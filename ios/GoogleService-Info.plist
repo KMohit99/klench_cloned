@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>92734214065-0kif88celn3i3uei8l433bn81aqolijt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.92734214065-0kif88celn3i3uei8l433bn81aqolijt</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>92734214065-mhi4g3r3ipfft8cg5rtn3888ttel80p4.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBweNAGST2TCCVGLAQiGSH6g9WIJHqGmPo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>92734214065</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.foxy.klench</string>
+	<key>PROJECT_ID</key>
+	<string>klench12</string>
+	<key>STORAGE_BUCKET</key>
+	<string>klench12.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:92734214065:ios:d0a4ea9c330290b442b790</string>
+</dict>
+</plist>

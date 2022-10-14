@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "92734214065",
+    "project_id": "klench12",
+    "storage_bucket": "klench12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92734214065:android:3ca502756f1b829e42b790",
+        "android_client_info": {
+          "package_name": "com.example.klench_"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92734214065-mhi4g3r3ipfft8cg5rtn3888ttel80p4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.klench_",
+            "certificate_hash": "960d50a1f2491615c0f66328d794e0edfd445cc9"
+          }
+        },
+        {
+          "client_id": "92734214065-0mle7n71db2a9gdkrgjho55vsuihu2r5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDLTApgzXBsvug7nc0lp40NLexelbwQTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92734214065-0mle7n71db2a9gdkrgjho55vsuihu2r5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

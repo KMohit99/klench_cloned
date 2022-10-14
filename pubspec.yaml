@@ -1,0 +1,133 @@
+name: klench_
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  get: 4.6.1
+  hexcolor: ^2.0.5
+  dropdown_button2: ^1.0.7
+  intl: ^0.17.0
+  pinput: ^1.2.0
+#  better_player: ^0.0.70
+  video_player: ^2.2.18
+
+  dotted_border: ^2.0.0+2
+  google_fonts: ^2.3.3
+  syncfusion_flutter_charts: ^19.4.56
+  flutter_launcher_icons: ^0.9.2
+  avatar_glow: ^2.0.2
+  percent_indicator: ^4.0.1
+  fluttertoast: ^8.0.8
+  loading_indicator: ^3.0.2
+  shared_preferences: ^2.0.13
+  image_picker: ^0.8.2
+  qr_flutter: ^4.0.0
+  qr_code_scanner: ^1.0.0
+  path_provider: ^2.0.9
+  local_auth: ^2.0.1
+  country_code_picker: ^2.0.2
+  age_calculator: ^1.0.0
+#  flutter_vibrate: ^1.3.0
+#  vibration: ^1.7.3
+  vibration: ^1.7.4-nullsafety.0
+
+  sqflite: ^2.0.2+1
+  flutter_local_notifications: ^9.6.1
+  share_plus: ^2.1.2
+
+  firebase_auth: ^3.1.4
+  #///FCM
+  firebase_core: ^1.8.0
+  firebase_messaging: ^11.2.0
+  overlay_support: ^2.0.1
+  cloud_firestore: ^3.1.4
+  cloud_functions: ^3.2.6
+  carousel_slider: ^4.1.1
+
+  flutter_facebook_auth: ^4.1.2
+#  flutter_webview_plugin: ^0.4.0
+  webview_flutter: ^3.0.4
+  dio: ^4.0.0
+  table_calendar: ^3.0.6
+  loop_page_view: ^1.2.0
+  sms_autofill: ^2.2.0
+  otp_autofill: ^2.1.0
+  flutter_alarm_clock: ^0.0.2
+  flutter_native_splash: ^2.1.1
+
+
+#  esys_flutter_share_plus: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^1.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/klench12-App-Icon.png"
+
+flutter_native_splash:
+  color: "#000000"
+  image: assets/images/Group 70.png
+  android: true
+  ios: true
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: PB
+      fonts:
+        - asset: assets/fonts/Poppins-Bold.ttf
+    - family: PSB
+      fonts:
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+    - family: PM
+      fonts:
+        - asset: assets/fonts/Poppins-Medium.ttf
+    - family: PR
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
