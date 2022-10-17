@@ -114,9 +114,9 @@ class _MyAppState extends State<MyApp> {
 
 
     // workaround for onLaunch: When the app is completely closed (not in the background) and opened directly from the push notification
-    FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
-      print('getInitialMessage data: ${message!.data}');
-    });
+    // FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+    //   print('getInitialMessage data: ${message!.data}');
+    // });
 
     // FirebaseMessaging.onBackgroundMessage(_throwGetMessage);
 

@@ -311,7 +311,7 @@ class _WarmUpScreenState extends State<WarmUpScreen>
 
   bool animation_started = false;
   double button_height = 200;
-  double text_k_size = 48;
+  double text_k_size = 35;
   double text_time_size = 35;
 
   // start_animation() {
@@ -445,7 +445,7 @@ class _WarmUpScreenState extends State<WarmUpScreen>
     //     AnimationController(vsync: this, duration: Duration(seconds: 5));
     // _animationController_textK!.forward();
     _animation_textK =
-        Tween(begin: 48.0, end: 30.0).animate(_animationController_button!)
+        Tween(begin: 35.0, end: 30.0).animate(_animationController_button!)
           ..addStatusListener((status) {
             // print(status);
             // if (status == AnimationStatus.completed) {
@@ -2135,6 +2135,7 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                               //     msg: "Finish method first");
                             } else {
                               await stopWatch_finish();
+
                               await Vibration.cancel();
                               await click_alarm();
                               await _animationController_middle!.reverse();
@@ -2142,32 +2143,43 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                 animation_started = false;
                                 _swipe_setup_controller.w_running = false;
                                 started = true;
-                                if (reverse_started) {
-                                  countdownTimer2!.cancel();
-                                }
+                                four_started = false;
+                                reverse_started = false;
+                                timer_started = false;
+                                back_wallpaper = true;
+                                elapsedTime = '00';
                                 elapsedTime2 = '00';
-                                // percent = 0.0;s
+                                elapsedTime3 = '00';
+                                button_height = 150;
+                                text_k_size = 30;
+                                text_time_size = 25;
+                              });
+                              if (reverse_started) {
+                                  setState(() {
+                                    countdownTimer2!.cancel();
+                                  });
+                                }
+                                // percent = 0.0;
                                 if (watch2.isRunning) {
-                                  watch2.reset();
+                                  setState(() {
+                                    watch2.reset();
+                                  });
                                 }
                                 // countdownTimer2!.cancel();
                                 // if(countdownTimer2!.isActive) {
                                 //   countdownTimer2!.cancel();
                                 // }
-                                four_started = false;
-                                reverse_started = false;
-                                timer_started = false;
-                                elapsedTime = '00';
-                                percent = 0.0;
-                                back_wallpaper = true;
-                                button_height = 150;
-                                text_k_size = 30;
-                                text_time_size = 25;
-                                if (watch.isRunning) {
-                                  watch.reset();
-                                }
                                 // paused_time.clear();
-                              });
+                              if (watch.isRunning) {
+                                setState(() {
+                                  watch.reset();
+                                });
+                              } if (watch3.isRunning) {
+                                setState(() {
+                                  watch3.reset();
+                                });
+                              }
+                              // Get.to(WarmUpScreen());
                             } // print('method_time : ${method_time[0].total_time}');
                             // print('method_name : ${method_time[0].method_name}');
                           }
@@ -2368,8 +2380,8 @@ class _WarmUpScreenState extends State<WarmUpScreen>
 
   stopWatch_finish() {
     setState(() {
-      startStop = true;
-      // animation_started = false;
+      // startStop = true;
+      animation_started = false;
       watch.stop();
       watch2.stop();
       watch3.stop();

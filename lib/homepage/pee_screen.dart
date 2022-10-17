@@ -1,12 +1,9 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,22 +15,16 @@ import 'package:klench_/homepage/alarm_info.dart';
 import 'package:klench_/homepage/controller/pee_screen_controller.dart';
 import 'package:klench_/homepage/swipe_controller.dart';
 import 'package:klench_/main.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-
-// import 'package:pimp_my_button/pimp_my_button.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:vibration/vibration.dart';
 
 import '../Authentication/SingIn/controller/SignIn_controller.dart';
 import '../Dashboard/dashboard_screen.dart';
-import '../databse.dart';
 import '../utils/Asset_utils.dart';
-import '../utils/TexrUtils.dart';
 import '../utils/TextStyle_utils.dart';
 import '../utils/UrlConstrant.dart';
 import '../utils/colorUtils.dart';
 import '../utils/common_widgets.dart';
-import 'model/pee_get_model.dart';
 
 class PeeScreen extends StatefulWidget {
   const PeeScreen({Key? key}) : super(key: key);
@@ -70,6 +61,7 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
   String? levels;
   int counter = 0;
   int sets = 0;
+
 
   updateTime_hard(Timer timer) {
     if (watch.isRunning) {
@@ -2020,7 +2012,6 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14.0,
                                         color: Colors.white),
-
                                     todayTextStyle: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14.0,
@@ -2629,7 +2620,7 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
     setState(() {
       startStop = true;
       // started = true;
-      // animation_started = false;
+      animation_started = false;
       watch.stop();
       setTime_finish();
     });

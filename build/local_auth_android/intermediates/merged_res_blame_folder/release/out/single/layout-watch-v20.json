@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/technologies/Downloads/klench_cloned/build/local_auth_android/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_title_material.xml",
+        "source": "/Users/technologies/.gradle/caches/transforms-2/files-2.1/a95723017108f3dd426ed794ac4eb9e7/appcompat-1.2.0/res/layout-watch-v20/abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "/Users/technologies/Downloads/klench_cloned/build/local_auth_android/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_button_bar_material.xml",
+        "source": "/Users/technologies/.gradle/caches/transforms-2/files-2.1/a95723017108f3dd426ed794ac4eb9e7/appcompat-1.2.0/res/layout-watch-v20/abc_alert_dialog_button_bar_material.xml"
+    }
+]

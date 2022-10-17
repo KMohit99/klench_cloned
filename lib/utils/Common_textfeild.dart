@@ -66,7 +66,7 @@ class CommonTextFormField_text extends StatelessWidget {
           Container(
             // width: 300,
             decoration: BoxDecoration(
-              // color: Colors.black.withOpacity(0.65),
+                // color: Colors.black.withOpacity(0.65),
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
@@ -94,7 +94,7 @@ class CommonTextFormField_text extends StatelessWidget {
               obscureText: isObscure ?? false,
               decoration: InputDecoration(
                   contentPadding:
-                  EdgeInsets.only(left: 20, top: 14, bottom: 14),
+                      EdgeInsets.only(left: 20, top: 14, bottom: 14),
                   alignLabelWithHint: false,
                   isDense: true,
                   hintText: labelText ?? '',
@@ -207,7 +207,7 @@ class CommonTextFormField_text_reversed extends StatelessWidget {
           Container(
             // width: 300,
             decoration: BoxDecoration(
-              // color: Colors.black.withOpacity(0.65),
+                // color: Colors.black.withOpacity(0.65),
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
@@ -235,7 +235,7 @@ class CommonTextFormField_text_reversed extends StatelessWidget {
               obscureText: isObscure ?? false,
               decoration: InputDecoration(
                   contentPadding:
-                  EdgeInsets.only(left: 20, top: 14, bottom: 14),
+                      EdgeInsets.only(left: 20, top: 14, bottom: 14),
                   alignLabelWithHint: false,
                   isDense: true,
                   hintText: labelText ?? '',
@@ -324,7 +324,9 @@ class CommonTextFormField extends StatelessWidget {
     this.enabled,
     this.height,
     this.iconData,
-    this.textFocusNode, this.onFieldSubmitted, this.maxLength,
+    this.textFocusNode,
+    this.onFieldSubmitted,
+    this.maxLength,
   }) : super(key: key);
 
   @override
@@ -337,7 +339,7 @@ class CommonTextFormField extends StatelessWidget {
         // height: 50,
         // width: 300,
         decoration: BoxDecoration(
-          // color: Colors.black.withOpacity(0.65),
+            // color: Colors.black.withOpacity(0.65),
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
@@ -416,6 +418,7 @@ class CommonTextFormField extends StatelessWidget {
   }
 }
 
+
 class CommonTextFormField_reversed extends StatelessWidget {
   final String? labelText;
   final TextEditingController? controller;
@@ -453,7 +456,9 @@ class CommonTextFormField_reversed extends StatelessWidget {
     this.validator,
     this.enabled,
     this.height,
-    this.iconData, this.textFocusNode, this.onFieldSubmitted,
+    this.iconData,
+    this.textFocusNode,
+    this.onFieldSubmitted,
   }) : super(key: key);
 
   @override
@@ -466,7 +471,7 @@ class CommonTextFormField_reversed extends StatelessWidget {
         height: 50,
         // width: 300,
         decoration: BoxDecoration(
-          // color: Colors.black.withOpacity(0.65),
+            // color: Colors.black.withOpacity(0.65),
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
@@ -594,7 +599,7 @@ class CommonTextFormField_noicon extends StatelessWidget {
         height: 50,
         // width: 300,
         decoration: BoxDecoration(
-          // color: Colors.black.withOpacity(0.65),
+            // color: Colors.black.withOpacity(0.65),
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,

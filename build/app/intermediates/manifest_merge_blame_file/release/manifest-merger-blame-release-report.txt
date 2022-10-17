@@ -1,0 +1,797 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.klench_"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="27"
+8-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:4:5-67
+11-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:4:22-64
+12    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+12-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:5:5-73
+12-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:5:22-71
+13    <uses-permission android:name="android.permission.VIBRATE" />
+13-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:6:5-65
+13-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:6:22-63
+14    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+14-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:7:5-79
+14-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:7:22-76
+15    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+15-->[:flutter_alarm_clock] /Users/technologies/Downloads/klench_cloned/build/flutter_alarm_clock/intermediates/library_manifest/release/AndroidManifest.xml:7:5-78
+15-->[:flutter_alarm_clock] /Users/technologies/Downloads/klench_cloned/build/flutter_alarm_clock/intermediates/library_manifest/release/AndroidManifest.xml:7:22-75
+16    <uses-permission android:name="android.permission.WAKE_LOCK" />
+16-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:8:5-68
+16-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:8:22-65
+17    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+17-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:7:5-81
+17-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:7:22-78
+18    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+18-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:9:5-81
+18-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:9:22-78
+19    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+19-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:10:5-79
+19-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:10:22-76
+20    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+20-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:11:5-77
+20-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:11:22-74
+21    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+21-->[:local_auth_android] /Users/technologies/Downloads/klench_cloned/build/local_auth_android/intermediates/library_manifest/release/AndroidManifest.xml:9:5-72
+21-->[:local_auth_android] /Users/technologies/Downloads/klench_cloned/build/local_auth_android/intermediates/library_manifest/release/AndroidManifest.xml:9:22-69
+22
+23    <queries>
+23-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:29:5-31:15
+24        <package android:name="com.facebook.katana" />
+24-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:30:9-55
+24-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:30:18-52
+25    </queries> <!-- Required by older versions of Google Play services to create IID tokens -->
+26    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+26-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:29:5-82
+26-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:29:22-79
+27    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+27-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:28:5-79
+27-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:28:22-76
+28    <uses-permission android:name="android.permission.REORDER_TASKS" />
+28-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:24:5-72
+28-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:24:22-69
+29    <uses-permission android:name="android.permission.CAMERA" /> <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
+29-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:22:5-65
+29-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:22:22-62
+30    <uses-feature
+30-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:25:5-27:36
+31        android:name="android.hardware.camera"
+31-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:26:9-47
+32        android:required="false" />
+32-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:27:9-33
+33    <uses-feature
+33-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:28:5-30:36
+34        android:name="android.hardware.camera.front"
+34-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:29:9-53
+35        android:required="false" /> <!-- TODO replace above two with next line after Android 4.2 -->
+35-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:30:9-33
+36    <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
+37    <uses-feature
+37-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:33:5-35:36
+38        android:name="android.hardware.camera.autofocus"
+38-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:34:9-57
+39        android:required="false" />
+39-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:35:9-33
+40    <uses-feature
+40-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:36:5-38:36
+41        android:name="android.hardware.camera.flash"
+41-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:37:9-53
+42        android:required="false" />
+42-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:38:9-33
+43    <uses-feature
+43-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:39:5-41:36
+44        android:name="android.hardware.screen.landscape"
+44-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:40:9-57
+45        android:required="false" />
+45-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:41:9-33
+46    <uses-feature
+46-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:42:5-44:36
+47        android:name="android.hardware.wifi"
+47-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:43:9-45
+48        android:required="false" />
+48-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:44:9-33
+49
+50    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" /> <!-- <uses-feature android:name="android.hardware.fingerprint" android:required="true" /> -->
+50-->[com.android.installreferrer:installreferrer:1.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/e133ff3817072e824fc783a26aa3c013/jetified-installreferrer-1.0/AndroidManifest.xml:9:5-110
+50-->[com.android.installreferrer:installreferrer:1.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/e133ff3817072e824fc783a26aa3c013/jetified-installreferrer-1.0/AndroidManifest.xml:9:22-107
+51    <application
+52        android:name="android.app.Application"
+52-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:14:9-42
+53        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+53-->[androidx.core:core:1.8.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/efbf645ac7f7a6288f6f3f3011a758fb/core-1.8.0/AndroidManifest.xml:24:18-86
+54        android:extractNativeLibs="false"
+55        android:icon="@mipmap/ic_launcher"
+55-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:15:9-43
+56        android:label="klench_12"
+56-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:13:9-34
+57        android:supportsRtl="true"
+57-->[com.facebook.android:facebook-android-sdk:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/e72a31ad7191511d54cb9eea1b66ed28/jetified-facebook-android-sdk-14.1.0/AndroidManifest.xml:28:18-44
+58        android:usesCleartextTraffic="true" >
+58-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:16:9-44
+59        <activity
+59-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:18:9-66:20
+60            android:name="com.example.klench_.MainActivity"
+60-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:19:13-41
+61            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+61-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:23:13-163
+62            android:exported="true"
+62-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:20:13-36
+63            android:hardwareAccelerated="true"
+63-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:24:13-47
+64            android:launchMode="singleTop"
+64-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:21:13-43
+65            android:requestLegacyExternalStorage="true"
+65-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:25:13-56
+66            android:theme="@style/LaunchTheme"
+66-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:22:13-47
+67            android:usesCleartextTraffic="true"
+67-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:26:13-48
+68            android:windowSoftInputMode="adjustResize" >
+68-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:27:13-55
+69
+70            <!--
+71                 Specifies an Android theme to apply to this Activity as soon as
+72                 the Android process has started. This theme is visible to the user
+73                 while the Flutter UI initializes. After that, this theme continues
+74                 to determine the Window background behind the Flutter UI.
+75            -->
+76
+77            <meta-data
+77-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:33:13-35:59
+78                android:name="com.facebook.sdk.ApplicationId"
+78-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:34:17-62
+79                android:value="@string/facebook_app_id" />
+79-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:35:17-56
+80            <meta-data
+80-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:36:13-38:65
+81                android:name="com.facebook.sdk.ClientToken"
+81-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:37:17-60
+82                android:value="@string/facebook_client_token" />
+82-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:38:17-62
+83            <meta-data
+83-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:39:13-42:17
+84                android:name="io.flutter.embedding.android.NormalTheme"
+84-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:40:15-70
+85                android:resource="@style/NormalTheme" />
+85-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:41:15-52
+86            <meta-data
+86-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:39:13-42:17
+87                android:name="io.flutter.embedding.android.NormalTheme"
+87-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:40:15-70
+88                android:resource="@style/NormalTheme" />
+88-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:41:15-52
+89
+90            <intent-filter>
+90-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:48:13-57:29
+91                <action android:name="android.intent.action.MAIN" />
+91-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:49:17-69
+91-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:49:25-66
+92
+93                <category android:name="android.intent.category.LAUNCHER" />
+93-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:50:17-77
+93-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:50:27-74
+94
+95                <action android:name="android.intent.action.VIEW" />
+95-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:51:17-69
+95-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:51:25-66
+96
+97                <category android:name="android.intent.category.DEFAULT" />
+97-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:53:17-76
+97-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:53:27-73
+98                <category android:name="android.intent.category.BROWSABLE" />
+98-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:54:17-78
+98-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:54:27-75
+99
+100                <data android:scheme="@string/fb_login_protocol_scheme" />
+100-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:56:17-75
+100-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:56:23-72
+101            </intent-filter>
+102            <intent-filter>
+102-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:58:13-61:29
+103                <action android:name="android.intent.action.MAIN" />
+103-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:49:17-69
+103-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:49:25-66
+104
+105                <category android:name="android.intent.category.LAUNCHER" />
+105-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:50:17-77
+105-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:50:27-74
+106            </intent-filter>
+107            <intent-filter>
+107-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:62:13-65:29
+108                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+108-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:63:17-68
+108-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:63:25-66
+109
+110                <category android:name="android.intent.category.DEFAULT" />
+110-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:53:17-76
+110-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:53:27-73
+111            </intent-filter>
+112        </activity>
+113        <!--
+114             Don't delete the meta-data below.
+115             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+116        -->
+117        <meta-data
+117-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:69:9-71:33
+118            android:name="flutterEmbedding"
+118-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:70:13-44
+119            android:value="2" />
+119-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:71:13-30
+120
+121        <service
+121-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:12:9-15:72
+122            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService"
+122-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:13:13-107
+123            android:exported="false"
+123-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:14:13-37
+124            android:permission="android.permission.BIND_JOB_SERVICE" />
+124-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:15:13-69
+125        <service
+125-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:16:9-22:19
+126            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingService"
+126-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:17:13-97
+127            android:exported="false" >
+127-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:18:13-37
+128            <intent-filter>
+128-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:19:13-21:29
+129                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+129-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:20:17-78
+129-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:20:25-75
+130            </intent-filter>
+131        </service>
+132
+133        <receiver
+133-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:24:9-31:20
+134            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
+134-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:25:13-98
+135            android:exported="true"
+135-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:26:13-36
+136            android:permission="com.google.android.c2dm.permission.SEND" >
+136-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:27:13-73
+137            <intent-filter>
+137-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:28:13-30:29
+138                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+138-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:29:17-81
+138-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:29:25-78
+139            </intent-filter>
+140        </receiver>
+141
+142        <service
+142-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:33:9-37:19
+143            android:name="com.google.firebase.components.ComponentDiscoveryService"
+143-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:33:18-89
+144            android:directBootAware="true"
+144-->[com.google.firebase:firebase-common:20.1.2] /Users/technologies/.gradle/caches/transforms-2/files-2.1/086879fe8119a9449861b11c584c5a22/jetified-firebase-common-20.1.2/AndroidManifest.xml:35:13-43
+145            android:exported="false" >
+145-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:66:13-37
+146            <meta-data
+146-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:34:13-36:85
+147                android:name="com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar"
+147-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:35:17-128
+148                android:value="com.google.firebase.components.ComponentRegistrar" />
+148-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:36:17-82
+149            <meta-data
+149-->[:cloud_firestore] /Users/technologies/Downloads/klench_cloned/build/cloud_firestore/intermediates/library_manifest/release/AndroidManifest.xml:9:13-11:85
+150                android:name="com.google.firebase.components:io.flutter.plugins.firebase.firestore.FlutterFirebaseFirestoreRegistrar"
+150-->[:cloud_firestore] /Users/technologies/Downloads/klench_cloned/build/cloud_firestore/intermediates/library_manifest/release/AndroidManifest.xml:10:17-134
+151                android:value="com.google.firebase.components.ComponentRegistrar" />
+151-->[:cloud_firestore] /Users/technologies/Downloads/klench_cloned/build/cloud_firestore/intermediates/library_manifest/release/AndroidManifest.xml:11:17-82
+152            <meta-data
+152-->[:cloud_functions] /Users/technologies/Downloads/klench_cloned/build/cloud_functions/intermediates/library_manifest/release/AndroidManifest.xml:9:13-11:85
+153                android:name="com.google.firebase.components:io.flutter.plugins.firebase.functions.FlutterFirebaseAppRegistrar"
+153-->[:cloud_functions] /Users/technologies/Downloads/klench_cloned/build/cloud_functions/intermediates/library_manifest/release/AndroidManifest.xml:10:17-128
+154                android:value="com.google.firebase.components.ComponentRegistrar" />
+154-->[:cloud_functions] /Users/technologies/Downloads/klench_cloned/build/cloud_functions/intermediates/library_manifest/release/AndroidManifest.xml:11:17-82
+155            <meta-data
+155-->[:firebase_auth] /Users/technologies/Downloads/klench_cloned/build/firebase_auth/intermediates/library_manifest/release/AndroidManifest.xml:9:13-11:85
+156                android:name="com.google.firebase.components:io.flutter.plugins.firebase.auth.FlutterFirebaseAuthRegistrar"
+156-->[:firebase_auth] /Users/technologies/Downloads/klench_cloned/build/firebase_auth/intermediates/library_manifest/release/AndroidManifest.xml:10:17-124
+157                android:value="com.google.firebase.components.ComponentRegistrar" />
+157-->[:firebase_auth] /Users/technologies/Downloads/klench_cloned/build/firebase_auth/intermediates/library_manifest/release/AndroidManifest.xml:11:17-82
+158            <meta-data
+158-->[:firebase_core] /Users/technologies/Downloads/klench_cloned/build/firebase_core/intermediates/library_manifest/release/AndroidManifest.xml:9:13-11:85
+159                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+159-->[:firebase_core] /Users/technologies/Downloads/klench_cloned/build/firebase_core/intermediates/library_manifest/release/AndroidManifest.xml:10:17-124
+160                android:value="com.google.firebase.components.ComponentRegistrar" />
+160-->[:firebase_core] /Users/technologies/Downloads/klench_cloned/build/firebase_core/intermediates/library_manifest/release/AndroidManifest.xml:11:17-82
+161            <meta-data
+161-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:67:13-69:85
+162                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+162-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:68:17-109
+163                android:value="com.google.firebase.components.ComponentRegistrar" />
+163-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:69:17-82
+164            <meta-data
+164-->[com.google.firebase:firebase-functions:20.1.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/865d64ee8ff901fbc7cc9254947a147f/jetified-firebase-functions-20.1.1/AndroidManifest.xml:18:13-20:85
+165                android:name="com.google.firebase.components:com.google.firebase.functions.FunctionsRegistrar"
+165-->[com.google.firebase:firebase-functions:20.1.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/865d64ee8ff901fbc7cc9254947a147f/jetified-firebase-functions-20.1.1/AndroidManifest.xml:19:17-111
+166                android:value="com.google.firebase.components.ComponentRegistrar" />
+166-->[com.google.firebase:firebase-functions:20.1.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/865d64ee8ff901fbc7cc9254947a147f/jetified-firebase-functions-20.1.1/AndroidManifest.xml:20:17-82
+167            <meta-data
+167-->[com.google.firebase:firebase-firestore:24.3.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/ed0ffcebc71066b163b24ddc3f46ea1b/jetified-firebase-firestore-24.3.1/AndroidManifest.xml:20:13-22:85
+168                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+168-->[com.google.firebase:firebase-firestore:24.3.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/ed0ffcebc71066b163b24ddc3f46ea1b/jetified-firebase-firestore-24.3.1/AndroidManifest.xml:21:17-111
+169                android:value="com.google.firebase.components.ComponentRegistrar" />
+169-->[com.google.firebase:firebase-firestore:24.3.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/ed0ffcebc71066b163b24ddc3f46ea1b/jetified-firebase-firestore-24.3.1/AndroidManifest.xml:22:17-82
+170            <meta-data
+170-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:56:13-58:85
+171                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+171-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:57:17-119
+172                android:value="com.google.firebase.components.ComponentRegistrar" />
+172-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:58:17-82
+173            <meta-data
+173-->[com.google.firebase:firebase-iid:21.1.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/0c1798e5373df907a92628697e456f59/jetified-firebase-iid-21.1.0/AndroidManifest.xml:32:13-34:85
+174                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+174-->[com.google.firebase:firebase-iid:21.1.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/0c1798e5373df907a92628697e456f59/jetified-firebase-iid-21.1.0/AndroidManifest.xml:33:17-96
+175                android:value="com.google.firebase.components.ComponentRegistrar" />
+175-->[com.google.firebase:firebase-iid:21.1.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/0c1798e5373df907a92628697e456f59/jetified-firebase-iid-21.1.0/AndroidManifest.xml:34:17-82
+176            <meta-data
+176-->[com.google.firebase:firebase-datatransport:18.1.6] /Users/technologies/.gradle/caches/transforms-2/files-2.1/e630892ae839ce1584a803cacbd7f007/jetified-firebase-datatransport-18.1.6/AndroidManifest.xml:28:13-30:85
+177                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+177-->[com.google.firebase:firebase-datatransport:18.1.6] /Users/technologies/.gradle/caches/transforms-2/files-2.1/e630892ae839ce1584a803cacbd7f007/jetified-firebase-datatransport-18.1.6/AndroidManifest.xml:29:17-115
+178                android:value="com.google.firebase.components.ComponentRegistrar" />
+178-->[com.google.firebase:firebase-datatransport:18.1.6] /Users/technologies/.gradle/caches/transforms-2/files-2.1/e630892ae839ce1584a803cacbd7f007/jetified-firebase-datatransport-18.1.6/AndroidManifest.xml:30:17-82
+179            <meta-data
+179-->[com.google.firebase:firebase-installations:17.0.3] /Users/technologies/.gradle/caches/transforms-2/files-2.1/6b27a4389187b6761cb55ad088223e8a/jetified-firebase-installations-17.0.3/AndroidManifest.xml:18:13-20:85
+180                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+180-->[com.google.firebase:firebase-installations:17.0.3] /Users/technologies/.gradle/caches/transforms-2/files-2.1/6b27a4389187b6761cb55ad088223e8a/jetified-firebase-installations-17.0.3/AndroidManifest.xml:19:17-127
+181                android:value="com.google.firebase.components.ComponentRegistrar" />
+181-->[com.google.firebase:firebase-installations:17.0.3] /Users/technologies/.gradle/caches/transforms-2/files-2.1/6b27a4389187b6761cb55ad088223e8a/jetified-firebase-installations-17.0.3/AndroidManifest.xml:20:17-82
+182        </service>
+183
+184        <provider
+184-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:39:9-43:38
+185            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider"
+185-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:40:13-102
+186            android:authorities="com.example.klench_.flutterfirebasemessaginginitprovider"
+186-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:41:13-88
+187            android:exported="false"
+187-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:42:13-37
+188            android:initOrder="99" />
+188-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:43:13-35
+189
+190        <receiver
+190-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:14:9-16:40
+191            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"
+191-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:15:13-97
+192            android:exported="false" />
+192-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:16:13-37
+193        <receiver
+193-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:17:9-26:20
+194            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
+194-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:18:13-101
+195            android:exported="false" >
+195-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:19:13-37
+196            <intent-filter>
+196-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:20:13-25:29
+197                <action android:name="android.intent.action.BOOT_COMPLETED" />
+197-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:21:17-79
+197-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:21:25-76
+198                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+198-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:22:17-84
+198-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:22:25-81
+199                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+199-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:23:17-82
+199-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:23:25-79
+200                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+200-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:24:17-82
+200-->[:flutter_local_notifications] /Users/technologies/Downloads/klench_cloned/build/flutter_local_notifications/intermediates/library_manifest/release/AndroidManifest.xml:24:25-79
+201            </intent-filter>
+202        </receiver>
+203
+204        <provider
+204-->[:share_plus] /Users/technologies/Downloads/klench_cloned/build/share_plus/intermediates/library_manifest/release/AndroidManifest.xml:8:9-16:20
+205            android:name="dev.fluttercommunity.plus.share.ShareFileProvider"
+205-->[:share_plus] /Users/technologies/Downloads/klench_cloned/build/share_plus/intermediates/library_manifest/release/AndroidManifest.xml:9:13-77
+206            android:authorities="com.example.klench_.flutter.share_provider"
+206-->[:share_plus] /Users/technologies/Downloads/klench_cloned/build/share_plus/intermediates/library_manifest/release/AndroidManifest.xml:10:13-74
+207            android:exported="false"
+207-->[:share_plus] /Users/technologies/Downloads/klench_cloned/build/share_plus/intermediates/library_manifest/release/AndroidManifest.xml:11:13-37
+208            android:grantUriPermissions="true" >
+208-->[:share_plus] /Users/technologies/Downloads/klench_cloned/build/share_plus/intermediates/library_manifest/release/AndroidManifest.xml:12:13-47
+209            <meta-data
+209-->[:share_plus] /Users/technologies/Downloads/klench_cloned/build/share_plus/intermediates/library_manifest/release/AndroidManifest.xml:13:13-15:68
+210                android:name="android.support.FILE_PROVIDER_PATHS"
+210-->[:share_plus] /Users/technologies/Downloads/klench_cloned/build/share_plus/intermediates/library_manifest/release/AndroidManifest.xml:14:17-67
+211                android:resource="@xml/flutter_share_file_paths" />
+211-->[:share_plus] /Users/technologies/Downloads/klench_cloned/build/share_plus/intermediates/library_manifest/release/AndroidManifest.xml:15:17-65
+212        </provider>
+213        <provider
+213-->[:image_picker_android] /Users/technologies/Downloads/klench_cloned/build/image_picker_android/intermediates/library_manifest/release/AndroidManifest.xml:8:9-16:20
+214            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+214-->[:image_picker_android] /Users/technologies/Downloads/klench_cloned/build/image_picker_android/intermediates/library_manifest/release/AndroidManifest.xml:9:13-82
+215            android:authorities="com.example.klench_.flutter.image_provider"
+215-->[:image_picker_android] /Users/technologies/Downloads/klench_cloned/build/image_picker_android/intermediates/library_manifest/release/AndroidManifest.xml:10:13-74
+216            android:exported="false"
+216-->[:image_picker_android] /Users/technologies/Downloads/klench_cloned/build/image_picker_android/intermediates/library_manifest/release/AndroidManifest.xml:11:13-37
+217            android:grantUriPermissions="true" >
+217-->[:image_picker_android] /Users/technologies/Downloads/klench_cloned/build/image_picker_android/intermediates/library_manifest/release/AndroidManifest.xml:12:13-47
+218            <meta-data
+218-->[:share_plus] /Users/technologies/Downloads/klench_cloned/build/share_plus/intermediates/library_manifest/release/AndroidManifest.xml:13:13-15:68
+219                android:name="android.support.FILE_PROVIDER_PATHS"
+219-->[:share_plus] /Users/technologies/Downloads/klench_cloned/build/share_plus/intermediates/library_manifest/release/AndroidManifest.xml:14:17-67
+220                android:resource="@xml/flutter_image_picker_file_paths" />
+220-->[:share_plus] /Users/technologies/Downloads/klench_cloned/build/share_plus/intermediates/library_manifest/release/AndroidManifest.xml:15:17-65
+221        </provider>
+222
+223        <activity
+223-->[:url_launcher_android] /Users/technologies/Downloads/klench_cloned/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:8:9-11:74
+224            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+224-->[:url_launcher_android] /Users/technologies/Downloads/klench_cloned/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:9:13-74
+225            android:exported="false"
+225-->[:url_launcher_android] /Users/technologies/Downloads/klench_cloned/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:10:13-37
+226            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+226-->[:url_launcher_android] /Users/technologies/Downloads/klench_cloned/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:11:13-71
+227        <activity
+227-->[com.google.android.gms:play-services-auth:19.2.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/7c53966097004512aff19b69bf86d053/jetified-play-services-auth-19.2.0/AndroidManifest.xml:23:9-27:75
+228            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+228-->[com.google.android.gms:play-services-auth:19.2.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/7c53966097004512aff19b69bf86d053/jetified-play-services-auth-19.2.0/AndroidManifest.xml:24:13-93
+229            android:excludeFromRecents="true"
+229-->[com.google.android.gms:play-services-auth:19.2.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/7c53966097004512aff19b69bf86d053/jetified-play-services-auth-19.2.0/AndroidManifest.xml:25:13-46
+230            android:exported="false"
+230-->[com.google.android.gms:play-services-auth:19.2.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/7c53966097004512aff19b69bf86d053/jetified-play-services-auth-19.2.0/AndroidManifest.xml:26:13-37
+231            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+231-->[com.google.android.gms:play-services-auth:19.2.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/7c53966097004512aff19b69bf86d053/jetified-play-services-auth-19.2.0/AndroidManifest.xml:27:13-72
+232        <!--
+233            Service handling Google Sign-In user revocation. For apps that do not integrate with
+234            Google Sign-In, this service will never be started.
+235        -->
+236        <service
+236-->[com.google.android.gms:play-services-auth:19.2.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/7c53966097004512aff19b69bf86d053/jetified-play-services-auth-19.2.0/AndroidManifest.xml:33:9-37:51
+237            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+237-->[com.google.android.gms:play-services-auth:19.2.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/7c53966097004512aff19b69bf86d053/jetified-play-services-auth-19.2.0/AndroidManifest.xml:34:13-89
+238            android:exported="true"
+238-->[com.google.android.gms:play-services-auth:19.2.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/7c53966097004512aff19b69bf86d053/jetified-play-services-auth-19.2.0/AndroidManifest.xml:35:13-36
+239            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+239-->[com.google.android.gms:play-services-auth:19.2.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/7c53966097004512aff19b69bf86d053/jetified-play-services-auth-19.2.0/AndroidManifest.xml:36:13-107
+240            android:visibleToInstantApps="true" />
+240-->[com.google.android.gms:play-services-auth:19.2.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/7c53966097004512aff19b69bf86d053/jetified-play-services-auth-19.2.0/AndroidManifest.xml:37:13-48
+241
+242        <activity
+242-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:34:9-37:66
+243            android:name="com.facebook.FacebookActivity"
+243-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:35:13-57
+244            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+244-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:36:13-96
+245            android:theme="@style/com_facebook_activity_theme" />
+245-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:37:13-63
+246        <activity android:name="com.facebook.CustomTabMainActivity" />
+246-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:38:9-71
+246-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:38:19-68
+247        <activity
+247-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:39:9-53:20
+248            android:name="com.facebook.CustomTabActivity"
+248-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:40:13-58
+249            android:exported="true" >
+249-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:41:13-36
+250            <intent-filter>
+250-->[com.facebook.android:facebook-common:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/332e4dd6ff64ef7084bb342b2bac81b3/jetified-facebook-common-15.0.0/AndroidManifest.xml:43:13-52:29
+251                <action android:name="android.intent.action.VIEW" />
+251-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:51:17-69
+251-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:51:25-66
+252
+253                <category android:name="android.intent.category.DEFAULT" />
+253-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:53:17-76
+253-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:53:27-73
+254                <category android:name="android.intent.category.BROWSABLE" />
+254-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:54:17-78
+254-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:54:27-75
+255
+256                <data
+256-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:56:17-75
+257                    android:host="cct.com.example.klench_"
+258                    android:scheme="fbconnect" />
+258-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:56:23-72
+259            </intent-filter>
+260        </activity>
+261        <activity
+261-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:27:9-44:20
+262            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+262-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:28:13-80
+263            android:excludeFromRecents="true"
+263-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:29:13-46
+264            android:exported="true"
+264-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:30:13-36
+265            android:launchMode="singleTask"
+265-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:31:13-44
+266            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+266-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:32:13-72
+267            <intent-filter>
+267-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:33:13-43:29
+268                <action android:name="android.intent.action.VIEW" />
+268-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:51:17-69
+268-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:51:25-66
+269
+270                <category android:name="android.intent.category.DEFAULT" />
+270-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:53:17-76
+270-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:53:27-73
+271                <category android:name="android.intent.category.BROWSABLE" />
+271-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:54:17-78
+271-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:54:27-75
+272
+273                <data
+273-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:56:17-75
+274                    android:host="firebase.auth"
+275                    android:path="/"
+276                    android:scheme="genericidp" />
+276-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:56:23-72
+277            </intent-filter>
+278        </activity>
+279        <activity
+279-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:45:9-62:20
+280            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+280-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:46:13-79
+281            android:excludeFromRecents="true"
+281-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:47:13-46
+282            android:exported="true"
+282-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:48:13-36
+283            android:launchMode="singleTask"
+283-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:49:13-44
+284            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+284-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:50:13-72
+285            <intent-filter>
+285-->[com.google.firebase:firebase-auth:21.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/8e266734444686e8ee01d5def7f72073/jetified-firebase-auth-21.0.8/AndroidManifest.xml:51:13-61:29
+286                <action android:name="android.intent.action.VIEW" />
+286-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:51:17-69
+286-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:51:25-66
+287
+288                <category android:name="android.intent.category.DEFAULT" />
+288-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:53:17-76
+288-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:53:27-73
+289                <category android:name="android.intent.category.BROWSABLE" />
+289-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:54:17-78
+289-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:54:27-75
+290
+291                <data
+291-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:56:17-75
+292                    android:host="firebase.auth"
+293                    android:path="/"
+294                    android:scheme="recaptcha" />
+294-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:56:23-72
+295            </intent-filter>
+296        </activity>
+297
+298        <receiver
+298-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:32:9-39:20
+299            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+299-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:33:13-78
+300            android:exported="true"
+300-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:34:13-36
+301            android:permission="com.google.android.c2dm.permission.SEND" >
+301-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:35:13-73
+302            <intent-filter>
+302-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:28:13-30:29
+303                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+303-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:29:17-81
+303-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:29:25-78
+304            </intent-filter>
+305        </receiver>
+306        <!--
+307             FirebaseMessagingService performs security checks at runtime,
+308             but set to not exported to explicitly avoid allowing another app to call it.
+309        -->
+310        <service
+310-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:45:9-52:19
+311            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+311-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:46:13-82
+312            android:directBootAware="true"
+312-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:47:13-43
+313            android:exported="false" >
+313-->[com.google.firebase:firebase-messaging:23.0.8] /Users/technologies/.gradle/caches/transforms-2/files-2.1/af557cd82d5fde3ee4349948a239a129/jetified-firebase-messaging-23.0.8/AndroidManifest.xml:48:13-37
+314            <intent-filter android:priority="-500" >
+314-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:19:13-21:29
+315                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+315-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:20:17-78
+315-->[:firebase_messaging] /Users/technologies/Downloads/klench_cloned/build/firebase_messaging/intermediates/library_manifest/release/AndroidManifest.xml:20:25-75
+316            </intent-filter>
+317        </service>
+318
+319        <activity
+319-->[com.google.android.gms:play-services-base:18.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/cc67751070ba8f7377d63ab76544c726/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+320            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+320-->[com.google.android.gms:play-services-base:18.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/cc67751070ba8f7377d63ab76544c726/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+321            android:exported="false"
+321-->[com.google.android.gms:play-services-base:18.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/cc67751070ba8f7377d63ab76544c726/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+322            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+322-->[com.google.android.gms:play-services-base:18.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/cc67751070ba8f7377d63ab76544c726/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+323
+324        <provider
+324-->[com.google.firebase:firebase-common:20.1.2] /Users/technologies/.gradle/caches/transforms-2/files-2.1/086879fe8119a9449861b11c584c5a22/jetified-firebase-common-20.1.2/AndroidManifest.xml:26:9-31:39
+325            android:name="com.google.firebase.provider.FirebaseInitProvider"
+325-->[com.google.firebase:firebase-common:20.1.2] /Users/technologies/.gradle/caches/transforms-2/files-2.1/086879fe8119a9449861b11c584c5a22/jetified-firebase-common-20.1.2/AndroidManifest.xml:27:13-77
+326            android:authorities="com.example.klench_.firebaseinitprovider"
+326-->[com.google.firebase:firebase-common:20.1.2] /Users/technologies/.gradle/caches/transforms-2/files-2.1/086879fe8119a9449861b11c584c5a22/jetified-firebase-common-20.1.2/AndroidManifest.xml:28:13-72
+327            android:directBootAware="true"
+327-->[com.google.firebase:firebase-common:20.1.2] /Users/technologies/.gradle/caches/transforms-2/files-2.1/086879fe8119a9449861b11c584c5a22/jetified-firebase-common-20.1.2/AndroidManifest.xml:29:13-43
+328            android:exported="false"
+328-->[com.google.firebase:firebase-common:20.1.2] /Users/technologies/.gradle/caches/transforms-2/files-2.1/086879fe8119a9449861b11c584c5a22/jetified-firebase-common-20.1.2/AndroidManifest.xml:30:13-37
+329            android:initOrder="100" />
+329-->[com.google.firebase:firebase-common:20.1.2] /Users/technologies/.gradle/caches/transforms-2/files-2.1/086879fe8119a9449861b11c584c5a22/jetified-firebase-common-20.1.2/AndroidManifest.xml:31:13-36
+330
+331        <meta-data
+331-->[com.google.android.gms:play-services-basement:18.1.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/371e697bd847b8f0299b1a4e3e0b40ec/jetified-play-services-basement-18.1.0/AndroidManifest.xml:21:9-23:69
+332            android:name="com.google.android.gms.version"
+332-->[com.google.android.gms:play-services-basement:18.1.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/371e697bd847b8f0299b1a4e3e0b40ec/jetified-play-services-basement-18.1.0/AndroidManifest.xml:22:13-58
+333            android:value="@integer/google_play_services_version" />
+333-->[com.google.android.gms:play-services-basement:18.1.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/371e697bd847b8f0299b1a4e3e0b40ec/jetified-play-services-basement-18.1.0/AndroidManifest.xml:23:13-66
+334        <!--
+335         The initialization ContentProvider will call FacebookSdk.sdkInitialize automatically
+336         with the application context. This config is merged in with the host app's manifest,
+337         but there can only be one provider with the same authority activated at any given
+338         point; so if the end user has two or more different apps that use Facebook SDK, only the
+339         first one will be able to use the provider. To work around this problem, we use the
+340         following placeholder in the authority to identify each host application as if it was
+341         a completely different provider.
+342        -->
+343        <provider
+343-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:41:9-44:40
+344            android:name="com.facebook.internal.FacebookInitProvider"
+344-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:42:13-70
+345            android:authorities="com.example.klench_.FacebookInitProvider"
+345-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:43:13-72
+346            android:exported="false" />
+346-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:44:13-37
+347
+348        <receiver
+348-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:46:9-52:20
+349            android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver"
+349-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:47:13-86
+350            android:exported="false" >
+350-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:48:13-37
+351            <intent-filter>
+351-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:49:13-51:29
+352                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED" />
+352-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:50:17-95
+352-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:50:25-92
+353            </intent-filter>
+354        </receiver>
+355        <receiver
+355-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:53:9-59:20
+356            android:name="com.facebook.AuthenticationTokenManager$CurrentAuthenticationTokenChangedBroadcastReceiver"
+356-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:54:13-118
+357            android:exported="false" >
+357-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:55:13-37
+358            <intent-filter>
+358-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:56:13-58:29
+359                <action android:name="com.facebook.sdk.ACTION_CURRENT_AUTHENTICATION_TOKEN_CHANGED" />
+359-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:57:17-103
+359-->[com.facebook.android:facebook-core:15.0.1] /Users/technologies/.gradle/caches/transforms-2/files-2.1/41cf5f992866992376a8b9f3c554f523/jetified-facebook-core-15.0.1/AndroidManifest.xml:57:25-100
+360            </intent-filter>
+361        </receiver>
+362
+363        <uses-library
+363-->[androidx.window:window:1.0.0-beta04] /Users/technologies/.gradle/caches/transforms-2/files-2.1/5d93ab2f2812dcc02a149cabf48676c0/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+364            android:name="androidx.window.extensions"
+364-->[androidx.window:window:1.0.0-beta04] /Users/technologies/.gradle/caches/transforms-2/files-2.1/5d93ab2f2812dcc02a149cabf48676c0/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+365            android:required="false" />
+365-->[androidx.window:window:1.0.0-beta04] /Users/technologies/.gradle/caches/transforms-2/files-2.1/5d93ab2f2812dcc02a149cabf48676c0/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+366        <uses-library
+366-->[androidx.window:window:1.0.0-beta04] /Users/technologies/.gradle/caches/transforms-2/files-2.1/5d93ab2f2812dcc02a149cabf48676c0/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+367            android:name="androidx.window.sidecar"
+367-->[androidx.window:window:1.0.0-beta04] /Users/technologies/.gradle/caches/transforms-2/files-2.1/5d93ab2f2812dcc02a149cabf48676c0/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+368            android:required="false" />
+368-->[androidx.window:window:1.0.0-beta04] /Users/technologies/.gradle/caches/transforms-2/files-2.1/5d93ab2f2812dcc02a149cabf48676c0/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+369
+370        <provider
+370-->[androidx.emoji2:emoji2:1.0.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/26fb15319d259b9b76c702a289576309/jetified-emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+371            android:name="androidx.startup.InitializationProvider"
+371-->[androidx.emoji2:emoji2:1.0.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/26fb15319d259b9b76c702a289576309/jetified-emoji2-1.0.0/AndroidManifest.xml:27:13-67
+372            android:authorities="com.example.klench_.androidx-startup"
+372-->[androidx.emoji2:emoji2:1.0.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/26fb15319d259b9b76c702a289576309/jetified-emoji2-1.0.0/AndroidManifest.xml:28:13-68
+373            android:exported="false" >
+373-->[androidx.emoji2:emoji2:1.0.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/26fb15319d259b9b76c702a289576309/jetified-emoji2-1.0.0/AndroidManifest.xml:29:13-37
+374            <meta-data
+374-->[androidx.emoji2:emoji2:1.0.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/26fb15319d259b9b76c702a289576309/jetified-emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+375                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+375-->[androidx.emoji2:emoji2:1.0.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/26fb15319d259b9b76c702a289576309/jetified-emoji2-1.0.0/AndroidManifest.xml:32:17-75
+376                android:value="androidx.startup" />
+376-->[androidx.emoji2:emoji2:1.0.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/26fb15319d259b9b76c702a289576309/jetified-emoji2-1.0.0/AndroidManifest.xml:33:17-49
+377            <meta-data
+377-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/67edf536addfb585db7b09822be1156e/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+378                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+378-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/67edf536addfb585db7b09822be1156e/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
+379                android:value="androidx.startup" />
+379-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/67edf536addfb585db7b09822be1156e/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+380        </provider>
+381
+382        <activity
+382-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:27:9-34:20
+383            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
+383-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:28:13-99
+384            android:exported="true"
+384-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:29:13-36
+385            android:theme="@android:style/Theme" >
+385-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:30:13-49
+386            <intent-filter>
+386-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:31:13-33:29
+387                <action android:name="android.intent.action.MAIN" />
+387-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:49:17-69
+387-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:49:25-66
+388            </intent-filter>
+389        </activity>
+390        <activity
+390-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:35:9-42:20
+391            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
+391-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:36:13-95
+392            android:exported="true"
+392-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:37:13-36
+393            android:theme="@android:style/Theme" >
+393-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:38:13-49
+394            <intent-filter>
+394-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:31:13-33:29
+395                <action android:name="android.intent.action.MAIN" />
+395-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:49:17-69
+395-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:49:25-66
+396            </intent-filter>
+397        </activity>
+398        <activity
+398-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:43:9-50:20
+399            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
+399-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:44:13-103
+400            android:exported="true"
+400-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:45:13-36
+401            android:theme="@android:style/Theme.Dialog" >
+401-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:46:13-56
+402            <intent-filter>
+402-->[androidx.test:core:1.4.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/4e699d5b835fd3a332cc9eb468394998/jetified-core-1.4.0/AndroidManifest.xml:31:13-33:29
+403                <action android:name="android.intent.action.MAIN" />
+403-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:49:17-69
+403-->/Users/technologies/Downloads/klench_cloned/android/app/src/main/AndroidManifest.xml:49:25-66
+404            </intent-filter>
+405        </activity>
+406
+407        <service
+407-->[com.google.android.datatransport:transport-backend-cct:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/23a7cc1aeb110957f672694b7af2c387/jetified-transport-backend-cct-3.1.7/AndroidManifest.xml:29:9-35:19
+408            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+408-->[com.google.android.datatransport:transport-backend-cct:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/23a7cc1aeb110957f672694b7af2c387/jetified-transport-backend-cct-3.1.7/AndroidManifest.xml:30:13-103
+409            android:exported="false" >
+409-->[com.google.android.datatransport:transport-backend-cct:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/23a7cc1aeb110957f672694b7af2c387/jetified-transport-backend-cct-3.1.7/AndroidManifest.xml:31:13-37
+410            <meta-data
+410-->[com.google.android.datatransport:transport-backend-cct:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/23a7cc1aeb110957f672694b7af2c387/jetified-transport-backend-cct-3.1.7/AndroidManifest.xml:32:13-34:39
+411                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+411-->[com.google.android.datatransport:transport-backend-cct:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/23a7cc1aeb110957f672694b7af2c387/jetified-transport-backend-cct-3.1.7/AndroidManifest.xml:33:17-94
+412                android:value="cct" />
+412-->[com.google.android.datatransport:transport-backend-cct:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/23a7cc1aeb110957f672694b7af2c387/jetified-transport-backend-cct-3.1.7/AndroidManifest.xml:34:17-36
+413        </service>
+414        <service
+414-->[com.google.android.datatransport:transport-runtime:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/f1838c34aa545012ebad37a664b9ebcd/jetified-transport-runtime-3.1.7/AndroidManifest.xml:26:9-30:19
+415            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+415-->[com.google.android.datatransport:transport-runtime:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/f1838c34aa545012ebad37a664b9ebcd/jetified-transport-runtime-3.1.7/AndroidManifest.xml:27:13-117
+416            android:exported="false"
+416-->[com.google.android.datatransport:transport-runtime:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/f1838c34aa545012ebad37a664b9ebcd/jetified-transport-runtime-3.1.7/AndroidManifest.xml:28:13-37
+417            android:permission="android.permission.BIND_JOB_SERVICE" >
+417-->[com.google.android.datatransport:transport-runtime:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/f1838c34aa545012ebad37a664b9ebcd/jetified-transport-runtime-3.1.7/AndroidManifest.xml:29:13-69
+418        </service>
+419
+420        <receiver
+420-->[com.google.android.datatransport:transport-runtime:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/f1838c34aa545012ebad37a664b9ebcd/jetified-transport-runtime-3.1.7/AndroidManifest.xml:32:9-34:40
+421            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+421-->[com.google.android.datatransport:transport-runtime:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/f1838c34aa545012ebad37a664b9ebcd/jetified-transport-runtime-3.1.7/AndroidManifest.xml:33:13-132
+422            android:exported="false" />
+422-->[com.google.android.datatransport:transport-runtime:3.1.7] /Users/technologies/.gradle/caches/transforms-2/files-2.1/f1838c34aa545012ebad37a664b9ebcd/jetified-transport-runtime-3.1.7/AndroidManifest.xml:34:13-37
+423
+424        <activity
+424-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:47:9-53:63
+425            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+425-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:48:13-74
+426            android:clearTaskOnLaunch="true"
+426-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:49:13-45
+427            android:screenOrientation="sensorLandscape"
+427-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:50:13-56
+428            android:stateNotNeeded="true"
+428-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:51:13-42
+429            android:theme="@style/zxing_CaptureTheme"
+429-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:52:13-54
+430            android:windowSoftInputMode="stateAlwaysHidden" />
+430-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/technologies/.gradle/caches/transforms-2/files-2.1/62790738a4129c9b99fe9deab621c52e/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:53:13-60
+431    </application>
+432
+433</manifest>

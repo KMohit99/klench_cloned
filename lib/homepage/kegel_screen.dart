@@ -169,9 +169,8 @@ class _KegelScreenState extends State<KegelScreen>
                 await _kegel_controller.Kegel_post_API(context);
                 await _kegel_controller.alarm_notifications(context);
                 print('Sets-------$_kegel_controller.sets');
-                await Get.to(DashboardScreen(page: 1));
+                // await Get.to(DashboardScreen(page: 1));
                 await getdata();
-
                 if (_kegel_controller.sets == 3) {
                   stopWatch_finish();
                   setState(() {

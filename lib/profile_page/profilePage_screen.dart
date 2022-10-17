@@ -706,110 +706,32 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                             child: Column(
                               children: [
                                 Container(
-                                  child: CommonTextFormField(
-                                    controller: _profile_page_controller
-                                        .FullnameController,
-                                    readOnly: editable,
-                                    labelText: Textutils.name_,
-                                    iconData: IconButton(
-                                      visualDensity: VisualDensity(
-                                          horizontal: -4, vertical: -4),
-                                      icon: Image.asset(
-                                        AssetUtils.signIN_user_icon,
-                                        height: 17,
-                                        width: 15,
-                                        color: HexColor("#606060"),
-                                      ),
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Container(
-                                  child: Row(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        decoration: BoxDecoration(
-                                          // color: Colors.black.withOpacity(0.65),
-                                            gradient: LinearGradient(
-                                              begin: Alignment.centerLeft,
-                                              end: Alignment.centerRight,
-                                              // stops: [0.1, 0.5, 0.7, 0.9],
-                                              colors: [
-                                                HexColor("#36393E")
-                                                    .withOpacity(1),
-                                                HexColor("#020204")
-                                                    .withOpacity(1),
-                                              ],
-                                            ),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: HexColor('#04060F'),
-                                                offset: Offset(10, 10),
-                                                blurRadius: 20,
-                                              ),
-                                            ],
-                                            borderRadius:
-                                            BorderRadius.circular(10)),
-                                        child: CountryCodePicker(
-                                          onChanged: (country) {
-                                            setState(() {
-                                              _profile_page_controller
-                                                  .dialCodedigits =
-                                              country.dialCode!;
-                                              print(_profile_page_controller
-                                                  .dialCodedigits);
-                                            });
-                                          },
-                                          initialSelection:
-                                          _profile_page_controller
-                                              .dialCodedigits,
-                                          textStyle: FontStyleUtility.h15(
-                                              fontColor:
-                                              ColorUtils.primary_gold,
-                                              family: 'PM'),
-                                          showCountryOnly: false,
-                                          showFlagMain: false,
-                                          padding: EdgeInsets.zero,
-                                          showFlag: true,
-                                          showOnlyCountryWhenClosed: false,
-                                          favorite: [
-                                            "+1",
-                                            "US",
-                                            "+91",
-                                            "IN"
-                                          ],
-                                          barrierColor: Colors.white,
-                                          backgroundColor: Colors.black,
-                                          dialogSize: Size.fromHeight(
-                                              screenHeight / 2),
+                                        child: Text(
+                                          'Username',
+                                          style:  FontStyleUtility.h15(
+                                              fontColor: Colors.white, family: 'PM'),
                                         ),
                                       ),
-                                      Container(
-                                        width: 10,
-                                      ),
-                                      Expanded(
-                                        child: CommonTextFormField(
-                                          controller:
-                                          _profile_page_controller
-                                              .phoneNumberController,
-                                          labelText: Textutils.phone_,
-                                          keyboardType: TextInputType.phone,
-                                          readOnly: editable,
-                                          iconData: IconButton(
-                                            visualDensity: VisualDensity(
-                                                horizontal: -4,
-                                                vertical: -4),
-                                            icon: Image.asset(
-                                              AssetUtils.mobile_icons,
-                                              height: 17,
-                                              color: HexColor("#606060"),
-                                              width: 15,
-                                            ),
-                                            onPressed: () {},
+                                      SizedBox(height: 5,),
+                                      CommonTextFormField(
+                                        controller: _profile_page_controller
+                                            .FullnameController,
+                                        readOnly: editable,
+                                        labelText: Textutils.name_,
+                                        iconData: IconButton(
+                                          visualDensity: VisualDensity(
+                                              horizontal: -4, vertical: -4),
+                                          icon: Image.asset(
+                                            AssetUtils.signIN_user_icon,
+                                            height: 17,
+                                            width: 15,
+                                            color: HexColor("#606060"),
                                           ),
+                                          onPressed: () {},
                                         ),
                                       ),
                                     ],
@@ -819,50 +741,180 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                                   height: 15,
                                 ),
                                 Container(
-                                  child: CommonTextFormField(
-                                    controller: _profile_page_controller
-                                        .emailAddressController,
-                                    labelText: Textutils.email_,
-                                    readOnly: editable,
-                                    maxLines: 1,
-                                    iconData: IconButton(
-                                      visualDensity: VisualDensity(
-                                          horizontal: -4, vertical: -4),
-                                      icon: Image.asset(
-                                        AssetUtils.message_icons,
-                                        color: HexColor("#606060"),
-                                        height: 17,
-                                        width: 15,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        child: Text(
+                                          'Phone number',
+                                          style:  FontStyleUtility.h15(
+                                              fontColor: Colors.white, family: 'PM'),
+                                        ),
                                       ),
-                                      onPressed: () {},
-                                    ),
+                                      SizedBox(height: 5,),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              // color: Colors.black.withOpacity(0.65),
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.centerLeft,
+                                                  end: Alignment.centerRight,
+                                                  // stops: [0.1, 0.5, 0.7, 0.9],
+                                                  colors: [
+                                                    HexColor("#36393E")
+                                                        .withOpacity(1),
+                                                    HexColor("#020204")
+                                                        .withOpacity(1),
+                                                  ],
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: HexColor('#04060F'),
+                                                    offset: Offset(10, 10),
+                                                    blurRadius: 20,
+                                                  ),
+                                                ],
+                                                borderRadius:
+                                                BorderRadius.circular(10)),
+                                            child: CountryCodePicker(
+                                              onChanged: (country) {
+                                                setState(() {
+                                                  _profile_page_controller
+                                                      .dialCodedigits =
+                                                  country.dialCode!;
+                                                  print(_profile_page_controller
+                                                      .dialCodedigits);
+                                                });
+                                              },
+                                              initialSelection:
+                                              _profile_page_controller
+                                                  .dialCodedigits,
+                                              textStyle: FontStyleUtility.h15(
+                                                  fontColor:
+                                                  ColorUtils.primary_gold,
+                                                  family: 'PM'),
+                                              showCountryOnly: false,
+                                              showFlagMain: false,
+                                              padding: EdgeInsets.zero,
+                                              showFlag: true,
+                                              showOnlyCountryWhenClosed: false,
+                                              favorite: [
+                                                "+1",
+                                                "US",
+                                                "+91",
+                                                "IN"
+                                              ],
+                                              barrierColor: Colors.white,
+                                              backgroundColor: Colors.black,
+                                              dialogSize: Size.fromHeight(
+                                                  screenHeight / 2),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: CommonTextFormField(
+                                              controller:
+                                              _profile_page_controller
+                                                  .phoneNumberController,
+                                              labelText: Textutils.phone_,
+                                              keyboardType: TextInputType.phone,
+                                              readOnly: editable,
+                                              iconData: IconButton(
+                                                visualDensity: VisualDensity(
+                                                    horizontal: -4,
+                                                    vertical: -4),
+                                                icon: Image.asset(
+                                                  AssetUtils.mobile_icons,
+                                                  height: 17,
+                                                  color: HexColor("#606060"),
+                                                  width: 15,
+                                                ),
+                                                onPressed: () {},
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
                                   height: 15,
                                 ),
                                 Container(
-                                  child: CommonTextFormField(
-                                    labelText: Textutils.dob_,
-                                    readOnly: true,
-                                    controller: _profile_page_controller
-                                        .dateOfbirthController,
-                                    tap: () {
-                                      // selectDoB(context);
-                                    },
-                                    iconData: IconButton(
-                                      visualDensity: VisualDensity(
-                                          horizontal: -4, vertical: -4),
-                                      icon: Image.asset(
-                                        AssetUtils.date_icons,
-                                        color: HexColor("#606060"),
-                                        height: 17,
-                                        width: 15,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        child: Text(
+                                          'Email address',
+                                          style:  FontStyleUtility.h15(
+                                              fontColor: Colors.white, family: 'PM'),
+                                        ),
                                       ),
-                                      onPressed: () {
-                                        // selectDoB(context);
-                                      },
-                                    ),
+                                      SizedBox(height: 5,),
+                                      CommonTextFormField(
+                                        controller: _profile_page_controller
+                                            .emailAddressController,
+                                        labelText: Textutils.email_,
+                                        readOnly: editable,
+                                        maxLines: 1,
+                                        iconData: IconButton(
+                                          visualDensity: VisualDensity(
+                                              horizontal: -4, vertical: -4),
+                                          icon: Image.asset(
+                                            AssetUtils.message_icons,
+                                            color: HexColor("#606060"),
+                                            height: 17,
+                                            width: 15,
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        child: Text(
+                                          'Date of Birth',
+                                          style:  FontStyleUtility.h13(
+                                              fontColor: Colors.white, family: 'PM'),
+                                        ),
+                                      ),
+                                      SizedBox(height: 5,),
+                                      CommonTextFormField(
+                                        labelText: Textutils.dob_,
+                                        readOnly: true,
+                                        controller: _profile_page_controller
+                                            .dateOfbirthController,
+                                        tap: () {
+                                          // selectDoB(context);
+                                        },
+                                        iconData: IconButton(
+                                          visualDensity: VisualDensity(
+                                              horizontal: -4, vertical: -4),
+                                          icon: Image.asset(
+                                            AssetUtils.date_icons,
+                                            color: HexColor("#606060"),
+                                            height: 17,
+                                            width: 15,
+                                          ),
+                                          onPressed: () {
+                                            // selectDoB(context);
+                                          },
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
@@ -990,27 +1042,40 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                                 //   ),
                                 // ),
                                 Container(
-                                  child: CommonTextFormField(
-                                    labelText: 'Gender',
-                                    controller: _profile_page_controller
-                                        .genderController,
-                                    tap: () {
-                                      // select_gender(context);
-                                    },
-                                    readOnly: true,
-                                    iconData: IconButton(
-                                      visualDensity: VisualDensity(
-                                          horizontal: -4, vertical: -4),
-                                      icon: Image.asset(
-                                        AssetUtils.arrow_down_icons,
-                                        color: HexColor("#606060"),
-                                        height: 13,
-                                        width: 13,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        child: Text(
+                                          'Gender',
+                                          style:  FontStyleUtility.h13(
+                                              fontColor: Colors.white, family: 'PM'),
+                                        ),
                                       ),
-                                      onPressed: () {
-                                        // select_gender(context);
-                                      },
-                                    ),
+                                      SizedBox(height: 5,),
+                                      CommonTextFormField(
+                                        labelText: 'Gender',
+                                        controller: _profile_page_controller
+                                            .genderController,
+                                        tap: () {
+                                          // select_gender(context);
+                                        },
+                                        readOnly: true,
+                                        iconData: IconButton(
+                                          visualDensity: VisualDensity(
+                                              horizontal: -4, vertical: -4),
+                                          icon: Image.asset(
+                                            AssetUtils.arrow_down_icons,
+                                            color: HexColor("#606060"),
+                                            height: 13,
+                                            width: 13,
+                                          ),
+                                          onPressed: () {
+                                            // select_gender(context);
+                                          },
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -1667,110 +1732,32 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                                 child: Column(
                                   children: [
                                     Container(
-                                      child: CommonTextFormField(
-                                        controller: _profile_page_controller
-                                            .FullnameController,
-                                        readOnly: editable,
-                                        labelText: Textutils.name_,
-                                        iconData: IconButton(
-                                          visualDensity: VisualDensity(
-                                              horizontal: -4, vertical: -4),
-                                          icon: Image.asset(
-                                            AssetUtils.signIN_user_icon,
-                                            height: 17,
-                                            width: 15,
-                                            color: HexColor("#606060"),
-                                          ),
-                                          onPressed: () {},
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Container(
-                                      child: Row(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            decoration: BoxDecoration(
-                                                // color: Colors.black.withOpacity(0.65),
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.centerLeft,
-                                                  end: Alignment.centerRight,
-                                                  // stops: [0.1, 0.5, 0.7, 0.9],
-                                                  colors: [
-                                                    HexColor("#36393E")
-                                                        .withOpacity(1),
-                                                    HexColor("#020204")
-                                                        .withOpacity(1),
-                                                  ],
-                                                ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: HexColor('#04060F'),
-                                                    offset: Offset(10, 10),
-                                                    blurRadius: 20,
-                                                  ),
-                                                ],
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: CountryCodePicker(
-                                              onChanged: (country) {
-                                                setState(() {
-                                                  _profile_page_controller
-                                                          .dialCodedigits =
-                                                      country.dialCode!;
-                                                  print(_profile_page_controller
-                                                      .dialCodedigits);
-                                                });
-                                              },
-                                              initialSelection:
-                                                  _profile_page_controller
-                                                      .dialCodedigits,
-                                              textStyle: FontStyleUtility.h15(
-                                                  fontColor:
-                                                      ColorUtils.primary_gold,
-                                                  family: 'PM'),
-                                              showCountryOnly: false,
-                                              showFlagMain: false,
-                                              padding: EdgeInsets.zero,
-                                              showFlag: true,
-                                              showOnlyCountryWhenClosed: false,
-                                              favorite: [
-                                                "+1",
-                                                "US",
-                                                "+91",
-                                                "IN"
-                                              ],
-                                              barrierColor: Colors.white,
-                                              backgroundColor: Colors.black,
-                                              dialogSize: Size.fromHeight(
-                                                  screenHeight / 2),
+                                            child: Text(
+                                              'Username',
+                                              style:  FontStyleUtility.h15(
+                                                  fontColor: Colors.white, family: 'PM'),
                                             ),
                                           ),
-                                          Container(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: CommonTextFormField(
-                                              controller:
-                                                  _profile_page_controller
-                                                      .phoneNumberController,
-                                              labelText: Textutils.phone_,
-                                              keyboardType: TextInputType.phone,
-                                              readOnly: editable,
-                                              iconData: IconButton(
-                                                visualDensity: VisualDensity(
-                                                    horizontal: -4,
-                                                    vertical: -4),
-                                                icon: Image.asset(
-                                                  AssetUtils.mobile_icons,
-                                                  height: 17,
-                                                  color: HexColor("#606060"),
-                                                  width: 15,
-                                                ),
-                                                onPressed: () {},
+                                          SizedBox(height: 5,),
+                                          CommonTextFormField(
+                                            controller: _profile_page_controller
+                                                .FullnameController,
+                                            readOnly: editable,
+                                            labelText: Textutils.name_,
+                                            iconData: IconButton(
+                                              visualDensity: VisualDensity(
+                                                  horizontal: -4, vertical: -4),
+                                              icon: Image.asset(
+                                                AssetUtils.signIN_user_icon,
+                                                height: 17,
+                                                width: 15,
+                                                color: HexColor("#606060"),
                                               ),
+                                              onPressed: () {},
                                             ),
                                           ),
                                         ],
@@ -1780,50 +1767,180 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                                       height: 15,
                                     ),
                                     Container(
-                                      child: CommonTextFormField(
-                                        controller: _profile_page_controller
-                                            .emailAddressController,
-                                        labelText: Textutils.email_,
-                                        readOnly: editable,
-                                        maxLines: 1,
-                                        iconData: IconButton(
-                                          visualDensity: VisualDensity(
-                                              horizontal: -4, vertical: -4),
-                                          icon: Image.asset(
-                                            AssetUtils.message_icons,
-                                            color: HexColor("#606060"),
-                                            height: 17,
-                                            width: 15,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            child: Text(
+                                              'Phone number',
+                                              style:  FontStyleUtility.h15(
+                                                  fontColor: Colors.white, family: 'PM'),
+                                            ),
                                           ),
-                                          onPressed: () {},
-                                        ),
+                                          SizedBox(height: 5,),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    // color: Colors.black.withOpacity(0.65),
+                                                    gradient: LinearGradient(
+                                                      begin: Alignment.centerLeft,
+                                                      end: Alignment.centerRight,
+                                                      // stops: [0.1, 0.5, 0.7, 0.9],
+                                                      colors: [
+                                                        HexColor("#36393E")
+                                                            .withOpacity(1),
+                                                        HexColor("#020204")
+                                                            .withOpacity(1),
+                                                      ],
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: HexColor('#04060F'),
+                                                        offset: Offset(10, 10),
+                                                        blurRadius: 20,
+                                                      ),
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.circular(10)),
+                                                child: CountryCodePicker(
+                                                  onChanged: (country) {
+                                                    setState(() {
+                                                      _profile_page_controller
+                                                              .dialCodedigits =
+                                                          country.dialCode!;
+                                                      print(_profile_page_controller
+                                                          .dialCodedigits);
+                                                    });
+                                                  },
+                                                  initialSelection:
+                                                      _profile_page_controller
+                                                          .dialCodedigits,
+                                                  textStyle: FontStyleUtility.h15(
+                                                      fontColor:
+                                                          ColorUtils.primary_gold,
+                                                      family: 'PM'),
+                                                  showCountryOnly: false,
+                                                  showFlagMain: false,
+                                                  padding: EdgeInsets.zero,
+                                                  showFlag: true,
+                                                  showOnlyCountryWhenClosed: false,
+                                                  favorite: [
+                                                    "+1",
+                                                    "US",
+                                                    "+91",
+                                                    "IN"
+                                                  ],
+                                                  barrierColor: Colors.white,
+                                                  backgroundColor: Colors.black,
+                                                  dialogSize: Size.fromHeight(
+                                                      screenHeight / 2),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 10,
+                                              ),
+                                              Expanded(
+                                                child: CommonTextFormField(
+                                                  controller:
+                                                      _profile_page_controller
+                                                          .phoneNumberController,
+                                                  labelText: Textutils.phone_,
+                                                  keyboardType: TextInputType.phone,
+                                                  readOnly: editable,
+                                                  iconData: IconButton(
+                                                    visualDensity: VisualDensity(
+                                                        horizontal: -4,
+                                                        vertical: -4),
+                                                    icon: Image.asset(
+                                                      AssetUtils.mobile_icons,
+                                                      height: 17,
+                                                      color: HexColor("#606060"),
+                                                      width: 15,
+                                                    ),
+                                                    onPressed: () {},
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     SizedBox(
                                       height: 15,
                                     ),
                                     Container(
-                                      child: CommonTextFormField(
-                                        labelText: Textutils.dob_,
-                                        readOnly: true,
-                                        controller: _profile_page_controller
-                                            .dateOfbirthController,
-                                        tap: () {
-                                          // selectDoB(context);
-                                        },
-                                        iconData: IconButton(
-                                          visualDensity: VisualDensity(
-                                              horizontal: -4, vertical: -4),
-                                          icon: Image.asset(
-                                            AssetUtils.date_icons,
-                                            color: HexColor("#606060"),
-                                            height: 17,
-                                            width: 15,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            child: Text(
+                                              'Email address',
+                                              style:  FontStyleUtility.h15(
+                                                  fontColor: Colors.white, family: 'PM'),
+                                            ),
                                           ),
-                                          onPressed: () {
-                                            // selectDoB(context);
-                                          },
-                                        ),
+                                          SizedBox(height: 5,),
+                                          CommonTextFormField(
+                                            controller: _profile_page_controller
+                                                .emailAddressController,
+                                            labelText: Textutils.email_,
+                                            readOnly: editable,
+                                            maxLines: 1,
+                                            iconData: IconButton(
+                                              visualDensity: VisualDensity(
+                                                  horizontal: -4, vertical: -4),
+                                              icon: Image.asset(
+                                                AssetUtils.message_icons,
+                                                color: HexColor("#606060"),
+                                                height: 17,
+                                                width: 15,
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Container(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            child: Text(
+                                              'Date of Birth',
+                                              style:  FontStyleUtility.h13(
+                                                  fontColor: Colors.white, family: 'PM'),
+                                            ),
+                                          ),
+                                          SizedBox(height: 5,),
+                                          CommonTextFormField(
+                                            labelText: Textutils.dob_,
+                                            readOnly: true,
+                                            controller: _profile_page_controller
+                                                .dateOfbirthController,
+                                            tap: () {
+                                              // selectDoB(context);
+                                            },
+                                            iconData: IconButton(
+                                              visualDensity: VisualDensity(
+                                                  horizontal: -4, vertical: -4),
+                                              icon: Image.asset(
+                                                AssetUtils.date_icons,
+                                                color: HexColor("#606060"),
+                                                height: 17,
+                                                width: 15,
+                                              ),
+                                              onPressed: () {
+                                                // selectDoB(context);
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     SizedBox(
@@ -1951,27 +2068,40 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                                     //   ),
                                     // ),
                                     Container(
-                                      child: CommonTextFormField(
-                                        labelText: 'Gender',
-                                        controller: _profile_page_controller
-                                            .genderController,
-                                        tap: () {
-                                          // select_gender(context);
-                                        },
-                                        readOnly: true,
-                                        iconData: IconButton(
-                                          visualDensity: VisualDensity(
-                                              horizontal: -4, vertical: -4),
-                                          icon: Image.asset(
-                                            AssetUtils.arrow_down_icons,
-                                            color: HexColor("#606060"),
-                                            height: 13,
-                                            width: 13,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            child: Text(
+                                              'Gender',
+                                              style:  FontStyleUtility.h13(
+                                                  fontColor: Colors.white, family: 'PM'),
+                                            ),
                                           ),
-                                          onPressed: () {
-                                            // select_gender(context);
-                                          },
-                                        ),
+                                          SizedBox(height: 5,),
+                                          CommonTextFormField(
+                                            labelText: 'Gender',
+                                            controller: _profile_page_controller
+                                                .genderController,
+                                            tap: () {
+                                              // select_gender(context);
+                                            },
+                                            readOnly: true,
+                                            iconData: IconButton(
+                                              visualDensity: VisualDensity(
+                                                  horizontal: -4, vertical: -4),
+                                              icon: Image.asset(
+                                                AssetUtils.arrow_down_icons,
+                                                color: HexColor("#606060"),
+                                                height: 13,
+                                                width: 13,
+                                              ),
+                                              onPressed: () {
+                                                // select_gender(context);
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],

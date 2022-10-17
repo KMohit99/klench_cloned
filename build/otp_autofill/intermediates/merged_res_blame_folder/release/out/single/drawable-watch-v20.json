@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/technologies/Downloads/klench_cloned/build/otp_autofill/intermediates/res/merged/release/drawable-watch-v20/common_google_signin_btn_text_light_normal.xml",
+        "source": "/Users/technologies/.gradle/caches/transforms-2/files-2.1/a2d9ba2fb53458f8f47753511e122fd0/jetified-play-services-auth-17.0.0/res/drawable-watch-v20/common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "/Users/technologies/Downloads/klench_cloned/build/otp_autofill/intermediates/res/merged/release/drawable-watch-v20/common_google_signin_btn_text_dark_normal.xml",
+        "source": "/Users/technologies/.gradle/caches/transforms-2/files-2.1/a2d9ba2fb53458f8f47753511e122fd0/jetified-play-services-auth-17.0.0/res/drawable-watch-v20/common_google_signin_btn_text_dark_normal.xml"
+    },
+    {
+        "merged": "/Users/technologies/Downloads/klench_cloned/build/otp_autofill/intermediates/res/merged/release/drawable-watch-v20/common_google_signin_btn_text_disabled.xml",
+        "source": "/Users/technologies/.gradle/caches/transforms-2/files-2.1/a2d9ba2fb53458f8f47753511e122fd0/jetified-play-services-auth-17.0.0/res/drawable-watch-v20/common_google_signin_btn_text_disabled.xml"
+    }
+]

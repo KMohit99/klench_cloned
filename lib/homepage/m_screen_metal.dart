@@ -61,6 +61,17 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   List<ListMethodClass> method_data = [];
   bool timer_started = false;
 
+  List<HexColor> list = [
+    HexColor('#005aff'),
+    HexColor('#ffffff'),
+    HexColor('#ffde00'),
+    HexColor('#bbff00'),
+    HexColor('#d96be8'),
+    HexColor('#ff6000'),
+    HexColor('#349400'),
+    HexColor('#8c0d37'),
+  ];
+
   final _random = Random();
 
   updateTime(Timer timer) {
@@ -347,7 +358,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                               // use24hFormat: true,
                               mode: CupertinoDatePickerMode.date,
                               maximumDate: DateTime.now(),
-                              initialDateTime: DateTime.now().subtract(Duration(hours: 1)),
+                              initialDateTime:
+                                  DateTime.now().subtract(Duration(hours: 1)),
                               onDateTimeChanged: (DateTime value) async {
                                 // print(value);
                                 print(DateFormat('yyyy-MM-dd')
@@ -858,8 +870,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         //       )
         //   );
         // },
-        format: 'point.high second'
-    );
+        format: 'point.high second');
     _trackballBehavior = TrackballBehavior(
         enable: true,
         // lineDashArray: <double>[5,5],
@@ -875,7 +886,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         // },
         tooltipSettings: const InteractiveTooltip(
             // Formatting trackball tooltip text
-            format: 'point.x : point.y times'),
+            format: 'point.x : point.y seconds'),
         // Display mode of trackball tooltip
         tooltipDisplayMode: TrackballDisplayMode.floatAllPoints,
         activationMode: ActivationMode.singleTap);
@@ -1531,8 +1542,10 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     child: Text('Masturbate',
                                         style: GoogleFonts.sourceSerifPro(
                                           textStyle: TextStyle(
-                                              color:(timer_started ?  HexColor('#DD3931')
-                                                  .withOpacity(0.4) :HexColor('#DD3931')),
+                                              color: (timer_started
+                                                  ? HexColor('#DD3931')
+                                                      .withOpacity(0.4)
+                                                  : HexColor('#DD3931')),
                                               fontSize: 18,
                                               fontWeight: FontWeight.w600),
                                         )),
@@ -1673,7 +1686,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                                 .blue
                                                                             : (method_list[index] == 'Sex'
                                                                                 ? Colors.green
-                                                                                : (method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
+                                                                                // : (method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
+                                                                                : (method_list[index] == 'Fleshlight' ? Colors.purple : list[random.nextInt(list.length)])))),
                                                                     family: 'PM'),
                                                               ),
                                                             ),
@@ -2230,16 +2244,12 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               ? Colors.green
                                               : (method_selected == 'Fleshlight'
                                                   ? Colors.purple
-                                                  : Colors.primaries[
-                                                          _random.nextInt(Colors
-                                                              .primaries
-                                                              .length)][
-                                                      _random.nextInt(9) *
-                                                          100]))));
+                                                  : list[random.nextInt(list.length)]))));
                                 });
 
                                 print(
-                                    'Method colorrr : ${method_color!.value.toRadixString(16)}');
+                                    'Method  : $method_color');
+                                        print('Method colorrr : ${method_color!.value.toRadixString(16)}');
                                 method_data.add(ListMethodClass(
                                     method_name: method_selected,
                                     pauses: paused_time.length.toString(),
@@ -3357,6 +3367,16 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
+                                                    Text(
+                                                      'Daily Graph',
+                                                      style: FontStyleUtility.h14(
+                                                          fontColor:
+                                                          ColorUtils.primary_gold,
+                                                          family: 'PR'),
+                                                    ),
+                                                    SizedBox(
+                                                        height: 5,
+                                                    ),
                                                     (loading
                                                         ? CircularProgressIndicator(
                                                             color: Colors.green,
@@ -3370,7 +3390,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                     .isEmpty
                                                             ? SizedBox.shrink()
                                                             : Text(
-                                                                DateFormat("yyyy-MM-dd").format(DateFormat(
+                                                                DateFormat("MM-dd-yyyy").format(DateFormat(
                                                                         "yyyy-MM-dd hh:mm:ss")
                                                                     .parse(m_screenDailyDataModel!
                                                                         .data![
@@ -3385,15 +3405,16 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                     family:
                                                                         'PR'),
                                                               ))),
-                                                    Text(
-                                                      'Top result: 40 sec',
-                                                      style:
-                                                          FontStyleUtility.h14(
-                                                              fontColor:
-                                                                  HexColor(
-                                                                      "#66686B"),
-                                                              family: 'PR'),
-                                                    ),
+                                                    // Text(
+                                                    //   'Top result: 40 sec',
+                                                    //   style:
+                                                    //       FontStyleUtility.h14(
+                                                    //           fontColor:
+                                                    //               HexColor(
+                                                    //                   "#66686B"),
+                                                    //           family: 'PR'),
+                                                    // ),
+
                                                   ],
                                                 ),
                                                 Container(
@@ -3428,7 +3449,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                             vertical: -2,
                                                             horizontal: -2),
                                                     onPressed: () {
-                                                       selectdate(context);
+                                                      selectdate(context);
                                                     },
                                                     iconSize: 15,
                                                     icon: Icon(
@@ -3447,7 +3468,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                   plotAreaBorderWidth: 0,
                                                   plotAreaBorderColor:
                                                       ColorUtils.primary_grey,
-                                                  tooltipBehavior: _tooltipBehavior,
+                                                  tooltipBehavior:
+                                                      _tooltipBehavior,
                                                   primaryXAxis: CategoryAxis(
                                                       majorGridLines:
                                                           MajorGridLines(
@@ -3460,7 +3482,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                   primaryYAxis: NumericAxis(
                                                       //Hide the gridlines of y-axis
                                                       // opposedPosition: true,
-
+                                                      numberFormat: NumberFormat.compact(),
                                                       majorGridLines:
                                                           MajorGridLines(
                                                               width: 1,
@@ -3477,10 +3499,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                       ChartSeries<ChartData2,
                                                           String>>[
                                                     // Renders column chart
-
                                                     ColumnSeries<ChartData2,
                                                             String>(
-
                                                         dataSource:
                                                             daily_data_list,
                                                         enableTooltip: false,
@@ -3516,18 +3536,17 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                         ChartData2, String>(
                                                       dataSource:
                                                           daily_data_list,
-
                                                       width: 0.5,
                                                       color: Colors.black45,
                                                       xValueMapper:
                                                           (ChartData2 data,
                                                                   _) =>
                                                               data.x,
-
                                                       lowValueMapper:
                                                           (ChartData2 data,
                                                                   _) =>
-                                                              data.pause_time - 1,
+                                                              data.pause_time -
+                                                              0.5,
                                                       highValueMapper:
                                                           (ChartData2 data,
                                                                   _) =>
@@ -3591,7 +3610,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'History',
+                                          'Weekly Graph',
                                           style: FontStyleUtility.h14(
                                               fontColor:
                                                   ColorUtils.primary_gold,
@@ -4700,7 +4719,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
 
             var total_time = (tempDate_.minute * 60) + tempDate_.second;
-            print("TOTAL TIMEEE : ${total_time}");
+            print("TOTAL TIMEEE : ${total_time/60}");
 
             // if (m_screenDailyDataModel!
             //     .data![0].days![i].pausesTime!.isNotEmpty) {
@@ -4722,7 +4741,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             // }
             var x = m_screenDailyDataModel!.data![0].days![i].createdDate!;
             var x1 = m_screenDailyDataModel!.data![0].days![i].methodName;
-            var y = double.parse(total_time.toString());
+            var y = double.parse((total_time/60).toString());
             // var inputFormat = DateFormat.jm().format(DateFormat("hh:mm:ss").parse("14:15:00"));
             DateTime tempDate = new DateFormat("yyyy-MM-dd hh:mm:ss").parse(x);
 
@@ -4737,27 +4756,28 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                         ? Colors.green
                         : (x1 == 'Fleshlight'
                             ? Colors.purple
-                            : Colors.primaries[
-                                    _random.nextInt(Colors.primaries.length)]
-                                [_random.nextInt(9) * 100]))));
+                            : list[random.nextInt(list.length)]))));
             print("Color $color");
             // var y2 = data_gst_receivable[i]['value'];
             // var y3 =
             // method_time.clear()
-            for(var j = 0; j< m_screenDailyDataModel!.data![0].days![i].pausesTime!.length ; j++){
+            for (var j = 0;
+                j <
+                    m_screenDailyDataModel!
+                        .data![0].days![i].pausesTime!.length;
+                j++) {
               setState(() {
+                double day = double.parse(m_screenDailyDataModel!.data![0].days![i].pausesTime![j]);
                 daily_data_list.add(ChartData2(
                   formattedTime,
                   x1!,
                   y,
                   m_screenDailyDataModel!.data![0].days![i].colorCode!,
-                  double.parse(m_screenDailyDataModel!.data![0].days![i].pausesTime![j]),
+                  day/60,
                 ));
               });
-
             }
             setState(() {
-
               print(daily_data_list);
               method_time.add(ListMethodClass(
                 method_name:
