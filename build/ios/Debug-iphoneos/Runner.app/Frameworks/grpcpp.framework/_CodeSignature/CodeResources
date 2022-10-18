@@ -30,7 +30,7 @@
 		</data>
 		<key>gRPCCertificates-Cpp.bundle/_CodeSignature/CodeSignature</key>
 		<data>
-		UV7ya5+1et72ZplyYKzJUqRlq4g=
+		Og7vUR5+zoCErPA8QQ8I3m0Uhhc=
 		</data>
 		<key>gRPCCertificates-Cpp.bundle/roots.pem</key>
 		<data>
@@ -98,11 +98,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			UV7ya5+1et72ZplyYKzJUqRlq4g=
+			Og7vUR5+zoCErPA8QQ8I3m0Uhhc=
 			</data>
 			<key>hash2</key>
 			<data>
-			ZaCJVRikEXn6uizI7CG/oPP1DHr4M9BSyAQVFp5GB1Y=
+			ELBZ05isXtcUwEEU98Wzqi8GUeKvz8nJv9yhqrm6FpU=
 			</data>
 		</dict>
 		<key>gRPCCertificates-Cpp.bundle/roots.pem</key>

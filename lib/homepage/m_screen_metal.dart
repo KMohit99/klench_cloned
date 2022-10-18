@@ -3546,7 +3546,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                           (ChartData2 data,
                                                                   _) =>
                                                               data.pause_time -
-                                                              0.5,
+                                                              10,
                                                       highValueMapper:
                                                           (ChartData2 data,
                                                                   _) =>
@@ -4741,7 +4741,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             // }
             var x = m_screenDailyDataModel!.data![0].days![i].createdDate!;
             var x1 = m_screenDailyDataModel!.data![0].days![i].methodName;
-            var y = double.parse((total_time/60).toString());
+            var y = double.parse((total_time).toString());
             // var inputFormat = DateFormat.jm().format(DateFormat("hh:mm:ss").parse("14:15:00"));
             DateTime tempDate = new DateFormat("yyyy-MM-dd hh:mm:ss").parse(x);
 
@@ -4773,7 +4773,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                   x1!,
                   y,
                   m_screenDailyDataModel!.data![0].days![i].colorCode!,
-                  day/60,
+                  day,
                 ));
               });
             }
