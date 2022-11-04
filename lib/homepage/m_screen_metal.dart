@@ -854,7 +854,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   void initState() {
     getdata().then((value) => print("Success"));
     graph_ = data_graph[0];
-    graph_life = daily_data_list;
+    graph_life = lifetime_data_list;
 
     // _tooltipBehavior = TooltipBehavior(
     //     enable: true, borderWidth: 5, color: Colors.transparent);
@@ -886,7 +886,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         // },
         tooltipSettings: const InteractiveTooltip(
             // Formatting trackball tooltip text
-            format: 'point.x : point.y seconds'),
+            format: 'point.x : point.y minute'),
         // Display mode of trackball tooltip
         tooltipDisplayMode: TrackballDisplayMode.floatAllPoints,
         activationMode: ActivationMode.singleTap);
@@ -974,9 +974,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             // ),
             image: DecorationImage(
               fit: BoxFit.cover,
-              colorFilter: new ColorFilter.mode(
+              colorFilter:  ColorFilter.mode(
                   Colors.black.withOpacity(0.5), BlendMode.dst),
-              image: AssetImage(
+              image: const AssetImage(
                 AssetUtils.m_screen_back,
               ),
             ),
@@ -1676,14 +1676,10 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                 method_list[
                                                                     index],
                                                                 style: FontStyleUtility.h15(
-                                                                    fontColor: (method_list[index] ==
-                                                                            'Hand'
-                                                                        ? Colors
-                                                                            .red
-                                                                        : (method_list[index] ==
-                                                                                'Dildo'
-                                                                            ? Colors
-                                                                                .blue
+                                                                    fontColor: (method_list[index] == 'Hand'
+                                                                        ? Colors.red
+                                                                        : (method_list[index] == 'Dildo'
+                                                                            ? Colors.blue
                                                                             : (method_list[index] == 'Sex'
                                                                                 ? Colors.green
                                                                                 // : (method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
@@ -2232,7 +2228,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                         children: [
                           GestureDetector(
                             onTap: () async {
-                              if (started == false) {
+                              if (started == false || elapsedTime == "30:00") {
                                 await stopWatch_finish();
                                 await changeIndex();
                                 setState(() {
@@ -2244,12 +2240,13 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               ? Colors.green
                                               : (method_selected == 'Fleshlight'
                                                   ? Colors.purple
-                                                  : list[random.nextInt(list.length)]))));
+                                                  : list[random.nextInt(
+                                                      list.length)]))));
                                 });
 
+                                print('Method  : $method_color');
                                 print(
-                                    'Method  : $method_color');
-                                        print('Method colorrr : ${method_color!.value.toRadixString(16)}');
+                                    'Method colorrr : ${method_color!.value.toRadixString(16)}');
                                 method_data.add(ListMethodClass(
                                     method_name: method_selected,
                                     pauses: paused_time.length.toString(),
@@ -2269,10 +2266,10 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   print(
                                       "TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
 
-                                  var total_time = (tempDate_.minute * 60) +
+                                  var totalTime = (tempDate_.minute * 60) +
                                       tempDate_.second;
-                                  print("TOTAL TIMEEE : $total_time");
-                                  mohit.add(total_time);
+                                  print("TOTAL TIMEEE : $totalTime");
+                                  mohit.add(totalTime);
                                   print("totaL : $mohit");
                                 }
                                 print(
@@ -3370,12 +3367,12 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                     Text(
                                                       'Daily Graph',
                                                       style: FontStyleUtility.h14(
-                                                          fontColor:
-                                                          ColorUtils.primary_gold,
+                                                          fontColor: ColorUtils
+                                                              .primary_gold,
                                                           family: 'PR'),
                                                     ),
                                                     SizedBox(
-                                                        height: 5,
+                                                      height: 5,
                                                     ),
                                                     (loading
                                                         ? CircularProgressIndicator(
@@ -3414,7 +3411,6 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                     //                   "#66686B"),
                                                     //           family: 'PR'),
                                                     // ),
-
                                                   ],
                                                 ),
                                                 Container(
@@ -3482,15 +3478,29 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                   primaryYAxis: NumericAxis(
                                                       //Hide the gridlines of y-axis
                                                       // opposedPosition: true,
-                                                      numberFormat: NumberFormat.compact(),
+                                                      // rangePadding: ChartRangePadding.none,
+                                                      title: AxisTitle(
+                                                          text: 'minutes'),
+                                                      // minimum: 1,
+                                                      // maximum: 30,
+                                                      interval: 5,
+                                                      //Axis label ustomization.
+                                                      labelStyle: const TextStyle(
+                                                          color:
+                                                              Colors.blueGrey,
+                                                          fontSize: 10),
+                                                      // numberFormat: NumberFormat
+                                                      //     .compact(),
                                                       majorGridLines:
                                                           MajorGridLines(
                                                               width: 1,
                                                               color: HexColor(
                                                                   '#383E46')),
                                                       //Hide the axis line of y-axis
-                                                      axisLine:
-                                                          AxisLine(width: 0)),
+                                                      axisLine: AxisLine(
+                                                          width: 1,
+                                                          color: HexColor(
+                                                              '#383E46'))),
                                                   // tooltipBehavior:
                                                   //     _tooltipBehavior,
                                                   enableSideBySideSeriesPlacement:
@@ -3546,7 +3556,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                           (ChartData2 data,
                                                                   _) =>
                                                               data.pause_time -
-                                                              10,
+                                                              0.3,
                                                       highValueMapper:
                                                           (ChartData2 data,
                                                                   _) =>
@@ -3669,13 +3679,30 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               majorGridLines:
                                                   MajorGridLines(width: 0),
                                               //Hide the axis line of y-axis
-                                              axisLine: AxisLine(width: 3)),
+                                              axisLine: AxisLine(width: 0)),
                                           primaryYAxis: NumericAxis(
                                               //Hide the gridlines of y-axis
+                                              title: AxisTitle(
+                                                  text: 'minutes'),
+                                              // minimum: 1,
+                                              // maximum: 30,
+                                              interval: 5,
+                                              labelStyle: const TextStyle(
+                                                  color:
+                                                  Colors.blueGrey,
+                                                  fontSize: 10),
+                                              // numberFormat: NumberFormat
+                                              //     .compact(),
                                               majorGridLines:
-                                                  MajorGridLines(width: 0),
+                                              MajorGridLines(
+                                                  width: 1,
+                                                  color: HexColor(
+                                                      '#383E46')),
                                               //Hide the axis line of y-axis
-                                              axisLine: AxisLine(width: 3)),
+                                              axisLine: AxisLine(
+                                                  width: 1,
+                                                  color: HexColor(
+                                                      '#383E46'))),
                                           series: <
                                               ChartSeries<ChartData0, String>>[
                                             // Renders column chart
@@ -3852,111 +3879,111 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                 ],
                               ),
                             ),
-                            Container(
-                              width: 250,
-                              decoration: BoxDecoration(
-                                  color: HexColor('#181B23').withOpacity(0.65),
-                                  // boxShadow: [
-                                  //   BoxShadow(
-                                  //       color: HexColor('#000000'),
-                                  //       offset: Offset(0, 6),
-                                  //       blurRadius: 6)
-                                  // ],
-                                  borderRadius: BorderRadius.circular(100)),
-                              margin: EdgeInsets.symmetric(vertical: 7),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          selected_time = 'days';
-                                          graph_life = daily_data_list;
-                                        });
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          color: (selected_time == 'days'
-                                              ? HexColor('#21252E')
-                                              : Colors.transparent),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 14),
-                                          child: Text('Days',
-                                              style: FontStyleUtility.h13(
-                                                  fontColor: (selected_time ==
-                                                          'days'
-                                                      ? Colors.white
-                                                      : HexColor('#656565')),
-                                                  family: 'PM')),
-                                        ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          selected_time = 'weeks';
-                                          graph_life = weekly_data5;
-                                        });
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                            color: (selected_time == 'weeks'
-                                                ? HexColor('#21252E')
-                                                : Colors.transparent)),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 14),
-                                          child: Text('Weeks',
-                                              style: FontStyleUtility.h13(
-                                                  fontColor: (selected_time ==
-                                                          'weeks'
-                                                      ? Colors.white
-                                                      : HexColor('#656565')),
-                                                  family: 'PM')),
-                                        ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          selected_time = 'months';
-                                          graph_life = lifetime_data_list;
-                                        });
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                            color: (selected_time == 'months'
-                                                ? HexColor('#21252E')
-                                                : Colors.transparent)),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 14),
-                                          child: Text('Months',
-                                              style: FontStyleUtility.h13(
-                                                  fontColor: (selected_time ==
-                                                          'months'
-                                                      ? Colors.white
-                                                      : HexColor('#656565')),
-                                                  family: 'PM')),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Container(
+                            //   width: 250,
+                            //   decoration: BoxDecoration(
+                            //       color: HexColor('#181B23').withOpacity(0.65),
+                            //       // boxShadow: [
+                            //       //   BoxShadow(
+                            //       //       color: HexColor('#000000'),
+                            //       //       offset: Offset(0, 6),
+                            //       //       blurRadius: 6)
+                            //       // ],
+                            //       borderRadius: BorderRadius.circular(100)),
+                            //   margin: EdgeInsets.symmetric(vertical: 7),
+                            //   child: Padding(
+                            //     padding:
+                            //         const EdgeInsets.symmetric(vertical: 10.0),
+                            //     child: Row(
+                            //       mainAxisAlignment:
+                            //           MainAxisAlignment.spaceEvenly,
+                            //       children: [
+                            //         GestureDetector(
+                            //           onTap: () {
+                            //             setState(() {
+                            //               selected_time = 'days';
+                            //               graph_life = daily_data_list;
+                            //             });
+                            //           },
+                            //           child: Container(
+                            //             decoration: BoxDecoration(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(100),
+                            //               color: (selected_time == 'days'
+                            //                   ? HexColor('#21252E')
+                            //                   : Colors.transparent),
+                            //             ),
+                            //             child: Padding(
+                            //               padding: EdgeInsets.symmetric(
+                            //                   vertical: 5, horizontal: 14),
+                            //               child: Text('Days',
+                            //                   style: FontStyleUtility.h13(
+                            //                       fontColor: (selected_time ==
+                            //                               'days'
+                            //                           ? Colors.white
+                            //                           : HexColor('#656565')),
+                            //                       family: 'PM')),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //         GestureDetector(
+                            //           onTap: () {
+                            //             setState(() {
+                            //               selected_time = 'weeks';
+                            //               graph_life = weekly_data5;
+                            //             });
+                            //           },
+                            //           child: Container(
+                            //             decoration: BoxDecoration(
+                            //                 borderRadius:
+                            //                     BorderRadius.circular(100),
+                            //                 color: (selected_time == 'weeks'
+                            //                     ? HexColor('#21252E')
+                            //                     : Colors.transparent)),
+                            //             child: Padding(
+                            //               padding: EdgeInsets.symmetric(
+                            //                   vertical: 5, horizontal: 14),
+                            //               child: Text('Weeks',
+                            //                   style: FontStyleUtility.h13(
+                            //                       fontColor: (selected_time ==
+                            //                               'weeks'
+                            //                           ? Colors.white
+                            //                           : HexColor('#656565')),
+                            //                       family: 'PM')),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //         GestureDetector(
+                            //           onTap: () {
+                            //             setState(() {
+                            //               selected_time = 'months';
+                            //               graph_life = lifetime_data_list;
+                            //             });
+                            //           },
+                            //           child: Container(
+                            //             decoration: BoxDecoration(
+                            //                 borderRadius:
+                            //                     BorderRadius.circular(100),
+                            //                 color: (selected_time == 'months'
+                            //                     ? HexColor('#21252E')
+                            //                     : Colors.transparent)),
+                            //             child: Padding(
+                            //               padding: EdgeInsets.symmetric(
+                            //                   vertical: 5, horizontal: 14),
+                            //               child: Text('Months',
+                            //                   style: FontStyleUtility.h13(
+                            //                       fontColor: (selected_time ==
+                            //                               'months'
+                            //                           ? Colors.white
+                            //                           : HexColor('#656565')),
+                            //                       family: 'PM')),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
                             Container(
                               margin: EdgeInsets.all(15),
                               decoration: BoxDecoration(
@@ -4007,13 +4034,38 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               arrangeByIndex: true,
 
                                               //Hide the axis line of y-axis
-                                              axisLine: AxisLine(width: 3)),
+                                              axisLine: AxisLine(width: 0)),
                                           primaryYAxis: NumericAxis(
-                                              //Hide the gridlines of y-axis
+                                            //Hide the gridlines of y-axis
+                                            // opposedPosition: true,
+                                            // rangePadding: ChartRangePadding.none,
+                                              title: AxisTitle(
+                                                  text: 'minutes'),
+                                              minimum: 1,
+                                              // maximum: 30,
+                                              interval: 5,
+                                              //Axis label ustomization.
+                                              labelStyle: const TextStyle(
+                                                  color: Colors.blueGrey,
+                                                  fontSize: 10),
+                                              // numberFormat: NumberFormat
+                                              //     .compact(),
                                               majorGridLines:
-                                                  MajorGridLines(width: 0),
+                                              MajorGridLines(
+                                                  width: 1,
+                                                  color: HexColor(
+                                                      '#383E46')),
                                               //Hide the axis line of y-axis
-                                              axisLine: AxisLine(width: 3)),
+                                              axisLine: AxisLine(
+                                                  width: 1,
+                                                  color: HexColor(
+                                                      '#383E46'))),
+                                          // primaryYAxis: NumericAxis(
+                                          //     //Hide the gridlines of y-axis
+                                          //     majorGridLines:
+                                          //         MajorGridLines(width: 0),
+                                          //     //Hide the axis line of y-axis
+                                          //     axisLine: AxisLine(width: 3)),
                                           series: <ChartSeries>[
                                             SplineSeries<ChartData2, String>(
                                                 markerSettings:
@@ -4338,9 +4390,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   List testList2 = [];
 
   Future MasturbationWeekly_Data_get_API() async {
-    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    String idUser = await PreferenceManager().getPref(URLConstants.id);
     var url =
-        "${URLConstants.base_url}${URLConstants.masturbation_get_weekly_data}?userId=$id_user";
+        "${URLConstants.base_url}${URLConstants.masturbation_get_weekly_data}?userId=$idUser";
 
     try {
       showLoader(context);
@@ -4379,57 +4431,89 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
               testList2.add(test2);
               print('Test: $testList2');
 
+              DateTime tempDate_ = new DateFormat("mm:ss")
+                  .parse(weeklyData!.data![i].days![0].totalTime!);
+              print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+
+              var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+              var y = double.parse((totalTime / 60).toString());
+
               setState(() {
                 weekly_data5.add(ChartData2(
                   DateFormat('EEEE').format(DateFormat("yyyy-MM-dd")
                       .parse(weeklyData!.data![i].days![j].createdDate!)),
                   weeklyData!.data![i].days![j].methodName!,
-                  double.parse(weeklyData!.data![i].days![j].totalPauses!),
+                  y,
                   weeklyData!.data![i].days![j].totalPauses!,
                   double.parse(weeklyData!.data![i].days![j].totalPauses!),
                 ));
               });
             }
             if (weeklyData!.data![i].days!.length > 1) {
+              DateTime tempDate_ = new DateFormat("mm:ss")
+                  .parse(weeklyData!.data![i].days![1].totalTime!);
+              print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+
+              var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+              var y = double.parse((totalTime / 60).toString());
+
               setState(() {
                 weekly_data2.add(ChartData0(
                   tempDate,
                   m_screenWeeklyDataModel!.data![i].days![1].methodName!,
-                  double.parse(
-                      m_screenWeeklyDataModel!.data![i].days![1].totalPauses!),
+                  y,
+                  // double.parse(
+                  //     m_screenWeeklyDataModel!.data![i].days![1].totalPauses!),
                   m_screenWeeklyDataModel!.data![i].days![0].colorCode!,
                 ));
               });
             }
             if (weeklyData!.data![i].days!.length > 2) {
+              DateTime tempDate_ = new DateFormat("mm:ss")
+                  .parse(weeklyData!.data![i].days![2].totalTime!);
+              print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+
+              var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+              var y = double.parse((totalTime / 60).toString());
+
               setState(() {
                 weekly_data3.add(ChartData0(
                   tempDate,
                   m_screenWeeklyDataModel!.data![i].days![2].methodName!,
-                  double.parse(
-                      m_screenWeeklyDataModel!.data![i].days![2].totalPauses!),
+                 y,
                   m_screenWeeklyDataModel!.data![i].days![0].colorCode!,
                 ));
               });
             }
             if (weeklyData!.data![i].days!.length > 3) {
+              DateTime tempDate_ = new DateFormat("mm:ss")
+                  .parse(weeklyData!.data![i].days![3].totalTime!);
+              print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+
+              var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+              var y = double.parse((totalTime / 60).toString());
+
               setState(() {
                 weekly_data4.add(ChartData0(
                   tempDate,
                   m_screenWeeklyDataModel!.data![i].days![3].methodName!,
-                  double.parse(
-                      m_screenWeeklyDataModel!.data![i].days![3].totalPauses!),
+                  y,
                   m_screenWeeklyDataModel!.data![i].days![0].colorCode!,
                 ));
               });
             }
+            DateTime tempDate_ = new DateFormat("mm:ss")
+                .parse(weeklyData!.data![i].days![0].totalTime!);
+            print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+
+            var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+            var y = double.parse((totalTime / 60).toString());
 
             setState(() {
               weekly_data.add(ChartData0(
                 tempDate,
                 m_screenWeeklyDataModel!.data![i].days![0].methodName!,
-                double.parse(
-                    m_screenWeeklyDataModel!.data![i].days![0].totalPauses!),
+                y,
                 m_screenWeeklyDataModel!.data![i].days![0].colorCode!,
               ));
             });
@@ -4600,9 +4684,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   }
 
   Future Masturbation_LifeTime_Data_get_API() async {
-    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    String idUser = await PreferenceManager().getPref(URLConstants.id);
     var url =
-        "${URLConstants.base_url}${URLConstants.masturbation_get_lifetime_data}?userId=$id_user";
+        "${URLConstants.base_url}${URLConstants.masturbation_get_lifetime_data}?userId=$idUser";
 
     try {
       showLoader(context);
@@ -4634,8 +4718,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             var x =
                 m_screenLifeTimeDataModel!.data![0].methods![i].createdDate!;
             var x1 = m_screenLifeTimeDataModel!.data![0].methods![i].methodName;
-            var y = double.parse(
-                m_screenLifeTimeDataModel!.data![0].methods![i].totalPauses!);
+            // var y = double.parse(
+            //     m_screenLifeTimeDataModel!.data![0].methods![i].totalPauses!);
             // var inputFormat = DateFormat.jm().format(DateFormat("hh:mm:ss").parse("14:15:00"));
             DateTime tempDate = DateFormat("yyyy-MM-dd hh:mm:ss").parse(x);
 
@@ -4643,6 +4727,14 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             // print(formattedTime);//5:08 PM
             // var y2 = data_gst_receivable[i]['value'];
             // var y3 =
+            DateTime tempDate_ = new DateFormat("mm:ss")
+                .parse( m_screenLifeTimeDataModel!.data![0].methods![i].totalTime!);
+            print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+
+            var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+            print("TOTAL TIMEEE : ${totalTime / 60}");
+            var y = double.parse((totalTime / 60).toString());
+
             setState(() {
               lifetime_data_list
                   .add(ChartData2(formattedTime, x1!, y, '#75C043', y));
@@ -4677,9 +4769,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   List temp = [];
 
   Future Masturbation_Daily_Data_get_API() async {
-    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    String idUser = await PreferenceManager().getPref(URLConstants.id);
     var url =
-        "${URLConstants.base_url}${URLConstants.masturbation_get_daily_data}?userId=$id_user&createdDate=$selected_date";
+        "${URLConstants.base_url}${URLConstants.masturbation_get_daily_data}?userId=$idUser&createdDate=$selected_date";
 
     try {
       showLoader(context);
@@ -4718,8 +4810,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                 .parse(m_screenDailyDataModel!.data![0].days![i].totalTime!);
             print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
 
-            var total_time = (tempDate_.minute * 60) + tempDate_.second;
-            print("TOTAL TIMEEE : ${total_time/60}");
+            var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+            print("TOTAL TIMEEE : ${totalTime / 60}");
 
             // if (m_screenDailyDataModel!
             //     .data![0].days![i].pausesTime!.isNotEmpty) {
@@ -4741,7 +4833,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             // }
             var x = m_screenDailyDataModel!.data![0].days![i].createdDate!;
             var x1 = m_screenDailyDataModel!.data![0].days![i].methodName;
-            var y = double.parse((total_time).toString());
+            var y = double.parse((totalTime / 60).toString());
             // var inputFormat = DateFormat.jm().format(DateFormat("hh:mm:ss").parse("14:15:00"));
             DateTime tempDate = new DateFormat("yyyy-MM-dd hh:mm:ss").parse(x);
 
@@ -4767,13 +4859,14 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                         .data![0].days![i].pausesTime!.length;
                 j++) {
               setState(() {
-                double day = double.parse(m_screenDailyDataModel!.data![0].days![i].pausesTime![j]);
+                double day = double.parse(
+                    m_screenDailyDataModel!.data![0].days![i].pausesTime![j]);
                 daily_data_list.add(ChartData2(
                   formattedTime,
                   x1!,
                   y,
                   m_screenDailyDataModel!.data![0].days![i].colorCode!,
-                  day,
+                  day / 60,
                 ));
               });
             }

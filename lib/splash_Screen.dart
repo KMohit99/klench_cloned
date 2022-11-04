@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -32,9 +33,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  FlutterLocalNotificationsPlugin? fltNotification;
+
   @override
   void initState() {
     super.initState();
+    initMessaging();
     Timer(Duration(seconds: 0), () {
       // Get.to(FrontScreen());
       init();
@@ -79,6 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
               MaterialPageRoute(
                   builder: (BuildContext context) => SignInScreen()));
         } else {
+          await _signInScreenController.Add_token_API(context);
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => DashboardScreen(page: 1,)),
           );
@@ -96,9 +103,31 @@ class _SplashScreenState extends State<SplashScreen> {
             MaterialPageRoute(
                 builder: (BuildContext context) => SignInScreen()));
       } else {
+        await _signInScreenController.Add_token_API(context);
         await Get.to(DashboardScreen(page: 1,));
       }
     }
+  }
+
+
+  void initMessaging() {
+    var androiInit = AndroidInitializationSettings("@mipmap/ic_launcher");
+    var iosInit = IOSInitializationSettings();
+    var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
+    fltNotification = FlutterLocalNotificationsPlugin();
+    fltNotification!.initialize(initSetting);
+    var androidDetails =
+    AndroidNotificationDetails('1', 'channelName',);
+    var iosDetails = IOSNotificationDetails();
+    var generalNotificationDetails =
+    NotificationDetails(android: androidDetails, iOS: iosDetails);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification= message.notification;
+      AndroidNotification? android= message.notification?.android;
+      if(notification!=null && android!=null){
+        fltNotification!.show(
+            notification.hashCode, notification.title, notification.body, generalNotificationDetails);
+      }});
   }
 
   @override
@@ -125,7 +154,6 @@ class _SplashScreenState extends State<SplashScreen> {
                       HexColor("#36393E").withOpacity(1),
                     ],
                   ),
-
                   borderRadius: BorderRadius.circular(10)),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

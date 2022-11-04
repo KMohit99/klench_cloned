@@ -36,23 +36,26 @@ MessagingService _msgService = MessagingService();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
 
   // // TODO: Link app with Firebase (use FlutterFire CLI tools)
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   //
   // await _msgService.init();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(MyApp());
 }
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
 
-  print("Handling a background message: ${message.messageId}");
+
+/// Top level function to handle incoming messages when the app is in the background
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print(" --- background message received ---");
+  print(message.notification!.title);
+  print(message.notification!.body);
 }
+
 
 Future<void> saveTokenToDatabase(String token) async {
   // Assume user is logged in for this example
@@ -75,111 +78,86 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  // final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  //
+  // //
+  // // static Future<void> _throwGetMessage(RemoteMessage message) async {
+  // //   print("PUSH RECEIVED");
+  // //   await Firebase.initializeApp();
+  // //   bFirebaseMessaging.showPushFromBackground(message);
+  // // }
+  //
+  // var token;
+  // @override
+  // void initState() {
+  //   // FirebaseMessaging.instance.getToken().then((token) {
+  //   //   print('This is Token: ' '${token}');
+  //   // });
+  //   // setupToken();
+  //   FlutterNativeSplash.remove();
+  //   init();
+  //
+  //   super.initState();
+  //
+  //   // _fcm.configure(
+  //   //   onMessage: (Map<String, dynamic> message) async {
+  //   //     //this callback happens when you are in the app and notification is received
+  //   //     print("onMessage: $message");
+  //   //   },
+  //   //   onLaunch: (Map<String, dynamic> message) async {
+  //   //     //this callback happens when you launch app after a notification received
+  //   //     print("onLaunch: $message");
+  //   //   },
+  //   //   onResume: (Map<String, dynamic> message) async {
+  //   //     //this callbakc happens when you open the app after a notification received AND
+  //   //     //app was running in the background
+  //   //     print("onResume: $message");
+  //   //   },
+  //   // );
+  //
+  //
+  //   // workaround for onLaunch: When the app is completely closed (not in the background) and opened directly from the push notification
+  //   // FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+  //   //   print('getInitialMessage data: ${message!.data}');
+  //   // });
+  //
+  //   // FirebaseMessaging.onBackgroundMessage(_throwGetMessage);
+  //
+  //   // onMessage: When the app is open and it receives a push notification
+  //
+  //
+  // }
+  // String? _token;
+  // init() async {
+  //   if (Platform.isIOS)  {
+  //     await _fcm.requestPermission(alert: true,
+  //       announcement: false,
+  //       badge: true,
+  //       carPlay: false,
+  //       criticalAlert: false,
+  //       provisional: false,
+  //       sound: true,);
+  //     // FirebaseMessaging.onMessage.listen((event) {
+  //     //   print("IOS Registered");
+  //     // });
+  //     // _fcm.onIosSettingsRegistered.listen((event) {
+  //     //   print("IOS Registered");
+  //     // });
+  //   }
+  // }
+  //
 
   //
-  // static Future<void> _throwGetMessage(RemoteMessage message) async {
-  //   print("PUSH RECEIVED");
-  //   await Firebase.initializeApp();
-  //   bFirebaseMessaging.showPushFromBackground(message);
+  // Future<void> setupToken() async {
+  //   // Get the token each time the application loads
+  //   String? token = await FirebaseMessaging.instance.getToken();
+  //
+  //   // Save the initial token to the database
+  //   await saveTokenToDatabase(token!);
+  //
+  //   // Any time the token refreshes, store this in the database too.
+  //   FirebaseMessaging.instance.onTokenRefresh.listen(saveTokenToDatabase);
   // }
-
-  var token;
-  @override
-  void initState() {
-    // FirebaseMessaging.instance.getToken().then((token) {
-    //   print('This is Token: ' '${token}');
-    // });
-    // setupToken();
-    FlutterNativeSplash.remove();
-    init();
-
-    super.initState();
-
-    // _fcm.configure(
-    //   onMessage: (Map<String, dynamic> message) async {
-    //     //this callback happens when you are in the app and notification is received
-    //     print("onMessage: $message");
-    //   },
-    //   onLaunch: (Map<String, dynamic> message) async {
-    //     //this callback happens when you launch app after a notification received
-    //     print("onLaunch: $message");
-    //   },
-    //   onResume: (Map<String, dynamic> message) async {
-    //     //this callbakc happens when you open the app after a notification received AND
-    //     //app was running in the background
-    //     print("onResume: $message");
-    //   },
-    // );
-
-
-    // workaround for onLaunch: When the app is completely closed (not in the background) and opened directly from the push notification
-    // FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
-    //   print('getInitialMessage data: ${message!.data}');
-    // });
-
-    // FirebaseMessaging.onBackgroundMessage(_throwGetMessage);
-
-    // onMessage: When the app is open and it receives a push notification
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("onMessage data: ${message.data}");
-      // showDialog(
-      //   context: context,
-      //   builder: (context) => AlertDialog(
-      //     content: ListTile(
-      //       title: Text(message.data['notification']['title']),
-      //       subtitle: Text(message.data['notification']['body']),
-      //     ),
-      //     actions: <Widget>[
-      //       ElevatedButton(
-      //         child: Text('Ok'),
-      //         onPressed: () => Navigator.of(context).pop(),
-      //       ),
-      //     ],
-      //   ),
-      // );
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      print('Message clicked!');
-    });
-    // replacement for onResume: When the app is in the background and opened directly from the push notification.
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('onMessageOpenedApp data: ${message.data}');
-    });
-
-
-  }
-  String? _token;
-  init() async {
-    if (Platform.isIOS)  {
-      await _fcm.requestPermission(alert: true,
-        announcement: false,
-        badge: true,
-        carPlay: false,
-        criticalAlert: false,
-        provisional: false,
-        sound: true,);
-      // FirebaseMessaging.onMessage.listen((event) {
-      //   print("IOS Registered");
-      // });
-      // _fcm.onIosSettingsRegistered.listen((event) {
-      //   print("IOS Registered");
-      // });
-    }
-  }
-
-
-
-  Future<void> setupToken() async {
-    // Get the token each time the application loads
-    String? token = await FirebaseMessaging.instance.getToken();
-
-    // Save the initial token to the database
-    await saveTokenToDatabase(token!);
-
-    // Any time the token refreshes, store this in the database too.
-    FirebaseMessaging.instance.onTokenRefresh.listen(saveTokenToDatabase);
-  }
 
 
   // This widget is the root of your application.

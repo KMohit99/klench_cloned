@@ -2134,8 +2134,12 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                               // CommonWidget().showToaster(
                               //     msg: "Finish method first");
                             } else {
+                              setState(() {
+                                elapsedTime = '00';
+                                elapsedTime2 = '00';
+                                elapsedTime3 = '00';
+                              });
                               await stopWatch_finish();
-
                               await Vibration.cancel();
                               await click_alarm();
                               await _animationController_middle!.reverse();
@@ -2147,9 +2151,7 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                 reverse_started = false;
                                 timer_started = false;
                                 back_wallpaper = true;
-                                elapsedTime = '00';
-                                elapsedTime2 = '00';
-                                elapsedTime3 = '00';
+
                                 button_height = 150;
                                 text_k_size = 30;
                                 text_time_size = 25;
@@ -2161,8 +2163,10 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                 }
                                 // percent = 0.0;
                                 if (watch2.isRunning) {
+                                  print("Datatata222222");
                                   setState(() {
-                                    watch2.reset();
+                                    // watch2.stop();
+
                                   });
                                 }
                                 // countdownTimer2!.cancel();
@@ -2171,12 +2175,16 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                 // }
                                 // paused_time.clear();
                               if (watch.isRunning) {
+                                print("Datatata");
                                 setState(() {
-                                  watch.reset();
+                                  // watch.stop();
                                 });
-                              } if (watch3.isRunning) {
+                              }
+                              if (watch3.isRunning) {
+                                print("Datatata33333");
                                 setState(() {
-                                  watch3.reset();
+                                  // watch3.stop();
+                                  // timer!.cancel();
                                 });
                               }
                               // Get.to(WarmUpScreen());
@@ -2416,7 +2424,6 @@ class _WarmUpScreenState extends State<WarmUpScreen>
 
   startWatch3() {
     // vibration();
-
     setState(() {
       _swipe_setup_controller.w_running = true;
       startStop = false;

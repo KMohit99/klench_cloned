@@ -5,6 +5,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -61,7 +62,7 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
   String? levels;
   int counter = 0;
   int sets = 0;
-
+  bool four_started = false;
 
   updateTime_hard(Timer timer) {
     if (watch.isRunning) {
@@ -74,7 +75,12 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
           // Vibration.vibrate(duration: 1000);
           // } else {
           // Future.delayed(Duration(microseconds: 500),(){
-          Vibration.vibrate();
+          // HapticFeedback.heavyImpact();
+          (four_started ? Vibration.cancel() : Vibration.vibrate());
+          //
+          // Vibration.vibrate();
+          // Vibration.vibrate();
+          // Vibration.vibrate();
           // });
           // }
           // if (percent >= 100) {
@@ -89,10 +95,42 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
               watch.reset();
               // CommonWidget().showToaster(msg: '${7 - counter} Times left');
               counter++;
+              four_started = true;
+
               // print(counter);
               // paused_time.clear();
-            });
+            });            startWatch2();
             Future.delayed(const Duration(seconds: 4), () {
+              // if (counter == 10) {
+              //   stopWatch_finish();
+              //   setState(() {
+              //     elapsedTime = '00';
+              //     // watch.stop();
+              //     counter = 0;
+              //   });
+              // sets++;
+              // print('Sets-------$sets');
+              // if (sets == 3) {
+              //   stopWatch_finish();
+              //   setState(() {
+              //     elapsedTime = '00';
+              //     percent = 0.0;
+              //     // watch.stop();
+              //     counter = 0;
+              //   });
+              //   CommonWidget().showToaster(msg: "Method Complete");
+              //   Future.delayed(Duration(seconds: 5), () {
+              //     CommonWidget().showErrorToaster(
+              //         msg:
+              //         "After one month it will automatically switch to Hard");
+              //   });
+              // }
+              // } else {
+              setState(() {
+                elapsedTime = '00';
+                four_started = false;
+                watch.reset();
+              });
               // if (counter == 10) {
               //   stopWatch_finish();
               //   setState(() {
@@ -140,7 +178,7 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
           // Vibration.vibrate(duration: 1000);
           // } else {
           // Future.delayed(Duration(microseconds: 500),(){
-          Vibration.vibrate();
+          (four_started ? Vibration.cancel() : Vibration.vibrate());
           // });
           // }
           // if (percent >= 100) {
@@ -155,9 +193,11 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
               watch.reset();
               // CommonWidget().showToaster(msg: '${7 - counter} Times left');
               counter++;
+              four_started = true;
               // print(counter);
               // paused_time.clear();
             });
+            startWatch2();
             Future.delayed(const Duration(seconds: 3), () {
               // if (counter == 10) {
               //   stopWatch_finish();
@@ -184,6 +224,11 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
               //   });
               // }
               // } else {
+              setState(() {
+                elapsedTime = '00';
+                four_started = false;
+                watch.reset();
+              });
               _animationController!.reverse();
               _animationController_button!.reverse();
               startWatch();
@@ -218,10 +263,43 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
               watch.reset();
               // CommonWidget().showToaster(msg: '${7 - counter} Times left');
               counter++;
+              four_started = true;
+
               // print(counter);
               // paused_time.clear();
             });
+            startWatch2();
             Future.delayed(const Duration(seconds: 4), () {
+              // if (counter == 10) {
+              //   stopWatch_finish();
+              //   setState(() {
+              //     elapsedTime = '00';
+              //     // watch.stop();
+              //     counter = 0;
+              //   });
+              // sets++;
+              // print('Sets-------$sets');
+              // if (sets == 3) {
+              //   stopWatch_finish();
+              //   setState(() {
+              //     elapsedTime = '00';
+              //     percent = 0.0;
+              //     // watch.stop();
+              //     counter = 0;
+              //   });
+              //   CommonWidget().showToaster(msg: "Method Complete");
+              //   Future.delayed(Duration(seconds: 5), () {
+              //     CommonWidget().showErrorToaster(
+              //         msg:
+              //         "After one month it will automatically switch to Hard");
+              //   });
+              // }
+              // } else {
+              setState(() {
+                elapsedTime = '00';
+                four_started = false;
+                watch.reset();
+              });
               // if (counter == 10) {
               //   stopWatch_finish();
               //   setState(() {
@@ -281,10 +359,43 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
               watch.reset();
               // CommonWidget().showToaster(msg: '${7 - counter} Times left');
               counter++;
+              four_started = true;
+
               // print(counter);
               // paused_time.clear();
             });
+            startWatch2();
             Future.delayed(const Duration(seconds: 5), () {
+              // if (counter == 10) {
+              //   stopWatch_finish();
+              //   setState(() {
+              //     elapsedTime = '00';
+              //     // watch.stop();
+              //     counter = 0;
+              //   });
+              // sets++;
+              // print('Sets-------$sets');
+              // if (sets == 3) {
+              //   stopWatch_finish();
+              //   setState(() {
+              //     elapsedTime = '00';
+              //     percent = 0.0;
+              //     // watch.stop();
+              //     counter = 0;
+              //   });
+              //   CommonWidget().showToaster(msg: "Method Complete");
+              //   Future.delayed(Duration(seconds: 5), () {
+              //     CommonWidget().showErrorToaster(
+              //         msg:
+              //         "After one month it will automatically switch to Hard");
+              //   });
+              // }
+              // } else {
+              setState(() {
+                elapsedTime = '00';
+                four_started = false;
+                watch.reset();
+              });
               // if (counter == 10) {
               //   stopWatch_finish();
               //   setState(() {
@@ -591,8 +702,7 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
 
   getdata() async {
     await _signInScreenController.GetUserInfo(context);
-    String? fcmToken = await FirebaseMessaging.instance.getToken();
-    print("fcmToken : $fcmToken");
+
     // await _masturbation_screen_controller.MasturbationData_get_API(context);
     levels = await PreferenceManager().getPref(URLConstants.levels);
     print('Inside');
@@ -1637,9 +1747,9 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
                                             style: GoogleFonts.sourceSerifPro(
                                               textStyle: TextStyle(
                                                   color: (timer_started
-                                                          ? HexColor('#F5C921')
-                                                              .withOpacity(0.4)
-                                                          : HexColor('#F5C921')),
+                                                      ? HexColor('#F5C921')
+                                                          .withOpacity(0.4)
+                                                      : HexColor('#F5C921')),
                                                   fontSize: (animation_started
                                                       ? _animation_textK!.value
                                                       : text_k_size),
@@ -1648,15 +1758,48 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
                                       ),
                                       Container(
                                         alignment: Alignment.center,
-                                        child: Text(
-                                          (timer_started ? elapsedTime : ''),
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: (animation_started
-                                                  ? _animation_textTime!.value
-                                                  : text_time_size),
-                                              fontWeight: FontWeight.w900),
-                                        ),
+                                        child: (four_started
+                                            ? Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "PUSH",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: (animation_started
+                                                            ? _animation_textTime!
+                                                                .value
+                                                            : text_time_size),
+                                                        fontWeight:
+                                                            FontWeight.w900),
+                                                  ),
+                                                  Text(
+                                                    elapsedTime,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: (animation_started
+                                                            ? _animation_textTime!
+                                                                .value
+                                                            : text_time_size),
+                                                        fontWeight:
+                                                            FontWeight.w900),
+                                                  ),
+                                                ],
+                                              )
+                                            : Text(
+                                                (timer_started
+                                                    ? elapsedTime
+                                                    : ''),
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: (animation_started
+                                                        ? _animation_textTime!
+                                                            .value
+                                                        : text_time_size),
+                                                    fontWeight:
+                                                        FontWeight.w900),
+                                              )),
                                       ),
                                     ],
                                   ),
@@ -2582,6 +2725,29 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
       elapsedTime = "00";
       startStop = false;
       started = false;
+      watch.start();
+      timer = Timer.periodic(
+          const Duration(milliseconds: 100),
+          (levels == 'Easy ?'
+              ? updateTime_easy
+              : (levels == 'Normal'
+                  ? updateTime_normal
+                  : (levels == 'Super Easy'
+                      ? updateTime_super_easy
+                      : (levels == 'Hard'
+                          ? updateTime_hard
+                          : (levels == 'Infinite'
+                              ? updateTime_hard
+                              : updateTime_easy))))));
+    });
+  }
+
+  startWatch2() {
+    // start_animation();
+    setState(() {
+      // startStop = false;
+      // started = false;
+      elapsedTime = "00";
       watch.start();
       timer = Timer.periodic(
           const Duration(milliseconds: 100),

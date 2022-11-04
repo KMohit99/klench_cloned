@@ -176,6 +176,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                     false &&
                                 _signInScreenController.userInfoModel!.error ==
                                     false) {
+                              await _signInScreenController.Add_token_API(context);
+
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

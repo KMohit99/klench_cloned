@@ -1097,34 +1097,26 @@ class ChartData {
   final double y2;
 }
 
-class ChartData3 {
-  ChartData3(this.x, this.y, this.y1, this.y2, this.y3);
-
-  final String x;
-  final double y;
-  final double y1;
-  final double y2;
-  final double y3;
-}
 
 class ChartData2 {
   ChartData2(this.x, this.x1, this.y, this.color, this.pause_time);
- final double pause_time;
-
+  final double pause_time;
   final String x;
   final String x1;
   final double y;
   final String color;
 }
 
-class ChartDataD {
-  ChartDataD(this.x, this.x1, this.y, this.color);
 
+class ChartData3 {
+  ChartData3(this.x, this.x1, this.y, this.color, this.pause_time);
+ final double pause_time;
   final String x;
   final String x1;
-  final String y;
+  final DateTime y;
   final String color;
 }
+
 
 class ChartData0 {
   ChartData0(this.x, this.x1, this.y, this.color);
@@ -1135,43 +1127,4 @@ class ChartData0 {
   final String color;
 }
 
-class methodData {
-  methodData(this.x, this.x1, this.y, this.color);
 
-  final String x;
-  final String x1;
-  final double y;
-  final Color color;
-}
-
-class ChartDataS {
-  ChartDataS(
-    this.x,
-    this.x1,
-    this.y,
-    this.color,
-  );
-
-  final String x;
-  final String x1;
-  final double y;
-  final Color color;
-}
-
-class ChartDataM {
-  ChartDataM(this.x, this.x1, this.y, this.color);
-
-  final String x;
-  final String x1;
-  final double y;
-  final Color color;
-}
-
-class ChartDataT {
-  ChartDataT(this.x, this.x1, this.y, this.color);
-
-  final String x;
-  final String x1;
-  final double y;
-  final Color color;
-}

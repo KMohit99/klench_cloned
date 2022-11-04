@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'dart:ui';
+import 'dart:convert';
 import 'dart:io' show Platform, sleep;
+import 'dart:ui';
 
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -12,12 +13,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:klench_/Dashboard/dashboard_screen.dart';
 import 'package:klench_/homepage/controller/kegel_excercise_controller.dart';
 import 'package:klench_/homepage/swipe_controller.dart';
 import 'package:klench_/homepage/theme_data.dart';
-import 'package:klench_/utils/TexrUtils.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:vibration/vibration.dart';
 
@@ -28,10 +28,11 @@ import '../utils/TextStyle_utils.dart';
 import '../utils/UrlConstrant.dart';
 import '../utils/colorUtils.dart';
 import '../utils/common_widgets.dart';
+import '../utils/page_loader.dart';
 import 'Breathing_screen.dart';
-import 'TESTALARMPAGE.dart';
 import 'alarm_helper.dart';
 import 'alarm_info.dart';
+import 'model/AlarmPostModel.dart';
 
 class KegelScreen extends StatefulWidget {
   KegelScreen({
@@ -7280,6 +7281,7 @@ class _KegelScreenState extends State<KegelScreen>
                                                                             'Kegel ${(_currentAlarms!.length + 1)}');
                                                                   }
                                                                   await onSaveAlarm();
+                                                                  await Alarm_post_API(context);
                                                                 }
                                                               },
                                                               child: Container(
@@ -8337,7 +8339,6 @@ class _KegelScreenState extends State<KegelScreen>
   startWatch() {
     // start_animation();
     // vibration();
-
     setState(() {
       startStop = false;
       started = false;
@@ -8669,7 +8670,7 @@ class _KegelScreenState extends State<KegelScreen>
   }
 
   Future<dynamic> KegelRoute(String? payload) async {
-    print("indise navigationn");
+    print("inside navigationn");
     // await Navigator.push(
     //   context,
     //   MaterialPageRoute<void>(builder: (context) => KegelScreen()),
@@ -8789,4 +8790,58 @@ class _KegelScreenState extends State<KegelScreen>
     //unsubscribe for notification
     loadAlarms();
   }
+
+
+  AlarmPostModel? alarmPostModel;
+  Future<dynamic> Alarm_post_API(BuildContext context) async {
+    debugPrint('0-0-0-0-0-0-0 username');
+    // try {
+    //
+    // } catch (e) {
+    //   print('0-0-0-0-0-0- SignIn Error :- ${e.toString()}');
+    // }
+    // isLoading(true);
+    print("${_alarmTime!.hour}:${_alarmTime!.minute}");
+    showLoader(context);
+    String idUser = await PreferenceManager().getPref(URLConstants.id);
+
+    Map data = {
+      'userId': idUser,
+      'alarmTime' : "${_alarmTime!.hour}:${_alarmTime!.minute}",
+      // 'type': login_type,
+    };
+    print(data);
+    // String body = json.encode(data);
+
+    var url = (URLConstants.base_url + URLConstants.kegel_alarm_post);
+    print("url : $url");
+    print("body : $data");
+
+    var response = await http.post(
+      Uri.parse(url),
+      body: data,
+    );
+    print(response.body);
+    print(response.request);
+    print(response.statusCode);
+    // var final_data = jsonDecode(response.body);
+
+    // print('final data $final_data');
+    if (response.statusCode == 200) {
+      // isLoading(false);
+      var data = jsonDecode(response.body);
+      alarmPostModel = AlarmPostModel.fromJson(data);
+      if (alarmPostModel!.error == false) {
+        // CommonWidget().showToaster(msg: peePostModel!.message!);
+        hideLoader(context);
+      } else {
+        hideLoader(context);
+        // CommonWidget().showErrorToaster(msg: peePostModel!.message!);
+        print('Please try again');
+        print('Please try again');
+      }
+    } else {}
+  }
+
+
 }

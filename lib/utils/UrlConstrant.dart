@@ -25,6 +25,7 @@ class URLConstants {
  ///Kegel
   static const kegel_get = "get-kegel.php";
   static const kegel_post = "kegel.php";
+  static const kegel_alarm_post = "kegel-alarm.php";
 
   ///masturbation
   static const masturbation_get = "get-masturbation.php";
@@ -41,6 +42,10 @@ class URLConstants {
 
   ///contact_us
   static const contact_post = "contact-us.php";
+
+  ///toekn
+  static const token_device_post = "device.php";
+
 
   static String id = "id";
   static String trial = 'false';

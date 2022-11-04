@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -410,10 +411,64 @@ class SignInScreenController extends GetxController {
   }
 
 
+
   clear_method() {
     usernameController.clear();
     passwordController.clear();
   }
+
+  Future<dynamic> Add_token_API(BuildContext context) async {
+    debugPrint('0-0-0-0-0-0-0 username');
+    // try {
+    //
+    // } catch (e) {
+    //   print('0-0-0-0-0-0- SignIn Error :- ${e.toString()}');
+    // }
+    // isLoading(true);
+
+    showLoader(context);
+    String idUser = await PreferenceManager().getPref(URLConstants.id);
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
+    print("fcmToken : $fcmToken");
+
+    Map data = {
+      'userId': idUser,
+      'token' : fcmToken,
+      // 'type': login_type,
+    };
+    print(data);
+    // String body = json.encode(data);
+
+    var url = (URLConstants.base_url + URLConstants.token_device_post);
+    print("url : $url");
+    print("body : $data");
+
+    var response = await http.post(
+      Uri.parse(url),
+      body: data,
+    );
+    print(response.body);
+    print(response.request);
+    print(response.statusCode);
+    // var final_data = jsonDecode(response.body);
+
+    // print('final data $final_data');
+    if (response.statusCode == 200) {
+      // isLoading(false);
+      var data = jsonDecode(response.body);
+      // alarmPostModel = AlarmPostModel.fromJson(data);
+      if (data["error"] == false) {
+        // CommonWidget().showToaster(msg: peePostModel!.message!);
+        hideLoader(context);
+      } else {
+        hideLoader(context);
+        // CommonWidget().showErrorToaster(msg: peePostModel!.message!);
+        print('Please try again');
+        print('Please try again');
+      }
+    } else {}
+  }
+
 }
 
 class Resource {
