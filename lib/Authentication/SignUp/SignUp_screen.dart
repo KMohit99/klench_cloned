@@ -4,16 +4,15 @@ import 'dart:ui';
 
 import 'package:age_calculator/age_calculator.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
-import '../../front_page/FrontpageScreen.dart';
 import '../../setting_page/terms_conditions.dart';
 import '../../utils/Asset_utils.dart';
 import '../../utils/Common_buttons.dart';
@@ -22,10 +21,7 @@ import '../../utils/Common_textfeild.dart';
 import '../../utils/TextStyle_utils.dart';
 import '../../utils/UrlConstrant.dart';
 import '../../utils/colorUtils.dart';
-import 'package:intl/intl.dart';
-
 import '../../utils/common_widgets.dart';
-import 'Otp_verification.dart';
 import 'controller/sign_up_controller.dart';
 import 'model/checkUserModel.dart';
 
@@ -42,7 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var reg = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
   var reg2 =
-      RegExp(r'^[a-z]+$');
+      RegExp(r'^[a-z0-9]+$');
   var alpha_numeric =
       RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
 
@@ -144,7 +140,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     //     ],
     //   ),
     // );
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -555,64 +550,90 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Column(
                       children: [
                         Container(
-                          child: CommonTextFormField(
-                            controller:
-                                _signUpScreenController.fullnameController,
-                            labelText: 'Enter Full name',
-                            maxLines: 1,
-                            textFocusNode: Fullname_Focus,
-                            onFieldSubmitted: (value) {
-                              FocusScope.of(context)
-                                  .requestFocus(Username_Focus);
-                            },
-                            iconData: IconButton(
-                              visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                              icon: Image.asset(
-                                AssetUtils.signIN_user_icon,
-                                color: HexColor("#606060"),
-                                height: 17,
-                                width: 15,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  'Enter Full name:',
+                                  style:  FontStyleUtility.h15(
+                                      fontColor: Colors.white, family: 'PM'),
+                                ),
                               ),
-                              onPressed: () {},
-                            ),
+                              SizedBox(height: 5,),
+                              CommonTextFormField(
+                                controller:
+                                    _signUpScreenController.fullnameController,
+                                labelText: 'Enter Full name',
+                                maxLines: 1,
+                                textFocusNode: Fullname_Focus,
+                                onFieldSubmitted: (value) {
+                                  FocusScope.of(context)
+                                      .requestFocus(Username_Focus);
+                                },
+                                iconData: IconButton(
+                                  visualDensity:
+                                      VisualDensity(horizontal: -4, vertical: -4),
+                                  icon: Image.asset(
+                                    AssetUtils.signIN_user_icon,
+                                    color: HexColor("#606060"),
+                                    height: 17,
+                                    width: 15,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(
                           height: 15,
                         ),
                         Container(
-                          child: CommonTextFormField(
-                            controller:
-                                _signUpScreenController.usernameController,
-                            labelText: 'Enter Username',
-                            textFocusNode: Username_Focus,
-                            onFieldSubmitted: (value) {
-                              FocusScope.of(context).requestFocus(Mobile_Focus);
-                            },
-                            maxLines: 1,
-
-                            iconData: IconButton(
-                              visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                              icon: Image.asset(
-                                AssetUtils.signIN_user_icon,
-                                color: HexColor("#606060"),
-                                height: 17,
-                                width: 15,
+                          child:  Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  'Username:',
+                                  style:  FontStyleUtility.h15(
+                                      fontColor: Colors.white, family: 'PM'),
+                                ),
                               ),
-                              onPressed: () {},
-                            ),
-                            onChanged: (value) {
-                              value = _signUpScreenController
-                                  .usernameController.text;
-                              CheckUserName(context);
-                              setState(() {});
-                            },
-                            // errorText: checkUserModel!.message,
-                            tap: () {
-                              CheckUserName(context);
-                            },
+                              SizedBox(height: 5,),
+                              CommonTextFormField(
+                                controller:
+                                    _signUpScreenController.usernameController,
+                                labelText: 'Enter Username',
+                                textFocusNode: Username_Focus,
+                                onFieldSubmitted: (value) {
+                                  FocusScope.of(context).requestFocus(Mobile_Focus);
+                                },
+                                maxLines: 1,
+
+                                iconData: IconButton(
+                                  visualDensity:
+                                      VisualDensity(horizontal: -4, vertical: -4),
+                                  icon: Image.asset(
+                                    AssetUtils.signIN_user_icon,
+                                    color: HexColor("#606060"),
+                                    height: 17,
+                                    width: 15,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                                onChanged: (value) {
+                                  value = _signUpScreenController
+                                      .usernameController.text;
+                                  CheckUserName(context);
+                                  setState(() {});
+                                },
+                                // errorText: checkUserModel!.message,
+                                tap: () {
+                                  CheckUserName(context);
+                                },
+                              ),
+                            ],
                           ),
                         ),
                         (username_error == false
@@ -634,211 +655,241 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 15,
                         ),
-                        Row(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: (_signUpScreenController.imgFile == null
-                                    ? Container(
-                                        height: 100,
-                                        width: 100,
-                                        child: Image.asset(
-                                          AssetUtils.user_icon45,
-                                          fit: BoxFit.fitWidth,
-                                          height: 93,
-                                          width: 106,
-                                        ))
-                                    : Container(
-                                        height: 100,
-                                        width: 100,
-                                        child: Image.file(
-                                          _signUpScreenController.imgFile!,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      )),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 23,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                    title: Text("Pick Image from"),
-                                    actions: <Widget>[
-                                      Container(
-                                          margin: EdgeInsets.only(bottom: 10),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              openCamera();
-                                              Navigator.pop(context);
-                                            },
-                                            child: Container(
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 30),
-                                              // height: 45,
-                                              // width:(width ?? 300) ,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.black,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          25)),
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  margin: EdgeInsets.symmetric(
-                                                    vertical: 12,
-                                                  ),
-                                                  child: Text(
-                                                    'Camera',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontFamily: 'PR',
-                                                        fontSize: 16),
-                                                  )),
-                                            ),
-                                          )),
-                                      Container(
-                                          margin: EdgeInsets.only(bottom: 10),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              openGallery();
-                                              Navigator.pop(context);
-                                            },
-                                            child: Container(
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 30),
-                                              // height: 45,
-                                              // width:(width ?? 300) ,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.black,
-                                                      width: 1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          25)),
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  margin: EdgeInsets.symmetric(
-                                                    vertical: 12,
-                                                  ),
-                                                  child: Text(
-                                                    'Gallery',
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontFamily: 'PR',
-                                                        fontSize: 16),
-                                                  )),
-                                            ),
-                                          )),
-                                    ],
-                                  ),
-                                );
-                              },
+                            Container(
                               child: Text(
-                                'Upload image',
-                                style: FontStyleUtility.h15(
-                                    fontColor: ColorUtils.primary_grey,
-                                    family: 'PM'),
+                                'Photo:',
+                                style:  FontStyleUtility.h15(
+                                    fontColor: Colors.white, family: 'PM'),
                               ),
-                            )
+                            ),
+                            SizedBox(height: 5,),
+                            Container(
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: (_signUpScreenController.imgFile == null
+                                          ? Container(
+                                              height: 100,
+                                              width: 100,
+                                              child: Image.asset(
+                                                AssetUtils.user_icon45,
+                                                fit: BoxFit.fitWidth,
+                                                height: 93,
+                                                width: 106,
+                                              ))
+                                          : Container(
+                                              height: 100,
+                                              width: 100,
+                                              child: Image.file(
+                                                _signUpScreenController.imgFile!,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            )),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 23,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (ctx) => AlertDialog(
+                                          title: Text("Pick Image from"),
+                                          actions: <Widget>[
+                                            Container(
+                                                margin: EdgeInsets.only(bottom: 10),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    openCamera();
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Container(
+                                                    margin:
+                                                        const EdgeInsets.symmetric(
+                                                            horizontal: 30),
+                                                    // height: 45,
+                                                    // width:(width ?? 300) ,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.black,
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                25)),
+                                                    child: Container(
+                                                        alignment: Alignment.center,
+                                                        margin: EdgeInsets.symmetric(
+                                                          vertical: 12,
+                                                        ),
+                                                        child: Text(
+                                                          'Camera',
+                                                          style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontFamily: 'PR',
+                                                              fontSize: 16),
+                                                        )),
+                                                  ),
+                                                )),
+                                            Container(
+                                                margin: EdgeInsets.only(bottom: 10),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    openGallery();
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Container(
+                                                    margin:
+                                                        const EdgeInsets.symmetric(
+                                                            horizontal: 30),
+                                                    // height: 45,
+                                                    // width:(width ?? 300) ,
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: Colors.black,
+                                                            width: 1),
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                25)),
+                                                    child: Container(
+                                                        alignment: Alignment.center,
+                                                        margin: EdgeInsets.symmetric(
+                                                          vertical: 12,
+                                                        ),
+                                                        child: Text(
+                                                          'Gallery',
+                                                          style: TextStyle(
+                                                              color: Colors.black,
+                                                              fontFamily: 'PR',
+                                                              fontSize: 16),
+                                                        )),
+                                                  ),
+                                                )),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'Upload image',
+                                      style: FontStyleUtility.h15(
+                                          fontColor: ColorUtils.primary_grey,
+                                          family: 'PM'),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(
                           height: 15,
                         ),
-                        Row(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              decoration: BoxDecoration(
-                                  // color: Colors.black.withOpacity(0.65),
-                                  gradient: LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    // stops: [0.1, 0.5, 0.7, 0.9],
-                                    colors: [
-                                      HexColor("#36393E").withOpacity(1),
-                                      HexColor("#020204").withOpacity(1),
-                                    ],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: HexColor('#04060F'),
-                                      offset: Offset(10, 10),
-                                      blurRadius: 20,
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: CountryCodePicker(
-                                onChanged: (country) {
-                                  setState(() {
-                                    _signUpScreenController.dialCodedigits =
-                                        country.dialCode!;
-                                    print(
-                                        _signUpScreenController.dialCodedigits);
-                                  });
-                                },
-                                initialSelection: "IN",
-                                textStyle: FontStyleUtility.h15(
-                                    fontColor: ColorUtils.primary_gold,
-                                    family: 'PM'),
-                                showCountryOnly: false,
-                                showFlagMain: false,
-                                padding: EdgeInsets.zero,
-                                showFlag: true,
-                                showOnlyCountryWhenClosed: false,
-                                favorite: ["+1", "US", "+91", "IN"],
-                                barrierColor: Colors.white,
-                                backgroundColor: Colors.black,
-                                dialogSize: Size.fromHeight(screenHeight / 2),
+                              child: Text(
+                                'Mobile number:',
+                                style:  FontStyleUtility.h15(
+                                    fontColor: Colors.white, family: 'PM'),
                               ),
                             ),
+                            SizedBox(height: 5,),
                             Container(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Container(
-                                child: CommonTextFormField(
-                                  controller:
-                                      _signUpScreenController.phoneController,
-                                  labelText: 'Enter Mobile Number',
-                                  maxLength: 10,
-                                  maxLines: 1,
-                                  textFocusNode: Mobile_Focus,
-                                  onFieldSubmitted: (value) {
-                                    FocusScope.of(context)
-                                        .requestFocus(Email_Focus);
-                                  },
-                                  keyboardType: TextInputType.number,
-                                  iconData: IconButton(
-                                    visualDensity: VisualDensity(
-                                        horizontal: -4, vertical: -4),
-                                    icon: Image.asset(
-                                      AssetUtils.mobile_icons,
-                                      height: 17,
-                                      color: HexColor("#606060"),
-                                      width: 15,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        // color: Colors.black.withOpacity(0.65),
+                                        gradient: LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                          colors: [
+                                            HexColor("#36393E").withOpacity(1),
+                                            HexColor("#020204").withOpacity(1),
+                                          ],
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: HexColor('#04060F'),
+                                            offset: Offset(10, 10),
+                                            blurRadius: 20,
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10)),
+                                    child: CountryCodePicker(
+                                      onChanged: (country) {
+                                        setState(() {
+                                          _signUpScreenController.dialCodedigits =
+                                              country.dialCode!;
+                                          print(
+                                              _signUpScreenController.dialCodedigits);
+                                        });
+                                      },
+                                      initialSelection: "IN",
+                                      textStyle: FontStyleUtility.h15(
+                                          fontColor: ColorUtils.primary_gold,
+                                          family: 'PM'),
+                                      showCountryOnly: false,
+                                      showFlagMain: false,
+                                      padding: EdgeInsets.zero,
+                                      showFlag: true,
+                                      showOnlyCountryWhenClosed: false,
+                                      favorite: ["+1", "US", "+91", "IN"],
+                                      barrierColor: Colors.white,
+                                      backgroundColor: Colors.black,
+                                      dialogSize: Size.fromHeight(screenHeight / 2),
                                     ),
-                                    onPressed: () {},
                                   ),
-                                  onChanged: (value) {
-                                    value = _signUpScreenController
-                                        .phoneController.text;
-                                    CheckPhoneName(context);
-                                    setState(() {});
-                                  },
-                                  // errorText: checkUserModel!.message,
-                                  tap: () {
-                                    CheckPhoneName(context);
-                                  },
-                                ),
+                                  Container(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      child: CommonTextFormField(
+                                        controller:
+                                            _signUpScreenController.phoneController,
+                                        labelText: 'Enter Mobile Number',
+                                        maxLength: 10,
+                                        maxLines: 1,
+                                        textFocusNode: Mobile_Focus,
+                                        onFieldSubmitted: (value) {
+                                          FocusScope.of(context)
+                                              .requestFocus(Email_Focus);
+                                        },
+                                        keyboardType: TextInputType.number,
+                                        iconData: IconButton(
+                                          visualDensity: VisualDensity(
+                                              horizontal: -4, vertical: -4),
+                                          icon: Image.asset(
+                                            AssetUtils.mobile_icons,
+                                            height: 17,
+                                            color: HexColor("#606060"),
+                                            width: 15,
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                        onChanged: (value) {
+                                          value = _signUpScreenController
+                                              .phoneController.text;
+                                          CheckPhoneName(context);
+                                          setState(() {});
+                                        },
+                                        // errorText: checkUserModel!.message,
+                                        tap: () {
+                                          CheckPhoneName(context);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -863,36 +914,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 15,
                         ),
                         Container(
-                          child: CommonTextFormField(
-                            controller: _signUpScreenController.emailController,
-                            labelText: 'Email Address',
-                            maxLines: 1,
-                            textFocusNode: Email_Focus,
-                            onFieldSubmitted: (value) {
-                              FocusScope.of(context)
-                                  .requestFocus(Password_Focus);
-                            },
-                            iconData: IconButton(
-                              visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                              icon: Image.asset(
-                                AssetUtils.message_icons,
-                                height: 17,
-                                width: 15,
-                                color: HexColor("#606060"),
+                          child:Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  'Email address:',
+                                  style:  FontStyleUtility.h15(
+                                      fontColor: Colors.white, family: 'PM'),
+                                ),
                               ),
-                              onPressed: () {},
-                            ),
-                            onChanged: (value) {
-                              value =
-                                  _signUpScreenController.emailController.text;
-                              CheckEmailName(context);
-                              setState(() {});
-                            },
-                            // errorText: checkUserModel!.message,
-                            tap: () {
-                              CheckEmailName(context);
-                            },
+                              SizedBox(height: 5,),
+                              CommonTextFormField(
+                                controller: _signUpScreenController.emailController,
+                                labelText: 'Email Address',
+                                maxLines: 1,
+                                textFocusNode: Email_Focus,
+                                onFieldSubmitted: (value) {
+                                  FocusScope.of(context)
+                                      .requestFocus(Password_Focus);
+                                },
+                                iconData: IconButton(
+                                  visualDensity:
+                                      VisualDensity(horizontal: -4, vertical: -4),
+                                  icon: Image.asset(
+                                    AssetUtils.message_icons,
+                                    height: 17,
+                                    width: 15,
+                                    color: HexColor("#606060"),
+                                  ),
+                                  onPressed: () {},
+                                ),
+                                onChanged: (value) {
+                                  value =
+                                      _signUpScreenController.emailController.text;
+                                  CheckEmailName(context);
+                                  setState(() {});
+                                },
+                                // errorText: checkUserModel!.message,
+                                tap: () {
+                                  CheckEmailName(context);
+                                },
+                              ),
+                            ],
                           ),
                         ),
                         (email_error == false
@@ -915,53 +979,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 15,
                         ),
                         Container(
-                          child: CommonTextFormField(
-                            labelText: 'DOB',
-                            controller: _signUpScreenController.DoBController,
-                            tap: () {
-                              selectDoB(context);
-                            },
-                            readOnly: true,
-                            iconData: IconButton(
-                              visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                              icon: Image.asset(
-                                AssetUtils.date_icons,
-                                height: 17,
-                                color: HexColor("#606060"),
-                                width: 15,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  'DOB:',
+                                  style:  FontStyleUtility.h15(
+                                      fontColor: Colors.white, family: 'PM'),
+                                ),
                               ),
-                              onPressed: () {
-                                selectDoB(context);
-                              },
-                            ),
+                              SizedBox(height: 5,),
+                              CommonTextFormField(
+                                labelText: 'DOB',
+                                controller: _signUpScreenController.DoBController,
+                                tap: () {
+                                  selectDoB(context);
+                                },
+                                readOnly: true,
+                                iconData: IconButton(
+                                  visualDensity:
+                                      VisualDensity(horizontal: -4, vertical: -4),
+                                  icon: Image.asset(
+                                    AssetUtils.date_icons,
+                                    height: 17,
+                                    color: HexColor("#606060"),
+                                    width: 15,
+                                  ),
+                                  onPressed: () {
+                                    selectDoB(context);
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(
                           height: 15,
                         ),
                         Container(
-                          child: CommonTextFormField(
-                            labelText: 'Gender',
-                            controller:
-                                _signUpScreenController.genderController,
-                            tap: () {
-                              select_gender(context);
-                            },
-                            readOnly: true,
-                            iconData: IconButton(
-                              visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                              icon: Image.asset(
-                                AssetUtils.arrow_down_icons,
-                                color: HexColor("#606060"),
-                                height: 13,
-                                width: 13,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  'Gender:',
+                                  style:  FontStyleUtility.h15(
+                                      fontColor: Colors.white, family: 'PM'),
+                                ),
                               ),
-                              onPressed: () {
-                                select_gender(context);
-                              },
-                            ),
+                              SizedBox(height: 5,),
+                              CommonTextFormField(
+                                labelText: 'Gender',
+                                controller:
+                                    _signUpScreenController.genderController,
+                                tap: () {
+                                  select_gender(context);
+                                },
+                                readOnly: true,
+                                iconData: IconButton(
+                                  visualDensity:
+                                      VisualDensity(horizontal: -4, vertical: -4),
+                                  icon: Image.asset(
+                                    AssetUtils.arrow_down_icons,
+                                    color: HexColor("#606060"),
+                                    height: 13,
+                                    width: 13,
+                                  ),
+                                  onPressed: () {
+                                    select_gender(context);
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                         ),
 
@@ -1090,31 +1180,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 15,
                         ),
                         Container(
-                          child: CommonTextFormField_reversed(
-                            controller:
-                                _signUpScreenController.passwordController,
-                            labelText: 'Password',
-                            textFocusNode: Password_Focus,
-                            maxLines: 1,
-                            onFieldSubmitted: (value) {
-                              FocusScope.of(context)
-                                  .requestFocus(Confirm_Password_Focus);
-                            },
-                            onChanged: (value) {
-                              print(value);
-                              checkPassword();
-                            },
-                            iconData: IconButton(
-                              visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                              icon: Image.asset(
-                                AssetUtils.key_icons,
-                                height: 17,
-                                width: 15,
-                                color: HexColor("#606060"),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  'Create Password:',
+                                  style:  FontStyleUtility.h15(
+                                      fontColor: Colors.white, family: 'PM'),
+                                ),
                               ),
-                              onPressed: () {},
-                            ),
+                              SizedBox(height: 5,),
+                              CommonTextFormField_reversed(
+                                controller:
+                                    _signUpScreenController.passwordController,
+                                labelText: 'Password',
+                                textFocusNode: Password_Focus,
+                                maxLines: 1,
+                                onFieldSubmitted: (value) {
+                                  FocusScope.of(context)
+                                      .requestFocus(Confirm_Password_Focus);
+                                },
+                                onChanged: (value) {
+                                  print(value);
+                                  checkPassword();
+                                },
+                                iconData: IconButton(
+                                  visualDensity:
+                                      VisualDensity(horizontal: -4, vertical: -4),
+                                  icon: Image.asset(
+                                    AssetUtils.key_icons,
+                                    height: 17,
+                                    width: 15,
+                                    color: HexColor("#606060"),
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         (alpha_num == false
@@ -1394,26 +1497,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 15,
                         ),
                         Container(
-                          child: CommonTextFormField(
-                            controller: _signUpScreenController
-                                .confirmPasswordController,
-                            maxLines: 1,
-                            labelText: 'Confirm Password',
-                            textFocusNode: Confirm_Password_Focus,
-                            onFieldSubmitted: (value) {
-                              FocusScope.of(context).unfocus();
-                            },
-                            iconData: IconButton(
-                              visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                              icon: Image.asset(
-                                AssetUtils.key_icons,
-                                height: 17,
-                                color: HexColor("#606060"),
-                                width: 15,
+                          child:  Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  'Confirm Password:',
+                                  style:  FontStyleUtility.h15(
+                                      fontColor: Colors.white, family: 'PM'),
+                                ),
                               ),
-                              onPressed: () {},
-                            ),
+                              SizedBox(height: 5,),
+                              CommonTextFormField(
+                                controller: _signUpScreenController
+                                    .confirmPasswordController,
+                                maxLines: 1,
+                                labelText: 'Confirm Password',
+                                textFocusNode: Confirm_Password_Focus,
+                                onFieldSubmitted: (value) {
+                                  FocusScope.of(context).unfocus();
+                                },
+                                iconData: IconButton(
+                                  visualDensity:
+                                      VisualDensity(horizontal: -4, vertical: -4),
+                                  icon: Image.asset(
+                                    AssetUtils.key_icons,
+                                    height: 17,
+                                    color: HexColor("#606060"),
+                                    width: 15,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(

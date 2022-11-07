@@ -80,6 +80,7 @@ class Kegel_controller extends GetxController {
   }
 
   KegelPostModel? kegelPostModel;
+  String? start_time ;
 
   Future<dynamic> Kegel_post_API(BuildContext context) async {
     debugPrint('0-0-0-0-0-0-0 username');
@@ -100,18 +101,12 @@ class Kegel_controller extends GetxController {
       'sets': '1',
       'numberOf_sets': '1',
       'createdDate': DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      'startTime': '',
-      'finishTime': '',
-      'pause': '',
-      'alarm': '',
-      'repeate': '',
-      'sound': '',
-      'kegel_info': '',
+      'startTime': start_time,
+      'finishTime': DateFormat('HH:mm').format(DateTime.now()),
       // 'type': login_type,
     };
     print(data);
     // String body = json.encode(data);
-
     var url = (URLConstants.base_url + URLConstants.kegel_post);
     print("url : $url");
     print("body : $data");
@@ -134,6 +129,7 @@ class Kegel_controller extends GetxController {
       if (data["error"] == false) {
         CommonWidget().showToaster(msg: data["message"]);
         await Kegel_get_API(context);
+        start_time = "";
         hideLoader(context);
       } else {
         hideLoader(context);

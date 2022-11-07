@@ -3195,6 +3195,10 @@ class _KegelScreenState extends State<KegelScreen>
                             if (started) {
                               back_wallpaper = false;
 
+                              setState(() {
+                                _kegel_controller.start_time =DateFormat('HH:mm').format(DateTime.now());
+                              });
+                              print(_kegel_controller.start_time);
                               // start_animation();
                               // start_button_animation();
                               startTimer();
@@ -3222,7 +3226,6 @@ class _KegelScreenState extends State<KegelScreen>
                                 Vibration.cancel();
                                 setState(() {
                                   animation_started = false;
-
                                   started = true;
                                   _swipe_setup_controller.k_running = false;
                                   timer_started = false;
