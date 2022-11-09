@@ -1110,6 +1110,105 @@ class _KegelScreenState extends State<KegelScreen>
             // shadow_animation1_completed = true;
           });
   }
+  done_animation(){
+    _animationController_middle = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 200));
+    _animationController_middle!.forward();
+    _animation_middle =
+    Tween(begin: 50.0, end: 15.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        print("status $status");
+        // shadow_animation1_completed = true;
+      });
+    _animation_middle2 =
+    Tween(begin: 45.0, end: 15.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        print("status $status");
+        // shadow_animation1_completed = true;
+      });
+    _animation_middle3 =
+    Tween(begin: 120.0, end: 15.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        print("status $status");
+        // shadow_animation1_completed = true;
+      });
+    _animation_middle4 =
+    Tween(begin: 100.0, end: 15.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        print("status $status");
+
+        // shadow_animation1_completed = true;
+      });
+
+
+
+    _animationController_button =
+        AnimationController(vsync: this, duration: const Duration(seconds: 5));
+    _animationController_button!.forward();
+    _animation_button = Tween(begin: 150.0, end: 200.0)
+        .animate(_animationController_button!)
+      ..addStatusListener((status) {});
+    _animationController_shadow1 =
+        AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _animationController_shadow1!.forward();
+    _animation_shadow1 =
+    Tween(begin: 65.0, end: 0.0).animate(_animationController_shadow1!)
+      ..addStatusListener((status) {
+        print(status);
+        if (status == AnimationStatus.completed) {
+          // print("elapsedTime");
+          setState(() {
+            shadow_animation1_completed = true;
+            // print(shadow_animation1_completed);
+          });
+        }
+        // shadow_animation1_completed = true;
+      });
+
+    _animationController_shadow2 =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 100));
+    _animationController_shadow2!.repeat(reverse: false);
+    _animation_shadow2 =
+    Tween(begin: 70.0, end: 65.0).animate(_animationController_shadow2!)
+      ..addStatusListener((status) {
+        if (shadow_animation_pause == true) {}
+        // print(status);
+        // if (status == AnimationStatus.completed) {}
+        // shadow_animation1_completed = true;
+      });
+
+    // _animationController_textK =
+    //     AnimationController(vsync: this, duration: Duration(seconds: 5));
+    // _animationController_textK!.forward();
+    _animation_textK =
+    Tween(begin: 30.0, end: 50.0).animate(_animationController_button!)
+      ..addStatusListener((status) {
+        // print(status);
+        // if (status == AnimationStatus.completed) {
+        //   setState(() {});
+        //   _animationController_button!.reverse();
+        // } else if (status == AnimationStatus.dismissed) {
+        //   setState(() {});
+        //   _animationController_button!.forward();
+        // }
+      });
+
+    // _animationController_textTime =
+    //     AnimationController(vsync: this, duration: Duration(seconds: 5));
+    // _animationController_textTime!.forward();
+    _animation_textTime =
+    Tween(begin: 25.0, end: 40.0).animate(_animationController_button!)
+      ..addStatusListener((status) {
+        // print(status);
+        // if (status == AnimationStatus.completed) {
+        //   setState(() {});
+        //   _animationController_button!.reverse();
+        // } else if (status == AnimationStatus.dismissed) {
+        //   setState(() {});
+        //   _animationController_button!.forward();
+        // }
+      });
+  }
 
   AnimationController? _animController;
   Animation<Offset>? _animOffset;
@@ -1806,6 +1905,7 @@ class _KegelScreenState extends State<KegelScreen>
                                   color: Colors.black,
                                   boxShadow: [
                                     BoxShadow(
+                                      offset: const Offset(0,0),
                                       color: (animation_started
                                           ? HexColor('#E64A9B')
                                           : Colors.transparent),
@@ -1815,7 +1915,16 @@ class _KegelScreenState extends State<KegelScreen>
                                               : _animation_shadow1!.value)
                                           : 0),
                                       blurRadius: 35,
-                                    )
+                                    ),
+                                    BoxShadow(
+                                      // offset: Offset(0,10),
+                                      color: (animation_started
+                                          ? HexColor('#000000')
+                                          : Colors.transparent),
+                                      spreadRadius: 35,
+                                      blurRadius: 35,
+                                    ),
+                                    
                                   ],
                                   // boxShadow: [
                                   //   BoxShadow(
@@ -2125,7 +2234,7 @@ class _KegelScreenState extends State<KegelScreen>
                                       borderType: BorderType.Oval,
                                       strokeWidth: 7.5,
                                       dashPattern: [0, 19],
-                                      strokeCap: StrokeCap.square,
+                                      strokeCap: StrokeCap.round,
                                       radius: Radius.circular(100),
                                       padding: EdgeInsets.all(0),
                                       color: Colors.black,
@@ -2141,7 +2250,7 @@ class _KegelScreenState extends State<KegelScreen>
                                       borderType: BorderType.Oval,
                                       strokeWidth: 7.5,
                                       dashPattern: [0, 19],
-                                      strokeCap: StrokeCap.square,
+                                      strokeCap: StrokeCap.round,
                                       radius: Radius.circular(100),
                                       padding: EdgeInsets.all(0),
                                       color: Colors.black,
@@ -2157,7 +2266,7 @@ class _KegelScreenState extends State<KegelScreen>
                                       borderType: BorderType.Oval,
                                       strokeWidth: 7,
                                       dashPattern: [0, 19],
-                                      strokeCap: StrokeCap.square,
+                                      strokeCap: StrokeCap.round,
                                       radius: Radius.circular(100),
                                       padding: EdgeInsets.all(0),
                                       color: Colors.black,
@@ -2173,7 +2282,7 @@ class _KegelScreenState extends State<KegelScreen>
                                       borderType: BorderType.Oval,
                                       strokeWidth: 8,
                                       dashPattern: [0, 19],
-                                      strokeCap: StrokeCap.square,
+                                      strokeCap: StrokeCap.round,
                                       radius: Radius.circular(100),
                                       padding: EdgeInsets.all(0),
                                       color: Colors.black,
@@ -2189,7 +2298,7 @@ class _KegelScreenState extends State<KegelScreen>
                                       borderType: BorderType.Oval,
                                       strokeWidth: 7,
                                       dashPattern: [0, 18],
-                                      strokeCap: StrokeCap.square,
+                                      strokeCap: StrokeCap.round,
                                       radius: Radius.circular(100),
                                       padding: EdgeInsets.all(0),
                                       color: Colors.black,
@@ -2205,7 +2314,7 @@ class _KegelScreenState extends State<KegelScreen>
                                       borderType: BorderType.Oval,
                                       strokeWidth: 6,
                                       dashPattern: [0, 16],
-                                      strokeCap: StrokeCap.square,
+                                      strokeCap: StrokeCap.round,
                                       radius: Radius.circular(100),
                                       padding: EdgeInsets.all(0),
                                       color: Colors.black,
@@ -2221,7 +2330,7 @@ class _KegelScreenState extends State<KegelScreen>
                                       borderType: BorderType.Oval,
                                       strokeWidth: 5,
                                       dashPattern: [0, 14],
-                                      strokeCap: StrokeCap.square,
+                                      strokeCap: StrokeCap.round,
                                       radius: Radius.circular(100),
                                       padding: EdgeInsets.all(0),
                                       color: Colors.black,
@@ -2237,7 +2346,7 @@ class _KegelScreenState extends State<KegelScreen>
                                       borderType: BorderType.Oval,
                                       strokeWidth: 4,
                                       dashPattern: [0, 12],
-                                      strokeCap: StrokeCap.square,
+                                      strokeCap: StrokeCap.round,
                                       radius: Radius.circular(100),
                                       padding: EdgeInsets.all(0),
                                       color: Colors.black,
@@ -2253,7 +2362,7 @@ class _KegelScreenState extends State<KegelScreen>
                                       borderType: BorderType.Oval,
                                       strokeWidth: 3,
                                       dashPattern: [0, 10],
-                                      strokeCap: StrokeCap.square,
+                                      strokeCap: StrokeCap.round,
                                       radius: Radius.circular(100),
                                       padding: EdgeInsets.all(0),
                                       color: Colors.black,
@@ -3218,11 +3327,13 @@ class _KegelScreenState extends State<KegelScreen>
                               //   await startWatch();
                               // });
                             } else {
+                              await done_animation();
+
                               if (four_started) {
                                 null;
                               } else {
                                 await stopWatch_finish();
-                                await _animationController_middle!.reverse();
+                                // await _animationController_middle!.reverse();
                                 Vibration.cancel();
                                 setState(() {
                                   animation_started = false;
@@ -3238,6 +3349,7 @@ class _KegelScreenState extends State<KegelScreen>
                                   watch.reset();
                                   // paused_time.clear();
                                 });
+
                               }
                               // print('method_time : ${method_time[0].total_time}');
                               // print('method_name : ${method_time[0].method_name}');

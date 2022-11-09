@@ -34,9 +34,11 @@ class _VerifyOtpState extends State<VerifyOtp> {
 
   verifyPhonenumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: _signUpScreenController.dialCodedigits + _signUpScreenController.phoneController.text,
+        phoneNumber: _signUpScreenController.dialCodedigits +
+            _signUpScreenController.phoneController.text,
         verificationCompleted: (PhoneAuthCredential credential) async {
-          await FirebaseAuth.instance.signInWithCredential(credential)
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
               .then((value) {
             if (value.user != null) {
               // Navigator.push(context,
@@ -54,7 +56,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
         },
         codeSent: (String verificationId, int? resendToken) {
           setState(() {
-            varification= verificationId;
+            varification = verificationId;
           });
         },
         codeAutoRetrievalTimeout: (String verificationId) {
@@ -62,11 +64,8 @@ class _VerifyOtpState extends State<VerifyOtp> {
             varification = verificationId;
           });
         },
-        timeout: Duration(seconds: 60)
-
-    );
+        timeout: Duration(seconds: 60));
   }
-
 
   final BoxDecoration pinOTPDecoration = BoxDecoration(
 // color: Colors.black.withOpacity(0.65),
@@ -114,6 +113,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
       }
     });
   }
+
   String codeValue = "";
 
   @override
@@ -220,12 +220,12 @@ class _VerifyOtpState extends State<VerifyOtp> {
                             print("onCodeChanged $code");
                             setState(() {
                               codeValue = code.toString();
-                              _signUpScreenController.OtpController.text = codeValue;
+                              _signUpScreenController.OtpController.text =
+                                  codeValue;
                             });
                             await _signUpScreenController.VerifyOtpAPi(
                                 context: context);
-                            if (_signUpScreenController
-                                .signUpModel!.error ==
+                            if (_signUpScreenController.signUpModel!.error ==
                                 false) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => FaceScanScreen()));
@@ -253,7 +253,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            // color: Colors.black.withOpacity(0.65),
+                              // color: Colors.black.withOpacity(0.65),
                               gradient: LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
@@ -280,7 +280,9 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                 Container(
                                   child: PinPut(
                                     autofocus: true,
-                                    autofillHints: const [AutofillHints.oneTimeCode],
+                                    autofillHints: const [
+                                      AutofillHints.oneTimeCode
+                                    ],
                                     fieldsCount: 4,
                                     textStyle: TextStyle(
                                         fontFamily: 'PM',
@@ -291,28 +293,31 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                     eachFieldMargin: EdgeInsets.all(7),
                                     focusNode: _pinOTPFocus,
                                     controller:
-                                    _signUpScreenController.OtpController,
+                                        _signUpScreenController.OtpController,
                                     submittedFieldDecoration: pinOTPDecoration,
                                     selectedFieldDecoration: pinOTPDecoration,
                                     followingFieldDecoration: pinOTPDecoration,
                                     pinAnimationType: PinAnimationType.scale,
                                     onSubmit: (pin) async {
                                       try {
-                                        await FirebaseAuth.instance.signInWithCredential(
-                                            PhoneAuthProvider.credential(
-                                                verificationId: varification!, smsCode: pin))
+                                        await FirebaseAuth.instance
+                                            .signInWithCredential(
+                                                PhoneAuthProvider.credential(
+                                                    verificationId:
+                                                        varification!,
+                                                    smsCode: pin))
                                             .then((value) {
                                           if (value.user != null) {
                                             print("Otp verifiredddddddd");
                                           }
                                         });
-                                      }
-                                      catch (e) {
+                                      } catch (e) {
                                         FocusScope.of(context).unfocus();
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(content: Text('invalid otp'),
-                                              duration: Duration(seconds: 3),)
-                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text('invalid otp'),
+                                          duration: Duration(seconds: 3),
+                                        ));
                                       }
                                     },
                                   ),
@@ -354,58 +359,61 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                 // ),
                                 Container(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment.bottomLeft,
-                                                end: Alignment.topRight,
-                                                colors: [
-                                                  HexColor("#020204").withOpacity(1),
-                                                  HexColor("#36393E").withOpacity(1),
-                                                ],
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: HexColor('#2E2E2D'),
-                                                  offset: Offset(0, 3),
-                                                  blurRadius: 6,
-                                                ),
-                                                BoxShadow(
-                                                  color: HexColor('#04060F'),
-                                                  offset: Offset(10, 10),
-                                                  blurRadius: 20,
-                                                ),
-                                              ],
-                                              borderRadius: BorderRadius.circular(50)),
-                                          child: IconButton(
-                                            visualDensity: VisualDensity(
-                                                horizontal: -4, vertical: -4),
-                                            onPressed: () {},
-                                            icon: Icon(Icons.access_time_rounded),
-                                            color: ColorUtils.primary_grey,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.bottomLeft,
+                                            end: Alignment.topRight,
+                                            colors: [
+                                              HexColor("#020204")
+                                                  .withOpacity(1),
+                                              HexColor("#36393E")
+                                                  .withOpacity(1),
+                                            ],
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: 7,
-                                        ),
-                                        Text(
-                                          '${seconds} S',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontFamily: 'PR',
-                                              color: ColorUtils.primary_grey),
-                                        ),
-                                      ],
-                                    )),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: HexColor('#2E2E2D'),
+                                              offset: Offset(0, 3),
+                                              blurRadius: 6,
+                                            ),
+                                            BoxShadow(
+                                              color: HexColor('#04060F'),
+                                              offset: Offset(10, 10),
+                                              blurRadius: 20,
+                                            ),
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                      child: IconButton(
+                                        visualDensity: VisualDensity(
+                                            horizontal: -4, vertical: -4),
+                                        onPressed: () {},
+                                        icon: Icon(Icons.access_time_rounded),
+                                        color: ColorUtils.primary_grey,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 7,
+                                    ),
+                                    Text(
+                                      '${seconds} S',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontFamily: 'PR',
+                                          color: ColorUtils.primary_grey),
+                                    ),
+                                  ],
+                                )),
                                 GestureDetector(
                                   onTap: () {
                                     if (resend_otp == false) {
                                       _signUpScreenController.ReSendOtpAPi(
                                           context: context);
                                       if (_signUpScreenController
-                                          .sendOtpModel!.error ==
+                                              .sendOtpModel!.error ==
                                           false) {
                                         resend_otp = true;
                                         startTimer();
@@ -417,12 +425,13 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                         borderRadius: BorderRadius.circular(10),
                                         border: (resend_otp
                                             ? Border.all(
-                                            color: Colors.transparent, width: 1)
+                                                color: Colors.transparent,
+                                                width: 1)
                                             : Border.all(
-                                            color: ColorUtils.primary_gold,
-                                            width: 1))),
-                                    margin:
-                                    const EdgeInsets.only(top: 28, bottom: 28),
+                                                color: ColorUtils.primary_gold,
+                                                width: 1))),
+                                    margin: const EdgeInsets.only(
+                                        top: 28, bottom: 28),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
@@ -443,9 +452,16 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                     await _signUpScreenController.VerifyOtpAPi(
                                         context: context);
                                     if (_signUpScreenController
-                                        .signUpModel!.error ==
+                                            .signUpModel!.error ==
                                         false) {
                                       await selectTowerBottomSheet(context);
+                                      Future.delayed(Duration(seconds: 2),
+                                          () async {
+                                        await Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    FaceScanScreen()));
+                                      });
                                       // (ontapped)
                                       //     ? Navigator.pop(context)
                                       //     : {
@@ -465,7 +481,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      // color: Colors.black.withOpacity(0.65),
+                                        // color: Colors.black.withOpacity(0.65),
                                         gradient: LinearGradient(
                                           begin: Alignment.centerLeft,
                                           end: Alignment.centerRight,
@@ -482,7 +498,8 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                             blurRadius: 20,
                                           ),
                                         ],
-                                        borderRadius: BorderRadius.circular(10)),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     child: Container(
                                         alignment: Alignment.center,
                                         margin: EdgeInsets.symmetric(
@@ -491,7 +508,8 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                         child: Text(
                                           'Verify',
                                           style: FontStyleUtility.h15(
-                                              fontColor: ColorUtils.primary_grey,
+                                              fontColor:
+                                                  ColorUtils.primary_grey,
                                               family: 'PM'),
                                         )),
                                   ),
@@ -516,6 +534,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
   }
 
   bool ontapped = false;
+
   _listOPT() async {
     print("inseide sms");
     print(codeValue);
@@ -585,19 +604,19 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                 fontColor: ColorUtils.primary_grey,
                                 family: 'PR')),
                       ),
-                      common_button_gold(
-                        onTap: () {
-                          // setState(() {
-                          ontapped = true;
-                          print(ontapped);
-                          // });
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>FaceScanScreen()));
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => FaceScanScreen()));
-                          // Get.to(FaceScanScreen());
-                        },
-                        title_text: 'Proceed',
-                      ),
+                      // common_button_gold(
+                      //   onTap: () {
+                      //     // setState(() {
+                      //     ontapped = true;
+                      //     print(ontapped);
+                      //     // });
+                      //     // Navigator.push(context, MaterialPageRoute(builder: (context)=>FaceScanScreen()));
+                      //     Navigator.of(context).push(MaterialPageRoute(
+                      //         builder: (context) => FaceScanScreen()));
+                      //     // Get.to(FaceScanScreen());
+                      //   },
+                      //   title_text: 'Proceed',
+                      // ),
                     ],
                   ),
                 ),

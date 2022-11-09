@@ -66,7 +66,7 @@ dependencies:
   otp_autofill: ^2.1.0
   flutter_alarm_clock: ^0.0.2
   flutter_native_splash: ^2.1.1
-
+#  firebase_dynamic_links: ^5.0.4
 
 #  esys_flutter_share_plus: ^2.1.0
 

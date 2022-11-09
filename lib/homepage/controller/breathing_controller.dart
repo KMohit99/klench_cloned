@@ -88,6 +88,8 @@ class Breathing_controller extends GetxController {
     Map data = {
       'userId': id_user,
       'sets': "1",
+      'numberOf_sets': '1',
+
       // 'type': login_type,
     };
     print(data);

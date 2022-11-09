@@ -769,7 +769,15 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                                 : _animation_shadow1!.value)
                                             : 0),
                                         blurRadius: 35,
-                                      )
+                                      ),
+                                      BoxShadow(
+                                        // offset: Offset(0,10),
+                                        color: (animation_started
+                                            ? HexColor('#000000')
+                                            : Colors.transparent),
+                                        spreadRadius: 35,
+                                        blurRadius: 35,
+                                      ),
                                     ],
                                     // boxShadow: [
                                     //   BoxShadow(
@@ -2151,7 +2159,6 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                 reverse_started = false;
                                 timer_started = false;
                                 back_wallpaper = true;
-
                                 button_height = 150;
                                 text_k_size = 30;
                                 text_time_size = 25;
@@ -2166,7 +2173,6 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                   print("Datatata222222");
                                   setState(() {
                                     // watch2.stop();
-
                                   });
                                 }
                                 // countdownTimer2!.cancel();
@@ -2187,8 +2193,9 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                   // timer!.cancel();
                                 });
                               }
-                              // Get.to(WarmUpScreen());
-                            } // print('method_time : ${method_time[0].total_time}');
+                              // await Get.to(DashboardScreen(page: 0));
+                            }
+                            // print('method_time : ${method_time[0].total_time}');
                             // print('method_name : ${method_time[0].method_name}');
                           }
                         },

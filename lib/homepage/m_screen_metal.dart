@@ -201,6 +201,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   var graph_life;
 
   TooltipBehavior? _tooltipBehavior;
+  TooltipBehavior? _tooltipBehavior2;
   TrackballBehavior? _trackballBehavior;
   SelectionBehavior? _selectionBehavior;
   CrosshairBehavior? _crosshairBehavior;
@@ -871,6 +872,19 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         //   );
         // },
         format: 'point.high second');
+    _tooltipBehavior2 = TooltipBehavior(
+        enable: true,
+        header: "total",
+        // Formatting the tooltip text
+        // builder: (dynamic data, dynamic point, dynamic series,
+        //     int pointIndex, int seriesIndex) {
+        //   return Container(
+        //       child: Text(
+        //           '$seriesIndex : ${pointIndex.toString()}',style: TextStyle(color: Colors.white),
+        //       )
+        //   );
+        // },
+        format: 'point.x : point.y');
     _trackballBehavior = TrackballBehavior(
         enable: true,
         // lineDashArray: <double>[5,5],
@@ -974,7 +988,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             // ),
             image: DecorationImage(
               fit: BoxFit.cover,
-              colorFilter:  ColorFilter.mode(
+              colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.5), BlendMode.dst),
               image: const AssetImage(
                 AssetUtils.m_screen_back,
@@ -3466,6 +3480,15 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                       ColorUtils.primary_grey,
                                                   tooltipBehavior:
                                                       _tooltipBehavior,
+                                                  // legend: Legend(
+                                                  //     isVisible: true,
+                                                  //     position:
+                                                  //         LegendPosition.bottom,
+                                                  //     textStyle:
+                                                  //         FontStyleUtility.h12(
+                                                  //             fontColor:
+                                                  //                 Colors.white,
+                                                  //             family: "PM")),
                                                   primaryXAxis: CategoryAxis(
                                                       majorGridLines:
                                                           MajorGridLines(
@@ -3485,10 +3508,11 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                       // maximum: 30,
                                                       interval: 5,
                                                       //Axis label ustomization.
-                                                      labelStyle: const TextStyle(
-                                                          color:
-                                                              Colors.blueGrey,
-                                                          fontSize: 10),
+                                                      labelStyle:
+                                                          const TextStyle(
+                                                              color: Colors
+                                                                  .blueGrey,
+                                                              fontSize: 10),
                                                       // numberFormat: NumberFormat
                                                       //     .compact(),
                                                       majorGridLines:
@@ -3590,6 +3614,60 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                     //   // highValueMapper: (ChartData2 data, _) => data.y,
                                                     // )
                                                   ])),
+                                          (loading
+                                              ? SizedBox.shrink()
+                                              : (m_screenDailyDataModel!
+                                                      .data!.isEmpty
+                                                  ? SizedBox.shrink()
+                                                  : Container(
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 0,
+                                                              horizontal: 20),
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      // width: 100,
+                                                      height: 50,
+                                                      child: ListView.builder(
+                                                        shrinkWrap: true,
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        itemCount:
+                                                            methoddd.length,
+                                                        itemBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                int index) {
+                                                          return Row(
+                                                            children: [
+                                                              Container(
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .bar_chart,
+                                                                  color: HexColor(
+                                                                      coloring[
+                                                                          index]),
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                child: Text(
+                                                                  methoddd[
+                                                                      index],
+                                                                  style: FontStyleUtility.h12(
+                                                                      fontColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      family:
+                                                                          "PM"),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      ),
+                                                    )))
                                         ],
                                       ),
                                     ),
@@ -3670,7 +3748,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           plotAreaBorderColor:
                                               ColorUtils.primary_grey,
                                           legend: Legend(
-                                              isVisible: true,
+                                              isVisible: false,
                                               position: LegendPosition.bottom,
                                               textStyle: FontStyleUtility.h12(
                                                   fontColor: Colors.white,
@@ -3682,27 +3760,22 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               axisLine: AxisLine(width: 0)),
                                           primaryYAxis: NumericAxis(
                                               //Hide the gridlines of y-axis
-                                              title: AxisTitle(
-                                                  text: 'minutes'),
+                                              title: AxisTitle(text: 'minutes'),
                                               // minimum: 1,
                                               // maximum: 30,
                                               interval: 5,
                                               labelStyle: const TextStyle(
-                                                  color:
-                                                  Colors.blueGrey,
+                                                  color: Colors.blueGrey,
                                                   fontSize: 10),
                                               // numberFormat: NumberFormat
                                               //     .compact(),
-                                              majorGridLines:
-                                              MajorGridLines(
+                                              majorGridLines: MajorGridLines(
                                                   width: 1,
-                                                  color: HexColor(
-                                                      '#383E46')),
+                                                  color: HexColor('#383E46')),
                                               //Hide the axis line of y-axis
                                               axisLine: AxisLine(
                                                   width: 1,
-                                                  color: HexColor(
-                                                      '#383E46'))),
+                                                  color: HexColor('#383E46'))),
                                           series: <
                                               ChartSeries<ChartData0, String>>[
                                             // Renders column chart
@@ -3876,6 +3949,51 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                             //         (ChartData2 data, _) =>
                                             //     data.y),
                                           ])),
+                                  (loader
+                                      ? SizedBox.shrink()
+                                      : (m_screenWeeklyDataModel!.data!.isEmpty
+                                          ? SizedBox.shrink()
+                                          : Container(
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 0, horizontal: 20),
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              // width: 100,
+                                              height: 50,
+                                              child: ListView.builder(
+                                                shrinkWrap: true,
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemCount: methoddd2.length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  return Row(
+                                                    children: [
+                                                      Container(
+                                                        child: Icon(
+                                                          Icons.bar_chart,
+                                                          color: HexColor(
+                                                              coloring2[index]),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        child: Text(
+                                                          methoddd2[index],
+                                                          style: FontStyleUtility
+                                                              .h12(
+                                                                  fontColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  family: "PM"),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ),
+                                            )))
                                 ],
                               ),
                             ),
@@ -4036,12 +4154,11 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               //Hide the axis line of y-axis
                                               axisLine: AxisLine(width: 0)),
                                           primaryYAxis: NumericAxis(
-                                            //Hide the gridlines of y-axis
-                                            // opposedPosition: true,
-                                            // rangePadding: ChartRangePadding.none,
-                                              title: AxisTitle(
-                                                  text: 'minutes'),
-                                              minimum: 1,
+                                              //Hide the gridlines of y-axis
+                                              // opposedPosition: true,
+                                              // rangePadding: ChartRangePadding.none,
+                                              title: AxisTitle(text: 'minutes'),
+                                              // minimum: 1,
                                               // maximum: 30,
                                               interval: 5,
                                               //Axis label ustomization.
@@ -4050,16 +4167,13 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                   fontSize: 10),
                                               // numberFormat: NumberFormat
                                               //     .compact(),
-                                              majorGridLines:
-                                              MajorGridLines(
+                                              majorGridLines: MajorGridLines(
                                                   width: 1,
-                                                  color: HexColor(
-                                                      '#383E46')),
+                                                  color: HexColor('#383E46')),
                                               //Hide the axis line of y-axis
                                               axisLine: AxisLine(
                                                   width: 1,
-                                                  color: HexColor(
-                                                      '#383E46'))),
+                                                  color: HexColor('#383E46'))),
                                           // primaryYAxis: NumericAxis(
                                           //     //Hide the gridlines of y-axis
                                           //     majorGridLines:
@@ -4388,6 +4502,10 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   WeeklyData? weeklyData;
   List testList = [];
   List testList2 = [];
+  bool loader = true;
+  List methoddd2 = [];
+
+  List coloring2 = [];
 
   Future MasturbationWeekly_Data_get_API() async {
     String idUser = await PreferenceManager().getPref(URLConstants.id);
@@ -4407,7 +4525,11 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         print("Data :${data}");
         m_screenWeeklyDataModel = M_ScreenWeeklyDataModel.fromJson(data);
         weeklyData = WeeklyData.fromJson(data);
+
         // getUSerModelList(userInfoModel_email);
+        setState(() {
+          loader = false;
+        });
         if (m_screenWeeklyDataModel!.error == false) {
           hideLoader(context);
           debugPrint(
@@ -4437,6 +4559,11 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
               var totalTime = (tempDate_.minute * 60) + tempDate_.second;
               var y = double.parse((totalTime / 60).toString());
+
+              setState(() {
+                methoddd2.add(weeklyData!.data![i].days![j].methodName!);
+                coloring2.add(weeklyData!.data![i].days![j].colorCode!);
+              });
 
               setState(() {
                 weekly_data5.add(ChartData2(
@@ -4480,7 +4607,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                 weekly_data3.add(ChartData0(
                   tempDate,
                   m_screenWeeklyDataModel!.data![i].days![2].methodName!,
-                 y,
+                  y,
                   m_screenWeeklyDataModel!.data![i].days![0].colorCode!,
                 ));
               });
@@ -4518,6 +4645,12 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
               ));
             });
           }
+          setState(() {
+            methoddd2 = methoddd2.toSet().toList();
+            coloring2 = coloring2.toSet().toList();
+          });
+          print("methoddd2 ${methoddd2}");
+          print("methoddd2 ${methoddd2}");
           // print("weekly_data[i] ${weekly_data[0].x}");
           // print("weekly_data[i] ${weekly_data[0].y}");
           // print("weekly_data[i] ${weekly_data[0].x1}");
@@ -4718,6 +4851,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             var x =
                 m_screenLifeTimeDataModel!.data![0].methods![i].createdDate!;
             var x1 = m_screenLifeTimeDataModel!.data![0].methods![i].methodName;
+
             // var y = double.parse(
             //     m_screenLifeTimeDataModel!.data![0].methods![i].totalPauses!);
             // var inputFormat = DateFormat.jm().format(DateFormat("hh:mm:ss").parse("14:15:00"));
@@ -4727,8 +4861,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             // print(formattedTime);//5:08 PM
             // var y2 = data_gst_receivable[i]['value'];
             // var y3 =
-            DateTime tempDate_ = new DateFormat("mm:ss")
-                .parse( m_screenLifeTimeDataModel!.data![0].methods![i].totalTime!);
+            DateTime tempDate_ = new DateFormat("mm:ss").parse(
+                m_screenLifeTimeDataModel!.data![0].methods![i].totalTime!);
             print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
 
             var totalTime = (tempDate_.minute * 60) + tempDate_.second;
@@ -4767,6 +4901,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
   bool loading = true;
   List temp = [];
+  List methoddd = [];
+
+  List coloring = [];
 
   Future Masturbation_Daily_Data_get_API() async {
     String idUser = await PreferenceManager().getPref(URLConstants.id);
@@ -4805,6 +4942,13 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             // x_axis = data_sales[i]["month"];
             print(
                 "date : ${m_screenDailyDataModel!.data![0].days![i].totalTime}");
+
+            setState(() {
+              methoddd
+                  .add(m_screenDailyDataModel!.data![0].days![i].methodName!);
+              coloring
+                  .add(m_screenDailyDataModel!.data![0].days![i].colorCode!);
+            });
 
             DateTime tempDate_ = new DateFormat("mm:ss")
                 .parse(m_screenDailyDataModel!.data![0].days![i].totalTime!);
@@ -4884,8 +5028,20 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                 id: m_screenDailyDataModel!.data![0].days![i].id!,
               ));
             });
+            print("daily_data_list.toSet().toList().length"); // => ['a', 'b']
+            setState(() {
+              daily_data_list = daily_data_list.toSet().toList();
+            });
+            print(daily_data_list.toSet().toList().length); // => ['a', 'b']
             // print("${daily_data_list[i].x} :${daily_data_list[i].x1} :${daily_data_list[i].y}");
           }
+          setState(() {
+            methoddd = methoddd.toSet().toList();
+            coloring = coloring.toSet().toList();
+          });
+
+          print("methoddd ${methoddd}");
+          print("coloring ${coloring}");
           print("gst_payable_list");
           print("gst_payable_list");
           print(temp);

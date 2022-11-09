@@ -134,8 +134,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child:Column(
+      body: Container(
+          alignment: Alignment.center,
+          // margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/20),
+          child:Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -165,8 +167,12 @@ class _SplashScreenState extends State<SplashScreen> {
                       color: ColorUtils.primary_gold,
                     ),
                     Container(
-                      child: Text("Loading..", style: FontStyleUtility.h16(
-                          fontColor: ColorUtils.primary_gold, family: 'PB'),),
+                      child: Text(
+                        "Loading..",
+                        style: FontStyleUtility.h16(
+                            fontColor: ColorUtils.primary_gold,
+                            family: 'PB'),
+                      ),
                     ),
 
                     // Container(
@@ -191,7 +197,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
           ],
-        ),
+        )
       ),
     );
   }

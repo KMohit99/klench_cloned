@@ -855,12 +855,10 @@ class _BreathingScreenState extends State<BreathingScreen>
                                               : _animation_shadow1!.value)
                                           : 0),
                                       blurRadius: 35,
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
-
-
                               (animation_started
                                   ? DottedBorder(
                                 borderType: BorderType.Oval,

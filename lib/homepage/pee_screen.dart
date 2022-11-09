@@ -1255,7 +1255,15 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
                                               : _animation_shadow1!.value)
                                           : 0),
                                       blurRadius: 35,
-                                    )
+                                    ),
+                                    BoxShadow(
+                                      // offset: Offset(0,10),
+                                      color: (animation_started
+                                          ? HexColor('#000000')
+                                          : Colors.transparent),
+                                      spreadRadius: 35,
+                                      blurRadius: 35,
+                                    ),
                                   ],
                                 ),
                               ),

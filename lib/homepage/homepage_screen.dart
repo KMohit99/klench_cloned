@@ -296,7 +296,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                                             shadows: [
                                               Shadow(
                                                   color: HexColor('#EE499E'),
-                                                  offset: Offset(0, 10),
+                                                  offset: Offset(0, 0),
                                                   blurRadius: 50)
                                             ],
                                             fontSize: 64,
@@ -332,7 +332,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                                               shadows: [
                                                 Shadow(
                                                     color: HexColor('#3EA244'),
-                                                    offset: Offset(0, 10),
+                                                    offset: Offset(0, 0),
                                                     blurRadius: 50)
                                               ],
                                               fontSize: 64,
@@ -367,7 +367,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                                               shadows: [
                                                 Shadow(
                                                     color: HexColor('#ED4A42'),
-                                                    offset: Offset(0, 10),
+                                                    offset: Offset(0, 0),
                                                     blurRadius: 50)
                                               ],
                                               fontSize: 64,
@@ -400,7 +400,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                                           shadows: [
                                             Shadow(
                                                 color: HexColor('#F8D44D'),
-                                                offset: Offset(0, 10),
+                                                offset: Offset(0, 0),
                                                 blurRadius: 50)
                                           ],
                                           fontSize: 64,

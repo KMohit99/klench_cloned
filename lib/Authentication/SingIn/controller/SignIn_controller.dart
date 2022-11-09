@@ -426,7 +426,7 @@ class SignInScreenController extends GetxController {
     // }
     // isLoading(true);
 
-    showLoader(context);
+    // showLoader(context);
     String idUser = await PreferenceManager().getPref(URLConstants.id);
     String? fcmToken = await FirebaseMessaging.instance.getToken();
     print("fcmToken : $fcmToken");
@@ -459,9 +459,9 @@ class SignInScreenController extends GetxController {
       // alarmPostModel = AlarmPostModel.fromJson(data);
       if (data["error"] == false) {
         // CommonWidget().showToaster(msg: peePostModel!.message!);
-        hideLoader(context);
+        // hideLoader(context);
       } else {
-        hideLoader(context);
+        // hideLoader(context);
         // CommonWidget().showErrorToaster(msg: peePostModel!.message!);
         print('Please try again');
         print('Please try again');
