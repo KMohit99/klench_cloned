@@ -10,6 +10,7 @@ import 'SingIn/controller/SignIn_controller.dart';
 import 'instagram/instagram_view.dart';
 
 class AskSignUp extends StatefulWidget {
+
   const AskSignUp({Key? key}) : super(key: key);
 
   @override

@@ -1,12 +1,13 @@
 # This is a generated file; do not edit or check into version control.
 cloud_firestore=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-3.4.9/
-cloud_firestore_web=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-2.8.8/
+cloud_firestore_web=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-2.8.10/
 cloud_functions=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/cloud_functions-3.3.8/
 cloud_functions_web=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/cloud_functions_web-4.3.6/
 firebase_auth=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.10.0/
 firebase_auth_web=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-4.5.0/
 firebase_core=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.23.0/
-firebase_core_web=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.7.2/
+firebase_core_web=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.7.3/
+firebase_dynamic_links=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/firebase_dynamic_links-4.3.11/
 firebase_messaging=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-11.4.4/
 firebase_messaging_web=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/firebase_messaging_web-2.4.4/
 flutter_alarm_clock=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/flutter_alarm_clock-0.0.2/
@@ -57,6 +58,10 @@ video_player=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dar
 video_player_android=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/video_player_android-2.3.9/
 video_player_avfoundation=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/video_player_avfoundation-2.3.5/
 video_player_web=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/video_player_web-2.0.12/
+video_thumbnail=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/video_thumbnail-0.5.3/
+wakelock=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/wakelock-0.6.2/
+wakelock_macos=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/wakelock_macos-0.4.0/
+wakelock_web=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/wakelock_web-0.4.0/
 webview_flutter=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/webview_flutter-3.0.4/
 webview_flutter_android=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/webview_flutter_android-2.10.3/
 webview_flutter_wkwebview=/Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/webview_flutter_wkwebview-2.9.5/

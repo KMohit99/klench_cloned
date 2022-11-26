@@ -26,6 +26,7 @@ import '../utils/TextStyle_utils.dart';
 import '../utils/UrlConstrant.dart';
 import '../utils/colorUtils.dart';
 import '../utils/common_widgets.dart';
+import 'controller/kegel_excercise_controller.dart';
 
 class PeeScreen extends StatefulWidget {
   const PeeScreen({Key? key}) : super(key: key);
@@ -99,7 +100,8 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
 
               // print(counter);
               // paused_time.clear();
-            });            startWatch2();
+            });
+            startWatch2();
             Future.delayed(const Duration(seconds: 4), () {
               // if (counter == 10) {
               //   stopWatch_finish();
@@ -248,7 +250,7 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
           elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
           // percent += 1;
           // Future.delayed(Duration(seconds: 1), () {
-          Vibration.vibrate();
+          (four_started ? Vibration.cancel() : Vibration.vibrate());
           // });
 
           // if (percent >= 100) {
@@ -264,7 +266,6 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
               // CommonWidget().showToaster(msg: '${7 - counter} Times left');
               counter++;
               four_started = true;
-
               // print(counter);
               // paused_time.clear();
             });
@@ -344,12 +345,91 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
           elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
           // percent += 1;
           // Future.delayed(Duration(microseconds: 500), () {
-          Vibration.vibrate();
+          (four_started ? Vibration.cancel() : Vibration.vibrate());
           // });
 
           // if (percent >= 100) {
           //   percent = 0.0;
           // }
+          if(four_started){
+            if (elapsedTime == '05') {
+              stopWatch_finish();
+              // _animationController_shadow1!.reverse();
+              setState(() {
+                elapsedTime = 'PUSH';
+                percent = 0.0;
+                watch.reset();
+                // CommonWidget().showToaster(msg: '${7 - counter} Times left');
+                counter++;
+                four_started = true;
+                // print(counter);
+                // paused_time.clear();
+              });
+              startWatch3();
+              Future.delayed(const Duration(seconds: 5), () {
+                // if (counter == 10) {
+                //   stopWatch_finish();
+                //   setState(() {
+                //     elapsedTime = '00';
+                //     // watch.stop();
+                //     counter = 0;
+                //   });
+                // sets++;
+                // print('Sets-------$sets');
+                // if (sets == 3) {
+                //   stopWatch_finish();
+                //   setState(() {
+                //     elapsedTime = '00';
+                //     percent = 0.0;
+                //     // watch.stop();
+                //     counter = 0;
+                //   });
+                //   CommonWidget().showToaster(msg: "Method Complete");
+                //   Future.delayed(Duration(seconds: 5), () {
+                //     CommonWidget().showErrorToaster(
+                //         msg:
+                //         "After one month it will automatically switch to Hard");
+                //   });
+                // }
+                // } else {
+                setState(() {
+                  elapsedTime = '00';
+                  four_started = false;
+                  watch.reset();
+                });
+                // if (counter == 10) {
+                //   stopWatch_finish();
+                //   setState(() {
+                //     elapsedTime = '00';
+                //     // watch.stop();
+                //     counter = 0;
+                //   });
+                // sets++;
+                // print('Sets-------$sets');
+                // if (sets == 3) {
+                //   stopWatch_finish();
+                //   setState(() {
+                //     elapsedTime = '00';
+                //     percent = 0.0;
+                //     // watch.stop();
+                //     counter = 0;
+                //   });
+                //   CommonWidget().showToaster(msg: "Method Complete");
+                //   Future.delayed(Duration(seconds: 5), () {
+                //     CommonWidget().showErrorToaster(
+                //         msg:
+                //         "After one month it will automatically switch to Hard");
+                //   });
+                // }
+                // } else {
+                _animationController!.reverse();
+                _animationController_button!.reverse();
+                startWatch();
+                // }
+              });
+            }
+
+          }else{
           if (elapsedTime == '03') {
             stopWatch_finish();
             // _animationController_shadow1!.reverse();
@@ -360,11 +440,10 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
               // CommonWidget().showToaster(msg: '${7 - counter} Times left');
               counter++;
               four_started = true;
-
               // print(counter);
               // paused_time.clear();
             });
-            startWatch2();
+            startWatch3();
             Future.delayed(const Duration(seconds: 5), () {
               // if (counter == 10) {
               //   stopWatch_finish();
@@ -426,11 +505,42 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
               startWatch();
               // }
             });
+          }}
+        });
+      }
+    }
+  }
+  updateTime(Timer timer) {
+    if (watch.isRunning) {
+      if (mounted) {
+        setState(() {
+          // print("startstop Inside=$startStop");
+          elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
+          print("inside updatetime");
+          // Future.delayed(Duration(microseconds: 500), () {
+          (four_started ? Vibration.cancel() : Vibration.vibrate());
+          // });
+
+          // if (percent >= 100) {
+          //   percent = 0.0;
+          // }
+          if (elapsedTime == '05') {
+            stopWatch_finish();
+            // _animationController_shadow1!.reverse();
+            setState(() {
+              elapsedTime = 'PUSH';
+
+              // print(counter);
+              // paused_time.clear();
+            });
           }
         });
       }
     }
   }
+
+  final Kegel_controller _kegel_controller =
+  Get.put(Kegel_controller(), tag: Kegel_controller().toString());
 
   String? selected_date_sets = '';
   String? selected_date = '';
@@ -1852,9 +1962,12 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
                         onTap: () async {
                           if (started) {
                             back_wallpaper = false;
+                            await _kegel_controller.update_notified_status(context: context,status: 'true');
                             startWatch();
                             middle_animation();
                           } else {
+                            await _animationController_middle!.reverse();
+                            await _kegel_controller.update_notified_status(context: context,status: 'false');
                             await stopWatch();
                             await click_alarm();
                             await Vibration.cancel();
@@ -2727,7 +2840,6 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
     // vibration();
     setState(() {
       timer_started = true;
-
       num = 7;
       _swipe_setup_controller.p_running = true;
       elapsedTime = "00";
@@ -2772,6 +2884,19 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
                               : updateTime_easy))))));
     });
   }
+ startWatch3() {
+    // start_animation();
+    setState(() {
+      // startStop = false;
+      // started = false;
+      elapsedTime = "00";
+      watch.start();
+      timer = Timer.periodic(
+          const Duration(milliseconds: 100),
+          updateTime);
+    });
+  }
+
 
   stopWatch() {
     setState(() {
@@ -2923,6 +3048,7 @@ class _PeeScreenState extends State<PeeScreen> with TickerProviderStateMixin {
     _alarmTime = DateTime.now();
     DateTime arch = DateTime.parse("2022-08-15 00:25:24");
     print(DateFormat('EEEE').format(arch)); // Sunday
+    print("Day :::: ${DateFormat('EEEE').format(arch)}"); // Sunday
 
     DateTime scheduleAlarmDateTime;
     // if (_alarmTime!.isAfter(DateTime.now())) {

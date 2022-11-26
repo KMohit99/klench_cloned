@@ -26,6 +26,12 @@ class Masturbation_screen_controller {
   final Dio _dio = Dio();
 
   TextEditingController method_new_name = new TextEditingController();
+  List<methods_list> method_list = <methods_list>[
+    methods_list(method_name: "Hand",color:  '#FF0000'),
+    methods_list(method_name: "Dildo",color:  "#0000FF"),
+    methods_list(method_name: "Sex",color:  "#00FF00"),
+    methods_list(method_name: "Fleshlight",color:  "#A020F0"),
+  ];
 
   Future<dynamic> m_method_post_API({
     required BuildContext context,

@@ -13,9 +13,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:klench_/homepage/controller/m_screen_controller.dart';
+import 'package:klench_/homepage/m_screen_metal.dart';
 import 'package:klench_/homepage/swipe_controller.dart';
 import 'package:klench_/utils/TexrUtils.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../utils/Asset_utils.dart';
@@ -26,7 +28,9 @@ import '../utils/UrlConstrant.dart';
 import '../utils/colorUtils.dart';
 import '../utils/common_widgets.dart';
 import '../utils/page_loader.dart';
+import 'controller/kegel_excercise_controller.dart';
 import 'm_screen.dart';
+import 'm_screen_metal.dart';
 import 'model/WeeklyData.dart';
 import 'model/m_screen_dailyData_model.dart';
 import 'model/m_screen_lifetimeData_model.dart';
@@ -55,21 +59,29 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   Color? method_color;
 
   String elapsedTime = '00:00';
-  List method_list = ['Hand', 'Dildo', 'Sex', 'Fleshlight'];
+
+  // List<methods_list> _masturbation_screen_controller.method_list = <methods_list>[
+  //   'Hand',
+  //   'Dildo',
+  //   'Sex',
+  //   'Fleshlight'
+  // ];
+
   String method_selected = '';
+  String method_selected_color = '';
   List<ListMethodClass> method_time = [];
   List<ListMethodClass> method_data = [];
   bool timer_started = false;
 
-  List<HexColor> list = [
-    HexColor('#005aff'),
-    HexColor('#ffffff'),
-    HexColor('#ffde00'),
-    HexColor('#bbff00'),
-    HexColor('#d96be8'),
-    HexColor('#ff6000'),
-    HexColor('#349400'),
-    HexColor('#8c0d37'),
+  List list = [
+    '#005aff',
+    '#ffffff',
+    '#ffde00',
+    '#bbff00',
+    '#d96be8',
+    '#ff6000',
+    '#349400',
+    '#8c0d37',
   ];
 
   final _random = Random();
@@ -203,10 +215,243 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   TooltipBehavior? _tooltipBehavior;
   TooltipBehavior? _tooltipBehavior2;
   TrackballBehavior? _trackballBehavior;
+  ZoomPanBehavior? _zoomPanBehavior;
+
   SelectionBehavior? _selectionBehavior;
   CrosshairBehavior? _crosshairBehavior;
   String? selected_date =
       DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
+
+  addmethod_popup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        double width = MediaQuery.of(context).size.width;
+        double height = MediaQuery.of(context).size.height;
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: AlertDialog(
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              elevation: 0.0,
+              // title: Center(child: Text("Evaluation our APP")),
+              content: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              // color: Colors.black.withOpacity(0.65),
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                // stops: [0.1, 0.5, 0.7, 0.9],
+                                colors: [
+                                  HexColor("#020204").withOpacity(1),
+                                  HexColor("#36393E").withOpacity(1),
+                                ],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: HexColor('#04060F'),
+                                    offset: Offset(10, 10),
+                                    blurRadius: 10)
+                              ],
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Align(
+                              alignment: Alignment.center,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 0,
+                                    ),
+
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(left: 18),
+                                          child: Text('Add more method',
+                                              style: FontStyleUtility.h14(
+                                                  fontColor:
+                                                      ColorUtils.primary_grey,
+                                                  family: 'Pr')),
+                                        ),
+                                        SizedBox(
+                                          height: 11,
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          // width: 300,
+                                          decoration: BoxDecoration(
+                                              // color: Colors.black.withOpacity(0.65),
+                                              gradient: LinearGradient(
+                                                begin: Alignment.centerLeft,
+                                                end: Alignment.centerRight,
+                                                // stops: [0.1, 0.5, 0.7, 0.9],
+                                                colors: [
+                                                  HexColor("#36393E")
+                                                      .withOpacity(1),
+                                                  HexColor("#020204")
+                                                      .withOpacity(1),
+                                                ],
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: HexColor('#04060F'),
+                                                    offset: Offset(10, 10),
+                                                    blurRadius: 10)
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+
+                                          child: TextFormField(
+                                            maxLength: 150,
+                                            decoration: InputDecoration(
+                                              contentPadding: EdgeInsets.only(
+                                                  left: 20,
+                                                  top: 14,
+                                                  bottom: 14),
+                                              alignLabelWithHint: false,
+                                              isDense: true,
+                                              hintText: 'Add more method',
+                                              counterStyle: TextStyle(
+                                                height: double.minPositive,
+                                              ),
+                                              counterText: "",
+                                              filled: true,
+                                              border: InputBorder.none,
+                                              enabledBorder:
+                                                  const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.transparent,
+                                                    width: 1),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                              ),
+                                              hintStyle: FontStyleUtility.h14(
+                                                  fontColor:
+                                                      HexColor('#CBCBCB'),
+                                                  family: 'PR'),
+                                            ),
+                                            style: FontStyleUtility.h14(
+                                                fontColor:
+                                                    ColorUtils.primary_grey,
+                                                family: 'PR'),
+                                            controller: method_new,
+                                            keyboardType: TextInputType.text,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        if(method_new.text.isNotEmpty){
+                                          setState(() {
+                                            _masturbation_screen_controller
+                                                .method_list
+                                                .add(methods_list(
+                                                method_name: method_new.text,
+                                                color: list[random
+                                                    .nextInt(list.length)]));
+                                            method_new.clear();
+                                          });
+                                          final String encodedData =
+                                          methods_list.encode(
+                                              _masturbation_screen_controller
+                                                  .method_list);
+                                          await PreferenceManager().setList(
+                                              URLConstants.method_list,
+                                              encodedData);
+
+                                          // await PreferenceManager()
+                                          //     .setList(
+                                          //     URLConstants
+                                          //         .method_list,
+                                          //     _masturbation_screen_controller
+                                          //         .method_list);
+                                          Navigator.pop(context);
+                                        }
+
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.topRight,
+                                        child: Text(
+                                          'Add',
+                                          style: FontStyleUtility.h12(
+                                              fontColor:
+                                                  ColorUtils.primary_grey,
+                                              family: 'PR'),
+                                        ),
+                                      ),
+                                    )
+                                    // common_button_gold(
+                                    //   onTap: () {
+                                    //     Get
+                                    //         .to(
+                                    //         DashboardScreen());
+                                    //   },
+                                    //   title_text: 'Go to Dashboard',
+                                    // ),
+                                  ],
+                                ),
+                              )),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(right: 10),
+                          alignment: Alignment.topRight,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  // color: Colors.black.withOpacity(0.65),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                    colors: [
+                                      HexColor("#36393E").withOpacity(1),
+                                      HexColor("#020204").withOpacity(1),
+                                    ],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: HexColor('#04060F'),
+                                        offset: Offset(0, 3),
+                                        blurRadius: 5)
+                                  ],
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Icon(
+                                  Icons.cancel_outlined,
+                                  size: 13,
+                                  color: ColorUtils.primary_grey,
+                                ),
+                              )),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              )),
+        );
+      },
+    );
+  }
 
   selectdate(BuildContext context) async {
     DateTime? selected;
@@ -884,7 +1129,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         //       )
         //   );
         // },
-        format: 'point.x : point.y');
+        format: 'point.x : point.y min');
     _trackballBehavior = TrackballBehavior(
         enable: true,
         // lineDashArray: <double>[5,5],
@@ -903,7 +1148,16 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             format: 'point.x : point.y minute'),
         // Display mode of trackball tooltip
         tooltipDisplayMode: TrackballDisplayMode.floatAllPoints,
-        activationMode: ActivationMode.singleTap);
+        activationMode: ActivationMode.longPress);
+    _zoomPanBehavior = ZoomPanBehavior(
+      // Enables pinch zooming
+      enablePinching: true,
+      // zoomMode: ZoomMode.x,
+      // zoomMode: ZoomMode.x,
+
+      maximumZoomLevel: 0.5,
+      enablePanning: true,
+    );
     _selectionBehavior = SelectionBehavior(enable: true);
     _crosshairBehavior = CrosshairBehavior(
         enable: true,
@@ -917,12 +1171,41 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
   getdata() async {
     print("insssiiiiiii");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     // WidgetsBinding.instance.addPostFrameCallback((_) async {
     // await _masturbation_screen_controller.MasturbationData_get_API(context);
+    // await PreferenceManager()
+    //     .setList(URLConstants.method_list, list);
     await Masturbation_LifeTime_Data_get_API();
     await Masturbation_Daily_Data_get_API();
     await MasturbationWeekly_Data_get_API();
+    // List<dynamic> id_user =
+    // await PreferenceManager().getList(URLConstants.method_list);
 
+    // final String encodedData =
+    //     methods_list.encode(_masturbation_screen_controller.method_list);
+    // await PreferenceManager().setList(URLConstants.method_list, encodedData);
+
+    final String? id_user =
+        prefs.getString(URLConstants.method_list);
+
+    setState(() {
+      if(id_user!.isNotEmpty){
+        _masturbation_screen_controller.method_list =
+            methods_list.decode(id_user);
+      }
+
+    });
+    print(
+        "_masturbation_screen_controller : ${_masturbation_screen_controller.method_list}");
+    // await prefs.setString('musics_key', encodedData);
+
+    // print("id_user${id_user}");
+    // print("id_user${id_user}");
+    // setState(() {
+    //   _masturbation_screen_controller.method_list = id_user;
+    // });
     // });
   }
 
@@ -956,6 +1239,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
     print('    stopWatch_finish()');
     super.dispose();
   }
+
+  final Kegel_controller _kegel_controller =
+      Get.put(Kegel_controller(), tag: Kegel_controller().toString());
 
   @override
   Widget build(BuildContext context) {
@@ -1659,7 +1945,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
                                                         // physics: NeverScrollableScrollPhysics(),
                                                         itemCount:
-                                                            method_list.length,
+                                                            _masturbation_screen_controller
+                                                                .method_list
+                                                                .length,
                                                         shrinkWrap: true,
                                                         itemBuilder:
                                                             (BuildContext
@@ -1669,10 +1957,19 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                             onTap: () {
                                                               setState(() {
                                                                 method_selected =
-                                                                    method_list[
-                                                                        index];
+                                                                    _masturbation_screen_controller
+                                                                        .method_list[
+                                                                            index]
+                                                                        .method_name!;
+                                                                method_selected_color =
+                                                                    _masturbation_screen_controller
+                                                                        .method_list[
+                                                                            index]
+                                                                        .color!;
                                                                 print(
                                                                     "method_selected $method_selected");
+                                                                print(
+                                                                    "method_selected ${_masturbation_screen_controller.method_list[index].color!.toString()}");
                                                                 started = true;
                                                               });
                                                               Navigator.pop(
@@ -1687,17 +1984,20 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                   Alignment
                                                                       .center,
                                                               child: Text(
-                                                                method_list[
-                                                                    index],
+                                                                _masturbation_screen_controller
+                                                                    .method_list[
+                                                                        index]
+                                                                    .method_name!,
                                                                 style: FontStyleUtility.h15(
-                                                                    fontColor: (method_list[index] == 'Hand'
-                                                                        ? Colors.red
-                                                                        : (method_list[index] == 'Dildo'
-                                                                            ? Colors.blue
-                                                                            : (method_list[index] == 'Sex'
-                                                                                ? Colors.green
-                                                                                // : (method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
-                                                                                : (method_list[index] == 'Fleshlight' ? Colors.purple : list[random.nextInt(list.length)])))),
+                                                                    fontColor: HexColor(_masturbation_screen_controller.method_list[index].color!),
+                                                                    // fontColor: (_masturbation_screen_controller.method_list[index] == 'Hand'
+                                                                    //     ? Colors.red
+                                                                    //     : (_masturbation_screen_controller.method_list[index] == 'Dildo'
+                                                                    //         ? Colors.blue
+                                                                    //         : (_masturbation_screen_controller.method_list[index] == 'Sex'
+                                                                    //             ? Colors.green
+                                                                    //             // : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
+                                                                    //             : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : list[random.nextInt(list.length)])))),
                                                                     family: 'PM'),
                                                               ),
                                                             ),
@@ -1712,198 +2012,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         Navigator.pop(context);
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (BuildContext
-                                                              context) {
-                                                            double width =
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width;
-                                                            double height =
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height;
-                                                            return BackdropFilter(
-                                                              filter: ImageFilter
-                                                                  .blur(
-                                                                      sigmaX:
-                                                                          10,
-                                                                      sigmaY:
-                                                                          10),
-                                                              child:
-                                                                  AlertDialog(
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      contentPadding:
-                                                                          EdgeInsets
-                                                                              .zero,
-                                                                      elevation:
-                                                                          0.0,
-                                                                      // title: Center(child: Text("Evaluation our APP")),
-                                                                      content:
-                                                                          Column(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
-                                                                        children: [
-                                                                          Stack(
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.all(8.0),
-                                                                                child: Container(
-                                                                                  decoration:
-                                                                                      BoxDecoration(
-                                                                                          // color: Colors.black.withOpacity(0.65),
-                                                                                          gradient:
-                                                                                              LinearGradient(
-                                                                                            begin: Alignment.centerLeft,
-                                                                                            end: Alignment.centerRight,
-                                                                                            // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                                            colors: [
-                                                                                              HexColor("#020204").withOpacity(1),
-                                                                                              HexColor("#36393E").withOpacity(1),
-                                                                                            ],
-                                                                                          ),
-                                                                                          boxShadow: [
-                                                                                            BoxShadow(color: HexColor('#04060F'), offset: Offset(10, 10), blurRadius: 10)
-                                                                                          ],
-                                                                                          borderRadius: BorderRadius.circular(15)),
-                                                                                  child: Align(
-                                                                                      alignment: Alignment.center,
-                                                                                      child: Padding(
-                                                                                        padding: const EdgeInsets.all(8.0),
-                                                                                        child: Column(
-                                                                                          children: [
-                                                                                            SizedBox(
-                                                                                              height: 0,
-                                                                                            ),
-
-                                                                                            Column(
-                                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                              children: [
-                                                                                                Container(
-                                                                                                  margin: EdgeInsets.only(left: 18),
-                                                                                                  child: Text('Add more method', style: FontStyleUtility.h14(fontColor: ColorUtils.primary_grey, family: 'Pr')),
-                                                                                                ),
-                                                                                                SizedBox(
-                                                                                                  height: 11,
-                                                                                                ),
-                                                                                                Container(
-                                                                                                  margin: EdgeInsets.symmetric(horizontal: 10),
-                                                                                                  // width: 300,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                      // color: Colors.black.withOpacity(0.65),
-                                                                                                      gradient: LinearGradient(
-                                                                                                        begin: Alignment.centerLeft,
-                                                                                                        end: Alignment.centerRight,
-                                                                                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                                                        colors: [
-                                                                                                          HexColor("#36393E").withOpacity(1),
-                                                                                                          HexColor("#020204").withOpacity(1),
-                                                                                                        ],
-                                                                                                      ),
-                                                                                                      boxShadow: [BoxShadow(color: HexColor('#04060F'), offset: Offset(10, 10), blurRadius: 10)],
-                                                                                                      borderRadius: BorderRadius.circular(20)),
-
-                                                                                                  child: TextFormField(
-                                                                                                    maxLength: 150,
-                                                                                                    decoration: InputDecoration(
-                                                                                                      contentPadding: EdgeInsets.only(left: 20, top: 14, bottom: 14),
-                                                                                                      alignLabelWithHint: false,
-                                                                                                      isDense: true,
-                                                                                                      hintText: 'Add more method',
-                                                                                                      counterStyle: TextStyle(
-                                                                                                        height: double.minPositive,
-                                                                                                      ),
-                                                                                                      counterText: "",
-                                                                                                      filled: true,
-                                                                                                      border: InputBorder.none,
-                                                                                                      enabledBorder: const OutlineInputBorder(
-                                                                                                        borderSide: BorderSide(color: Colors.transparent, width: 1),
-                                                                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                                                      ),
-                                                                                                      hintStyle: FontStyleUtility.h14(fontColor: HexColor('#CBCBCB'), family: 'PR'),
-                                                                                                    ),
-                                                                                                    style: FontStyleUtility.h14(fontColor: ColorUtils.primary_grey, family: 'PR'),
-                                                                                                    controller: method_new,
-                                                                                                    keyboardType: TextInputType.text,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ],
-                                                                                            ),
-                                                                                            SizedBox(
-                                                                                              height: 10,
-                                                                                            ),
-                                                                                            GestureDetector(
-                                                                                              onTap: () {
-                                                                                                setState(() {
-                                                                                                  method_list.add(method_new.text);
-                                                                                                  method_new.clear();
-                                                                                                  Navigator.pop(context);
-                                                                                                });
-                                                                                              },
-                                                                                              child: Container(
-                                                                                                alignment: Alignment.topRight,
-                                                                                                child: Text(
-                                                                                                  'Add',
-                                                                                                  style: FontStyleUtility.h12(fontColor: ColorUtils.primary_grey, family: 'PR'),
-                                                                                                ),
-                                                                                              ),
-                                                                                            )
-                                                                                            // common_button_gold(
-                                                                                            //   onTap: () {
-                                                                                            //     Get
-                                                                                            //         .to(
-                                                                                            //         DashboardScreen());
-                                                                                            //   },
-                                                                                            //   title_text: 'Go to Dashboard',
-                                                                                            // ),
-                                                                                          ],
-                                                                                        ),
-                                                                                      )),
-                                                                                ),
-                                                                              ),
-                                                                              GestureDetector(
-                                                                                onTap: () {
-                                                                                  Navigator.pop(context);
-                                                                                },
-                                                                                child: Container(
-                                                                                  margin: EdgeInsets.only(right: 10),
-                                                                                  alignment: Alignment.topRight,
-                                                                                  child: Container(
-                                                                                      decoration: BoxDecoration(
-                                                                                          // color: Colors.black.withOpacity(0.65),
-                                                                                          gradient: LinearGradient(
-                                                                                            begin: Alignment.centerLeft,
-                                                                                            end: Alignment.centerRight,
-                                                                                            // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                                            colors: [
-                                                                                              HexColor("#36393E").withOpacity(1),
-                                                                                              HexColor("#020204").withOpacity(1),
-                                                                                            ],
-                                                                                          ),
-                                                                                          boxShadow: [BoxShadow(color: HexColor('#04060F'), offset: Offset(0, 3), blurRadius: 5)],
-                                                                                          borderRadius: BorderRadius.circular(20)),
-                                                                                      child: Padding(
-                                                                                        padding: const EdgeInsets.all(4.0),
-                                                                                        child: Icon(
-                                                                                          Icons.cancel_outlined,
-                                                                                          size: 13,
-                                                                                          color: ColorUtils.primary_grey,
-                                                                                        ),
-                                                                                      )),
-                                                                                ),
-                                                                              )
-                                                                            ],
-                                                                          ),
-                                                                        ],
-                                                                      )),
-                                                            );
-                                                          },
-                                                        );
+                                                        addmethod_popup(
+                                                            context);
                                                       },
                                                       child: Container(
                                                         alignment:
@@ -2103,7 +2213,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                       //                           alignment: Alignment.center,
                       //                           child: ListView.builder(
                       //                             padding: EdgeInsets.zero,
-                      //                             itemCount: method_list.length,
+                      //                             itemCount: _masturbation_screen_controller.method_list.length,
                       //                             shrinkWrap: true,
                       //                             itemBuilder: (BuildContext context,
                       //                                 int index) {
@@ -2117,7 +2227,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                       //                                     onTap: () {
                       //                                       setState(() {
                       //                                         method_selected =
-                      //                                         method_list[index];
+                      //                                         _masturbation_screen_controller.method_list[index];
                       //                                         print(
                       //                                             "method_selected $method_selected");
                       //                                       });
@@ -2126,7 +2236,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                       //                                     child: Container(
                       //                                       alignment: Alignment.center,
                       //                                       child: Text(
-                      //                                         method_list[index],
+                      //                                         _masturbation_screen_controller.method_list[index],
                       //                                         style: FontStyleUtility.h16(
                       //                                             fontColor: ColorUtils
                       //                                                 .primary_gold,
@@ -2243,31 +2353,34 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                           GestureDetector(
                             onTap: () async {
                               if (started == false || elapsedTime == "30:00") {
+                                await _kegel_controller.update_notified_status(
+                                    context: context, status: 'false');
                                 await stopWatch_finish();
                                 await changeIndex();
-                                setState(() {
-                                  method_color = (method_selected == 'Hand'
-                                      ? Colors.red
-                                      : (method_selected == 'Dildo'
-                                          ? Colors.blue
-                                          : (method_selected == 'Sex'
-                                              ? Colors.green
-                                              : (method_selected == 'Fleshlight'
-                                                  ? Colors.purple
-                                                  : list[random.nextInt(
-                                                      list.length)]))));
-                                });
-
-                                print('Method  : $method_color');
-                                print(
-                                    'Method colorrr : ${method_color!.value.toRadixString(16)}');
+                                // setState(() {
+                                //   method_color = (method_selected == 'Hand'
+                                //       ? Colors.red
+                                //       : (method_selected == 'Dildo'
+                                //           ? Colors.blue
+                                //           : (method_selected == 'Sex'
+                                //               ? Colors.green
+                                //               : (method_selected == 'Fleshlight'
+                                //                   ? Colors.purple
+                                //                   : list[random.nextInt(
+                                //                       list.length)]))));
+                                // });
+                                //
+                                // print('Method  : $method_color');
+                                // print(
+                                //     'Method colorrr : ${method_color!.value.toRadixString(16)}');
                                 method_data.add(ListMethodClass(
                                     method_name: method_selected,
                                     pauses: paused_time.length.toString(),
                                     total_time: elapsedTime,
                                     pause_time: paused_time,
-                                    color:
-                                        method_color!.value.toRadixString(16)));
+                                    color: HexColor(method_selected_color)
+                                        .value
+                                        .toRadixString(16)));
                                 print("paused_time : $paused_time");
                                 List mohit = [];
 
@@ -2361,8 +2474,10 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               if (paused_time.length >= 4) {
+                                await _kegel_controller.update_notified_status(
+                                    context: context, status: 'true');
                                 startWatch();
                                 CommonWidget().showToaster(
                                     msg: "Only 4 pauses are available");
@@ -2381,9 +2496,15 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   //   });
                                   // }
                                   if (startStop) {
+                                    await _kegel_controller
+                                        .update_notified_status(
+                                            context: context, status: 'true');
                                     startWatch();
                                     start_animation();
                                   } else {
+                                    await _kegel_controller
+                                        .update_notified_status(
+                                            context: context, status: 'false');
                                     stopWatch();
                                   }
                                 } else {
@@ -2920,200 +3041,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                   flex: 2,
                                                   child: GestureDetector(
                                                     onTap: () {
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          double width =
-                                                              MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width;
-                                                          double height =
-                                                              MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .height;
-                                                          return BackdropFilter(
-                                                            filter: ImageFilter
-                                                                .blur(
-                                                                    sigmaX: 10,
-                                                                    sigmaY: 10),
-                                                            child: AlertDialog(
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                elevation: 0.0,
-                                                                // title: Center(child: Text("Evaluation our APP")),
-                                                                content: Column(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Stack(
-                                                                      children: [
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.all(8.0),
-                                                                          child:
-                                                                              Container(
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                                    // color: Colors.black.withOpacity(0.65),
-                                                                                    gradient:
-                                                                                        LinearGradient(
-                                                                                      begin: Alignment.centerLeft,
-                                                                                      end: Alignment.centerRight,
-                                                                                      // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                                      colors: [
-                                                                                        HexColor("#020204").withOpacity(1),
-                                                                                        HexColor("#36393E").withOpacity(1),
-                                                                                      ],
-                                                                                    ),
-                                                                                    boxShadow: [
-                                                                                      BoxShadow(color: HexColor('#04060F'), offset: Offset(10, 10), blurRadius: 10)
-                                                                                    ],
-                                                                                    borderRadius: BorderRadius.circular(15)),
-                                                                            child: Align(
-                                                                                alignment: Alignment.center,
-                                                                                child: Padding(
-                                                                                  padding: const EdgeInsets.all(8.0),
-                                                                                  child: Column(
-                                                                                    children: [
-                                                                                      SizedBox(
-                                                                                        height: 0,
-                                                                                      ),
-
-                                                                                      Column(
-                                                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                        children: [
-                                                                                          Container(
-                                                                                            margin: EdgeInsets.only(left: 18),
-                                                                                            child: Text('Add more method', style: FontStyleUtility.h14(fontColor: ColorUtils.primary_grey, family: 'Pr')),
-                                                                                          ),
-                                                                                          SizedBox(
-                                                                                            height: 11,
-                                                                                          ),
-                                                                                          Container(
-                                                                                            margin: EdgeInsets.symmetric(horizontal: 10),
-                                                                                            // width: 300,
-                                                                                            decoration: BoxDecoration(
-                                                                                                // color: Colors.black.withOpacity(0.65),
-                                                                                                gradient: LinearGradient(
-                                                                                                  begin: Alignment.centerLeft,
-                                                                                                  end: Alignment.centerRight,
-                                                                                                  // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                                                  colors: [
-                                                                                                    HexColor("#36393E").withOpacity(1),
-                                                                                                    HexColor("#020204").withOpacity(1),
-                                                                                                  ],
-                                                                                                ),
-                                                                                                boxShadow: [BoxShadow(color: HexColor('#04060F'), offset: Offset(10, 10), blurRadius: 10)],
-                                                                                                borderRadius: BorderRadius.circular(20)),
-
-                                                                                            child: TextFormField(
-                                                                                              maxLength: 150,
-                                                                                              decoration: InputDecoration(
-                                                                                                contentPadding: EdgeInsets.only(left: 20, top: 14, bottom: 14),
-                                                                                                alignLabelWithHint: false,
-                                                                                                isDense: true,
-                                                                                                hintText: 'Add more method',
-                                                                                                counterStyle: TextStyle(
-                                                                                                  height: double.minPositive,
-                                                                                                ),
-                                                                                                counterText: "",
-                                                                                                filled: true,
-                                                                                                border: InputBorder.none,
-                                                                                                enabledBorder: const OutlineInputBorder(
-                                                                                                  borderSide: BorderSide(color: Colors.transparent, width: 1),
-                                                                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                                                ),
-                                                                                                hintStyle: FontStyleUtility.h14(fontColor: HexColor('#CBCBCB'), family: 'PR'),
-                                                                                              ),
-                                                                                              style: FontStyleUtility.h14(fontColor: ColorUtils.primary_grey, family: 'PR'),
-                                                                                              controller: method_new,
-                                                                                              keyboardType: TextInputType.text,
-                                                                                            ),
-                                                                                          ),
-                                                                                        ],
-                                                                                      ),
-                                                                                      SizedBox(
-                                                                                        height: 10,
-                                                                                      ),
-                                                                                      GestureDetector(
-                                                                                        onTap: () {
-                                                                                          setState(() {
-                                                                                            method_list.add(method_new.text);
-                                                                                            method_new.clear();
-                                                                                            Navigator.pop(context);
-                                                                                          });
-                                                                                        },
-                                                                                        child: Container(
-                                                                                          alignment: Alignment.topRight,
-                                                                                          child: Text(
-                                                                                            'Add',
-                                                                                            style: FontStyleUtility.h12(fontColor: ColorUtils.primary_grey, family: 'PR'),
-                                                                                          ),
-                                                                                        ),
-                                                                                      )
-                                                                                      // common_button_gold(
-                                                                                      //   onTap: () {
-                                                                                      //     Get
-                                                                                      //         .to(
-                                                                                      //         DashboardScreen());
-                                                                                      //   },
-                                                                                      //   title_text: 'Go to Dashboard',
-                                                                                      // ),
-                                                                                    ],
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                        ),
-                                                                        GestureDetector(
-                                                                          onTap:
-                                                                              () {
-                                                                            Navigator.pop(context);
-                                                                          },
-                                                                          child:
-                                                                              Container(
-                                                                            margin:
-                                                                                EdgeInsets.only(right: 10),
-                                                                            alignment:
-                                                                                Alignment.topRight,
-                                                                            child: Container(
-                                                                                decoration: BoxDecoration(
-                                                                                    // color: Colors.black.withOpacity(0.65),
-                                                                                    gradient: LinearGradient(
-                                                                                      begin: Alignment.centerLeft,
-                                                                                      end: Alignment.centerRight,
-                                                                                      // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                                      colors: [
-                                                                                        HexColor("#36393E").withOpacity(1),
-                                                                                        HexColor("#020204").withOpacity(1),
-                                                                                      ],
-                                                                                    ),
-                                                                                    boxShadow: [BoxShadow(color: HexColor('#04060F'), offset: Offset(0, 3), blurRadius: 5)],
-                                                                                    borderRadius: BorderRadius.circular(20)),
-                                                                                child: Padding(
-                                                                                  padding: const EdgeInsets.all(4.0),
-                                                                                  child: Icon(
-                                                                                    Icons.cancel_outlined,
-                                                                                    size: 13,
-                                                                                    color: ColorUtils.primary_grey,
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                        )
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                )),
-                                                          );
-                                                        },
-                                                      );
+                                                      addmethod_popup(context);
                                                     },
                                                     child: Container(
                                                       alignment:
@@ -3238,7 +3166,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                             )
                           : SizedBox.shrink()),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 21,
                       ),
 
@@ -3356,12 +3284,12 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     //         bottomLeft: Radius.circular(20))),
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(13),
-                                          border: Border.all(
-                                              color: HexColor('#383E46'),
-                                              width: 1)),
-                                      margin: EdgeInsets.all(16),
+                                        borderRadius: BorderRadius.circular(13),
+                                        // border: Border.all(
+                                        //     color: HexColor('#383E46'),
+                                        //     width: 1)
+                                      ),
+                                      // margin: EdgeInsets.all(16),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -3480,6 +3408,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                       ColorUtils.primary_grey,
                                                   tooltipBehavior:
                                                       _tooltipBehavior,
+                                                  zoomPanBehavior: _zoomPanBehavior,
+
                                                   // legend: Legend(
                                                   //     isVisible: true,
                                                   //     position:
@@ -3504,10 +3434,10 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                       // rangePadding: ChartRangePadding.none,
                                                       title: AxisTitle(
                                                           text: 'minutes'),
-                                                      // minimum: 1,
+                                                      minimum: 0,
                                                       // maximum: 30,
                                                       interval: 5,
-                                                      //Axis label ustomization.
+                                                      //Axis label customization.
                                                       labelStyle:
                                                           const TextStyle(
                                                               color: Colors
@@ -3552,7 +3482,6 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                   5),
                                                         ),
                                                         // spacing: 0.5,
-
                                                         pointColorMapper:
                                                             (ChartData2 data,
                                                                     _) =>
@@ -3566,6 +3495,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                             (ChartData2 data,
                                                                     _) =>
                                                                 data.y),
+
                                                     RangeColumnSeries<
                                                         ChartData2, String>(
                                                       dataSource:
@@ -3747,6 +3677,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           plotAreaBorderWidth: 0,
                                           plotAreaBorderColor:
                                               ColorUtils.primary_grey,
+                                          tooltipBehavior: _tooltipBehavior2,
+                                          zoomPanBehavior: _zoomPanBehavior,
                                           legend: Legend(
                                               isVisible: false,
                                               position: LegendPosition.bottom,
@@ -3756,6 +3688,11 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           primaryXAxis: CategoryAxis(
                                               majorGridLines:
                                                   MajorGridLines(width: 0),
+                                              autoScrollingMode:
+                                                  AutoScrollingMode.start,
+                                              zoomFactor: 0.6,
+
+                                              // zoomFactor:2 ,
                                               //Hide the axis line of y-axis
                                               axisLine: AxisLine(width: 0)),
                                           primaryYAxis: NumericAxis(
@@ -3776,184 +3713,213 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               axisLine: AxisLine(
                                                   width: 1,
                                                   color: HexColor('#383E46'))),
-                                          series: <
-                                              ChartSeries<ChartData0, String>>[
-                                            // Renders column chart
-                                            ColumnSeries<ChartData0, String>(
-                                                // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                                dataSource: weekly_data,
-                                                legendItemText: 'Hand',
-                                                width: 0.5,
-                                                spacing: 0.3,
-                                                color: HexColor('#DD3931'),
-                                                pointColorMapper: (ChartData0 data,
-                                                        _) =>
-                                                    (data.x1 == 'Hand'
-                                                        ? Colors.red
-                                                        : (data.x1 == 'Dildo'
-                                                            ? Colors.blue
-                                                            : (data.x1 == 'Sex'
-                                                                ? Colors.green
-                                                                : (data.x1 ==
-                                                                        'Fleshlight'
-                                                                    ? Colors
-                                                                        .purple
-                                                                    : Colors
-                                                                        .white)))),
-                                                xValueMapper:
-                                                    (ChartData0 data, _) =>
-                                                        data.x,
-                                                yValueMapper:
-                                                    (ChartData0 data, _) =>
-                                                        data.y),
-                                            ColumnSeries<ChartData0, String>(
-                                                // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                                dataSource: weekly_data2,
-                                                legendItemText: 'Dildo',
-                                                width: 0.5,
-                                                spacing: 0.3,
-                                                color: Colors.blue,
-                                                pointColorMapper: (ChartData0 data,
-                                                        _) =>
-                                                    (data.x1 == 'Hand'
-                                                        ? Colors.red
-                                                        : (data.x1 == 'Dildo'
-                                                            ? Colors.blue
-                                                            : (data.x1 == 'Sex'
-                                                                ? Colors.green
-                                                                : (data.x1 ==
-                                                                        'Fleshlight'
-                                                                    ? Colors
-                                                                        .purple
-                                                                    : Colors
-                                                                        .white)))),
-                                                xValueMapper:
-                                                    (ChartData0 data, _) =>
-                                                        data.x,
-                                                yValueMapper:
-                                                    (ChartData0 data, _) =>
-                                                        data.y),
-                                            ColumnSeries<ChartData0, String>(
-                                                // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                                dataSource: weekly_data3,
-                                                legendItemText: 'Sex',
-                                                width: 0.5,
-                                                spacing: 0.3,
-                                                color: Colors.green,
-                                                pointColorMapper: (ChartData0 data,
-                                                        _) =>
-                                                    (data.x1 == 'Hand'
-                                                        ? Colors.red
-                                                        : (data.x1 == 'Dildo'
-                                                            ? Colors.blue
-                                                            : (data.x1 == 'Sex'
-                                                                ? Colors.green
-                                                                : (data.x1 ==
-                                                                        'Fleshlight'
-                                                                    ? Colors
-                                                                        .purple
-                                                                    : Colors
-                                                                        .white)))),
-                                                xValueMapper:
-                                                    (ChartData0 data, _) =>
-                                                        data.x,
-                                                yValueMapper:
-                                                    (ChartData0 data, _) =>
-                                                        data.y),
-                                            ColumnSeries<ChartData0, String>(
-                                                // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                                dataSource: weekly_data4,
-                                                legendItemText: 'Fleshlight',
-                                                width: 0.5,
-                                                spacing: 0.3,
-                                                color: Colors.purple,
-                                                pointColorMapper: (ChartData0 data,
-                                                        _) =>
-                                                    (data.x1 == 'Hand'
-                                                        ? Colors.red
-                                                        : (data.x1 == 'Dildo'
-                                                            ? Colors.blue
-                                                            : (data.x1 == 'Sex'
-                                                                ? Colors.green
-                                                                : (data.x1 ==
-                                                                        'Fleshlight'
-                                                                    ? Colors
-                                                                        .purple
-                                                                    : Colors
-                                                                        .white)))),
-                                                xValueMapper:
-                                                    (ChartData0 data, _) =>
-                                                        data.x,
-                                                yValueMapper:
-                                                    (ChartData0 data, _) =>
-                                                        data.y),
-                                            // ColumnSeries<ChartData2, String>(
-                                            //     width: 0.5,
-                                            //     spacing: 0.6,
-                                            //     color: HexColor('#75C043'),
-                                            //     legendItemText: 'Sex',
-                                            //
-                                            //     // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                            //     dataSource: weekly_data_listM,
-                                            //     xValueMapper:
-                                            //         (ChartData2 data, _) =>
-                                            //     data.x,
-                                            //     yValueMapper:
-                                            //         (ChartData2 data, _) =>
-                                            //     data.y),
-                                            // ColumnSeries<ChartData2, String>(
-                                            //     width: 0.5,
-                                            //     spacing: 0.6,
-                                            //     color: HexColor('#1880C3'),
-                                            //     legendItemText: 'Dildo',
-                                            //     dataSource: weekly_data_listT,
-                                            //     xValueMapper:
-                                            //         (ChartData2 data, _) =>
-                                            //     data.x,
-                                            //     yValueMapper:
-                                            //         (ChartData2 data, _) =>
-                                            //     data.y),
-                                            // ColumnSeries<ChartData2, String>(
-                                            //     width: 0.5,
-                                            //     spacing: 0.6,
-                                            //     color: HexColor('#1880C3'),
-                                            //     legendItemText: 'Dildo',
-                                            //     dataSource: weekly_data_listW,
-                                            //     xValueMapper:
-                                            //         (ChartData2 data, _) =>
-                                            //     data.x,
-                                            //     yValueMapper:
-                                            //         (ChartData2 data, _) =>
-                                            //     data.y),
-                                            // ColumnSeries<ChartData2, String>(
-                                            //     width: 0.5,
-                                            //     spacing: 0.6,
-                                            //     color: HexColor('#1880C3'),
-                                            //     legendItemText: 'Dildo',
-                                            //     dataSource: weekly_data_listTU,
-                                            //     xValueMapper:
-                                            //         (ChartData2 data, _) =>
-                                            //     data.x,
-                                            //     yValueMapper:
-                                            //         (ChartData2 data, _) =>
-                                            //     data.y),ColumnSeries<ChartData2, String>(
-                                            //     width: 0.5,
-                                            //     spacing: 0.6,
-                                            //     color: HexColor('#1880C3'),
-                                            //     legendItemText: 'Dildo',
-                                            //     dataSource: weekly_data_listF,
-                                            //     xValueMapper:
-                                            //         (ChartData2 data, _) =>
-                                            //     data.x,
-                                            //     yValueMapper:
-                                            //         (ChartData2 data, _) =>
-                                            //     data.y),
-                                          ])),
+                                          series: mohit
+                                          // <ChartSeries<ChartData0, String>>[
+                                          //   // Renders column chart
+                                          //   ColumnSeries<ChartData0, String>(
+                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                          //       dataSource: weekly_data,
+                                          //       enableTooltip: true,
+                                          //       legendItemText: 'Hand',
+                                          //       width: 0.5,
+                                          //       spacing: 0.3,
+                                          //       color: HexColor('#DD3931'),
+                                          //       pointColorMapper: (ChartData0
+                                          //                   data,
+                                          //               _) =>
+                                          //           (data
+                                          //                       .x1 ==
+                                          //                   'Hand'
+                                          //               ? Colors.red
+                                          //               : (data
+                                          //                           .x1 ==
+                                          //                       'Dildo'
+                                          //                   ? Colors.blue
+                                          //                   : (data
+                                          //                               .x1 ==
+                                          //                           'Sex'
+                                          //                       ? Colors.green
+                                          //                       : (data.x1 ==
+                                          //                               'Fleshlight'
+                                          //                           ? Colors
+                                          //                               .purple
+                                          //                           : HexColor(data
+                                          //                               .color))))),
+                                          //       xValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.x,
+                                          //       yValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.y),
+                                          //   ColumnSeries<ChartData0, String>(
+                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                          //       dataSource: weekly_data2,
+                                          //       enableTooltip: true,
+                                          //       legendItemText: 'Dildo',
+                                          //       width: 0.5,
+                                          //       spacing: 0.3,
+                                          //       color: Colors.blue,
+                                          //       pointColorMapper: (ChartData0
+                                          //                   data,
+                                          //               _) =>
+                                          //           (data
+                                          //                       .x1 ==
+                                          //                   'Hand'
+                                          //               ? Colors.red
+                                          //               : (data
+                                          //                           .x1 ==
+                                          //                       'Dildo'
+                                          //                   ? Colors.blue
+                                          //                   : (data
+                                          //                               .x1 ==
+                                          //                           'Sex'
+                                          //                       ? Colors.green
+                                          //                       : (data.x1 ==
+                                          //                               'Fleshlight'
+                                          //                           ? Colors
+                                          //                               .purple
+                                          //                           : HexColor(data
+                                          //                               .color))))),
+                                          //       xValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.x,
+                                          //       yValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.y),
+                                          //   ColumnSeries<ChartData0, String>(
+                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                          //       dataSource: weekly_data3,
+                                          //       enableTooltip: true,
+                                          //       legendItemText: 'Sex',
+                                          //       width: 0.5,
+                                          //       spacing: 0.3,
+                                          //       color: Colors.green,
+                                          //       pointColorMapper: (ChartData0
+                                          //                   data,
+                                          //               _) =>
+                                          //           (data
+                                          //                       .x1 ==
+                                          //                   'Hand'
+                                          //               ? Colors.red
+                                          //               : (data
+                                          //                           .x1 ==
+                                          //                       'Dildo'
+                                          //                   ? Colors.blue
+                                          //                   : (data
+                                          //                               .x1 ==
+                                          //                           'Sex'
+                                          //                       ? Colors.green
+                                          //                       : (data.x1 ==
+                                          //                               'Fleshlight'
+                                          //                           ? Colors
+                                          //                               .purple
+                                          //                           : HexColor(data
+                                          //                               .color))))),
+                                          //       xValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.x,
+                                          //       yValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.y),
+                                          //   ColumnSeries<ChartData0, String>(
+                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                          //       dataSource: weekly_data4,
+                                          //       enableTooltip: true,
+                                          //       legendItemText: 'Fleshlight',
+                                          //       width: 0.5,
+                                          //       spacing: 0.3,
+                                          //       color: Colors.purple,
+                                          //       pointColorMapper:
+                                          //           (ChartData0 data, _) => (data
+                                          //                       .x1 ==
+                                          //                   'Hand'
+                                          //               ? Colors.red
+                                          //               : (data.x1 == 'Dildo'
+                                          //                   ? Colors.blue
+                                          //                   : (data.x1 == 'Sex'
+                                          //                       ? Colors.green
+                                          //                       : (data.x1 ==
+                                          //                               'Fleshlight'
+                                          //                           ? Colors
+                                          //                               .purple
+                                          //                           : HexColor(
+                                          //                               "${data.color.substring(2)}"))))),
+                                          //       xValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.x,
+                                          //       yValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.y),
+                                          //   // ColumnSeries<ChartData2, String>(
+                                          //   //     width: 0.5,
+                                          //   //     spacing: 0.6,
+                                          //   //     color: HexColor('#75C043'),
+                                          //   //     legendItemText: 'Sex',
+                                          //   //
+                                          //   //     // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                          //   //     dataSource: weekly_data_listM,
+                                          //   //     xValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.x,
+                                          //   //     yValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.y),
+                                          //   // ColumnSeries<ChartData2, String>(
+                                          //   //     width: 0.5,
+                                          //   //     spacing: 0.6,
+                                          //   //     color: HexColor('#1880C3'),
+                                          //   //     legendItemText: 'Dildo',
+                                          //   //     dataSource: weekly_data_listT,
+                                          //   //     xValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.x,
+                                          //   //     yValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.y),
+                                          //   // ColumnSeries<ChartData2, String>(
+                                          //   //     width: 0.5,
+                                          //   //     spacing: 0.6,
+                                          //   //     color: HexColor('#1880C3'),
+                                          //   //     legendItemText: 'Dildo',
+                                          //   //     dataSource: weekly_data_listW,
+                                          //   //     xValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.x,
+                                          //   //     yValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.y),
+                                          //   // ColumnSeries<ChartData2, String>(
+                                          //   //     width: 0.5,
+                                          //   //     spacing: 0.6,
+                                          //   //     color: HexColor('#1880C3'),
+                                          //   //     legendItemText: 'Dildo',
+                                          //   //     dataSource: weekly_data_listTU,
+                                          //   //     xValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.x,
+                                          //   //     yValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.y),
+                                          //   // ColumnSeries<ChartData2, String>(
+                                          //   //     width: 0.5,
+                                          //   //     spacing: 0.6,
+                                          //   //     color: HexColor('#1880C3'),
+                                          //   //     legendItemText: 'Dildo',
+                                          //   //     dataSource: weekly_data_listF,
+                                          //   //     xValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.x,
+                                          //   //     yValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.y),
+                                          // ]
+                                          )),
                                   (loader
                                       ? SizedBox.shrink()
                                       : (m_screenWeeklyDataModel!.data!.isEmpty
                                           ? SizedBox.shrink()
                                           : Container(
+                                      // color: Colors.pink,
                                               margin: EdgeInsets.symmetric(
                                                   vertical: 0, horizontal: 20),
                                               width: MediaQuery.of(context)
@@ -4141,16 +4107,18 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           plotAreaBorderWidth: 0,
                                           plotAreaBorderColor:
                                               ColorUtils.primary_grey,
+
                                           // tooltipBehavior: _tooltipBehavior,
                                           // crosshairBehavior: _crosshairBehavior,
                                           trackballBehavior: _trackballBehavior,
+                                          zoomPanBehavior: _zoomPanBehavior,
                                           primaryXAxis: CategoryAxis(
                                               rangePadding:
                                                   ChartRangePadding.auto,
                                               majorGridLines:
                                                   MajorGridLines(width: 0),
-                                              arrangeByIndex: true,
-
+                                              // arrangeByIndex: true,
+                                              zoomFactor: 0.45,
                                               //Hide the axis line of y-axis
                                               axisLine: AxisLine(width: 0)),
                                           primaryYAxis: NumericAxis(
@@ -4504,8 +4472,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   List testList2 = [];
   bool loader = true;
   List methoddd2 = [];
-
   List coloring2 = [];
+
+  List<ChartSeries<Days_weekly, String>> mohit = [];
 
   Future MasturbationWeekly_Data_get_API() async {
     String idUser = await PreferenceManager().getPref(URLConstants.id);
@@ -4513,7 +4482,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         "${URLConstants.base_url}${URLConstants.masturbation_get_weekly_data}?userId=$idUser";
 
     try {
-      showLoader(context);
+      // showLoader(context);
       var response = await http.get(Uri.parse(url));
       print(response.body);
       print(response.request);
@@ -4530,127 +4499,182 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         setState(() {
           loader = false;
         });
+
         if (m_screenWeeklyDataModel!.error == false) {
-          hideLoader(context);
+          // hideLoader(context);
           debugPrint(
               '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${m_screenWeeklyDataModel!.data!.length}');
 
-          for (var i = 0; i < weeklyData!.data!.length; i++) {
+          if (mohit.isNotEmpty) {
+            mohit.clear();
+          }
+          for (var i = 0; i < m_screenWeeklyDataModel!.data!.length; i++) {
             var y1 = m_screenWeeklyDataModel!.data![i].createdDate!;
             print(y1);
             String tempDate =
                 DateFormat('EEEE').format(DateFormat("yyyy-MM-dd").parse(y1));
             print(tempDate);
-            // DateFormat('EEEE').format(DateFormat("yyyy-MM-dd hh:mm:ss")
-            //                          .parse(element.createdDate!))
 
-            for (var j = 0; j < weeklyData!.data![i].days!.length; j++) {
-              var test = weeklyData!.data![i].days![j].methodName!;
-              testList.add(test);
-              print('Testjj: $testList');
-
-              var test2 = weeklyData!.data![i].days![j].totalPauses!;
-              testList2.add(test2);
-              print('Test: $testList2');
-
+            for (var k = 0;
+                k < m_screenWeeklyDataModel!.data![i].days!.length;
+                k++) {
               DateTime tempDate_ = new DateFormat("mm:ss")
-                  .parse(weeklyData!.data![i].days![0].totalTime!);
+                  .parse(weeklyData!.data![i].days![k].totalTime!);
               print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
-
               var totalTime = (tempDate_.minute * 60) + tempDate_.second;
               var y = double.parse((totalTime / 60).toString());
 
+              var datar = ColumnSeries(
+                  dataSource: m_screenWeeklyDataModel!.data![i].days!,
+                  pointColorMapper: (Days_weekly data, _) =>
+                      HexColor(weeklyData!.data![i].days![k].colorCode!),
+                  xValueMapper: (Days_weekly data, _) => DateFormat('EEEE')
+                      .format(
+                          DateFormat("yyyy-MM-dd").parse(data.createdDate!)),
+                  width: 0.5,
+                  spacing: 0.3,
+                  yValueMapper: (Days_weekly data, _) => y);
+
               setState(() {
-                methoddd2.add(weeklyData!.data![i].days![j].methodName!);
-                coloring2.add(weeklyData!.data![i].days![j].colorCode!);
+                mohit.add(datar);
+              });
+              print("mohit ${mohit}");
+              List new1 = [];
+              List new2 = [];
+              setState(() {
+                new1.add(weeklyData!.data![i].days![k].methodName!);
+                new2.add(weeklyData!.data![i].days![k].colorCode!);
               });
 
               setState(() {
-                weekly_data5.add(ChartData2(
-                  DateFormat('EEEE').format(DateFormat("yyyy-MM-dd")
-                      .parse(weeklyData!.data![i].days![j].createdDate!)),
-                  weeklyData!.data![i].days![j].methodName!,
-                  y,
-                  weeklyData!.data![i].days![j].totalPauses!,
-                  double.parse(weeklyData!.data![i].days![j].totalPauses!),
-                ));
-              });
-            }
-            if (weeklyData!.data![i].days!.length > 1) {
-              DateTime tempDate_ = new DateFormat("mm:ss")
-                  .parse(weeklyData!.data![i].days![1].totalTime!);
-              print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
-
-              var totalTime = (tempDate_.minute * 60) + tempDate_.second;
-              var y = double.parse((totalTime / 60).toString());
-
-              setState(() {
-                weekly_data2.add(ChartData0(
-                  tempDate,
-                  m_screenWeeklyDataModel!.data![i].days![1].methodName!,
-                  y,
-                  // double.parse(
-                  //     m_screenWeeklyDataModel!.data![i].days![1].totalPauses!),
-                  m_screenWeeklyDataModel!.data![i].days![0].colorCode!,
-                ));
+                methoddd2.add(weeklyData!.data![i].days![k].methodName!);
+                // methoddd2.add(weeklyData!.data![i].days![k].methodName!);
+                coloring2.add(weeklyData!.data![i].days![k].colorCode!);
               });
             }
-            if (weeklyData!.data![i].days!.length > 2) {
-              DateTime tempDate_ = new DateFormat("mm:ss")
-                  .parse(weeklyData!.data![i].days![2].totalTime!);
-              print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
-
-              var totalTime = (tempDate_.minute * 60) + tempDate_.second;
-              var y = double.parse((totalTime / 60).toString());
-
-              setState(() {
-                weekly_data3.add(ChartData0(
-                  tempDate,
-                  m_screenWeeklyDataModel!.data![i].days![2].methodName!,
-                  y,
-                  m_screenWeeklyDataModel!.data![i].days![0].colorCode!,
-                ));
-              });
-            }
-            if (weeklyData!.data![i].days!.length > 3) {
-              DateTime tempDate_ = new DateFormat("mm:ss")
-                  .parse(weeklyData!.data![i].days![3].totalTime!);
-              print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
-
-              var totalTime = (tempDate_.minute * 60) + tempDate_.second;
-              var y = double.parse((totalTime / 60).toString());
-
-              setState(() {
-                weekly_data4.add(ChartData0(
-                  tempDate,
-                  m_screenWeeklyDataModel!.data![i].days![3].methodName!,
-                  y,
-                  m_screenWeeklyDataModel!.data![i].days![0].colorCode!,
-                ));
-              });
-            }
-            DateTime tempDate_ = new DateFormat("mm:ss")
-                .parse(weeklyData!.data![i].days![0].totalTime!);
-            print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
-
-            var totalTime = (tempDate_.minute * 60) + tempDate_.second;
-            var y = double.parse((totalTime / 60).toString());
 
             setState(() {
-              weekly_data.add(ChartData0(
-                tempDate,
-                m_screenWeeklyDataModel!.data![i].days![0].methodName!,
-                y,
-                m_screenWeeklyDataModel!.data![i].days![0].colorCode!,
-              ));
+              // methoddd2 = methoddd2.toSet().toList();
+
+              // coloring2 = coloring2.toSet().toList();
             });
           }
-          setState(() {
-            methoddd2 = methoddd2.toSet().toList();
-            coloring2 = coloring2.toSet().toList();
-          });
+
+          // for (var i = 0; i <= weeklyData!.data!.length; i++) {
+          //   var y1 = m_screenWeeklyDataModel!.data![i].createdDate!;
+          //   print(y1);
+          //   String tempDate =
+          //       DateFormat('EEEE').format(DateFormat("yyyy-MM-dd").parse(y1));
+          //   print(tempDate);
+          //   // DateFormat('EEEE').format(DateFormat("yyyy-MM-dd hh:mm:ss")
+          //   //                          .parse(element.createdDate!))
+          //
+          //   for (var j = 0; j < weeklyData!.data![i].days!.length; j++) {
+          //     var test = weeklyData!.data![i].days![j].methodName!;
+          //     testList.add(test);
+          //     print('Testjj: $testList');
+          //
+          //     var test2 = weeklyData!.data![i].days![j].totalPauses!;
+          //     testList2.add(test2);
+          //     print('Test: $testList2');
+          //
+          //     DateTime tempDate_ = new DateFormat("mm:ss")
+          //         .parse(weeklyData!.data![i].days![0].totalTime!);
+          //     print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+          //     var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+          //     var y = double.parse((totalTime / 60).toString());
+          //
+          //     setState(() {
+          //       weekly_data5.add(ChartData2(
+          //         DateFormat('EEEE').format(DateFormat("yyyy-MM-dd")
+          //             .parse(weeklyData!.data![i].days![j].createdDate!)),
+          //         weeklyData!.data![i].days![j].methodName!,
+          //         y,
+          //         m_screenWeeklyDataModel!.data![i].days![0].colorCode!
+          //             .substring(2),
+          //         double.parse(weeklyData!.data![i].days![j].totalPauses!),
+          //       ));
+          //     });
+          //   }
+          //   if (weeklyData!.data![i].days!.length > 1) {
+          //     DateTime tempDate_ = new DateFormat("mm:ss")
+          //         .parse(weeklyData!.data![i].days![1].totalTime!);
+          //     print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+          //
+          //     var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+          //     var y = double.parse((totalTime / 60).toString());
+          //
+          //     setState(() {
+          //       weekly_data2.add(ChartData0(
+          //         tempDate,
+          //         m_screenWeeklyDataModel!.data![i].days![1].methodName!,
+          //         y,
+          //         // double.parse(
+          //         //     m_screenWeeklyDataModel!.data![i].days![1].totalPauses!),
+          //         m_screenWeeklyDataModel!.data![i].days![0].colorCode!
+          //             .substring(2),
+          //       ));
+          //     });
+          //   }
+          //   if (weeklyData!.data![i].days!.length > 2) {
+          //     DateTime tempDate_ = new DateFormat("mm:ss")
+          //         .parse(weeklyData!.data![i].days![2].totalTime!);
+          //     print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+          //
+          //     var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+          //     var y = double.parse((totalTime / 60).toString());
+          //
+          //     setState(() {
+          //       weekly_data3.add(ChartData0(
+          //         tempDate,
+          //         m_screenWeeklyDataModel!.data![i].days![2].methodName!,
+          //         y,
+          //         m_screenWeeklyDataModel!.data![i].days![0].colorCode!
+          //             .substring(2),
+          //       ));
+          //     });
+          //   }
+          //   if (weeklyData!.data![i].days!.length > 3) {
+          //     DateTime tempDate_ = new DateFormat("mm:ss")
+          //         .parse(weeklyData!.data![i].days![3].totalTime!);
+          //     print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+          //
+          //     var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+          //     var y = double.parse((totalTime / 60).toString());
+          //
+          //     setState(() {
+          //       weekly_data4.add(ChartData0(
+          //         tempDate,
+          //         m_screenWeeklyDataModel!.data![i].days![3].methodName!,
+          //         y,
+          //         m_screenWeeklyDataModel!.data![i].days![0].colorCode!
+          //             .substring(2),
+          //       ));
+          //     });
+          //   }
+          //   DateTime tempDate_ = new DateFormat("mm:ss")
+          //       .parse(weeklyData!.data![i].days![0].totalTime!);
+          //   print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+          //
+          //   var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+          //   var y = double.parse((totalTime / 60).toString());
+          //
+          //   setState(() {
+          //     weekly_data.add(ChartData0(
+          //       tempDate,
+          //       m_screenWeeklyDataModel!.data![i].days![0].methodName!,
+          //       y,
+          //       m_screenWeeklyDataModel!.data![i].days![0].colorCode!
+          //           .substring(2),
+          //     ));
+          //   });
+          // }
+          // setState(() {
+          //   methoddd2 = methoddd2.toSet().toList();
+          //   coloring2 = coloring2.toSet().toList();
+          // });
           print("methoddd2 ${methoddd2}");
-          print("methoddd2 ${methoddd2}");
+          // print("coloring2 ${coloring2}");
           // print("weekly_data[i] ${weekly_data[0].x}");
           // print("weekly_data[i] ${weekly_data[0].y}");
           // print("weekly_data[i] ${weekly_data[0].x1}");
@@ -4796,16 +4820,16 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
           return m_screenWeeklyDataModel;
         } else {
-          hideLoader(context);
+          // hideLoader(context);
 
           // CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
           return null;
         }
       } else if (response.statusCode == 422) {
-        hideLoader(context);
+        // hideLoader(context);
         CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
       } else if (response.statusCode == 401) {
-        hideLoader(context);
+        // hideLoader(context);
         CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
       } else {
         // CommonWidget().showToaster(msg: msg.toString());
@@ -4843,6 +4867,10 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
           // await Get.to(Dashboard());
           // CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
           List var_ = [];
+
+          if (lifetime_data_list.isNotEmpty) {
+            lifetime_data_list.clear();
+          }
 
           for (var i = 0;
               i < m_screenLifeTimeDataModel!.data![0].methods!.length;
@@ -4936,19 +4964,27 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
           // await Get.to(Dashboard());
           // CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
 
+          if (daily_data_list.isNotEmpty) {
+            daily_data_list.clear();
+          }
           for (var i = 0;
               i < m_screenDailyDataModel!.data![0].days!.length;
               i++) {
             // x_axis = data_sales[i]["month"];
-            print(
-                "date : ${m_screenDailyDataModel!.data![0].days![i].totalTime}");
+            // print(
+            //     "date : ${m_screenDailyDataModel!.data![0].days![i].totalTime}");
 
             setState(() {
               methoddd
                   .add(m_screenDailyDataModel!.data![0].days![i].methodName!);
               coloring
                   .add(m_screenDailyDataModel!.data![0].days![i].colorCode!);
+              // methoddd = methoddd.toSet().toList();
+              // coloring = coloring.toSet().toList();
             });
+
+            print("methoddd ${methoddd}");
+            print("coloring ${coloring}");
 
             DateTime tempDate_ = new DateFormat("mm:ss")
                 .parse(m_screenDailyDataModel!.data![0].days![i].totalTime!);
@@ -5003,8 +5039,11 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                         .data![0].days![i].pausesTime!.length;
                 j++) {
               setState(() {
-                double day = double.parse(
-                    m_screenDailyDataModel!.data![0].days![i].pausesTime![j]);
+                double day = (m_screenDailyDataModel!
+                        .data![0].days![i].pausesTime![j].isNotEmpty
+                    ? double.parse(m_screenDailyDataModel!
+                        .data![0].days![i].pausesTime![j])
+                    : 0);
                 daily_data_list.add(ChartData2(
                   formattedTime,
                   x1!,
@@ -5035,25 +5074,21 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             print(daily_data_list.toSet().toList().length); // => ['a', 'b']
             // print("${daily_data_list[i].x} :${daily_data_list[i].x1} :${daily_data_list[i].y}");
           }
-          setState(() {
-            methoddd = methoddd.toSet().toList();
-            coloring = coloring.toSet().toList();
-          });
 
-          print("methoddd ${methoddd}");
-          print("coloring ${coloring}");
+          // print("methoddd ${methoddd}");
+          // print("coloring ${coloring}");
           print("gst_payable_list");
           print("gst_payable_list");
           print(temp);
 
-          // var unique = List.from(method_list)..addAll(temp);
+          // var unique = List.from(_masturbation_screen_controller.method_list)..addAll(temp);
           setState(() {
-            method_list = <dynamic>{...method_list, ...temp}.toList();
+            // _masturbation_screen_controller.method_list = <methods_list>{..._masturbation_screen_controller.method_list, ...temp}.toList();
           });
 
           print("unique");
           print("unique");
-          print(method_list);
+          print(_masturbation_screen_controller.method_list);
           return m_screenWeeklyDataModel;
         } else {
           hideLoader(context);

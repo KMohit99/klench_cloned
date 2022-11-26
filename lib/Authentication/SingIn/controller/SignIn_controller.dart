@@ -34,6 +34,8 @@ class SignInScreenController extends GetxController {
   SingInModel? singInModel;
   RxBool isLoading = false.obs;
 
+
+
   Future<dynamic> SignInAPi({required BuildContext context}) async {
     debugPrint('0-0-0-0-0-0-0 username');
     isLoading(true);

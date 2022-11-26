@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -1073,6 +1074,47 @@ import '../utils/colorUtils.dart';
 //     return "$hoursStr:$minutesStr:$secondsStr";
 //   }
 // }
+class methods_list {
+  final String? method_name;
+  final String? color;
+
+  methods_list({ this.method_name,  this.color});
+
+  factory methods_list.fromJson(Map<String, dynamic> jsonData) {
+    return methods_list(
+      method_name: jsonData['method_name'],
+      color: jsonData['color'],
+    );
+  }
+
+  static Map<String, dynamic> toMap(methods_list music) => {
+    'method_name': music.method_name,
+    'color': music.color,
+
+  };
+
+  static String encode(List<methods_list> musics) => json.encode(
+    musics
+        .map<Map<String, dynamic>>((music) => methods_list.toMap(music))
+        .toList(),
+  );
+
+  static List<methods_list> decode(String musics) =>
+      (json.decode(musics) as List<dynamic>)
+          .map<methods_list>((item) => methods_list.fromJson(item))
+          .toList();
+}
+
+// class methods_list {
+//   String? method_name;
+//   String? color;
+//
+// // added '?'
+//   methods_list(
+//       {this.method_name, this.color});
+// // can also add 'required' keyword
+// }
+
 
 class ListMethodClass {
   String? method_name;

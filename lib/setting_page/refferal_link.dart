@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,22 @@ class _RefferalLinkScreenState extends State<RefferalLinkScreen> {
   void initState() {
     Emailcontroller.text = link;
     print(Emailcontroller.text);
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
+      uriPrefix: 'https://klench12.page.link', // uri prefix used for Dynamic Links in Firebase Console
+      link: Uri.parse("https://klench12.page.link/RtQw"),
+      androidParameters: AndroidParameters(
+        packageName: 'com.example.klench_', // package name for your app
+        minimumVersion: 0,
+      ),
+      iosParameters: const IOSParameters(bundleId: 'com.foxy.klench'), // bundle ID for your app
+    );
+    final Uri shortDynamicLink = parameters.link;
+    print(shortDynamicLink);
+    setState(() {
+      link = shortDynamicLink.toString();
+      Emailcontroller.text = link;
+    });
+
   }
 
   PageController? controller;
@@ -55,6 +72,8 @@ class _RefferalLinkScreenState extends State<RefferalLinkScreen> {
     "Instagram",
     "Foursquare",
   ];
+
+
 
   @override
   Widget build(BuildContext context) {

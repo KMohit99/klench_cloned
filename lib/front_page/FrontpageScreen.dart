@@ -9,6 +9,7 @@ import 'package:klench_/utils/Common_container_color.dart';
 import 'package:klench_/utils/TextStyle_utils.dart';
 import 'package:klench_/utils/colorUtils.dart';
 
+import '../Authentication/SignUp/controller/sign_up_controller.dart';
 import '../Authentication/ask_signUp.dart';
 import '../utils/Common_buttons.dart';
 import '../utils/UrlConstrant.dart';
@@ -21,6 +22,11 @@ class FrontScreen extends StatefulWidget {
 }
 
 class _FrontScreenState extends State<FrontScreen> {
+
+  final SignUpScreenController _signUpScreenController = Get.put(
+      SignUpScreenController(),
+      tag: SignUpScreenController().toString());
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -71,6 +77,7 @@ class _FrontScreenState extends State<FrontScreen> {
           //   backgroundColor: Colors.black,
           // ),
           body: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
             child: Container(
               color: Colors.transparent,
               margin: EdgeInsets.symmetric(horizontal: 15),
@@ -436,6 +443,9 @@ class _FrontScreenState extends State<FrontScreen> {
                             await PreferenceManager()
                                 .setPref(URLConstants.trial, 'true');
 
+                            setState(() {
+                              _signUpScreenController.free_trials = 'true';
+                            });
                             Get.to(AskSignUp());
 
                           },
@@ -454,8 +464,10 @@ class _FrontScreenState extends State<FrontScreen> {
                           onTap: ()async{
                             // Get.to(SignUpScreen());
                             await PreferenceManager()
-                                .setPref(URLConstants.trial, 'true');
-
+                                .setPref(URLConstants.trial, 'false');
+                            setState(() {
+                              _signUpScreenController.free_trials = 'false';
+                            });
                             Get.to(AskSignUp());
 
                           },
@@ -509,8 +521,10 @@ class _FrontScreenState extends State<FrontScreen> {
                         GestureDetector(
                           onTap: (){
                             // Get.to(SignUpScreen());
+                            setState(() {
+                              _signUpScreenController.free_trials = 'false';
+                            });
                             Get.to(AskSignUp());
-
                           },
                           child: Container(
                             decoration: BoxDecoration(

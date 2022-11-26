@@ -23,6 +23,7 @@ import '../utils/TextStyle_utils.dart';
 import '../utils/colorUtils.dart';
 import '../utils/common_widgets.dart';
 import 'alarm_info.dart';
+import 'controller/kegel_excercise_controller.dart';
 
 class WarmUpScreen extends StatefulWidget {
   const WarmUpScreen({Key? key}) : super(key: key);
@@ -125,6 +126,8 @@ class _WarmUpScreenState extends State<WarmUpScreen>
               // startWatch2();
               // start_animation();
               Future.delayed(const Duration(seconds: 11), () {
+                print("1111");
+
                 setState(() {
                   reverse_started = false;
                 });
@@ -274,7 +277,7 @@ class _WarmUpScreenState extends State<WarmUpScreen>
     }
     if (seconds_timer! <= 0) {
       setState(() {
-        reverse_started = false;
+        // reverse_started = false;
         countdownTimer2!.cancel();
         seconds_timer = 10;
       });
@@ -529,6 +532,8 @@ class _WarmUpScreenState extends State<WarmUpScreen>
     // you need this
     super.dispose();
   }
+  final Kegel_controller _kegel_controller =
+  Get.put(Kegel_controller(), tag: Kegel_controller().toString());
 
   @override
   Widget build(BuildContext context) {
@@ -1301,7 +1306,7 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                               textStyle: TextStyle(
                                                   color: (four_started
                                                       ? HexColor('#409C46')
-                                                      .withOpacity(0.4)
+                                                          .withOpacity(0.4)
                                                       : (reverse_started
                                                           ? HexColor('#409C46')
                                                               .withOpacity(0.4)
@@ -2126,6 +2131,7 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                         onTap: () async {
                           if (started) {
                             back_wallpaper = false;
+                            await _kegel_controller.update_notified_status(context: context,status: 'true');
                             startTimer();
                             startWatch3();
                             start_animation();
@@ -2138,20 +2144,50 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                             //   startWatch();
                             // });
                           } else {
-                            if (four_started) {
-                              // CommonWidget().showToaster(
-                              //     msg: "Finish method first");
-                            } else {
+                            // if (four_started) {
+                            //   setState(() {
+                            //     reverse_started = false;
+                            //     // countdownTimer2!.cancel();
+                            //     elapsedTime = '00';
+                            //     elapsedTime2 = '00';
+                            //     elapsedTime3 = '00';
+                            //   });
+                            //   await _kegel_controller.update_notified_status(context: context,status: 'false');
+                            //
+                            //   await stopWatch_finish();
+                            //   await Vibration.cancel();
+                            //   await click_alarm();
+                            //   await _animationController_middle!.reverse();
+                            //   setState(() {
+                            //     animation_started = false;
+                            //     _swipe_setup_controller.w_running = false;
+                            //     started = true;
+                            //     four_started = false;
+                            //     reverse_started = false;
+                            //     timer_started = false;
+                            //     back_wallpaper = true;
+                            //     button_height = 150;
+                            //     text_k_size = 30;
+                            //     text_time_size = 25;
+                            //   });
+                            //   // CommonWidget().showToaster(
+                            //   //     msg: "Finish method first");
+                            // } else {
                               setState(() {
                                 elapsedTime = '00';
                                 elapsedTime2 = '00';
                                 elapsedTime3 = '00';
                               });
+                              await _kegel_controller.update_notified_status(context: context,status: 'false');
                               await stopWatch_finish();
                               await Vibration.cancel();
                               await click_alarm();
                               await _animationController_middle!.reverse();
                               setState(() {
+                                _animationController!.dispose();
+                                _animationController_button!.dispose();
+                                _animationController_shadow1!.dispose();
+                                _animationController_shadow2!.dispose();
                                 animation_started = false;
                                 _swipe_setup_controller.w_running = false;
                                 started = true;
@@ -2162,42 +2198,50 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                 button_height = 150;
                                 text_k_size = 30;
                                 text_time_size = 25;
+                                // countdownTimer2!.cancel();
+
                               });
                               if (reverse_started) {
-                                  setState(() {
-                                    countdownTimer2!.cancel();
-                                  });
-                                }
-                                // percent = 0.0;
-                                if (watch2.isRunning) {
-                                  print("Datatata222222");
-                                  setState(() {
-                                    // watch2.stop();
-                                  });
-                                }
-                                // countdownTimer2!.cancel();
-                                // if(countdownTimer2!.isActive) {
-                                //   countdownTimer2!.cancel();
-                                // }
-                                // paused_time.clear();
+                                setState(() {
+                                  countdownTimer2!.cancel();
+                                });
+                              }
+                              // percent = 0.0;
+                              if (watch2.isRunning) {
+                                print("Datatata222222");
+                                setState(() {
+                                  watch2.stop();
+                                });
+                              }
+                              // countdownTimer2!.cancel();
+                              // if(countdownTimer2!.isActive) {
+                              //   countdownTimer2!.cancel();
+                              // }
+                              // paused_time.clear();
                               if (watch.isRunning) {
                                 print("Datatata");
                                 setState(() {
-                                  // watch.stop();
+                                  watch.stop();
                                 });
                               }
                               if (watch3.isRunning) {
                                 print("Datatata33333");
                                 setState(() {
-                                  // watch3.stop();
+                                  watch3.stop();
                                   // timer!.cancel();
                                 });
                               }
-                              // await Get.to(DashboardScreen(page: 0));
+                              // await Get.to(DashboardScreen(page: 1));
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => DashboardScreen(page: 1)),
+                                      (route) => false
+                              );
                             }
                             // print('method_time : ${method_time[0].total_time}');
                             // print('method_name : ${method_time[0].method_name}');
-                          }
+                            ///
+                          // }
                         },
                         child: Container(
                           height: 65,
@@ -2395,6 +2439,7 @@ class _WarmUpScreenState extends State<WarmUpScreen>
 
   stopWatch_finish() {
     setState(() {
+
       // startStop = true;
       animation_started = false;
       watch.stop();

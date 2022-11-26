@@ -539,7 +539,7 @@ class CommonTextFormField_reversed extends StatelessWidget {
                       ],
                       borderRadius: BorderRadius.circular(50)),
                   child: iconData)),
-          style: FontStyleUtility.h15(
+          style: FontStyleUtility.h14(
             fontColor: ColorUtils.primary_gold,
             family: 'PM',
           ),

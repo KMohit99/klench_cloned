@@ -22,6 +22,7 @@ import '../utils/Asset_utils.dart';
 import '../utils/Common_buttons.dart';
 import '../utils/TextStyle_utils.dart';
 import '../utils/colorUtils.dart';
+import 'controller/kegel_excercise_controller.dart';
 
 class BreathingScreen extends StatefulWidget {
   const BreathingScreen({Key? key}) : super(key: key);
@@ -79,6 +80,7 @@ class _BreathingScreenState extends State<BreathingScreen>
                 });
                 _breathing_controller.sets++;
                 await _breathing_controller.Breathing_post_API(context);
+                await _kegel_controller.update_notified_status(context: context,status: 'false');
                 // if (_breathing_controller.breathingPostModel!.error == false) {
                 await getdata();
                 // }
@@ -465,7 +467,6 @@ class _BreathingScreenState extends State<BreathingScreen>
       _animationController_shadow1!.dispose();
       _animationController_shadow2!.dispose();
     }
-
     super.dispose();
   }
 
@@ -492,6 +493,10 @@ class _BreathingScreenState extends State<BreathingScreen>
       }
     });
   }
+
+  final Kegel_controller _kegel_controller =
+  Get.put(Kegel_controller(), tag: Kegel_controller().toString());
+
 
   @override
   Widget build(BuildContext context) {
@@ -1173,7 +1178,7 @@ class _BreathingScreenState extends State<BreathingScreen>
                       ),
 
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           if (_breathing_controller.breathingGetModel!.error ==
                                   false &&
                               int.parse(_breathing_controller
@@ -1187,6 +1192,7 @@ class _BreathingScreenState extends State<BreathingScreen>
                             if (startStop) {
                               if (_breathing_controller.sets <= 3) {
                                 startWatch();
+                                await _kegel_controller.update_notified_status(context: context,status: 'true');
                                 middle_animation();
                                 back_wallpaper = false;
 
@@ -1196,6 +1202,8 @@ class _BreathingScreenState extends State<BreathingScreen>
                                         "You have completed your today's sets, comback tommorow");
                               }
                             } else {
+                              await _animationController_middle!.reverse();
+                              await _kegel_controller.update_notified_status(context: context,status: 'false');
                               stopWatch();
                               setState(() {
                                 back_wallpaper = true;

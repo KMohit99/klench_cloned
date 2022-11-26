@@ -22,10 +22,12 @@ import '../../utils/TextStyle_utils.dart';
 import '../../utils/UrlConstrant.dart';
 import '../../utils/colorUtils.dart';
 import '../../utils/common_widgets.dart';
+import 'Otp_verification.dart';
 import 'controller/sign_up_controller.dart';
 import 'model/checkUserModel.dart';
 
 class SignUpScreen extends StatefulWidget {
+
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
@@ -46,6 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       SignUpScreenController(),
       tag: SignUpScreenController().toString());
 
+  String? free_trial ;
   DateTime selectedDate = DateTime.now();
   DateDuration? duration;
   FocusNode Fullname_Focus = new FocusNode();
@@ -1637,8 +1640,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       }
                       if (alpha_num) {
                         await submit();
-                        await _signUpScreenController.SendOtpAPi(
-                            context: context);
+                        await Get.to(VerifyOtp());
+
+                        // await _signUpScreenController.SendOtpAPi(
+                        //     context: context);
+
                       }
                     }
                   },

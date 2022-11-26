@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -12,6 +13,8 @@ import 'package:klench_/Dashboard/dashboard_screen.dart';
 import 'package:klench_/homepage/Breathing_screen.dart';
 import 'package:klench_/homepage/kegel_screen.dart';
 import 'package:klench_/utils/page_loader.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../../main.dart';
 import '../../utils/UrlConstrant.dart';
@@ -20,6 +23,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import '../alarm_info.dart';
+import '../model/IntroVideoModel.dart';
 import '../model/kegel_get_model.dart';
 import '../model/kegel_post_model.dart';
 
@@ -280,4 +284,115 @@ class Kegel_controller extends GetxController {
     // );
     Get.to(BreathingScreen());
   }
+
+
+  Future<dynamic> update_notified_status({required BuildContext context,required String status}) async {
+    debugPrint('0-0-0-0-0-0-0 username');
+    // showLoader(context);
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+
+    Map data = {
+      'userId': id_user,
+      'notified_status' : status
+      // 'type': login_type,
+    };
+    print(data);
+    // String body = json.encode(data);
+    var url = (URLConstants.base_url + URLConstants.update_notified_status);
+    print("url : $url");
+    print("body : $data");
+
+    var response = await http.post(
+      Uri.parse(url),
+      body: data,
+    );
+    print(response.body);
+    print(response.request);
+    print(response.statusCode);
+    // var final_data = jsonDecode(response.body);
+
+    // print('final data $final_data');
+    if (response.statusCode == 200) {
+      // isLoading(false);
+      var data = jsonDecode(response.body);
+      // kegelPostModel = KegelPostModel.fromJson(data);
+      // print(kegelPostModel);
+      if (data["error"] == false) {
+        // CommonWidget().showToaster(msg: data["message"]);
+        // hideLoader(context);
+      } else {
+        // hideLoader(context);
+        CommonWidget().showErrorToaster(msg: data["message"]);
+      }
+    } else {}
+  }
+
+
+
+  IntroVideoModel? introVideoModel;
+  List<File> imgFile_list = [];
+
+  Future<dynamic> IntroVideo_get_API(BuildContext context) async {
+
+    print('Inside creator get email');
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    print("UserID $id_user");
+    String url = "${URLConstants.base_url}${URLConstants.intro_video_get}";
+    var response = await http.get(Uri.parse(url));
+    print('Response request: ${response.request}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // var data = convert.jsonDecode(response.body);
+      Map<String, dynamic> data =
+      json.decode(response.body.replaceAll('}[]', '}'));
+      introVideoModel = IntroVideoModel.fromJson(data);
+      // getUSerModelList(userInfoModel_email);
+      if (introVideoModel!.error == false) {
+        // hideLoader(context);
+        debugPrint(
+            '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${introVideoModel!.data!.length}');
+        // CommonWidget().showToaster(msg: breathingGetModel!.message!);
+        // CommonWidget().showToaster(msg: data["success"].toString());
+        // await Get.to(Dashboard());
+        for (int i = 0; i < introVideoModel!.data!.length; i++) {
+          // final uint8list = await VideoThumbnail.thumbnailFile(
+          //   video:
+          //       ("http://foxyserver.com/funky/video/${introVideoModel!.data![i].uploadVideo}"),
+          //   thumbnailPath: (await getTemporaryDirectory()).path,
+          //   imageFormat: ImageFormat.PNG,
+          //   // maxHeight: 64,
+          //   // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+          //   quality: 30,
+          // );
+          // print(uint8list);
+          //
+          // imgFile_list.add(File(uint8list!));
+          // print("imgFile_list[i] ${imgFile_list[i]}");
+          // hideLoader(context);
+          // print("test----------${imgFile_list[i].path}");
+        }
+
+        return introVideoModel;
+      } else {
+        // hideLoader(context);
+
+        // CommonWidget().showToaster(msg: breathingGetModel!.message!);
+        return null;
+      }
+    } else if (response.statusCode == 422) {
+      // hideLoader(context);
+      CommonWidget().showToaster(msg: introVideoModel!.message!);
+    } else if (response.statusCode == 401) {
+      // hideLoader(context);
+      CommonWidget().showToaster(msg: introVideoModel!.message!);
+    } else {
+      // CommonWidget().showToaster(msg: msg.toString());
+    }
+
+
+  }
+
+
 }

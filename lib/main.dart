@@ -1,32 +1,24 @@
 
 
 import 'dart:async';
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:klench_/splash_Screen.dart';
-import 'package:klench_/utils/UrlConstrant.dart';
+import 'package:wakelock/wakelock.dart';
 
-import 'Authentication/SignUp/local_auth_api.dart';
-import 'Authentication/SingIn/SigIn_screen.dart';
-import 'Authentication/SingIn/controller/SignIn_controller.dart';
-import 'Dashboard/dashboard_screen.dart';
-import 'front_page/FrontpageScreen.dart';
+import 'firebase_options.dart';
 import 'getx_pagination/Bindings_class.dart';
 import 'getx_pagination/binding_utils.dart';
 import 'getx_pagination/page_route.dart';
-import 'homepage/controller/kegel_excercise_controller.dart';
 import 'messaging_service.dart';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -35,7 +27,10 @@ MessagingService _msgService = MessagingService();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
 
@@ -161,8 +156,44 @@ class _MyAppState extends State<MyApp> {
 
 
   // This widget is the root of your application.
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    initDynamicLinks();
+    super.initState();
+  }
+  void initDynamicLinks() async {
+    final PendingDynamicLinkData? data =
+    await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri? deepLink = data?.link;
+
+    if (deepLink != null) {
+      Navigator.pushNamed(context, deepLink.path);
+    }
+
+    // FirebaseDynamicLinks.instance.onLink(
+    //     onSuccess: (PendingDynamicLinkData dynamicLink) async {
+    //       final Uri deepLink = dynamicLink?.link;
+    //
+    //       if (deepLink != null) {
+    //         Navigator.pushNamed(context, deepLink.path);
+    //       }
+    //     },
+    //     onError: (OnLinkErrorException e) async {
+    //       print('onLinkError');
+    //       print(e.message);
+    //     });
+    FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
+      Navigator.pushNamed(context, dynamicLinkData.link.path);
+    }).onError((error) {
+      print('onLink error');
+      print(error.message);
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    Wakelock.enable(); // Here :)
     const style = SystemUiOverlayStyle(
         systemNavigationBarDividerColor: Colors.black,
         systemNavigationBarColor: Colors.black,

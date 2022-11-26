@@ -192,22 +192,26 @@ class _ResetPasswordState extends State<ResetPassword> {
                                     },
                                   ),
                                 ),
+
                                 (password_error
-                                    ? Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 0, vertical: 0),
-                                        alignment: Alignment.centerRight,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 1.0, horizontal: 5),
-                                          child: Text(
-                                            checkPasswordModel!.message!,
-                                            style: TextStyle(
-                                                color: Colors.red,
-                                                fontFamily: 'PR'),
-                                          ),
-                                        ))
-                                    : SizedBox.shrink()),
+                                        ?(_forgotPasswordController
+                                    .oldPasswordController.text.isNotEmpty ?  Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 0, vertical: 0),
+                                            alignment: Alignment.centerRight,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 1.0,
+                                                      horizontal: 5),
+                                              child: Text(
+                                                checkPasswordModel!.message!,
+                                                style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontFamily: 'PR'),
+                                              ),
+                                            )) : SizedBox.shrink())
+                                        : SizedBox.shrink()),
                                 SizedBox(
                                   height: 15,
                                 ),
@@ -254,7 +258,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                               Row(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
-                                                children: [
+                                                children: const [
                                                   Text(
                                                     '\u2022 ',
                                                     style: TextStyle(
@@ -384,7 +388,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                                             .isEmpty) {
                                       CommonWidget().showErrorToaster(
                                           msg: "Password Enter Password");
-                                    } else if (alpha_num && password_error == false) {
+                                    } else if (alpha_num &&
+                                        password_error == false) {
                                       await _forgotPasswordController
                                           .ResetPasswordAPi(
                                               context: context, id: id_user);

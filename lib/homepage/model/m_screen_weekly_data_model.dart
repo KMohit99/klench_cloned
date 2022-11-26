@@ -1,5 +1,5 @@
 class M_ScreenWeeklyDataModel {
-  List<Data>? data;
+  List<Data_weekly>? data;
   bool? error;
   String? statusCode;
   String? message;
@@ -9,9 +9,9 @@ class M_ScreenWeeklyDataModel {
 
   M_ScreenWeeklyDataModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Data_weekly>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new Data_weekly.fromJson(v));
       });
     }
     error = json['error'];
@@ -31,18 +31,18 @@ class M_ScreenWeeklyDataModel {
   }
 }
 
-class Data {
+class Data_weekly {
   String? createdDate;
-  List<Days>? days;
+  List<Days_weekly>? days;
 
-  Data({this.createdDate, this.days});
+  Data_weekly({this.createdDate, this.days});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Data_weekly.fromJson(Map<String, dynamic> json) {
     createdDate = json['createdDate'];
     if (json['days'] != null) {
-      days = <Days>[];
+      days = <Days_weekly>[];
       json['days'].forEach((v) {
-        days!.add(new Days.fromJson(v));
+        days!.add(new Days_weekly.fromJson(v));
       });
     }
   }
@@ -57,7 +57,7 @@ class Data {
   }
 }
 
-class Days {
+class Days_weekly {
   String? id;
   String? userId;
   String? methodName;
@@ -69,7 +69,7 @@ class Days {
   String? colorCode;
   String? createdDate;
 
-  Days(
+  Days_weekly(
       {this.id,
         this.userId,
         this.methodName,
@@ -81,7 +81,7 @@ class Days {
         this.colorCode,
         this.createdDate});
 
-  Days.fromJson(Map<String, dynamic> json) {
+  Days_weekly.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['userId'];
     methodName = json['methodName'];

@@ -21,7 +21,9 @@ dependencies:
   intl: ^0.17.0
   pinput: ^1.2.0
 #  better_player: ^0.0.70
-  video_player: ^2.2.18
+#  video_player: ^2.2.18
+#  vimeo_video_player: ^0.0.6
+  flick_video_player: ^0.5.0
 
   dotted_border: ^2.0.0+2
   google_fonts: ^2.3.3
@@ -66,6 +68,12 @@ dependencies:
   otp_autofill: ^2.1.0
   flutter_alarm_clock: ^0.0.2
   flutter_native_splash: ^2.1.1
+  wakelock: ^0.6.2
+  firebase_dynamic_links: ^4.3.11
+  video_thumbnail: ^0.5.0
+  video_thumbnail_imageview: ^0.0.5
+
+
 #  firebase_dynamic_links: ^5.0.4
 
 #  esys_flutter_share_plus: ^2.1.0

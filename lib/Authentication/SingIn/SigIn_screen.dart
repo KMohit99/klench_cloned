@@ -14,6 +14,7 @@ import '../../utils/Common_buttons.dart';
 import '../../utils/Common_container_color.dart';
 import '../../utils/TexrUtils.dart';
 import '../Forgot_pass/Forgot_screen.dart';
+import '../SignUp/controller/sign_up_controller.dart';
 import '../instagram/instagram_view.dart';
 import 'controller/SignIn_controller.dart';
 
@@ -37,6 +38,11 @@ class _SignInScreenState extends State<SignInScreen> {
       _obscureText = !_obscureText;
     });
   }
+
+  final SignUpScreenController _signUpScreenController = Get.put(
+      SignUpScreenController(),
+      tag: SignUpScreenController().toString());
+
 
   @override
   Widget build(BuildContext context) {
@@ -323,6 +329,9 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
+                                setState(() {
+                                  _signUpScreenController.free_trials = 'false';
+                                });
                                 Get.to(AskSignUp());
                               },
                               child: Text(

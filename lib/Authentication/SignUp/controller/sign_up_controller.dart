@@ -125,6 +125,7 @@ class SignUpScreenController extends GetxController {
     request.fields['levels'] = level.toString();
     request.fields['stage'] = 1.toString();
     request.fields['type'] = 'normal';
+    request.fields['freeTrial'] = free_trials!;
 
     //userId,tagLine,description,address,postImage,uploadVideo,isVideo
     // request.files.add(await http.MultipartFile.fromPath(
@@ -170,11 +171,13 @@ class SignUpScreenController extends GetxController {
 
   SendOtpModel? sendOtpModel;
   RxBool sendOtpLoading = false.obs;
+  String? free_trials;
 
   Future<dynamic> SendOtpAPi({required BuildContext context}) async {
     debugPrint('0-0-0-0-0-0-0 username');
     sendOtpLoading(true);
-    showLoader(context);
+    // showLoader(context);
+
     // username,phone,email,dob,gender,password,image
     appSignatureId = await SmsAutoFill().getAppSignature;
     print("appSignatureId $appSignatureId");
@@ -209,10 +212,10 @@ class SignUpScreenController extends GetxController {
       print(sendOtpModel);
       if (sendOtpModel!.error == false) {
         CommonWidget().showToaster(msg: sendOtpModel!.message!);
-        await Get.to(VerifyOtp());
-        hideLoader(context);
+        // await Get.to(VerifyOtp());
+        // hideLoader(context);
       } else {
-        hideLoader(context);
+        // hideLoader(context);
         CommonWidget().showErrorToaster(msg: sendOtpModel!.message!);
         print('Please try again');
         print('Please try again');

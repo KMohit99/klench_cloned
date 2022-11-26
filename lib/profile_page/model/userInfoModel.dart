@@ -42,6 +42,7 @@ class Data {
   String? image;
   String? levels;
   String? stage;
+  String? freeTrial;
 
   Data(
       {this.id,
@@ -54,7 +55,8 @@ class Data {
         this.gender,
         this.image,
         this.levels,
-        this.stage});
+        this.stage,
+        this.freeTrial});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -68,6 +70,7 @@ class Data {
     image = json['image'];
     levels = json['levels'];
     stage = json['stage'];
+    freeTrial = json['freeTrial'];
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +86,7 @@ class Data {
     data['image'] = this.image;
     data['levels'] = this.levels;
     data['stage'] = this.stage;
+    data['freeTrial'] = this.freeTrial;
     return data;
   }
 }

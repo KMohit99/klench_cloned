@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../homepage/m_screen.dart';
+
 class URLConstants {
   static const String base_url = "http://foxyserver.com/klench/api/";
   // static const String base_url = "https://foxytechnologies.com/klench/api/";
@@ -45,9 +47,15 @@ class URLConstants {
 
   ///toekn
   static const token_device_post = "device.php";
+  ///notified_status
+  static const update_notified_status = "update-notified-status.php";
+
+ ///intro_video
+  static const intro_video_get = "introvideoList.php";
 
 
   static String id = "id";
+  static String method_list = "list";
   static String trial = 'false';
   static String socail_signup = 'false';
   static String levels = "level";
@@ -66,6 +74,21 @@ class PreferenceManager {
     sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.clear();
   }
+
+  // set data in preference
+  Future setList(String key,   value) async {
+    //SharedPreferences.setMockInitialValues({});
+    sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.setString(key, value);
+  }
+
+  // get data in preference
+  Future getList(String key) async {
+    //SharedPreferences.setMockInitialValues({});
+    sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString(key) ?? [];
+  }
+
 
   // set data in preference
   Future<bool> setPref(String key, String value) async {

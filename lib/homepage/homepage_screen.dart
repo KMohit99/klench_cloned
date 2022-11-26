@@ -42,7 +42,12 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   @override
   void initState() {
-    init();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+
+      // Add Your Code here.
+      init();
+
+    });
     super.initState();
   }
   final Kegel_controller _kegel_controller =
@@ -50,6 +55,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   init() async {
     await _kegel_controller.Kegel_get_API(context);
+    await _kegel_controller.IntroVideo_get_API(context);
   }
 
   @override

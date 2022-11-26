@@ -80,6 +80,7 @@ class _SplashScreenState extends State<SplashScreen> {
         await _signInScreenController.GetUserInfo(context);
         if (_signInScreenController.userInfoModel!.error == true) {
           print("nno user founddddd");
+          // if(_signInScreenController.userInfoModel.data[0].freeTrial = '')
           await Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -123,7 +124,8 @@ class _SplashScreenState extends State<SplashScreen> {
     NotificationDetails(android: androidDetails, iOS: iosDetails);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification= message.notification;
-      AndroidNotification? android= message.notification?.android;
+      AppleNotification? android= message.notification?.apple;
+
       if(notification!=null && android!=null){
         fltNotification!.show(
             notification.hashCode, notification.title, notification.body, generalNotificationDetails);

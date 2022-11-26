@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pinput/pin_put/pin_put.dart';
@@ -118,10 +119,21 @@ class _VerifyOtpState extends State<VerifyOtp> {
 
   @override
   void initState() {
-    startTimer();
-    _listOPT();
+
     // verifyPhonenumber();
     super.initState();
+    startTimer();
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      // Call your function
+      init();
+      _listOPT();
+    });
+  }
+  init() async {
+    print("data");
+    await _signUpScreenController.SendOtpAPi(
+        context: context);
   }
 
   @override
@@ -299,26 +311,26 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                     followingFieldDecoration: pinOTPDecoration,
                                     pinAnimationType: PinAnimationType.scale,
                                     onSubmit: (pin) async {
-                                      try {
-                                        await FirebaseAuth.instance
-                                            .signInWithCredential(
-                                                PhoneAuthProvider.credential(
-                                                    verificationId:
-                                                        varification!,
-                                                    smsCode: pin))
-                                            .then((value) {
-                                          if (value.user != null) {
-                                            print("Otp verifiredddddddd");
-                                          }
-                                        });
-                                      } catch (e) {
-                                        FocusScope.of(context).unfocus();
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content: Text('invalid otp'),
-                                          duration: Duration(seconds: 3),
-                                        ));
-                                      }
+                                      // try {
+                                      //   await FirebaseAuth.instance
+                                      //       .signInWithCredential(
+                                      //           PhoneAuthProvider.credential(
+                                      //               verificationId:
+                                      //                   varification!,
+                                      //               smsCode: pin))
+                                      //       .then((value) {
+                                      //     if (value.user != null) {
+                                      //       print("Otp verifiredddddddd");
+                                      //     }
+                                      //   });
+                                      // } catch (e) {
+                                      //   FocusScope.of(context).unfocus();
+                                      //   ScaffoldMessenger.of(context)
+                                      //       .showSnackBar(SnackBar(
+                                      //     content: Text('invalid otp'),
+                                      //     duration: Duration(seconds: 3),
+                                      //   ));
+                                      // }
                                     },
                                   ),
                                 ),

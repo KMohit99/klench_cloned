@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:klench_/Dashboard/dashboard_screen.dart';
 import 'package:klench_/homepage/controller/kegel_excercise_controller.dart';
 import 'package:klench_/homepage/swipe_controller.dart';
 import 'package:klench_/homepage/theme_data.dart';
@@ -124,84 +126,104 @@ class _KegelScreenState extends State<KegelScreen>
     if (watch.isRunning) {
       if (mounted) {
         setState(() {
+          // print("startstop Inside=$startStop");
           elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
-          // percent += 1;
+          // Future.delayed(Duration(microseconds: 500), () {
           (four_started ? Vibration.cancel() : Vibration.vibrate());
-
+          // });
+          // percent += 1;
           // if (percent >= 100) {
           //   percent = 0.0;
           // }
-          Future.delayed(Duration(seconds: 1), () {
-            // Vibration.vibrate();
-          });
           print(elapsedTime);
+
           if (elapsedTime == '03') {
-            _animationController!.reverse();
-            _animationController_button!.reverse();
             stopWatch_finish();
+            // _animationController_shadow1!.reverse();
             setState(() {
               elapsedTime = '00';
               percent = 0.0;
-              watch.reset();
+              // watch.reset();
+              CommonWidget().showToaster(msg: '${3 - counter} Times left');
+              counter++;
               four_started = true;
+
               // paused_time.clear();
             });
-            CommonWidget().showToaster(msg: '${3 - counter} Times left');
-
-            counter++;
-            print(counter);
             startWatch2();
 
             Future.delayed(const Duration(seconds: 3), () async {
               print('indise 4 seconds');
-              if (counter == 4) {
-                print("Insidededededdddededddd");
-               await stopWatch_finish();
+              print('indise $counter');
+              if (counter >= 4) {
+                print('indise 4 Counter');
+                stopWatch_finish();
+                _animationController!.dispose();
+                _animationController_button!.dispose();
                 setState(() {
                   started = true;
                   elapsedTime = '00';
-                  // watch.stop();
-                  counter = 0;
                   watch.reset();
-                  _kegel_controller.kegel_performed = true;
+                  watch.stop();
+                  // watch.reset();
+                  // watch.stop();
+                  // watch3.reset();
+                  counter = 0;
+                  back_wallpaper = true;
+                  _swipe_setup_controller.k_running = false;
+                  // _kegel_controller.kegel_performed = true;
                 });
-                Vibration.cancel();
-                _kegel_controller.sets++;
+               await _kegel_controller.sets++;
+                print("_kegel_controller.kegel_performed");
+                print(_kegel_controller.kegel_performed);
                 await _kegel_controller.Kegel_post_API(context);
+
+                await _kegel_controller.update_notified_status(context: context,status: 'false');
                 await _kegel_controller.alarm_notifications(context);
-                print('Sets-------$_kegel_controller.sets');
-                // await Get.to(DashboardScreen(page: 1));
-                await getdata();
+                // await Get.to(KegelScreen());
+                print('Sets-------${_kegel_controller.sets}');
                 if (_kegel_controller.sets == 3) {
+                  print("indise 3 sets Counter");
                   stopWatch_finish();
                   setState(() {
-                    elapsedTime = '00';
+                    // elapsedTime = '00';
                     percent = 0.0;
                     started = true;
                     // watch.stop();
-                    counter = 0;
+                    // watch3.stop();
+                    back_wallpaper = true;
+                    // counter = 0;
                   });
-                  // CommonWidget().showToaster(msg: "Method Complete");
-                  // await click_alarm();
-                  Future.delayed(const Duration(seconds: 5), () {
+                  CommonWidget().showToaster(msg: "Method Complete");
+                  await click_alarm();
+                  Future.delayed(const Duration(seconds: 2), () {
                     CommonWidget().showErrorToaster(
                         msg:
-                            "After two week it will automatically switch to second stage");
+                        "After one month it will automatically switch to Normal");
                   });
                 }
-              } else {
-
-                stopWatch_finish();
+              }
+              else {
+                print("indise 322 sets----");
+                // _animationController!.reverse();
+                // _animationController_button!.reverse();
+                // stopWatch_finish();
                 // _animationController_shadow1!.reverse();
+                stopWatch_finish();
                 setState(() {
                   elapsedTime = '00';
                   four_started = false;
-                  watch.reset();
+                  started = true;
+                  // watch.stop();
+                  // watch.reset();
+
+                  // watch3.stop();
                 });
                 start_animation();
 
                 startWatch();
               }
+
             });
           }
         });
@@ -241,19 +263,25 @@ class _KegelScreenState extends State<KegelScreen>
 
             Future.delayed(const Duration(seconds: 3), () async {
               print('indise 4 seconds');
-              if (counter == 6) {
+              if (counter >= 6) {
                 stopWatch_finish();
                 setState(() {
                   started = true;
                   elapsedTime = '00';
                   // watch.stop();
+                  watch.reset();
+                  watch.stop();
+                  // watch3.stop();
                   counter = 0;
+                  back_wallpaper = true;
+                  _swipe_setup_controller.k_running = false;
                   _kegel_controller.kegel_performed = true;
                 });
                 _kegel_controller.sets++;
                 print("_kegel_controller.kegel_performed");
                 print(_kegel_controller.kegel_performed);
                 await _kegel_controller.Kegel_post_API(context);
+                await _kegel_controller.update_notified_status(context: context,status: 'false');
                 await _kegel_controller.alarm_notifications(context);
                 print('Sets-------$_kegel_controller.sets');
                 if (_kegel_controller.sets == 3) {
@@ -262,8 +290,11 @@ class _KegelScreenState extends State<KegelScreen>
                     elapsedTime = '00';
                     percent = 0.0;
                     started = true;
-                    // watch.stop();
-                    counter = 0;
+                    watch.stop();
+                    watch3.stop();
+                    back_wallpaper = true;
+
+                    // counter = 0;
                   });
                   // CommonWidget().showToaster(msg: "Method Complete");
                   await click_alarm();
@@ -282,6 +313,8 @@ class _KegelScreenState extends State<KegelScreen>
                   elapsedTime = '00';
                   four_started = false;
                   watch.reset();
+                  // watch.reset();
+                  // watch3.reset();
                 });
                 start_animation();
 
@@ -326,19 +359,26 @@ class _KegelScreenState extends State<KegelScreen>
 
             Future.delayed(const Duration(seconds: 3), () async {
               print('indise 4 seconds');
-              if (counter == 8) {
+              if (counter >= 8) {
                 stopWatch_finish();
                 setState(() {
                   started = true;
                   elapsedTime = '00';
                   // watch.stop();
+                  watch.reset();
+                  watch.stop();
+                  // watch3.stop();
                   counter = 0;
-                  _kegel_controller.kegel_performed = true;
+                  back_wallpaper = true;
+                  _swipe_setup_controller.k_running = false;
+
+                  // _kegel_controller.kegel_performed = true;
                 });
                 _kegel_controller.sets++;
                 print("_kegel_controller.kegel_performed");
                 print(_kegel_controller.kegel_performed);
                 await _kegel_controller.Kegel_post_API(context);
+                await _kegel_controller.update_notified_status(context: context,status: 'false');
                 await _kegel_controller.alarm_notifications(context);
                 print('Sets-------$_kegel_controller.sets');
                 if (_kegel_controller.sets == 3) {
@@ -347,8 +387,11 @@ class _KegelScreenState extends State<KegelScreen>
                     elapsedTime = '00';
                     percent = 0.0;
                     started = true;
-                    // watch.stop();
-                    counter = 0;
+                    watch.stop();
+                    watch3.stop();
+                    back_wallpaper = true;
+
+                    // counter = 0;
                   });
                   CommonWidget().showToaster(msg: "Method Complete");
                   await click_alarm();
@@ -366,7 +409,9 @@ class _KegelScreenState extends State<KegelScreen>
                 setState(() {
                   elapsedTime = '00';
                   four_started = false;
+                  // started = true;
                   watch.reset();
+                  // watch3.reset();
                 });
                 start_animation();
 
@@ -412,29 +457,38 @@ class _KegelScreenState extends State<KegelScreen>
 
             Future.delayed(const Duration(seconds: 3), () async {
               print('indise 4 seconds');
-              if (counter == 8) {
+              if (counter >= 8) {
                 stopWatch_finish();
                 setState(() {
                   started = true;
                   elapsedTime = '00';
-                  // watch.stop();
+                  watch.reset();
+                  watch.stop();
+                  // watch3.stop();
                   counter = 0;
-                  _kegel_controller.kegel_performed = true;
+                  back_wallpaper = true;
+                  _swipe_setup_controller.k_running = false;
+
+                  // _kegel_controller.kegel_performed = true;
                 });
                 _kegel_controller.sets++;
                 print("_kegel_controller.kegel_performed");
                 print(_kegel_controller.kegel_performed);
                 await _kegel_controller.Kegel_post_API(context);
+                await _kegel_controller.update_notified_status(context: context,status: 'false');
                 await _kegel_controller.alarm_notifications(context);
                 print('Sets-------$_kegel_controller.sets');
+
                 if (_kegel_controller.sets == 3) {
                   stopWatch_finish();
                   setState(() {
                     elapsedTime = '00';
                     percent = 0.0;
                     started = true;
-                    // watch.stop();
-                    counter = 0;
+                    watch.stop();
+                    watch3.stop();
+                    back_wallpaper = true;
+                    // counter = 0;
                   });
                   CommonWidget().showToaster(msg: "Method Complete");
                   await click_alarm();
@@ -453,6 +507,7 @@ class _KegelScreenState extends State<KegelScreen>
                   elapsedTime = '00';
                   four_started = false;
                   watch.reset();
+                  // watch3.reset();
                 });
                 start_animation();
 
@@ -480,13 +535,11 @@ class _KegelScreenState extends State<KegelScreen>
           // if (percent >= 100) {
           //   percent = 0.0;
           // }
-          Future.delayed(Duration(seconds: 1), () {
-            // Vibration.vibrate();
-          });
+
           print(elapsedTime);
           if (elapsedTime == '11') {
-            _animationController!.reverse();
-            _animationController_button!.reverse();
+            // _animationController!.reverse();
+            // _animationController_button!.reverse();
             stopWatch_finish();
             setState(() {
               elapsedTime = '00';
@@ -501,52 +554,47 @@ class _KegelScreenState extends State<KegelScreen>
             startWatch2();
 
             Future.delayed(const Duration(seconds: 3), () async {
-              if (counter == 10) {
+              if (counter >= 10) {
                 stopWatch_finish();
                 setState(() {
                   elapsedTime = '00';
                   started = true;
                   // watch.stop();
-                  counter = 0;
                   watch.reset();
-                  _kegel_controller.kegel_performed = true;
+                  watch.stop();
+                  // watch3.stop();
+                  counter = 0;
+                  // watch.reset();
+                  back_wallpaper = true;
+                  _swipe_setup_controller.k_running = false;
+
+                  // _kegel_controller.kegel_performed = true;
                 });
-                Vibration.cancel();
-                // setState(() {
-                //   _swipe_setup_controller.k_running = false;
-                //   timer_started = false;
-                //   counter = 0;
-                //
-                //   elapsedTime = '00';
-                //   percent = 0.0;
-                //   back_wallpaper = true;
-                //   button_height = 150;
-                //   text_k_size = 70;
-                //   text_time_size = 25;
-                //   watch.reset();
-                //   // paused_time.clear();
-                // });
                 _kegel_controller.sets++;
                 // print("_kegel_controller.sets++ ${_kegel_controller.sets++}");
                 // print(_kegel_controller.sets++);
                 await _kegel_controller.Kegel_post_API(context);
-                Future.delayed(Duration(hours: 2), () {
-                  _kegel_controller.alarm_notifications(context);
-                });
+                await _kegel_controller.update_notified_status(context: context,status: 'false');
+
+                // Future.delayed(Duration(hours: 2), () {
+                //   _kegel_controller.alarm_notifications(context);
+                // });
                 // await _kegel_controller.Kegel_get_API(context);
                 // if (_kegel_controller.kegelPostModel!.error == false) {
-                await getdata();
+                // await getdata();
                 // }
                 print('Sets-------$_kegel_controller.sets');
                 if (_kegel_controller.sets == 3) {
                   stopWatch_finish();
                   setState(() {
                     started = true;
-
                     elapsedTime = '00';
                     percent = 0.0;
-                    // watch.stop();
-                    counter = 0;
+                    watch.stop();
+                    watch3.stop();
+                    back_wallpaper = true;
+
+                    // counter = 0;
                   });
                   CommonWidget().showToaster(msg: "Method Complete");
                   Future.delayed(const Duration(seconds: 5), () {
@@ -557,11 +605,15 @@ class _KegelScreenState extends State<KegelScreen>
                 }
               } else {
                 stopWatch_finish();
-                // _animationController_shadow1!.reverse();
+                print("INsieee 10");
+
+                _animationController!.reverse();
+                _animationController_button!.reverse();
                 setState(() {
                   elapsedTime = '00';
                   four_started = false;
                   watch.reset();
+                  // watch3.reset();
                 });
                 start_animation();
 
@@ -592,8 +644,8 @@ class _KegelScreenState extends State<KegelScreen>
           print(elapsedTime);
 
           if (elapsedTime == '13') {
-            _animationController!.reverse();
-            _animationController_button!.reverse();
+            // _animationController!.reverse();
+            // _animationController_button!.reverse();
             stopWatch_finish();
             setState(() {
               elapsedTime = '00';
@@ -608,17 +660,23 @@ class _KegelScreenState extends State<KegelScreen>
             startWatch2();
 
             Future.delayed(const Duration(seconds: 3), () async {
-              if (counter == 12) {
+              if (counter >= 12) {
                 stopWatch_finish();
                 setState(() {
                   elapsedTime = '00';
                   started = true;
                   // watch.stop();
-                  counter = 0;
                   watch.reset();
-                  _kegel_controller.kegel_performed = true;
+                  watch.stop();
+                  // watch3.stop();
+                  counter = 0;
+                  back_wallpaper = true;
+                  _swipe_setup_controller.k_running = false;
+
+                  // watch.reset();
+                  // _kegel_controller.kegel_performed = true;
                 });
-                Vibration.cancel();
+                // Vibration.cancel();
                 // setState(() {
                 //   _swipe_setup_controller.k_running = false;
                 //   timer_started = false;
@@ -637,23 +695,26 @@ class _KegelScreenState extends State<KegelScreen>
                 // print("_kegel_controller.sets++ ${_kegel_controller.sets++}");
                 // print(_kegel_controller.sets++);
                 await _kegel_controller.Kegel_post_API(context);
-                Future.delayed(Duration(hours: 2), () {
-                  _kegel_controller.alarm_notifications(context);
-                });
+                await _kegel_controller.update_notified_status(context: context,status: 'false');
+                // Future.delayed(Duration(hours: 2), () {
+                //   _kegel_controller.alarm_notifications(context);
+                // });
                 // await _kegel_controller.Kegel_get_API(context);
                 // if (_kegel_controller.kegelPostModel!.error == false) {
-                await getdata();
+                // await getdata();
                 // }
                 print('Sets-------$_kegel_controller.sets');
                 if (_kegel_controller.sets == 3) {
                   stopWatch_finish();
                   setState(() {
                     started = true;
-
                     elapsedTime = '00';
                     percent = 0.0;
-                    // watch.stop();
-                    counter = 0;
+                    watch.stop();
+                    watch3.stop();
+                    back_wallpaper = true;
+
+                    // counter = 0;
                   });
                   CommonWidget().showToaster(msg: "Method Complete");
                   Future.delayed(const Duration(seconds: 5), () {
@@ -664,15 +725,17 @@ class _KegelScreenState extends State<KegelScreen>
                 }
               } else {
                 stopWatch_finish();
+                _animationController!.reverse();
+                _animationController_button!.reverse();
                 // _animationController_shadow1!.reverse();
                 setState(() {
                   elapsedTime = '00';
                   four_started = false;
+                  // started = true;
                   watch.reset();
-                  watch3.reset();
+                  // watch3.reset();
                 });
                 start_animation();
-
                 startWatch();
               }
             });
@@ -690,7 +753,7 @@ class _KegelScreenState extends State<KegelScreen>
           elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
           // percent += 1;
           // Future.delayed(Duration(microseconds: 500), () {
-          Vibration.vibrate();
+          (four_started ? Vibration.cancel() : Vibration.vibrate());
           // });
           // if (percent >= 100) {
           //   percent = 0.0;
@@ -700,8 +763,8 @@ class _KegelScreenState extends State<KegelScreen>
           print(elapsedTime);
 
           if (elapsedTime == '13') {
-            _animationController!.reverse();
-            _animationController_button!.reverse();
+            // _animationController!.reverse();
+            // _animationController_button!.reverse();
             stopWatch_finish();
             setState(() {
               elapsedTime = '00';
@@ -716,17 +779,22 @@ class _KegelScreenState extends State<KegelScreen>
             startWatch2();
 
             Future.delayed(const Duration(seconds: 3), () async {
-              if (counter == 10) {
+              if (counter >= 10) {
                 stopWatch_finish();
                 setState(() {
                   elapsedTime = '00';
                   started = true;
                   // watch.stop();
-                  counter = 0;
                   watch.reset();
-                  _kegel_controller.kegel_performed = true;
+                  watch.stop();
+                  // watch3.stop();
+                  counter = 0;
+                  back_wallpaper = true;
+                  _swipe_setup_controller.k_running = false;
+
+                  // watch.reset();
+                  // _kegel_controller.kegel_performed = true;
                 });
-                Vibration.cancel();
                 // setState(() {
                 //   _swipe_setup_controller.k_running = false;
                 //   timer_started = false;
@@ -745,23 +813,27 @@ class _KegelScreenState extends State<KegelScreen>
                 // print("_kegel_controller.sets++ ${_kegel_controller.sets++}");
                 // print(_kegel_controller.sets++);
                 await _kegel_controller.Kegel_post_API(context);
-                Future.delayed(Duration(hours: 2), () {
-                  _kegel_controller.alarm_notifications(context);
-                });
+                await _kegel_controller.update_notified_status(context: context,status: 'false');
+
+                // Future.delayed(Duration(hours: 2), () {
+                //   _kegel_controller.alarm_notifications(context);
+                // });
                 // await _kegel_controller.Kegel_get_API(context);
                 // if (_kegel_controller.kegelPostModel!.error == false) {
-                await getdata();
+                // await getdata();
                 // }
                 print('Sets-------$_kegel_controller.sets');
                 if (_kegel_controller.sets == 3) {
                   stopWatch_finish();
                   setState(() {
                     started = true;
-
                     elapsedTime = '00';
                     percent = 0.0;
-                    // watch.stop();
-                    counter = 0;
+                    watch.stop();
+                    watch3.stop();
+                    back_wallpaper = true;
+
+                    // counter = 0;
                   });
                   CommonWidget().showToaster(msg: "Method Complete");
                   Future.delayed(const Duration(seconds: 5), () {
@@ -771,13 +843,15 @@ class _KegelScreenState extends State<KegelScreen>
                   });
                 }
               } else {
+                _animationController!.reverse();
+                _animationController_button!.reverse();
                 stopWatch_finish();
                 // _animationController_shadow1!.reverse();
                 setState(() {
                   elapsedTime = '00';
                   four_started = false;
                   watch.reset();
-                  watch3.reset();
+                  // watch3.reset();
                 });
                 start_animation();
 
@@ -794,18 +868,22 @@ class _KegelScreenState extends State<KegelScreen>
     if (watch3.isRunning) {
       if (mounted) {
         setState(() {
-          // print("startstop Inside=$startStop");
+
+          print("updateTime3 =$startStop");
           elapsedTime2 = transformMilliSeconds(watch3.elapsedMilliseconds);
+          print("elapsedTime2 =$elapsedTime2");
 
           if (elapsedTime2 == '03') {
             // stopWatch_finish();
             // _animationController_shadow1!.reverse();
-            setState(() {
               // elapsedTime2 = '00';
               percent = 0.0;
+              elapsedTime2 = '00';
+              watch3.reset();
+              // watch.reset();
+
               // watch.reset();
               // four_started = true;
-            });
             startWatch();
           }
         });
@@ -856,15 +934,18 @@ class _KegelScreenState extends State<KegelScreen>
   }
 
   void setCountDown() {
-    final reduceSecondsBy = 1;
+    const reduceSecondsBy = 1;
     if (mounted) {
       setState(() {
         final seconds = myDuration.inSeconds - reduceSecondsBy;
+        print(seconds);
         if (seconds < 0) {
           countdownTimer!.cancel();
 
           print('timesup');
         } else {
+          print('timesup-----');
+
           myDuration = Duration(seconds: seconds);
         }
       });
@@ -1072,6 +1153,7 @@ class _KegelScreenState extends State<KegelScreen>
   }
 
   AnimationController? _animationController_middle;
+  AnimationController? _animationController_middle2;
   Animation? _animation_middle;
   Animation? _animation_middle2;
   Animation? _animation_middle3;
@@ -1111,29 +1193,29 @@ class _KegelScreenState extends State<KegelScreen>
           });
   }
   done_animation(){
-    _animationController_middle = AnimationController(
+    _animationController_middle2 = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200));
-    _animationController_middle!.forward();
+    _animationController_middle2!.forward();
     _animation_middle =
-    Tween(begin: 50.0, end: 15.0).animate(_animationController_middle!)
+    Tween(begin: 50.0, end: 15.0).animate(_animationController_middle2!)
       ..addStatusListener((status) {
         print("status $status");
         // shadow_animation1_completed = true;
       });
     _animation_middle2 =
-    Tween(begin: 45.0, end: 15.0).animate(_animationController_middle!)
+    Tween(begin: 45.0, end: 15.0).animate(_animationController_middle2!)
       ..addStatusListener((status) {
         print("status $status");
         // shadow_animation1_completed = true;
       });
     _animation_middle3 =
-    Tween(begin: 120.0, end: 15.0).animate(_animationController_middle!)
+    Tween(begin: 120.0, end: 15.0).animate(_animationController_middle2!)
       ..addStatusListener((status) {
         print("status $status");
         // shadow_animation1_completed = true;
       });
     _animation_middle4 =
-    Tween(begin: 100.0, end: 15.0).animate(_animationController_middle!)
+    Tween(begin: 100.0, end: 15.0).animate(_animationController_middle2!)
       ..addStatusListener((status) {
         print("status $status");
 
@@ -1273,6 +1355,7 @@ class _KegelScreenState extends State<KegelScreen>
       print('------database intialized');
       await loadAlarms();
     });
+
   }
 
   DateTime? _alarmTime;
@@ -3305,13 +3388,18 @@ class _KegelScreenState extends State<KegelScreen>
                               back_wallpaper = false;
 
                               setState(() {
+                                elapsedTime2 = '00';
+                                myDuration = const Duration(seconds: 3);
                                 _kegel_controller.start_time =DateFormat('HH:mm').format(DateTime.now());
                               });
+                              await _kegel_controller.update_notified_status(context: context,status: 'true');
                               print(_kegel_controller.start_time);
                               // start_animation();
                               // start_button_animation();
                               startTimer();
-                              (counter > 0 ? startWatch() : startWatch3());
+                              startWatch3();
+
+                              // startWatch3();
                               start_animation();
                               middle_animation();
                               text_animation();
@@ -3327,11 +3415,13 @@ class _KegelScreenState extends State<KegelScreen>
                               //   await startWatch();
                               // });
                             } else {
-                              await done_animation();
-
+                              // await done_animation();
+                              await _animationController_middle!.reverse();
+                              // await _kegel_controller.update_notified_status(context: context,status: 'false');
                               if (four_started) {
                                 null;
                               } else {
+                                await _kegel_controller.update_notified_status(context: context,status: 'false');
                                 await stopWatch_finish();
                                 // await _animationController_middle!.reverse();
                                 Vibration.cancel();
@@ -8487,6 +8577,7 @@ class _KegelScreenState extends State<KegelScreen>
       // startStop = false;
       // started = false;
       elapsedTime = "00";
+      watch.reset();
       watch.start();
       timer = Timer.periodic(
           const Duration(milliseconds: 100),
@@ -8521,7 +8612,7 @@ class _KegelScreenState extends State<KegelScreen>
       started = false;
       elapsedTime2 = "00";
       elapsedTime = "00";
-
+      watch3.reset();
       watch3.start();
       timer3 = Timer.periodic(const Duration(milliseconds: 100), updateTime3);
     });
@@ -8547,7 +8638,7 @@ class _KegelScreenState extends State<KegelScreen>
       animation_started = false;
       watch.stop();
       watch3.stop();
-      setTime_finish();
+      // setTime_finish();
     });
   }
 
@@ -8727,7 +8818,7 @@ class _KegelScreenState extends State<KegelScreen>
 
   Future<void> scheduleAlarm(
       DateTime scheduledNotificationDateTime, AlarmInfo alarmInfo) async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'alarm_notif',
       'alarm_notif',
       // 'Channel for Alarm notification',
@@ -8848,7 +8939,7 @@ class _KegelScreenState extends State<KegelScreen>
 
   Future<void> scheduleAlarm2(
       DateTime scheduledNotificationDateTime, AlarmInfo alarmInfo) async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'alarm_notif',
       'alarm_notif',
       // 'Channel for Alarm notification',
@@ -8863,7 +8954,7 @@ class _KegelScreenState extends State<KegelScreen>
       largeIcon: DrawableResourceAndroidBitmap('app_icon'),
     );
 
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails(
+    var iOSPlatformChannelSpecifics = const IOSNotificationDetails(
         sound: "alarm.mp3",
         presentAlert: true,
         presentBadge: true,
