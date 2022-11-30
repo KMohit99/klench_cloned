@@ -143,7 +143,8 @@ class _KegelScreenState extends State<KegelScreen>
             setState(() {
               elapsedTime = '00';
               percent = 0.0;
-              // watch.reset();
+              watch.reset();
+              watch.stop();
               CommonWidget().showToaster(msg: '${3 - counter} Times left');
               counter++;
               four_started = true;
@@ -214,13 +215,11 @@ class _KegelScreenState extends State<KegelScreen>
                   elapsedTime = '00';
                   four_started = false;
                   started = true;
-                  // watch.stop();
-                  // watch.reset();
-
+                  watch.stop();
+                  watch.reset();
                   // watch3.stop();
                 });
                 start_animation();
-
                 startWatch();
               }
 
@@ -8548,10 +8547,11 @@ class _KegelScreenState extends State<KegelScreen>
       startStop = false;
       started = false;
       elapsedTime = "00";
+      // watch.reset();
       watch.start();
       timer = Timer.periodic(
           const Duration(milliseconds: 100),
-          (levels == 'Easy ? '
+          (levels == 'Easy'
               ? updateTime_Easy
               : (levels == 'Normal'
                   ? updateTime_Normal
@@ -8577,11 +8577,11 @@ class _KegelScreenState extends State<KegelScreen>
       // startStop = false;
       // started = false;
       elapsedTime = "00";
-      watch.reset();
+      // watch.reset();
       watch.start();
       timer = Timer.periodic(
           const Duration(milliseconds: 100),
-          (levels == 'Easy ? '
+          (levels == 'Easy'
               ? updateTime_Easy
               : (levels == 'Normal'
                   ? updateTime_Normal

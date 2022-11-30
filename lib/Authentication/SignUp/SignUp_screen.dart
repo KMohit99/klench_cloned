@@ -1641,7 +1641,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (alpha_num) {
                         await submit();
                         await Get.to(VerifyOtp());
-
                         // await _signUpScreenController.SendOtpAPi(
                         //     context: context);
 

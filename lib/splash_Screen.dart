@@ -118,8 +118,8 @@ class _SplashScreenState extends State<SplashScreen> {
     fltNotification = FlutterLocalNotificationsPlugin();
     fltNotification!.initialize(initSetting);
     var androidDetails =
-    AndroidNotificationDetails('1', 'channelName',);
-    var iosDetails = IOSNotificationDetails();
+    AndroidNotificationDetails('1', 'channelName',enableVibration: true,playSound: true);
+    var iosDetails = const IOSNotificationDetails(presentSound: true,presentBadge: true);
     var generalNotificationDetails =
     NotificationDetails(android: androidDetails, iOS: iosDetails);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {

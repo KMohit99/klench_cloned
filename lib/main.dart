@@ -18,6 +18,9 @@ import 'firebase_options.dart';
 import 'getx_pagination/Bindings_class.dart';
 import 'getx_pagination/binding_utils.dart';
 import 'getx_pagination/page_route.dart';
+import 'homepage/kegel_screen.dart';
+import 'homepage/m_screen_metal.dart';
+import 'homepage/warmpUp_screen.dart';
 import 'messaging_service.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -206,18 +209,6 @@ class _MyAppState extends State<MyApp> {
       initialRoute: BindingUtils.initialRoute,
       initialBinding: Splash_Bindnig(),
       getPages: AppPages.getPageList,
-      // home: (Token == '_' ||
-      //         Token.toString() == 'null' ||
-      //         Token.toString().isEmpty ||
-      //         roles == '_' ||
-      //         roles == 'null' ||
-      //         roles.toString().isEmpty)
-      //     ? loginScreen()
-      //     : (roles == "company")
-      //         ? addCompanyScreen()
-      //         : (roles == "plan")
-      //             ? subscription_Screen()
-      //             : DashBoardScreen(),
 
       home: SplashScreen(),
       theme: ThemeData(

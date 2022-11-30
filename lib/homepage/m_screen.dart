@@ -1074,37 +1074,43 @@ import '../utils/colorUtils.dart';
 //     return "$hoursStr:$minutesStr:$secondsStr";
 //   }
 // }
+// class methods_list {
+//   final String? method_name;
+//   final String? color;
+//
+//   methods_list({ this.method_name,  this.color});
+//
+//   factory methods_list.fromJson(Map<String, dynamic> jsonData) {
+//     return methods_list(
+//       method_name: jsonData['method_name'],
+//       color: jsonData['color'],
+//     );
+//   }
+//
+//   static Map<String, dynamic> toMap(methods_list music) => {
+//     'method_name': music.method_name,
+//     'color': music.color,
+//
+//   };
+//
+//   static String encode(List<methods_list> musics) => json.encode(
+//     musics
+//         .map<Map<String, dynamic>>((music) => methods_list.toMap(music))
+//         .toList(),
+//   );
+//
+//   static List<methods_list> decode(String musics) =>
+//       (json.decode(musics) as List<dynamic>)
+//           .map<methods_list>((item) => methods_list.fromJson(item))
+//           .toList();
+// }
 class methods_list {
   final String? method_name;
+  final String? method_id;
   final String? color;
 
-  methods_list({ this.method_name,  this.color});
-
-  factory methods_list.fromJson(Map<String, dynamic> jsonData) {
-    return methods_list(
-      method_name: jsonData['method_name'],
-      color: jsonData['color'],
-    );
-  }
-
-  static Map<String, dynamic> toMap(methods_list music) => {
-    'method_name': music.method_name,
-    'color': music.color,
-
-  };
-
-  static String encode(List<methods_list> musics) => json.encode(
-    musics
-        .map<Map<String, dynamic>>((music) => methods_list.toMap(music))
-        .toList(),
-  );
-
-  static List<methods_list> decode(String musics) =>
-      (json.decode(musics) as List<dynamic>)
-          .map<methods_list>((item) => methods_list.fromJson(item))
-          .toList();
+  methods_list({ this.method_name,this.method_id,  this.color});
 }
-
 // class methods_list {
 //   String? method_name;
 //   String? color;
@@ -1118,6 +1124,7 @@ class methods_list {
 
 class ListMethodClass {
   String? method_name;
+  String? method_id;
   String? pauses;
   String? total_time;
   String? color;
@@ -1126,7 +1133,7 @@ class ListMethodClass {
 
 // added '?'
   ListMethodClass(
-      {this.method_name, this.pauses, this.total_time,this.pause_time, this.color, this.id});
+      {this.method_name,this.method_id, this.pauses, this.total_time,this.pause_time, this.color, this.id});
 // can also add 'required' keyword
 }
 

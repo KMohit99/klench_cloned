@@ -290,6 +290,7 @@ class SignUpScreenController extends GetxController {
     // username,phone,email,dob,gender,password,image
     Map data = {
       'otp': OtpController.text,
+      'email': emailController.text,
     };
     print(data);
     // String body = json.encode(data);

@@ -33,7 +33,9 @@ import 'm_screen.dart';
 import 'm_screen_metal.dart';
 import 'model/WeeklyData.dart';
 import 'model/m_screen_dailyData_model.dart';
+import 'model/m_screen_get_method_model.dart';
 import 'model/m_screen_lifetimeData_model.dart';
+import 'model/m_screen_post_method_moel.dart';
 import 'model/m_screen_weekly_data_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -68,20 +70,21 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   // ];
 
   String method_selected = '';
+  String method_selected_id = '';
   String method_selected_color = '';
   List<ListMethodClass> method_time = [];
   List<ListMethodClass> method_data = [];
   bool timer_started = false;
 
   List list = [
-    '#005aff',
-    '#ffffff',
-    '#ffde00',
-    '#bbff00',
-    '#d96be8',
-    '#ff6000',
-    '#349400',
-    '#8c0d37',
+    'FF005AFF',
+    'FFFFFFFF',
+    'FFFFDE00',
+    'FFBBFF00',
+    'FFD96BE8',
+    'FFFF6000',
+    'FF349400',
+    'FF8C0D37',
   ];
 
   final _random = Random();
@@ -356,23 +359,32 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     ),
                                     GestureDetector(
                                       onTap: () async {
-                                        if(method_new.text.isNotEmpty){
+                                        if (method_new.text.isNotEmpty) {
+                                          // setState(() {
+                                          //   _masturbation_screen_controller
+                                          //       .method_list
+                                          //       .add(methods_list(
+                                          //           method_name:
+                                          //               method_new.text,
+                                          //           color: list[random.nextInt(
+                                          //               list.length)]));
+                                          //   // method_new.clear();
+                                          // });
+
+                                          await Masturbation_Post_Method(
+                                              method_name: method_new.text,
+                                              method_color: list[
+                                                  random.nextInt(list.length)]);
                                           setState(() {
-                                            _masturbation_screen_controller
-                                                .method_list
-                                                .add(methods_list(
-                                                method_name: method_new.text,
-                                                color: list[random
-                                                    .nextInt(list.length)]));
                                             method_new.clear();
                                           });
-                                          final String encodedData =
-                                          methods_list.encode(
-                                              _masturbation_screen_controller
-                                                  .method_list);
-                                          await PreferenceManager().setList(
-                                              URLConstants.method_list,
-                                              encodedData);
+                                          // final String encodedData =
+                                          // methods_list.encode(
+                                          //     _masturbation_screen_controller
+                                          //         .method_list);
+                                          // await PreferenceManager().setList(
+                                          //     URLConstants.method_list,
+                                          //     encodedData);
 
                                           // await PreferenceManager()
                                           //     .setList(
@@ -382,7 +394,6 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           //         .method_list);
                                           Navigator.pop(context);
                                         }
-
                                       },
                                       child: Container(
                                         alignment: Alignment.topRight,
@@ -774,16 +785,25 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     GestureDetector(
                                       onTap: () async {
                                         Navigator.pop(context);
-                                        await _masturbation_screen_controller
-                                            .MasturbationData_delete_API(
-                                                context: context,
-                                                methodId: method_id);
-                                        if (_masturbation_screen_controller
-                                                .m_screenDeleteModel!.error ==
-                                            false) {
-                                          method_time.clear();
+                                        if (method_old == "Hand" ||
+                                            method_old == "Dildo" ||
+                                            method_old == "Sex" ||
+                                            method_old == "Fleshlight") {
+                                        } else {
+                                          await _masturbation_screen_controller
+                                              .MasturbationData_delete_API(
+                                                  context: context,
+                                                  methodId: method_id,
+                                              method_name: method_old);
+                                          if (_masturbation_screen_controller
+                                                  .m_screenDeleteModel!.error ==
+                                              false) {
+                                            method_time.clear();
 
-                                          await Masturbation_Daily_Data_get_API();
+                                            await Masturbation_LifeTime_Data_get_API();
+                                            await Masturbation_Daily_Data_get_API();
+                                            await MasturbationWeekly_Data_get_API();
+                                          }
                                         }
                                       },
                                       child: Container(
@@ -1177,6 +1197,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
     // await _masturbation_screen_controller.MasturbationData_get_API(context);
     // await PreferenceManager()
     //     .setList(URLConstants.method_list, list);
+
+    await Masturbation_Get_Method();
     await Masturbation_LifeTime_Data_get_API();
     await Masturbation_Daily_Data_get_API();
     await MasturbationWeekly_Data_get_API();
@@ -1187,16 +1209,14 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
     //     methods_list.encode(_masturbation_screen_controller.method_list);
     // await PreferenceManager().setList(URLConstants.method_list, encodedData);
 
-    final String? id_user =
-        prefs.getString(URLConstants.method_list);
+    final String? id_user = prefs.getString(URLConstants.method_list);
 
-    setState(() {
-      if(id_user!.isNotEmpty){
-        _masturbation_screen_controller.method_list =
-            methods_list.decode(id_user);
-      }
-
-    });
+    // setState(() {
+    //   if(id_user!.isNotEmpty){
+    //     _masturbation_screen_controller.method_list =
+    //         methods_list.decode(id_user);
+    //   }
+    // });
     print(
         "_masturbation_screen_controller : ${_masturbation_screen_controller.method_list}");
     // await prefs.setString('musics_key', encodedData);
@@ -1966,6 +1986,12 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                         .method_list[
                                                                             index]
                                                                         .color!;
+                                                                method_selected_id =
+                                                                    _masturbation_screen_controller
+                                                                        .method_list[
+                                                                            index]
+                                                                        .method_id!;
+
                                                                 print(
                                                                     "method_selected $method_selected");
                                                                 print(
@@ -2353,83 +2379,91 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                           GestureDetector(
                             onTap: () async {
                               if (started == false || elapsedTime == "30:00") {
-                                await _kegel_controller.update_notified_status(
-                                    context: context, status: 'false');
-                                await stopWatch_finish();
-                                await changeIndex();
-                                // setState(() {
-                                //   method_color = (method_selected == 'Hand'
-                                //       ? Colors.red
-                                //       : (method_selected == 'Dildo'
-                                //           ? Colors.blue
-                                //           : (method_selected == 'Sex'
-                                //               ? Colors.green
-                                //               : (method_selected == 'Fleshlight'
-                                //                   ? Colors.purple
-                                //                   : list[random.nextInt(
-                                //                       list.length)]))));
-                                // });
-                                //
-                                // print('Method  : $method_color');
-                                // print(
-                                //     'Method colorrr : ${method_color!.value.toRadixString(16)}');
-                                method_data.add(ListMethodClass(
-                                    method_name: method_selected,
-                                    pauses: paused_time.length.toString(),
-                                    total_time: elapsedTime,
-                                    pause_time: paused_time,
-                                    color: HexColor(method_selected_color)
-                                        .value
-                                        .toRadixString(16)));
-                                print("paused_time : $paused_time");
-                                List mohit = [];
+                                if (paused) {
+                                  await _kegel_controller
+                                      .update_notified_status(
+                                          context: context, status: 'false');
+                                  await stopWatch_finish();
+                                  await changeIndex();
+                                  // setState(() {
+                                  //   method_color = (method_selected == 'Hand'
+                                  //       ? Colors.red
+                                  //       : (method_selected == 'Dildo'
+                                  //           ? Colors.blue
+                                  //           : (method_selected == 'Sex'
+                                  //               ? Colors.green
+                                  //               : (method_selected == 'Fleshlight'
+                                  //                   ? Colors.purple
+                                  //                   : list[random.nextInt(
+                                  //                       list.length)]))));
+                                  // });
+                                  //
+                                  // print('Method  : $method_color');
+                                  // print(
+                                  //     'Method colorrr : ${method_color!.value.toRadixString(16)}');
+                                  method_data.add(ListMethodClass(
+                                      method_name: method_selected,
+                                      method_id: method_selected_id,
+                                      pauses: paused_time.length.toString(),
+                                      total_time: elapsedTime,
+                                      pause_time: paused_time,
+                                      color: HexColor(method_selected_color)
+                                          .value
+                                          .toRadixString(16)));
+                                  print("paused_time : $paused_time");
+                                  List mohit = [];
 
-                                for (var i = 0; i < paused_time.length; i++) {
-                                  // x_axis = data_sales[i]["month"];
-                                  print("timee : $paused_time");
+                                  for (var i = 0; i < paused_time.length; i++) {
+                                    // x_axis = data_sales[i]["month"];
+                                    print("timee : $paused_time");
 
-                                  DateTime tempDate_ = new DateFormat("mm:ss")
-                                      .parse(paused_time[i]);
+                                    DateTime tempDate_ = new DateFormat("mm:ss")
+                                        .parse(paused_time[i]);
+                                    print(
+                                        "TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+
+                                    var totalTime = (tempDate_.minute * 60) +
+                                        tempDate_.second;
+                                    print("TOTAL TIMEEE : $totalTime");
+                                    mohit.add(totalTime);
+                                    print("totaL : $mohit");
+                                  }
                                   print(
-                                      "TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+                                      "PP : ${paused_time.toString().replaceAll('[', '').replaceAll(']', '')}");
 
-                                  var totalTime = (tempDate_.minute * 60) +
-                                      tempDate_.second;
-                                  print("TOTAL TIMEEE : $totalTime");
-                                  mohit.add(totalTime);
-                                  print("totaL : $mohit");
+                                  print(
+                                      "paused_time : ${method_data[method_data.length - 1].pause_time}");
+
+                                  ///
+                                  await _masturbation_screen_controller
+                                      .m_method_post_API(
+                                          context: context,
+                                          pauses: mohit
+                                              .toString()
+                                              .replaceAll('[', '')
+                                              .replaceAll(']', ''),
+                                          method_data: method_data);
+                                  setState(() {
+                                    timer_started = false;
+                                    elapsedTime = '00:00';
+                                    percent = 0.0;
+                                    // method_selected = '';
+                                    watch.reset();
+                                    paused_time.clear();
+                                  });
+                                  method_time.clear();
+                                  coloring2.clear();
+                                  coloring.clear();
+                                  methoddd2.clear();
+                                  methoddd.clear();
+
+                                  ///
+                                  await Masturbation_LifeTime_Data_get_API();
+                                  await Masturbation_Daily_Data_get_API();
+                                  await MasturbationWeekly_Data_get_API();
+                                  // print('method_time : ${method_time[0].total_time}');
+                                  // print('method_name : ${method_time[0].method_name}');
                                 }
-                                print(
-                                    "PP : ${paused_time.toString().replaceAll('[', '').replaceAll(']', '')}");
-
-                                print(
-                                    "paused_time : ${method_data[method_data.length - 1].pause_time}");
-
-                                ///
-                                await _masturbation_screen_controller
-                                    .m_method_post_API(
-                                        context: context,
-                                        pauses: mohit
-                                            .toString()
-                                            .replaceAll('[', '')
-                                            .replaceAll(']', ''),
-                                        method_data: method_data);
-                                setState(() {
-                                  timer_started = false;
-                                  elapsedTime = '00:00';
-                                  percent = 0.0;
-                                  // method_selected = '';
-                                  watch.reset();
-                                  paused_time.clear();
-                                });
-                                method_time.clear();
-
-                                ///
-                                await Masturbation_LifeTime_Data_get_API();
-                                await Masturbation_Daily_Data_get_API();
-                                await MasturbationWeekly_Data_get_API();
-                                // print('method_time : ${method_time[0].total_time}');
-                                // print('method_name : ${method_time[0].method_name}');
                               }
                             },
                             child: Container(
@@ -2445,19 +2479,29 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           color: ColorUtils.primary_gold,
                                           width: 1),
                                       borderRadius: BorderRadius.circular(100))
-                                  : BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                        colors: [
-                                          HexColor("#ECDD8F").withOpacity(0.90),
-                                          HexColor("#E5CC79").withOpacity(0.90),
-                                          HexColor("#CE952F").withOpacity(0.90),
-                                        ],
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(100))),
+                                  : (paused
+                                      ? BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.centerLeft,
+                                            end: Alignment.centerRight,
+                                            // stops: [0.1, 0.5, 0.7, 0.9],
+                                            colors: [
+                                              HexColor("#ECDD8F")
+                                                  .withOpacity(0.90),
+                                              HexColor("#E5CC79")
+                                                  .withOpacity(0.90),
+                                              HexColor("#CE952F")
+                                                  .withOpacity(0.90),
+                                            ],
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(100))
+                                      : BoxDecoration(
+                                          border: Border.all(
+                                              color: ColorUtils.primary_gold,
+                                              width: 1),
+                                          borderRadius:
+                                              BorderRadius.circular(100)))),
                               child: Container(
                                   alignment: Alignment.center,
                                   margin: EdgeInsets.symmetric(
@@ -2468,7 +2512,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     style: FontStyleUtility.h16(
                                         fontColor: (started
                                             ? Colors.white
-                                            : Colors.black),
+                                            : (paused
+                                                ? Colors.black
+                                                : Colors.white)),
                                         family: 'PM'),
                                   )),
                             ),
@@ -3408,7 +3454,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                       ColorUtils.primary_grey,
                                                   tooltipBehavior:
                                                       _tooltipBehavior,
-                                                  zoomPanBehavior: _zoomPanBehavior,
+                                                  zoomPanBehavior:
+                                                      _zoomPanBehavior,
 
                                                   // legend: Legend(
                                                   //     isVisible: true,
@@ -3919,7 +3966,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                       : (m_screenWeeklyDataModel!.data!.isEmpty
                                           ? SizedBox.shrink()
                                           : Container(
-                                      // color: Colors.pink,
+                                              // color: Colors.pink,
                                               margin: EdgeInsets.symmetric(
                                                   vertical: 0, horizontal: 20),
                                               width: MediaQuery.of(context)
@@ -4111,14 +4158,14 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           // tooltipBehavior: _tooltipBehavior,
                                           // crosshairBehavior: _crosshairBehavior,
                                           trackballBehavior: _trackballBehavior,
-                                          zoomPanBehavior: _zoomPanBehavior,
+                                          // zoomPanBehavior: _zoomPanBehavior,
                                           primaryXAxis: CategoryAxis(
                                               rangePadding:
                                                   ChartRangePadding.auto,
                                               majorGridLines:
                                                   MajorGridLines(width: 0),
                                               // arrangeByIndex: true,
-                                              zoomFactor: 0.45,
+                                              // zoomFactor: 0.45,
                                               //Hide the axis line of y-axis
                                               axisLine: AxisLine(width: 0)),
                                           primaryYAxis: NumericAxis(
@@ -4476,6 +4523,110 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
   List<ChartSeries<Days_weekly, String>> mohit = [];
 
+  GetMasturbationMethod? getMasturbationMethod;
+
+  Future Masturbation_Get_Method() async {
+    String idUser = await PreferenceManager().getPref(URLConstants.id);
+    var url =
+        "${URLConstants.base_url}${URLConstants.masturbation_get_method}?user_id=$idUser";
+
+    try {
+      // showLoader(context);
+      var response = await http.get(Uri.parse(url));
+      print(response.body);
+      print(response.request);
+      print(response.statusCode);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // var data = convert.jsonDecode(response.body);
+        Map<String, dynamic> data =
+            json.decode(response.body.replaceAll('}[]', '}'));
+        print("Data :${data}");
+        getMasturbationMethod = GetMasturbationMethod.fromJson(data);
+        // getUSerModelList(userInfoModel_email);
+        if (getMasturbationMethod!.error == false) {
+          // hideLoader(context);
+          debugPrint(
+              '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${getMasturbationMethod!.data!.length}');
+
+          if(_masturbation_screen_controller.method_list.isNotEmpty){
+            _masturbation_screen_controller.method_list.clear();
+          }
+          for (var i = 0; i < getMasturbationMethod!.data!.length; i++) {
+            setState(() {
+              _masturbation_screen_controller.method_list.add(methods_list(
+                  method_name: getMasturbationMethod!.data![i].methodName,
+                  method_id: getMasturbationMethod!.data![i].id,
+                  color: getMasturbationMethod!.data![i].colorCode));
+            });
+          }
+
+          return getMasturbationMethod;
+        } else {
+          // hideLoader(context);
+
+          // CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
+          return null;
+        }
+      } else if (response.statusCode == 422) {
+        // hideLoader(context);
+        CommonWidget().showToaster(msg: getMasturbationMethod!.message!);
+      } else if (response.statusCode == 401) {
+        // hideLoader(context);
+        CommonWidget().showToaster(msg: getMasturbationMethod!.message!);
+      } else {
+        // CommonWidget().showToaster(msg: msg.toString());
+      }
+    } on Exception catch (e) {
+      print(e.toString());
+      // TODO
+    }
+  }
+
+  PostMasturbationMethod? postMasturbationMethod;
+
+  Future Masturbation_Post_Method(
+      {required String method_name, required String method_color}) async {
+    debugPrint('0-0-0-0-0-0-0 username');
+    // showLoader(context);
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+
+    // username,phone,email,dob,gender,password,image
+    Map data = {
+      'user_id': id_user,
+      'method_name': method_name,
+      'color_code': method_color,
+    };
+    print(data);
+    // String body = json.encode(data);
+
+    var url = (URLConstants.base_url + URLConstants.masturbation_post_method);
+    print("url : $url");
+    print("body : $data");
+
+    var response = await http.post(Uri.parse(url), body: data);
+    print(response.body);
+    print(response.request);
+    print(response.statusCode);
+    // var final_data = jsonDecode(response.body);
+
+    // print('final data $final_data');
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      postMasturbationMethod = PostMasturbationMethod.fromJson(data);
+      print(postMasturbationMethod);
+      if (postMasturbationMethod!.error == false) {
+       await Masturbation_Get_Method();
+        CommonWidget().showToaster(msg: postMasturbationMethod!.message!);
+        // hideLoader(context);
+      } else {
+        // hideLoader(context);
+        CommonWidget().showErrorToaster(msg: postMasturbationMethod!.message!);
+        print('Please try again');
+        print('Please try again');
+      }
+    } else {}
+  }
+
   Future MasturbationWeekly_Data_get_API() async {
     String idUser = await PreferenceManager().getPref(URLConstants.id);
     var url =
@@ -4554,8 +4705,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             }
 
             setState(() {
-              // methoddd2 = methoddd2.toSet().toList();
-
+              methoddd2 = methoddd2.toSet().toList();
               // coloring2 = coloring2.toSet().toList();
             });
           }
@@ -4979,7 +5129,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                   .add(m_screenDailyDataModel!.data![0].days![i].methodName!);
               coloring
                   .add(m_screenDailyDataModel!.data![0].days![i].colorCode!);
-              // methoddd = methoddd.toSet().toList();
+              methoddd = methoddd.toSet().toList();
               // coloring = coloring.toSet().toList();
             });
 
