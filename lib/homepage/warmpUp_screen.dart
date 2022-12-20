@@ -2,26 +2,24 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:klench_/Dashboard/dashboard_screen.dart';
-import 'package:klench_/homepage/Breathing_screen.dart';
 import 'package:klench_/homepage/swipe_controller.dart';
 import 'package:klench_/main.dart';
-import 'package:klench_/utils/TexrUtils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
 
 import '../utils/Asset_utils.dart';
 import '../utils/TextStyle_utils.dart';
 import '../utils/colorUtils.dart';
 import '../utils/common_widgets.dart';
+import 'alarm_info.dart';
 import 'alarm_info.dart';
 import 'controller/kegel_excercise_controller.dart';
 
@@ -49,6 +47,51 @@ class _WarmUpScreenState extends State<WarmUpScreen>
   double percent = 0.0;
   bool four_started = false;
   int counter = 0;
+
+  // vibration() async {
+  //   if (_canVibrate) {
+  //     // Vibration.vibrate(
+  //     //     // pattern: [100, 100,100, 100,100, 100,100, 100,],
+  //     //     duration: 4000,
+  //     //     intensities: [1, 255]);
+  //     // print(
+  //     //     "Vibration.hasCustomVibrationsSupport() ${Vibration.hasCustomVibrationsSupport()}");
+  //
+  //     if (await Vibration.hasCustomVibrationsSupport() == true) {
+  //       // print("has support");
+  //
+  //       if (Platform.isAndroid) {
+  //         // Android-specific code
+  //         Vibration.vibrate(
+  //           // pattern: [100, 100,100, 100,100, 100,100, 100,],
+  //             duration: 5000,
+  //             intensities: [1, 255]);
+  //       } else if (Platform.isIOS) {
+  //         // iOS-specific code
+  //         for (var i = 0; i <= 4; i++) {
+  //           await Future.delayed(const Duration(seconds: 1), () {
+  //             Vibration.vibrate();
+  //           });
+  //         }
+  //       }
+  //     } else {
+  //       print("haddddd support");
+  //       Vibration.vibrate();
+  //       for (var i = 0; i <= 4; i++) {
+  //         await Future.delayed(const Duration(seconds: 1), () {
+  //           Vibration.vibrate();
+  //         });
+  //       }
+  //       // await Future.delayed(Duration(milliseconds: 500));
+  //       // Vibration.vibrate();
+  //     }
+  //     // Vibrate.defaultVibrationDuration;
+  //     // Vibrate.defaultVibrationDuration;
+  //     // Vibrate.vibrateWithPauses(pauses);
+  //   } else {
+  //     CommonWidget().showErrorToaster(msg: 'Device Cannot vibrate');
+  //   }
+  // }
 
   updateTime(Timer timer) {
     if (watch.isRunning) {
@@ -166,6 +209,7 @@ class _WarmUpScreenState extends State<WarmUpScreen>
           print("startstop Inside=");
           elapsedTime2 = transformMilliSeconds(watch2.elapsedMilliseconds);
           print("startstop Inside= $elapsedTime2");
+          // vibration();
           if (elapsedTime2 == '13') {
             // stopWatch_finish();
             stopWatch_finish();
@@ -532,8 +576,23 @@ class _WarmUpScreenState extends State<WarmUpScreen>
     // you need this
     super.dispose();
   }
+
   final Kegel_controller _kegel_controller =
-  Get.put(Kegel_controller(), tag: Kegel_controller().toString());
+      Get.put(Kegel_controller(), tag: Kegel_controller().toString());
+
+  @override
+  void initState() {
+    getdata().then((value) => print("Success"));
+    super.initState();
+  }
+
+  getdata() async {
+    print("insssiiiiiii");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('last_route', "/warmpup");
+    String? lastRoute = prefs.getString('last_route');
+    print("lastRoute ${lastRoute}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -580,907 +639,1377 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                 )
               : const BoxDecoration()),
         ),
-        Scaffold(
-            backgroundColor: Colors.transparent,
-            // appBar: AppBar(
-            //   backgroundColor: Colors.transparent,
-            //   automaticallyImplyLeading: false,
-            //   leading: GestureDetector(
-            //     onTap: () {
-            //
-            //       (started
-            //           ? Navigator.pop(context)
-            //           : CommonWidget().showErrorToaster(msg: "Please finish the method"));
-            //       },
-            //     child: Container(
-            //         width: 41,
-            //         margin: EdgeInsets.all(8),
-            //         decoration: BoxDecoration(
-            //             color: Colors.white,
-            //             borderRadius: BorderRadius.circular(100),
-            //             gradient: LinearGradient(
-            //                 begin: Alignment(-1.0, -4.0),
-            //                 end: Alignment(1.0, 4.0),
-            //                 colors: [HexColor('#020204'), HexColor('#36393E')])),
-            //         child: Padding(
-            //           padding: const EdgeInsets.all(10.0),
-            //           child: Image.asset(
-            //             AssetUtils.arrow_back,
-            //             height: 14,
-            //             width: 15,
-            //           ),
-            //         )),
-            //   ),
-            //   title: Text(
-            //     Textutils.warmup,
-            //     style: FontStyleUtility.h16(
-            //         fontColor: ColorUtils.primary_grey, family: 'PM'),
-            //   ),
-            //   centerTitle: true,
-            //   actions: [
-            //     // Container(
-            //     //     width: 41,
-            //     //     margin: EdgeInsets.all(8),
-            //     //     decoration: BoxDecoration(
-            //     //         color: Colors.white,
-            //     //         borderRadius: BorderRadius.circular(100),
-            //     //         gradient: LinearGradient(
-            //     //             begin: Alignment(-1.0, -4.0),
-            //     //             end: Alignment(1.0, 4.0),
-            //     //             colors: [HexColor('#020204'), HexColor('#36393E')])),
-            //     //     child: Padding(
-            //     //       padding: const EdgeInsets.all(10.0),
-            //     //       child: Image.asset(
-            //     //         AssetUtils.notification_icon,
-            //     //         color: ColorUtils.primary_gold,
-            //     //         height: 14,
-            //     //         width: 15,
-            //     //       ),
-            //     //     ))
-            //   ],
-            // ),
-            body: NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  SliverAppBar(
-                    backgroundColor: Colors.transparent,
-                    automaticallyImplyLeading: false,
-                    snap: false,
-                    pinned: false,
-                    stretch: false,
-                    floating: false,
-                    leading: GestureDetector(
-                      onTap: () {
-                        (started
-                            ? Navigator.pop(context)
-                            : CommonWidget().showErrorToaster(
-                                msg: "Please finish the method"));
-                      },
-                      child: Container(
-                          width: 41,
-                          margin: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(100),
-                              gradient: LinearGradient(
-                                  begin: const Alignment(-1.0, -4.0),
-                                  end: const Alignment(1.0, 4.0),
-                                  colors: [
-                                    HexColor('#020204'),
-                                    HexColor('#36393E')
-                                  ])),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Image.asset(
-                              AssetUtils.arrow_back,
-                              height: 14,
-                              width: 15,
-                            ),
-                          )),
-                    ),
-                    // title: Text(
-                    //   Textutils.warmup,
-                    //   style: FontStyleUtility.h16(
-                    //       fontColor: ColorUtils.primary_grey, family: 'PM'),
-                    // ),
-                    centerTitle: true,
-                    actions: [
-                      // Container(
-                      //     width: 41,
-                      //     margin: EdgeInsets.all(8),
-                      //     decoration: BoxDecoration(
-                      //         color: Colors.white,
-                      //         borderRadius: BorderRadius.circular(100),
-                      //         gradient: LinearGradient(
-                      //             begin: Alignment(-1.0, -4.0),
-                      //             end: Alignment(1.0, 4.0),
-                      //             colors: [HexColor('#020204'), HexColor('#36393E')])),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.all(10.0),
-                      //       child: Image.asset(
-                      //         AssetUtils.notification_icon,
-                      //         color: ColorUtils.primary_gold,
-                      //         height: 14,
-                      //         width: 15,
-                      //       ),
-                      //     ))
-                    ],
-                  ),
-                ];
-              },
-              body: SingleChildScrollView(
-                physics: (_swipe_setup_controller.w_running
-                    ? const ClampingScrollPhysics()
-                    : const NeverScrollableScrollPhysics()),
-                child: Container(
-                  margin: const EdgeInsets.only(top: 15, left: 8, right: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // SizedBox(
-                      //   height: (animation_started_middle ? _animation_middle!.value : 15),
-                      // ),
-                      Container(
-                        height: (screenHeight >= 600 && screenHeight <= 700
-                            ? (animation_started_middle
-                                ? _animation_middle2!.value
-                                : 15)
-                            : (screenHeight >= 700 && screenHeight <= 800
-                                ? (animation_started_middle
-                                    ? _animation_middle!.value
-                                    : 15)
-                                : (screenHeight >= 800 && screenHeight <= 850
-                                    ? (animation_started_middle
-                                        ? _animation_middle4!.value
-                                        : 15)
-                                    : (screenHeight >= 850
-                                        ? (animation_started_middle
-                                            ? _animation_middle3!.value
-                                            : 15)
-                                        : 0)))),
+        WillPopScope(
+          onWillPop: () async => false,
+          child: Scaffold(
+              backgroundColor: Colors.transparent,
+              // appBar: AppBar(
+              //   backgroundColor: Colors.transparent,
+              //   automaticallyImplyLeading: false,
+              //   leading: GestureDetector(
+              //     onTap: () {
+              //
+              //       (started
+              //           ? Navigator.pop(context)
+              //           : CommonWidget().showErrorToaster(msg: "Please finish the method"));
+              //       },
+              //     child: Container(
+              //         width: 41,
+              //         margin: EdgeInsets.all(8),
+              //         decoration: BoxDecoration(
+              //             color: Colors.white,
+              //             borderRadius: BorderRadius.circular(100),
+              //             gradient: LinearGradient(
+              //                 begin: Alignment(-1.0, -4.0),
+              //                 end: Alignment(1.0, 4.0),
+              //                 colors: [HexColor('#020204'), HexColor('#36393E')])),
+              //         child: Padding(
+              //           padding: const EdgeInsets.all(10.0),
+              //           child: Image.asset(
+              //             AssetUtils.arrow_back,
+              //             height: 14,
+              //             width: 15,
+              //           ),
+              //         )),
+              //   ),
+              //   title: Text(
+              //     Textutils.warmup,
+              //     style: FontStyleUtility.h16(
+              //         fontColor: ColorUtils.primary_grey, family: 'PM'),
+              //   ),
+              //   centerTitle: true,
+              //   actions: [
+              //     // Container(
+              //     //     width: 41,
+              //     //     margin: EdgeInsets.all(8),
+              //     //     decoration: BoxDecoration(
+              //     //         color: Colors.white,
+              //     //         borderRadius: BorderRadius.circular(100),
+              //     //         gradient: LinearGradient(
+              //     //             begin: Alignment(-1.0, -4.0),
+              //     //             end: Alignment(1.0, 4.0),
+              //     //             colors: [HexColor('#020204'), HexColor('#36393E')])),
+              //     //     child: Padding(
+              //     //       padding: const EdgeInsets.all(10.0),
+              //     //       child: Image.asset(
+              //     //         AssetUtils.notification_icon,
+              //     //         color: ColorUtils.primary_gold,
+              //     //         height: 14,
+              //     //         width: 15,
+              //     //       ),
+              //     //     ))
+              //   ],
+              // ),
+              body: NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    SliverAppBar(
+                      backgroundColor: Colors.transparent,
+                      automaticallyImplyLeading: false,
+                      snap: false,
+                      pinned: false,
+                      stretch: false,
+                      floating: false,
+                      leading: GestureDetector(
+                        onTap: () {
+                          (started
+                              ? Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => DashboardScreen(
+                                            page: 1,
+                                          )),
+                                )
+                              : CommonWidget().showErrorToaster(
+                                  msg: "Please finish the method"));
+                        },
+                        child: Container(
+                            width: 41,
+                            margin: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(100),
+                                gradient: LinearGradient(
+                                    begin: const Alignment(-1.0, -4.0),
+                                    end: const Alignment(1.0, 4.0),
+                                    colors: [
+                                      HexColor('#020204'),
+                                      HexColor('#36393E')
+                                    ])),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Image.asset(
+                                AssetUtils.arrow_back,
+                                height: 14,
+                                width: 15,
+                              ),
+                            )),
                       ),
+                      // title: Text(
+                      //   Textutils.warmup,
+                      //   style: FontStyleUtility.h16(
+                      //       fontColor: ColorUtils.primary_grey, family: 'PM'),
+                      // ),
+                      centerTitle: true,
+                      actions: [
+                        // Container(
+                        //     width: 41,
+                        //     margin: EdgeInsets.all(8),
+                        //     decoration: BoxDecoration(
+                        //         color: Colors.white,
+                        //         borderRadius: BorderRadius.circular(100),
+                        //         gradient: LinearGradient(
+                        //             begin: Alignment(-1.0, -4.0),
+                        //             end: Alignment(1.0, 4.0),
+                        //             colors: [HexColor('#020204'), HexColor('#36393E')])),
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.all(10.0),
+                        //       child: Image.asset(
+                        //         AssetUtils.notification_icon,
+                        //         color: ColorUtils.primary_gold,
+                        //         height: 14,
+                        //         width: 15,
+                        //       ),
+                        //     ))
+                      ],
+                    ),
+                  ];
+                },
+                body: SingleChildScrollView(
+                  physics: (_swipe_setup_controller.w_running
+                      ? const ClampingScrollPhysics()
+                      : const NeverScrollableScrollPhysics()),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 15, left: 8, right: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // SizedBox(
+                        //   height: (animation_started_middle ? _animation_middle!.value : 15),
+                        // ),
+                        Container(
+                          height: (screenHeight >= 600 && screenHeight <= 700
+                              ? (animation_started_middle
+                                  ? _animation_middle2!.value
+                                  : 15)
+                              : (screenHeight >= 700 && screenHeight <= 800
+                                  ? (animation_started_middle
+                                      ? _animation_middle!.value
+                                      : 15)
+                                  : (screenHeight >= 800 && screenHeight <= 850
+                                      ? (animation_started_middle
+                                          ? _animation_middle4!.value
+                                          : 15)
+                                      : (screenHeight >= 850
+                                          ? (animation_started_middle
+                                              ? _animation_middle3!.value
+                                              : 15)
+                                          : 0)))),
+                        ),
 
-                      Container(
-                        child: AvatarGlow(
-                          endRadius: 170.0,
-                          showTwoGlows: true,
-                          animate: false,
-                          // (startStop ? false : true),
-                          duration: const Duration(milliseconds: 900),
-                          repeat: true,
-                          child: GestureDetector(
-                            onTap: () {
-                              print('helllllllooooooooooooooo');
-                              // startOrStop();
-                            },
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  height: 150,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.black,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: (animation_started
-                                            ? HexColor('#409C46')
-                                            : Colors.transparent),
-                                        spreadRadius: (animation_started
-                                            ? (shadow_animation1_completed
-                                                ? _animation_shadow2!.value
-                                                : _animation_shadow1!.value)
-                                            : 0),
-                                        blurRadius: 35,
-                                      ),
-                                      BoxShadow(
-                                        // offset: Offset(0,10),
-                                        color: (animation_started
-                                            ? HexColor('#000000')
-                                            : Colors.transparent),
-                                        spreadRadius: 35,
-                                        blurRadius: 35,
-                                      ),
-                                    ],
-                                    // boxShadow: [
-                                    //   BoxShadow(
-                                    //     color: (animation_started
-                                    //         ? HexColor('#409C46')
-                                    //         : Colors.transparent),
-                                    //     blurRadius: (animation_started
-                                    //         ? _animation!.value
-                                    //         : 0),
-                                    //     spreadRadius: (animation_started
-                                    //         ? _animation!.value
-                                    //         : 0),
-                                    //   )
-                                    // ]
+                        Container(
+                          child: AvatarGlow(
+                            endRadius: 170.0,
+                            showTwoGlows: true,
+                            animate: false,
+                            // (startStop ? false : true),
+                            duration: const Duration(milliseconds: 900),
+                            repeat: true,
+                            child: GestureDetector(
+                              onTap: () {
+                                print('helllllllooooooooooooooo');
+                                // startOrStop();
+                              },
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    height: 150,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.black,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: (animation_started
+                                              ? HexColor('#409C46')
+                                              : Colors.transparent),
+                                          spreadRadius: (animation_started
+                                              ? (shadow_animation1_completed
+                                                  ? _animation_shadow2!.value
+                                                  : _animation_shadow1!.value)
+                                              : 0),
+                                          blurRadius: 35,
+                                        ),
+                                        BoxShadow(
+                                          // offset: Offset(0,10),
+                                          color: (animation_started
+                                              ? HexColor('#000000')
+                                              : Colors.transparent),
+                                          spreadRadius: 35,
+                                          blurRadius: 35,
+                                        ),
+                                      ],
+                                      // boxShadow: [
+                                      //   BoxShadow(
+                                      //     color: (animation_started
+                                      //         ? HexColor('#409C46')
+                                      //         : Colors.transparent),
+                                      //     blurRadius: (animation_started
+                                      //         ? _animation!.value
+                                      //         : 0),
+                                      //     spreadRadius: (animation_started
+                                      //         ? _animation!.value
+                                      //         : 0),
+                                      //   )
+                                      // ]
+                                    ),
                                   ),
-                                ),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Circle,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 6],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 340,
-                                //     width: 340,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Circle,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 8.5],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 330,
-                                //     width: 330,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Circle,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 7.5],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 320,
-                                //     width: 320,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Circle,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 7.5],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 310,
-                                //     width: 310,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Circle,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 8],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 300,
-                                //     width: 300,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Circle,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 8.5],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 290,
-                                //     width: 290,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Circle,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 9],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 280,
-                                //     width: 280,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Circle,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 8.5],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 270,
-                                //     width: 270,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Oval,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 10],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 260,
-                                //     width: 260,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Oval,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 9.5],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 250,
-                                //     width: 250,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Oval,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 9],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 240,
-                                //     width: 240,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Oval,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 8.5],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 230,
-                                //     width: 230,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Oval,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 7],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 220,
-                                //     width: 220,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Oval,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 7.5],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 210,
-                                //     width: 210,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Oval,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 7],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 200,
-                                //     width: 200,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Oval,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 6.5],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 190,
-                                //     width: 190,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Oval,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 6],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 180,
-                                //     width: 180,
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Oval,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 5.5],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 170,
-                                //     width: 170,
-                                //     padding: EdgeInsets.all(5),
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //   borderType: BorderType.Oval,
-                                //   strokeWidth: 3,
-                                //   dashPattern: [0, 7],
-                                //   strokeCap: StrokeCap.round,
-                                //   radius: Radius.circular(100),
-                                //   padding: EdgeInsets.all(0),
-                                //   color: Colors.black,
-                                //   child: Container(
-                                //     height: 160,
-                                //     width: 160,
-                                //     padding: EdgeInsets.all(5),
-                                //   ),
-                                // )
-                                //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Circle,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 6],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 340,
+                                  //     width: 340,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Circle,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 8.5],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 330,
+                                  //     width: 330,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Circle,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 7.5],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 320,
+                                  //     width: 320,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Circle,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 7.5],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 310,
+                                  //     width: 310,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Circle,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 8],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 300,
+                                  //     width: 300,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Circle,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 8.5],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 290,
+                                  //     width: 290,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Circle,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 9],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 280,
+                                  //     width: 280,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Circle,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 8.5],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 270,
+                                  //     width: 270,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Oval,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 10],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 260,
+                                  //     width: 260,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Oval,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 9.5],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 250,
+                                  //     width: 250,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Oval,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 9],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 240,
+                                  //     width: 240,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Oval,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 8.5],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 230,
+                                  //     width: 230,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Oval,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 7],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 220,
+                                  //     width: 220,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Oval,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 7.5],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 210,
+                                  //     width: 210,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Oval,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 7],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 200,
+                                  //     width: 200,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Oval,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 6.5],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 190,
+                                  //     width: 190,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Oval,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 6],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 180,
+                                  //     width: 180,
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Oval,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 5.5],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 170,
+                                  //     width: 170,
+                                  //     padding: EdgeInsets.all(5),
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
+                                  // (animation_started
+                                  //     ? DottedBorder(
+                                  //   borderType: BorderType.Oval,
+                                  //   strokeWidth: 3,
+                                  //   dashPattern: [0, 7],
+                                  //   strokeCap: StrokeCap.round,
+                                  //   radius: Radius.circular(100),
+                                  //   padding: EdgeInsets.all(0),
+                                  //   color: Colors.black,
+                                  //   child: Container(
+                                  //     height: 160,
+                                  //     width: 160,
+                                  //     padding: EdgeInsets.all(5),
+                                  //   ),
+                                  // )
+                                  //     : SizedBox.shrink()),
 
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 7.5,
-                                        dashPattern: [0, 19],
-                                        strokeCap: StrokeCap.round,
-                                        radius: const Radius.circular(100),
-                                        padding: const EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 350,
-                                          width: 350,
-                                          padding: const EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : const SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 7.5,
-                                        dashPattern: [0, 19],
-                                        strokeCap: StrokeCap.round,
-                                        radius: const Radius.circular(100),
-                                        padding: const EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 320,
-                                          width: 320,
-                                          padding: const EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : const SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 7,
-                                        dashPattern: [0, 19],
-                                        strokeCap: StrokeCap.round,
-                                        radius: const Radius.circular(100),
-                                        padding: const EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 290,
-                                          width: 290,
-                                          padding: const EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : const SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 8,
-                                        dashPattern: [0, 19],
-                                        strokeCap: StrokeCap.round,
-                                        radius: const Radius.circular(100),
-                                        padding: const EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 265,
-                                          width: 265,
-                                          padding: const EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : const SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 7,
-                                        dashPattern: [0, 18],
-                                        strokeCap: StrokeCap.round,
-                                        radius: const Radius.circular(100),
-                                        padding: const EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 240,
-                                          width: 240,
-                                          padding: const EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : const SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 6,
-                                        dashPattern: [0, 16],
-                                        strokeCap: StrokeCap.round,
-                                        radius: const Radius.circular(100),
-                                        padding: const EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 220,
-                                          width: 220,
-                                          padding: const EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : const SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 5,
-                                        dashPattern: [0, 14],
-                                        strokeCap: StrokeCap.round,
-                                        radius: const Radius.circular(100),
-                                        padding: const EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 200,
-                                          width: 200,
-                                          padding: const EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : const SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 4,
-                                        dashPattern: [0, 12],
-                                        strokeCap: StrokeCap.round,
-                                        radius: const Radius.circular(100),
-                                        padding: const EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 180,
-                                          width: 180,
-                                          padding: const EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : const SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 3,
-                                        dashPattern: [0, 10],
-                                        strokeCap: StrokeCap.round,
-                                        radius: const Radius.circular(100),
-                                        padding: const EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 160,
-                                          width: 160,
-                                          padding: const EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : const SizedBox.shrink()),
-                                Container(
-                                  height: (animation_started || reverse_started
-                                      ? _animation_button!.value
-                                      : button_height),
-                                  width: (animation_started || reverse_started
-                                      ? _animation_button!.value
-                                      : button_height),
-                                  decoration: (animation_started
-                                      ? BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                              color: Colors.greenAccent,
-                                              width: 2.5),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: HexColor(
-                                                  '#409C46'), // darker color
-                                            ),
-                                            BoxShadow(
-                                              color: HexColor('#000000'),
-                                              // background color
-                                              spreadRadius: -7.0,
-                                              blurRadius: 10.0,
-                                            ),
-                                          ],
+                                  (animation_started
+                                      ? DottedBorder(
+                                          borderType: BorderType.Oval,
+                                          strokeWidth: 7.5,
+                                          dashPattern: [0, 19],
+                                          strokeCap: StrokeCap.round,
+                                          radius: const Radius.circular(100),
+                                          padding: const EdgeInsets.all(0),
+                                          color: Colors.black,
+                                          child: Container(
+                                            height: 350,
+                                            width: 350,
+                                            padding: const EdgeInsets.all(5),
+                                          ),
                                         )
-                                      : (reverse_started
-                                          ? BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                  color: Colors.greenAccent,
-                                                  width: 2.5),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: HexColor(
-                                                      '#409C46'), // darker color
-                                                ),
-                                                BoxShadow(
-                                                  color: HexColor('#000000'),
-                                                  // background color
-                                                  spreadRadius: -7.0,
-                                                  blurRadius: 10.0,
-                                                ),
-                                              ],
-                                            )
-                                          : const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                  alignment: Alignment.center,
-                                                  image: AssetImage(
-                                                      AssetUtils.home_button)),
-                                              // boxShadow: [
-                                              //   BoxShadow(
-                                              //     color: (animation_started
-                                              //         ? HexColor('#F5C921')
-                                              //         : Colors.transparent),
-                                              //     blurRadius: (animation_started
-                                              //         ? _animation!.value
-                                              //         : 0),
-                                              //     spreadRadius: (animation_started
-                                              //         ? _animation!.value
-                                              //         : 0),
-                                              //   )
-                                              // ]
-                                            ))),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.center,
-                                        child: Text('Warm up',
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.sourceSerifPro(
-                                              textStyle: TextStyle(
-                                                  color: (four_started
-                                                      ? HexColor('#409C46')
-                                                          .withOpacity(0.4)
-                                                      : (reverse_started
-                                                          ? HexColor('#409C46')
-                                                              .withOpacity(0.4)
-                                                          : HexColor(
-                                                              '#409C46'))),
-                                                  fontSize:
-                                                      (animation_started ||
-                                                              reverse_started
-                                                          ? _animation_textK!
-                                                              .value
-                                                          : text_k_size),
-                                                  fontWeight: FontWeight.w600),
-                                            )),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        child: (four_started
-                                            ? Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "HOLD",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: (animation_started
-                                                            ? _animation_textTime!
-                                                                .value
-                                                            : text_time_size),
-                                                        fontWeight:
-                                                            FontWeight.w900),
+                                      : const SizedBox.shrink()),
+                                  (animation_started
+                                      ? DottedBorder(
+                                          borderType: BorderType.Oval,
+                                          strokeWidth: 7.5,
+                                          dashPattern: [0, 19],
+                                          strokeCap: StrokeCap.round,
+                                          radius: const Radius.circular(100),
+                                          padding: const EdgeInsets.all(0),
+                                          color: Colors.black,
+                                          child: Container(
+                                            height: 320,
+                                            width: 320,
+                                            padding: const EdgeInsets.all(5),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink()),
+                                  (animation_started
+                                      ? DottedBorder(
+                                          borderType: BorderType.Oval,
+                                          strokeWidth: 7,
+                                          dashPattern: [0, 19],
+                                          strokeCap: StrokeCap.round,
+                                          radius: const Radius.circular(100),
+                                          padding: const EdgeInsets.all(0),
+                                          color: Colors.black,
+                                          child: Container(
+                                            height: 290,
+                                            width: 290,
+                                            padding: const EdgeInsets.all(5),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink()),
+                                  (animation_started
+                                      ? DottedBorder(
+                                          borderType: BorderType.Oval,
+                                          strokeWidth: 8,
+                                          dashPattern: [0, 19],
+                                          strokeCap: StrokeCap.round,
+                                          radius: const Radius.circular(100),
+                                          padding: const EdgeInsets.all(0),
+                                          color: Colors.black,
+                                          child: Container(
+                                            height: 265,
+                                            width: 265,
+                                            padding: const EdgeInsets.all(5),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink()),
+                                  (animation_started
+                                      ? DottedBorder(
+                                          borderType: BorderType.Oval,
+                                          strokeWidth: 7,
+                                          dashPattern: [0, 18],
+                                          strokeCap: StrokeCap.round,
+                                          radius: const Radius.circular(100),
+                                          padding: const EdgeInsets.all(0),
+                                          color: Colors.black,
+                                          child: Container(
+                                            height: 240,
+                                            width: 240,
+                                            padding: const EdgeInsets.all(5),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink()),
+                                  (animation_started
+                                      ? DottedBorder(
+                                          borderType: BorderType.Oval,
+                                          strokeWidth: 6,
+                                          dashPattern: [0, 16],
+                                          strokeCap: StrokeCap.round,
+                                          radius: const Radius.circular(100),
+                                          padding: const EdgeInsets.all(0),
+                                          color: Colors.black,
+                                          child: Container(
+                                            height: 220,
+                                            width: 220,
+                                            padding: const EdgeInsets.all(5),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink()),
+                                  (animation_started
+                                      ? DottedBorder(
+                                          borderType: BorderType.Oval,
+                                          strokeWidth: 5,
+                                          dashPattern: [0, 14],
+                                          strokeCap: StrokeCap.round,
+                                          radius: const Radius.circular(100),
+                                          padding: const EdgeInsets.all(0),
+                                          color: Colors.black,
+                                          child: Container(
+                                            height: 200,
+                                            width: 200,
+                                            padding: const EdgeInsets.all(5),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink()),
+                                  (animation_started
+                                      ? DottedBorder(
+                                          borderType: BorderType.Oval,
+                                          strokeWidth: 4,
+                                          dashPattern: [0, 12],
+                                          strokeCap: StrokeCap.round,
+                                          radius: const Radius.circular(100),
+                                          padding: const EdgeInsets.all(0),
+                                          color: Colors.black,
+                                          child: Container(
+                                            height: 180,
+                                            width: 180,
+                                            padding: const EdgeInsets.all(5),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink()),
+                                  (animation_started
+                                      ? DottedBorder(
+                                          borderType: BorderType.Oval,
+                                          strokeWidth: 3,
+                                          dashPattern: [0, 10],
+                                          strokeCap: StrokeCap.round,
+                                          radius: const Radius.circular(100),
+                                          padding: const EdgeInsets.all(0),
+                                          color: Colors.black,
+                                          child: Container(
+                                            height: 160,
+                                            width: 160,
+                                            padding: const EdgeInsets.all(5),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink()),
+                                  Container(
+                                    height:
+                                        (animation_started || reverse_started
+                                            ? _animation_button!.value
+                                            : button_height),
+                                    width: (animation_started || reverse_started
+                                        ? _animation_button!.value
+                                        : button_height),
+                                    decoration: (animation_started
+                                        ? BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                                color: Colors.greenAccent,
+                                                width: 2.5),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: HexColor(
+                                                    '#409C46'), // darker color
+                                              ),
+                                              BoxShadow(
+                                                color: HexColor('#000000'),
+                                                // background color
+                                                spreadRadius: -7.0,
+                                                blurRadius: 10.0,
+                                              ),
+                                            ],
+                                          )
+                                        : (reverse_started
+                                            ? BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                    color: Colors.greenAccent,
+                                                    width: 2.5),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: HexColor(
+                                                        '#409C46'), // darker color
                                                   ),
-                                                  Text(
-                                                    elapsedTime2,
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: (animation_started
-                                                            ? _animation_textTime!
-                                                                .value
-                                                            : text_time_size),
-                                                        fontWeight:
-                                                            FontWeight.w900),
+                                                  BoxShadow(
+                                                    color: HexColor('#000000'),
+                                                    // background color
+                                                    spreadRadius: -7.0,
+                                                    blurRadius: 10.0,
                                                   ),
                                                 ],
                                               )
-                                            : Text(
-                                                (reverse_started
-                                                    ? '$seconds_timer'
-                                                    : (timer_started
-                                                        ? (elapsedTime3 == '00'
-                                                            ? 'Ready'
-                                                            : (elapsedTime3 ==
-                                                                    '01'
-                                                                ? 'Set'
-                                                                : (elapsedTime3 ==
-                                                                        '02'
-                                                                    ? 'WarmUp'
-                                                                    : elapsedTime)))
-                                                        : '')),
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: (animation_started
-                                                        ? _animation_textTime!
-                                                            .value
-                                                        : text_time_size),
+                                            : const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                    alignment: Alignment.center,
+                                                    image: AssetImage(AssetUtils
+                                                        .home_button)),
+                                                // boxShadow: [
+                                                //   BoxShadow(
+                                                //     color: (animation_started
+                                                //         ? HexColor('#F5C921')
+                                                //         : Colors.transparent),
+                                                //     blurRadius: (animation_started
+                                                //         ? _animation!.value
+                                                //         : 0),
+                                                //     spreadRadius: (animation_started
+                                                //         ? _animation!.value
+                                                //         : 0),
+                                                //   )
+                                                // ]
+                                              ))),
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          alignment: Alignment.center,
+                                          child: Text('Warm up',
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.sourceSerifPro(
+                                                textStyle: TextStyle(
+                                                    color: (four_started
+                                                        ? HexColor('#409C46')
+                                                            .withOpacity(0.4)
+                                                        : (reverse_started
+                                                            ? HexColor(
+                                                                    '#409C46')
+                                                                .withOpacity(
+                                                                    0.4)
+                                                            : HexColor(
+                                                                '#409C46'))),
+                                                    fontSize:
+                                                        (animation_started ||
+                                                                reverse_started
+                                                            ? _animation_textK!
+                                                                .value
+                                                            : text_k_size),
                                                     fontWeight:
-                                                        FontWeight.w900),
+                                                        FontWeight.w600),
                                               )),
-                                      ),
-                                    ],
+                                        ),
+                                        Container(
+                                          alignment: Alignment.center,
+                                          child: (four_started
+                                              ? Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "PUSH",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: (animation_started
+                                                              ? _animation_textTime!
+                                                                  .value
+                                                              : text_time_size),
+                                                          fontWeight:
+                                                              FontWeight.w900),
+                                                    ),
+                                                    Text(
+                                                      elapsedTime2,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: (animation_started
+                                                              ? _animation_textTime!
+                                                                  .value
+                                                              : text_time_size),
+                                                          fontWeight:
+                                                              FontWeight.w900),
+                                                    ),
+                                                  ],
+                                                )
+                                              : Text(
+                                                  (reverse_started
+                                                      ? '$seconds_timer'
+                                                      : (timer_started
+                                                          ? (elapsedTime3 ==
+                                                                  '00'
+                                                              ? 'Ready'
+                                                              : (elapsedTime3 ==
+                                                                      '01'
+                                                                  ? 'Set'
+                                                                  : (elapsedTime3 ==
+                                                                          '02'
+                                                                      ? 'WarmUp'
+                                                                      : elapsedTime)))
+                                                          : '')),
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: (animation_started
+                                                          ? _animation_textTime!
+                                                              .value
+                                                          : text_time_size),
+                                                      fontWeight:
+                                                          FontWeight.w900),
+                                                )),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
+                            glowColor: Colors.white,
                           ),
-                          glowColor: Colors.white,
                         ),
-                      ),
-                      // SizedBox(
-                      //   height: 28,
-                      // ),
-                      Container(
-                        height: (screenHeight >= 600 && screenHeight <= 700
-                            ? (animation_started_middle
-                                ? _animation_middle2!.value
-                                : 15)
-                            : (screenHeight >= 700 && screenHeight <= 800
-                                ? (animation_started_middle
-                                    ? _animation_middle!.value
-                                    : 15)
-                                : (screenHeight >= 800 && screenHeight <= 850
-                                    ? (animation_started_middle
-                                        ? _animation_middle4!.value
-                                        : 15)
-                                    : (screenHeight >= 850
-                                        ? (animation_started_middle
-                                            ? _animation_middle3!.value
-                                            : 15)
-                                        : 0)))),
-                      ),
-                      (timer_started
-                          ? Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        // color: Colors.red,
-                                        child: ('$seconds' == '3'
-                                            ? Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Expanded(
-                                                    flex: 1,
-                                                    child: Container(
+                        // SizedBox(
+                        //   height: 28,
+                        // ),
+                        Container(
+                          height: (screenHeight >= 600 && screenHeight <= 700
+                              ? (animation_started_middle
+                                  ? _animation_middle2!.value
+                                  : 15)
+                              : (screenHeight >= 700 && screenHeight <= 800
+                                  ? (animation_started_middle
+                                      ? _animation_middle!.value
+                                      : 15)
+                                  : (screenHeight >= 800 && screenHeight <= 850
+                                      ? (animation_started_middle
+                                          ? _animation_middle4!.value
+                                          : 15)
+                                      : (screenHeight >= 850
+                                          ? (animation_started_middle
+                                              ? _animation_middle3!.value
+                                              : 15)
+                                          : 0)))),
+                        ),
+                        (timer_started
+                            ? Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(
+                                          // color: Colors.red,
+                                          child: ('$seconds' == '3'
+                                              ? Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Container(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Text(
+                                                            'Set',
+                                                            style: FontStyleUtility.h18(
+                                                                fontColor: Colors
+                                                                    .transparent,
+                                                                family: "PR"),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Container(
+                                                        width: 80,
+                                                        // decoration: BoxDecoration(
+                                                        //     borderRadius:
+                                                        //         BorderRadius
+                                                        //             .circular(10),
+                                                        //     border: Border.all(
+                                                        //         color:
+                                                        //             Colors.white,
+                                                        //         width: 0.5)),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Text(
+                                                            'Ready',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: FontStyleUtility.h22(
+                                                                fontColor:
+                                                                    ColorUtils
+                                                                        .primary_gold,
+                                                                family: "PM"),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              : ('$seconds' == '2'
+                                                  ? Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Container(
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child: Text(
+                                                                    'Ready',
+                                                                    style: FontStyleUtility.h14(
+                                                                        fontColor:
+                                                                            Colors
+                                                                                .white,
+                                                                        family:
+                                                                            "PR"),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: Container(
+                                                            width: 80,
+                                                            // decoration: BoxDecoration(
+                                                            //     borderRadius:
+                                                            //         BorderRadius
+                                                            //             .circular(
+                                                            //                 10),
+                                                            //     border: Border.all(
+                                                            //         color: Colors
+                                                            //             .white,
+                                                            //         width: 0.5)),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Text(
+                                                                'Set',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FontStyleUtility.h22(
+                                                                    fontColor:
+                                                                        ColorUtils
+                                                                            .primary_gold,
+                                                                    family:
+                                                                        "PM"),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  : ('$seconds' == '1'
+                                                      ? Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            Expanded(
+                                                              flex: 2,
+                                                              child: Container(
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          0.0),
+                                                                  child: Text(
+                                                                    'Ready',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .right,
+                                                                    style: FontStyleUtility.h14(
+                                                                        fontColor:
+                                                                            Colors
+                                                                                .white,
+                                                                        family:
+                                                                            "PR"),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child: Container(
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          0.0),
+                                                                  child: Text(
+                                                                    'Set',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .right,
+                                                                    style: FontStyleUtility.h14(
+                                                                        fontColor:
+                                                                            Colors
+                                                                                .white,
+                                                                        family:
+                                                                            "PR"),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              flex: 3,
+                                                              child: Container(
+                                                                width: 100,
+                                                                // decoration: BoxDecoration(
+                                                                //     borderRadius:
+                                                                //         BorderRadius
+                                                                //             .circular(
+                                                                //                 10),
+                                                                //     border: Border.all(
+                                                                //         color: Colors
+                                                                //             .white,
+                                                                //         width:
+                                                                //             0.5)),
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child: Text(
+                                                                    'Squeeze',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: FontStyleUtility.h22(
+                                                                        fontColor:
+                                                                            ColorUtils
+                                                                                .primary_gold,
+                                                                        family:
+                                                                            "PM"),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      : (four_started
+                                                          ? Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                Expanded(
+                                                                  flex: 2,
+                                                                  child:
+                                                                      Container(
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              0.0),
+                                                                      child:
+                                                                          Text(
+                                                                        'Push',
+                                                                        textAlign:
+                                                                            TextAlign.right,
+                                                                        style: FontStyleUtility.h14(
+                                                                            fontColor:
+                                                                                Colors.white,
+                                                                            family: "PR"),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                  flex: 2,
+                                                                  child:
+                                                                      Container(
+                                                                    width: 100,
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              0.0),
+                                                                      child:
+                                                                          Text(
+                                                                        'Squeeze',
+                                                                        textAlign:
+                                                                            TextAlign.right,
+                                                                        style: FontStyleUtility.h14(
+                                                                            fontColor:
+                                                                                Colors.white,
+                                                                            family: "PR"),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                  flex: 3,
+                                                                  child:
+                                                                      Container(
+                                                                    width: 80,
+                                                                    // decoration: BoxDecoration(
+                                                                    //     borderRadius:
+                                                                    //         BorderRadius.circular(
+                                                                    //             10),
+                                                                    //     border: Border.all(
+                                                                    //         color: Colors
+                                                                    //             .white,
+                                                                    //         width:
+                                                                    //             0.5)),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8.0),
+                                                                      child:
+                                                                          Text(
+                                                                        'Push',
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        style: FontStyleUtility.h22(
+                                                                            fontColor:
+                                                                                ColorUtils.primary_gold,
+                                                                            family: "PM"),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            )
+                                                          : (counter > 0
+                                                              ? Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: [
+                                                                    Expanded(
+                                                                      flex: 2,
+                                                                      child:
+                                                                          Container(
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(0.0),
+                                                                          child:
+                                                                              Text(
+                                                                            'Squeeze',
+                                                                            textAlign:
+                                                                                TextAlign.right,
+                                                                            style:
+                                                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      flex: 1,
+                                                                      child:
+                                                                          Container(
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(0.0),
+                                                                          child:
+                                                                              Text(
+                                                                            'Push',
+                                                                            textAlign:
+                                                                                TextAlign.right,
+                                                                            style:
+                                                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      flex: 3,
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            100,
+                                                                        // decoration: BoxDecoration(
+                                                                        //     borderRadius:
+                                                                        //         BorderRadius
+                                                                        //             .circular(
+                                                                        //                 10),
+                                                                        //     border: Border.all(
+                                                                        //         color: Colors
+                                                                        //             .white,
+                                                                        //         width:
+                                                                        //             0.5)),
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(8.0),
+                                                                          child:
+                                                                              Text(
+                                                                            'Squeeze',
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                FontStyleUtility.h22(fontColor: ColorUtils.primary_gold, family: "PM"),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                )
+                                                              : Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: [
+                                                                    Expanded(
+                                                                      flex: 2,
+                                                                      child:
+                                                                          Container(
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(0.0),
+                                                                          child:
+                                                                              Text(
+                                                                            'Ready',
+                                                                            textAlign:
+                                                                                TextAlign.right,
+                                                                            style:
+                                                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      flex: 1,
+                                                                      child:
+                                                                          Container(
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(0.0),
+                                                                          child:
+                                                                              Text(
+                                                                            'Set',
+                                                                            textAlign:
+                                                                                TextAlign.right,
+                                                                            style:
+                                                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      flex: 3,
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            100,
+                                                                        // decoration: BoxDecoration(
+                                                                        //     borderRadius:
+                                                                        //         BorderRadius
+                                                                        //             .circular(
+                                                                        //                 10),
+                                                                        //     border: Border.all(
+                                                                        //         color: Colors
+                                                                        //             .white,
+                                                                        //         width:
+                                                                        //             0.5)),
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(8.0),
+                                                                          child:
+                                                                              Text(
+                                                                            'Squeeze',
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                FontStyleUtility.h22(fontColor: ColorUtils.primary_gold, family: "PM"),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                )))))),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                          // color: Colors.red,
+                                          child: ('$seconds' == '3'
+                                              ? Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Container(
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
                                                                 .all(8.0),
                                                         child: Text(
                                                           'Set',
-                                                          style: FontStyleUtility.h18(
-                                                              fontColor: Colors
-                                                                  .transparent,
-                                                              family: "PR"),
+                                                          style: FontStyleUtility
+                                                              .h14(
+                                                                  fontColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  family: "PR"),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 1,
-                                                    child: Container(
-                                                      width: 80,
-                                                      // decoration: BoxDecoration(
-                                                      //     borderRadius:
-                                                      //         BorderRadius
-                                                      //             .circular(10),
-                                                      //     border: Border.all(
-                                                      //         color:
-                                                      //             Colors.white,
-                                                      //         width: 0.5)),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Text(
-                                                          'Ready',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FontStyleUtility.h22(
-                                                              fontColor: ColorUtils
-                                                                  .primary_gold,
-                                                              family: "PM"),
+                                                  ],
+                                                )
+                                              : ('$seconds' == '2'
+                                                  ? Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Text(
+                                                              'Squeeze',
+                                                              style: FontStyleUtility
+                                                                  .h14(
+                                                                      fontColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      family:
+                                                                          "PR"),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
-                                            : ('$seconds' == '2'
-                                                ? Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Expanded(
-                                                        flex: 1,
-                                                        child: Row(
+                                                      ],
+                                                    )
+                                                  : ('$seconds' == '1'
+                                                      ? Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .end,
+                                                                  .start,
                                                           children: [
+                                                            Container(
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        0.0),
+                                                                child: Text(
+                                                                  'Push',
+                                                                  style: FontStyleUtility.h14(
+                                                                      fontColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      family:
+                                                                          "PR"),
+                                                                ),
+                                                              ),
+                                                            ),
                                                             Container(
                                                               child: Padding(
                                                                 padding:
@@ -1488,7 +2017,7 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                                                             .all(
                                                                         8.0),
                                                                 child: Text(
-                                                                  'Ready',
+                                                                  'Squeeze',
                                                                   style: FontStyleUtility.h14(
                                                                       fontColor:
                                                                           Colors
@@ -1499,163 +2028,16 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                                               ),
                                                             ),
                                                           ],
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        flex: 1,
-                                                        child: Container(
-                                                          width: 80,
-                                                          // decoration: BoxDecoration(
-                                                          //     borderRadius:
-                                                          //         BorderRadius
-                                                          //             .circular(
-                                                          //                 10),
-                                                          //     border: Border.all(
-                                                          //         color: Colors
-                                                          //             .white,
-                                                          //         width: 0.5)),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Text(
-                                                              'Set',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: FontStyleUtility.h22(
-                                                                  fontColor:
-                                                                      ColorUtils
-                                                                          .primary_gold,
-                                                                  family: "PM"),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                : ('$seconds' == '1'
-                                                    ? Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Expanded(
-                                                            flex: 2,
-                                                            child: Container(
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        0.0),
-                                                                child: Text(
-                                                                  'Ready',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .right,
-                                                                  style: FontStyleUtility.h14(
-                                                                      fontColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      family:
-                                                                          "PR"),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Container(
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        0.0),
-                                                                child: Text(
-                                                                  'Set',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .right,
-                                                                  style: FontStyleUtility.h14(
-                                                                      fontColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      family:
-                                                                          "PR"),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 3,
-                                                            child: Container(
-                                                              width: 100,
-                                                              // decoration: BoxDecoration(
-                                                              //     borderRadius:
-                                                              //         BorderRadius
-                                                              //             .circular(
-                                                              //                 10),
-                                                              //     border: Border.all(
-                                                              //         color: Colors
-                                                              //             .white,
-                                                              //         width:
-                                                              //             0.5)),
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        8.0),
-                                                                child: Text(
-                                                                  'Squeeze',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: FontStyleUtility.h22(
-                                                                      fontColor:
-                                                                          ColorUtils
-                                                                              .primary_gold,
-                                                                      family:
-                                                                          "PM"),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    : (four_started
-                                                        ? Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
-                                                            children: [
-                                                              Expanded(
-                                                                flex: 2,
-                                                                child:
-                                                                    Container(
-                                                                  child:
-                                                                      Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      'Hold',
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .right,
-                                                                      style: FontStyleUtility.h14(
-                                                                          fontColor: Colors
-                                                                              .white,
-                                                                          family:
-                                                                              "PR"),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                flex: 2,
-                                                                child:
-                                                                    Container(
-                                                                  width: 100,
+                                                        )
+                                                      : (four_started
+                                                          ? Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Container(
+                                                                  // width: 100,
+
                                                                   child:
                                                                       Padding(
                                                                     padding:
@@ -1674,511 +2056,194 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              Expanded(
-                                                                flex: 3,
-                                                                child:
-                                                                    Container(
-                                                                  width: 80,
-                                                                  // decoration: BoxDecoration(
-                                                                  //     borderRadius:
-                                                                  //         BorderRadius.circular(
-                                                                  //             10),
-                                                                  //     border: Border.all(
-                                                                  //         color: Colors
-                                                                  //             .white,
-                                                                  //         width:
-                                                                  //             0.5)),
+                                                                Container(
                                                                   child:
                                                                       Padding(
                                                                     padding:
                                                                         const EdgeInsets.all(
                                                                             8.0),
                                                                     child: Text(
-                                                                      'Hold',
+                                                                      'Push',
                                                                       textAlign:
                                                                           TextAlign
-                                                                              .center,
-                                                                      style: FontStyleUtility.h22(
-                                                                          fontColor: ColorUtils
-                                                                              .primary_gold,
+                                                                              .right,
+                                                                      style: FontStyleUtility.h14(
+                                                                          fontColor: Colors
+                                                                              .white,
                                                                           family:
-                                                                              "PM"),
+                                                                              "PR"),
                                                                     ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                            ],
-                                                          )
-                                                        : (counter > 0
-                                                            ? Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .end,
-                                                                children: [
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child:
-                                                                        Container(
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(0.0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Squeeze',
-                                                                          textAlign:
-                                                                              TextAlign.right,
-                                                                          style: FontStyleUtility.h14(
-                                                                              fontColor: Colors.white,
-                                                                              family: "PR"),
-                                                                        ),
-                                                                      ),
+                                                              ],
+                                                            )
+                                                          : Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Container(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            0.0),
+                                                                    child: Text(
+                                                                      'Push',
+                                                                      style: FontStyleUtility.h14(
+                                                                          fontColor: Colors
+                                                                              .white,
+                                                                          family:
+                                                                              "PR"),
                                                                     ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 1,
-                                                                    child:
-                                                                        Container(
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(0.0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Hold',
-                                                                          textAlign:
-                                                                              TextAlign.right,
-                                                                          style: FontStyleUtility.h14(
-                                                                              fontColor: Colors.white,
-                                                                              family: "PR"),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 3,
-                                                                    child:
-                                                                        Container(
-                                                                      width:
-                                                                          100,
-                                                                      // decoration: BoxDecoration(
-                                                                      //     borderRadius:
-                                                                      //         BorderRadius
-                                                                      //             .circular(
-                                                                      //                 10),
-                                                                      //     border: Border.all(
-                                                                      //         color: Colors
-                                                                      //             .white,
-                                                                      //         width:
-                                                                      //             0.5)),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(8.0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Squeeze',
-                                                                          textAlign:
-                                                                              TextAlign.center,
-                                                                          style: FontStyleUtility.h22(
-                                                                              fontColor: ColorUtils.primary_gold,
-                                                                              family: "PM"),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                            : Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .end,
-                                                                children: [
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child:
-                                                                        Container(
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(0.0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Ready',
-                                                                          textAlign:
-                                                                              TextAlign.right,
-                                                                          style: FontStyleUtility.h14(
-                                                                              fontColor: Colors.white,
-                                                                              family: "PR"),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 1,
-                                                                    child:
-                                                                        Container(
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(0.0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Set',
-                                                                          textAlign:
-                                                                              TextAlign.right,
-                                                                          style: FontStyleUtility.h14(
-                                                                              fontColor: Colors.white,
-                                                                              family: "PR"),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 3,
-                                                                    child:
-                                                                        Container(
-                                                                      width:
-                                                                          100,
-                                                                      // decoration: BoxDecoration(
-                                                                      //     borderRadius:
-                                                                      //         BorderRadius
-                                                                      //             .circular(
-                                                                      //                 10),
-                                                                      //     border: Border.all(
-                                                                      //         color: Colors
-                                                                      //             .white,
-                                                                      //         width:
-                                                                      //             0.5)),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(8.0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Squeeze',
-                                                                          textAlign:
-                                                                              TextAlign.center,
-                                                                          style: FontStyleUtility.h22(
-                                                                              fontColor: ColorUtils.primary_gold,
-                                                                              family: "PM"),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              )))))),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        // color: Colors.red,
-                                        child: ('$seconds' == '3'
-                                            ? Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Text(
-                                                        'Set',
-                                                        style: FontStyleUtility
-                                                            .h14(
-                                                                fontColor:
-                                                                    Colors
-                                                                        .white,
-                                                                family: "PR"),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
-                                            : ('$seconds' == '2'
-                                                ? Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Container(
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Text(
-                                                            'Squeeze',
-                                                            style: FontStyleUtility
-                                                                .h14(
-                                                                    fontColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    family:
-                                                                        "PR"),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                : ('$seconds' == '1'
-                                                    ? Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Container(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(0.0),
-                                                              child: Text(
-                                                                'Hold',
-                                                                style: FontStyleUtility.h14(
-                                                                    fontColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    family:
-                                                                        "PR"),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Text(
-                                                                'Squeeze',
-                                                                style: FontStyleUtility.h14(
-                                                                    fontColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    family:
-                                                                        "PR"),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    : (four_started
-                                                        ? Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Container(
-                                                                // width: 100,
-
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          0.0),
-                                                                  child: Text(
-                                                                    'Squeeze',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .right,
-                                                                    style: FontStyleUtility.h14(
-                                                                        fontColor:
-                                                                            Colors
-                                                                                .white,
-                                                                        family:
-                                                                            "PR"),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              Container(
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Text(
-                                                                    'Hold',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .right,
-                                                                    style: FontStyleUtility.h14(
-                                                                        fontColor:
-                                                                            Colors
-                                                                                .white,
-                                                                        family:
-                                                                            "PR"),
+                                                                Container(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
+                                                                    child: Text(
+                                                                      'Squeeze',
+                                                                      style: FontStyleUtility.h14(
+                                                                          fontColor: Colors
+                                                                              .white,
+                                                                          family:
+                                                                              "PR"),
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                            ],
-                                                          )
-                                                        : Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Container(
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          0.0),
-                                                                  child: Text(
-                                                                    'Hold',
-                                                                    style: FontStyleUtility.h14(
-                                                                        fontColor:
-                                                                            Colors
-                                                                                .white,
-                                                                        family:
-                                                                            "PR"),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Text(
-                                                                    'Squeeze',
-                                                                    style: FontStyleUtility.h14(
-                                                                        fontColor:
-                                                                            Colors
-                                                                                .white,
-                                                                        family:
-                                                                            "PR"),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ))))),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                // Container(
-                                //   // color: Colors.red,
-                                //   child: ('$seconds' == '3'
-                                //       ? SizedBox(
-                                //     height : 40
-                                //   )
-                                //       : ('$seconds' == '2'
-                                //       ? const SizedBox(height : 40
-                                //   )
-                                //       :('$seconds' == '1'?
-                                //   Container(
-                                //     child: Padding(
-                                //       padding:
-                                //       const EdgeInsets
-                                //           .all(8.0),
-                                //       child: Text(
-                                //         'Squeeze',
-                                //         textAlign:
-                                //         TextAlign
-                                //             .center,
-                                //         style: FontStyleUtility.h16(
-                                //             fontColor: Colors
-                                //                 .white,
-                                //             family:
-                                //             "PR"),
-                                //       ),
-                                //     ),
-                                //   )  : (four_started
-                                //       ? Container(
-                                //     height : 40,
-                                //
-                                //     child: Text(
-                                //       'Push',
-                                //       textAlign:
-                                //       TextAlign
-                                //           .center,
-                                //       style: FontStyleUtility.h16(
-                                //           fontColor: Colors.white,
-                                //           family:
-                                //           "PM"),
-                                //     ),
-                                //   )
-                                //       : Container(
-                                //     height : 40,
-                                //     child: Padding(
-                                //       padding:
-                                //       const EdgeInsets
-                                //           .all(8.0),
-                                //       child: Text(
-                                //         'Squeeze',
-                                //         textAlign:
-                                //         TextAlign
-                                //             .center,
-                                //         style: FontStyleUtility.h16(
-                                //             fontColor: Colors
-                                //                 .white,
-                                //             family:
-                                //             "PR"),
-                                //       ),
-                                //     ),
-                                //   ) )))),
-                                // ),
-                              ],
-                            )
-                          : const SizedBox(
-                              height: 0,
-                            )),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          if (started) {
-                            back_wallpaper = false;
-                            await _kegel_controller.update_notified_status(context: context,status: 'true');
-                            startTimer();
-                            startWatch3();
-                            start_animation();
-                            middle_animation();
-                            // Future.delayed(const Duration(seconds: 1), () {
-                            //   startTimer();
-                            // });
-                            // Future.delayed(const Duration(seconds: 4),
-                            //     () async {
-                            //   startWatch();
-                            // });
-                          } else {
-                            // if (four_started) {
-                            //   setState(() {
-                            //     reverse_started = false;
-                            //     // countdownTimer2!.cancel();
-                            //     elapsedTime = '00';
-                            //     elapsedTime2 = '00';
-                            //     elapsedTime3 = '00';
-                            //   });
-                            //   await _kegel_controller.update_notified_status(context: context,status: 'false');
-                            //
-                            //   await stopWatch_finish();
-                            //   await Vibration.cancel();
-                            //   await click_alarm();
-                            //   await _animationController_middle!.reverse();
-                            //   setState(() {
-                            //     animation_started = false;
-                            //     _swipe_setup_controller.w_running = false;
-                            //     started = true;
-                            //     four_started = false;
-                            //     reverse_started = false;
-                            //     timer_started = false;
-                            //     back_wallpaper = true;
-                            //     button_height = 150;
-                            //     text_k_size = 30;
-                            //     text_time_size = 25;
-                            //   });
-                            //   // CommonWidget().showToaster(
-                            //   //     msg: "Finish method first");
-                            // } else {
+                                                              ],
+                                                            ))))),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  // Container(
+                                  //   // color: Colors.red,
+                                  //   child: ('$seconds' == '3'
+                                  //       ? SizedBox(
+                                  //     height : 40
+                                  //   )
+                                  //       : ('$seconds' == '2'
+                                  //       ? const SizedBox(height : 40
+                                  //   )
+                                  //       :('$seconds' == '1'?
+                                  //   Container(
+                                  //     child: Padding(
+                                  //       padding:
+                                  //       const EdgeInsets
+                                  //           .all(8.0),
+                                  //       child: Text(
+                                  //         'Squeeze',
+                                  //         textAlign:
+                                  //         TextAlign
+                                  //             .center,
+                                  //         style: FontStyleUtility.h16(
+                                  //             fontColor: Colors
+                                  //                 .white,
+                                  //             family:
+                                  //             "PR"),
+                                  //       ),
+                                  //     ),
+                                  //   )  : (four_started
+                                  //       ? Container(
+                                  //     height : 40,
+                                  //
+                                  //     child: Text(
+                                  //       'Push',
+                                  //       textAlign:
+                                  //       TextAlign
+                                  //           .center,
+                                  //       style: FontStyleUtility.h16(
+                                  //           fontColor: Colors.white,
+                                  //           family:
+                                  //           "PM"),
+                                  //     ),
+                                  //   )
+                                  //       : Container(
+                                  //     height : 40,
+                                  //     child: Padding(
+                                  //       padding:
+                                  //       const EdgeInsets
+                                  //           .all(8.0),
+                                  //       child: Text(
+                                  //         'Squeeze',
+                                  //         textAlign:
+                                  //         TextAlign
+                                  //             .center,
+                                  //         style: FontStyleUtility.h16(
+                                  //             fontColor: Colors
+                                  //                 .white,
+                                  //             family:
+                                  //             "PR"),
+                                  //       ),
+                                  //     ),
+                                  //   ) )))),
+                                  // ),
+                                ],
+                              )
+                            : const SizedBox(
+                                height: 0,
+                              )),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            if (started) {
+                              back_wallpaper = false;
+                              await _kegel_controller.update_notified_status(
+                                  context: context, status: 'true');
+                              startTimer();
+                              startWatch3();
+                              start_animation();
+                              middle_animation();
+                              // Future.delayed(const Duration(seconds: 1), () {
+                              //   startTimer();
+                              // });
+                              // Future.delayed(const Duration(seconds: 4),
+                              //     () async {
+                              //   startWatch();
+                              // });
+                            } else {
+                              // if (four_started) {
+                              //   setState(() {
+                              //     reverse_started = false;
+                              //     // countdownTimer2!.cancel();
+                              //     elapsedTime = '00';
+                              //     elapsedTime2 = '00';
+                              //     elapsedTime3 = '00';
+                              //   });
+                              //   await _kegel_controller.update_notified_status(context: context,status: 'false');
+                              //
+                              //   await stopWatch_finish();
+                              //   await Vibration.cancel();
+                              //   await click_alarm();
+                              //   await _animationController_middle!.reverse();
+                              //   setState(() {
+                              //     animation_started = false;
+                              //     _swipe_setup_controller.w_running = false;
+                              //     started = true;
+                              //     four_started = false;
+                              //     reverse_started = false;
+                              //     timer_started = false;
+                              //     back_wallpaper = true;
+                              //     button_height = 150;
+                              //     text_k_size = 30;
+                              //     text_time_size = 25;
+                              //   });
+                              //   // CommonWidget().showToaster(
+                              //   //     msg: "Finish method first");
+                              // } else {
                               setState(() {
                                 elapsedTime = '00';
                                 elapsedTime2 = '00';
                                 elapsedTime3 = '00';
                               });
-                              await _kegel_controller.update_notified_status(context: context,status: 'false');
+                              await _kegel_controller.update_notified_status(
+                                  context: context, status: 'false');
                               await stopWatch_finish();
                               await Vibration.cancel();
                               await click_alarm();
@@ -2199,7 +2264,6 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                 text_k_size = 30;
                                 text_time_size = 25;
                                 // countdownTimer2!.cancel();
-
                               });
                               if (reverse_started) {
                                 setState(() {
@@ -2234,112 +2298,208 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                               // await Get.to(DashboardScreen(page: 1));
                               Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
-                                      builder: (context) => DashboardScreen(page: 1)),
-                                      (route) => false
-                              );
+                                      builder: (context) =>
+                                          DashboardScreen(page: 1)),
+                                  (route) => false);
                             }
                             // print('method_time : ${method_time[0].total_time}');
                             // print('method_name : ${method_time[0].method_name}');
                             ///
-                          // }
-                        },
-                        child: Container(
-                          height: 65,
-                          margin: const EdgeInsets.symmetric(horizontal: 15),
-                          // height: 45,
-                          // width:(width ?? 300) ,
+                            // }
+                          },
+                          child: Container(
+                            height: 65,
+                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            // height: 45,
+                            // width:(width ?? 300) ,
+                            decoration: BoxDecoration(
+                                color: ColorUtils.primary_gold,
+                                gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  // stops: [0.1, 0.5, 0.7, 0.9],
+                                  colors: [
+                                    HexColor("#ECDD8F").withOpacity(0.90),
+                                    HexColor("#E5CC79").withOpacity(0.90),
+                                    HexColor("#CE952F").withOpacity(0.90),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Container(
+                                alignment: Alignment.center,
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
+                                child: Text(
+                                  (started ? 'Start' : 'Finish'),
+                                  style: FontStyleUtility.h16(
+                                      fontColor: Colors.black, family: 'PM'),
+                                )),
+                          ),
+                        ),
+                        // CarouselSlider(
+                        //   options: CarouselOptions(
+                        //       height: 100.0,
+                        //       aspectRatio: 4/5,
+                        //       enlargeCenterPage : false,
+                        //       enableInfiniteScroll: true,
+                        //       // initialPage: 1,
+                        //       autoPlayAnimationDuration: Duration(seconds: 1),
+                        //       autoPlay: (animation_started ? true : false)
+                        //   ),
+                        //   items: ['Ready',"Set","Kegel",'4','5'].map((i) {
+                        //     return Builder(
+                        //       builder: (BuildContext context) {
+                        //         return Container(
+                        //             width: MediaQuery.of(context).size.width/2,
+                        //             margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        //             decoration: BoxDecoration(
+                        //                 color: Colors.amber
+                        //             ),
+                        //             child: Text('text $i', style: TextStyle(fontSize: 16.0),)
+                        //         );
+                        //       },
+                        //     );
+                        //   }).toList(),
+                        // ),
+                        const SizedBox(
+                          height: 28,
+                        ),
+                        // Container(
+                        //   width: MediaQuery.of(context).size.width,
+                        //   decoration: BoxDecoration(
+                        //       // color: Colors.black.withOpacity(0.65),
+                        //       gradient: LinearGradient(
+                        //         begin: Alignment.centerLeft,
+                        //         end: Alignment.centerRight,
+                        //         // stops: [0.1, 0.5, 0.7, 0.9],
+                        //         colors: [
+                        //           HexColor("#36393E").withOpacity(1),
+                        //           HexColor("#020204").withOpacity(1),
+                        //         ],
+                        //       ),
+                        //       boxShadow: [
+                        //         BoxShadow(
+                        //             color: HexColor('#04060F'),
+                        //             offset: const Offset(10, 10),
+                        //             blurRadius: 20)
+                        //       ],
+                        //       borderRadius: BorderRadius.circular(20)),
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Container(
+                        //         margin: const EdgeInsets.only(top: 8, left: 27),
+                        //         child: Text(
+                        //           'What to do before sex?',
+                        //           style: FontStyleUtility.h16(
+                        //               fontColor: ColorUtils.primary_gold,
+                        //               family: 'PR'),
+                        //         ),
+                        //       ),
+                        //       const SizedBox(
+                        //         height: 12,
+                        //       ),
+                        //       Container(
+                        //         margin: const EdgeInsets.only(top: 0, left: 27),
+                        //         child: Column(
+                        //           crossAxisAlignment: CrossAxisAlignment.start,
+                        //           children: [
+                        //             Container(
+                        //               child: Text(
+                        //                 'Sample text from admin ',
+                        //                 style: FontStyleUtility.h16(
+                        //                     fontColor: HexColor('#DCDCDC'),
+                        //                     family: 'PR'),
+                        //               ),
+                        //             ),
+                        //             const SizedBox(
+                        //               height: 17,
+                        //             ),
+                        //             Container(
+                        //               child: Text(
+                        //                 'Admin will put the text here',
+                        //                 style: FontStyleUtility.h16(
+                        //                     fontColor: HexColor('#DCDCDC'),
+                        //                     family: 'PR'),
+                        //               ),
+                        //             ),
+                        //             const SizedBox(
+                        //               height: 17,
+                        //             ),
+                        //             Container(
+                        //               child: Text(
+                        //                 'Sample text from admin',
+                        //                 style: FontStyleUtility.h16(
+                        //                     fontColor: HexColor('#DCDCDC'),
+                        //                     family: 'PR'),
+                        //               ),
+                        //             ),
+                        //             const SizedBox(
+                        //               height: 17,
+                        //             ),
+                        //             Container(
+                        //               child: Text(
+                        //                 'Admin will put the text here',
+                        //                 style: FontStyleUtility.h16(
+                        //                     fontColor: HexColor('#DCDCDC'),
+                        //                     family: 'PR'),
+                        //               ),
+                        //             ),
+                        //             const SizedBox(
+                        //               height: 17,
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                        Container(
+                          margin: EdgeInsets.all(15),
                           decoration: BoxDecoration(
-                              color: ColorUtils.primary_gold,
+                            // color: Colors.black.withOpacity(0.65),
                               gradient: LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
                                 // stops: [0.1, 0.5, 0.7, 0.9],
                                 colors: [
-                                  HexColor("#ECDD8F").withOpacity(0.90),
-                                  HexColor("#E5CC79").withOpacity(0.90),
-                                  HexColor("#CE952F").withOpacity(0.90),
+                                  HexColor("#020204").withOpacity(0.65),
+                                  HexColor("#36393E").withOpacity(0.65),
                                 ],
                               ),
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Container(
-                              alignment: Alignment.center,
-                              margin: const EdgeInsets.symmetric(
-                                vertical: 12,
-                              ),
-                              child: Text(
-                                (started ? 'Start' : 'Finish'),
-                                style: FontStyleUtility.h16(
-                                    fontColor: Colors.black, family: 'PM'),
-                              )),
-                        ),
-                      ),
-                      // CarouselSlider(
-                      //   options: CarouselOptions(
-                      //       height: 100.0,
-                      //       aspectRatio: 4/5,
-                      //       enlargeCenterPage : false,
-                      //       enableInfiniteScroll: true,
-                      //       // initialPage: 1,
-                      //       autoPlayAnimationDuration: Duration(seconds: 1),
-                      //       autoPlay: (animation_started ? true : false)
-                      //   ),
-                      //   items: ['Ready',"Set","Kegel",'4','5'].map((i) {
-                      //     return Builder(
-                      //       builder: (BuildContext context) {
-                      //         return Container(
-                      //             width: MediaQuery.of(context).size.width/2,
-                      //             margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      //             decoration: BoxDecoration(
-                      //                 color: Colors.amber
-                      //             ),
-                      //             child: Text('text $i', style: TextStyle(fontSize: 16.0),)
-                      //         );
-                      //       },
-                      //     );
-                      //   }).toList(),
-                      // ),
-                      const SizedBox(
-                        height: 28,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            // color: Colors.black.withOpacity(0.65),
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              // stops: [0.1, 0.5, 0.7, 0.9],
-                              colors: [
-                                HexColor("#36393E").withOpacity(1),
-                                HexColor("#020204").withOpacity(1),
-                              ],
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: HexColor('#04060F'),
-                                  offset: const Offset(10, 10),
-                                  blurRadius: 20)
-                            ],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(top: 8, left: 27),
-                              child: Text(
-                                'What to do before sex?',
-                                style: FontStyleUtility.h16(
-                                    fontColor: ColorUtils.primary_gold,
-                                    family: 'PR'),
+                              // boxShadow: [
+                              //   BoxShadow(
+                              //       color: HexColor('#04060F'),
+                              //       offset: Offset(10, 10),
+                              //       blurRadius: 10)
+                              // ],
+                              borderRadius: BorderRadius.circular(20)),
+                          child: ExpansionTile(
+                            iconColor: ColorUtils.primary_gold,
+                            title: Container(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 0,
+                                    top: 15,
+                                    right: 15,
+                                    bottom: 15),
+                                child: Text(
+                                  // "What to do before sex?",
+                                  "Technique",
+                                  textAlign: TextAlign.left,
+                                  style: FontStyleUtility.h16(
+                                      fontColor: ColorUtils.primary_gold,
+                                      family: 'PR'),
+                                ),
                               ),
                             ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 0, left: 27),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              ListView(
+                                shrinkWrap: true,
+                                padding:
+                                EdgeInsets.symmetric(horizontal: 15),
+                                physics: ClampingScrollPhysics(),
                                 children: [
                                   Container(
                                     child: Text(
@@ -2387,18 +2547,19 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 28,
-                      ),
-                    ],
+
+                        const SizedBox(
+                          height: 28,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )),
+              )),
+        ),
       ],
     );
   }
@@ -2439,7 +2600,6 @@ class _WarmUpScreenState extends State<WarmUpScreen>
 
   stopWatch_finish() {
     setState(() {
-
       // startStop = true;
       animation_started = false;
       watch.stop();
@@ -2512,7 +2672,6 @@ class _WarmUpScreenState extends State<WarmUpScreen>
     String hoursStr = (hours % 60).toString().padLeft(2, '0');
     String minutesStr = (minutes % 60).toString().padLeft(2, '0');
     String secondsStr = (seconds % 60).toString().padLeft(2, '0');
-
     return secondsStr;
   }
 
@@ -2528,6 +2687,60 @@ class _WarmUpScreenState extends State<WarmUpScreen>
     });
   }
 
+  // vibration() async {
+  //   if (_canVibrate) {
+  //     // Vibration.vibrate(
+  //     //     // pattern: [100, 100,100, 100,100, 100,100, 100,],
+  //     //     duration: 4000,
+  //     //     intensities: [1, 255]);
+  //     // print(
+  //     //     "Vibration.hasCustomVibrationsSupport() ${Vibration.hasCustomVibrationsSupport()}");
+  //     print("Device Support Custom Vibration");
+  //     print("Device Support Custom Vibration22");
+  //     // Android-specific code
+  //     for (var i = 0; i < 15; i++) {
+  //       print("elapsedTime $i");
+  //       Vibration.vibrate(
+  //         // pattern: [100, 100,100, 100,100, 100,100, 100,],
+  //         duration: 3500,
+  //         intensities: [1, 0],
+  //         amplitude: (i == 0
+  //             ? 0
+  //             : (i == 1
+  //                 ? 10
+  //                 : (i == 2
+  //                     ? 20
+  //                     : (i == 3
+  //                         ? 30
+  //                         : (i == 4
+  //                             ? 40
+  //                             : (i == 5
+  //                                 ? 50
+  //                                 : (i == 6
+  //                                     ? 60
+  //                                     : (i == 7
+  //                                         ? 70
+  //                                         : (i == 8
+  //                                             ? 80
+  //                                             : (i == 9
+  //                                                 ? 90
+  //                                                 : (i == 10
+  //                                                     ? 100
+  //                                                     : (i == 11
+  //                                                         ? 110
+  //                                                         : (i == 12
+  //                                                             ? 120
+  //                                                             : (i == 13
+  //                                                                 ? 140
+  //                                                                 : (i == 14
+  //                                                                     ? 140
+  //                                                                     : 0))))))))))))))),
+  //       );
+  //     }
+  //   } else {
+  //     CommonWidget().showErrorToaster(msg: 'Device Cannot vibrate');
+  //   }
+  // }
   vibration() async {
     if (_canVibrate) {
       // Vibration.vibrate(
@@ -2536,48 +2749,38 @@ class _WarmUpScreenState extends State<WarmUpScreen>
       //     intensities: [1, 255]);
       // print(
       //     "Vibration.hasCustomVibrationsSupport() ${Vibration.hasCustomVibrationsSupport()}");
-      print("Device Support Custom Vibration");
-      print("Device Support Custom Vibration22");
-      // Android-specific code
-      for (var i = 0; i < 15; i++) {
-        print("elapsedTime $i");
-        Vibration.vibrate(
-          // pattern: [100, 100,100, 100,100, 100,100, 100,],
-          duration: 3500,
-          intensities: [1, 0],
-          amplitude: (i == 0
-              ? 0
-              : (i == 1
-                  ? 10
-                  : (i == 2
-                      ? 20
-                      : (i == 3
-                          ? 30
-                          : (i == 4
-                              ? 40
-                              : (i == 5
-                                  ? 50
-                                  : (i == 6
-                                      ? 60
-                                      : (i == 7
-                                          ? 70
-                                          : (i == 8
-                                              ? 80
-                                              : (i == 9
-                                                  ? 90
-                                                  : (i == 10
-                                                      ? 100
-                                                      : (i == 11
-                                                          ? 110
-                                                          : (i == 12
-                                                              ? 120
-                                                              : (i == 13
-                                                                  ? 140
-                                                                  : (i == 14
-                                                                      ? 140
-                                                                      : 0))))))))))))))),
-        );
+
+      if (await Vibration.hasCustomVibrationsSupport() == true) {
+        // print("has support");
+
+        if (Platform.isAndroid) {
+          // Android-specific code
+          Vibration.vibrate(
+              // pattern: [100, 100,100, 100,100, 100,100, 100,],
+              duration: 5000,
+              intensities: [1, 255]);
+        } else if (Platform.isIOS) {
+          // iOS-specific code
+          for (var i = 0; i <= 13; i++) {
+            await Future.delayed(const Duration(seconds: 2), () {
+              Vibration.vibrate();
+            });
+          }
+        }
+      } else {
+        print("haddddd support");
+        Vibration.vibrate();
+        for (var i = 0; i <= 4; i++) {
+          await Future.delayed(const Duration(seconds: 1), () {
+            Vibration.vibrate();
+          });
+        }
+        // await Future.delayed(Duration(milliseconds: 500));
+        // Vibration.vibrate();
       }
+      // Vibrate.defaultVibrationDuration;
+      // Vibrate.defaultVibrationDuration;
+      // Vibrate.vibrateWithPauses(pauses);
     } else {
       CommonWidget().showErrorToaster(msg: 'Device Cannot vibrate');
     }

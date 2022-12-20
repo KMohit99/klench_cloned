@@ -10,6 +10,9 @@ import Firebase
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
       
+      if #available(iOS 10.0, *) {
+        UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+      }
       
     FirebaseApp.configure()
     GeneratedPluginRegistrant.register(with: self)

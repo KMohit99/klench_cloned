@@ -111,6 +111,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       children: [
                         Container(
                           child: CommonTextFormField_text(
+                            maxLines: 1,
                             title: 'Username',
                             labelText: 'Enter Username',
                             controller:
@@ -128,7 +129,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Container(

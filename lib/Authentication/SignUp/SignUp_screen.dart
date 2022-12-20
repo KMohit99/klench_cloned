@@ -836,7 +836,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               _signUpScreenController.dialCodedigits);
                                         });
                                       },
-                                      initialSelection: "IN",
+                                      initialSelection: "US",
                                       textStyle: FontStyleUtility.h15(
                                           fontColor: ColorUtils.primary_gold,
                                           family: 'PM'),

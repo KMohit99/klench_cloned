@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,14 +11,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:klench_/splash_Screen.dart';
 import 'package:wakelock/wakelock.dart';
+// import 'package:watch_ble_connection/watch_connection.dart';
+// import 'package:watch_ble_connection/watch_listener.dart';
 
 import 'firebase_options.dart';
-import 'getx_pagination/Bindings_class.dart';
-import 'getx_pagination/binding_utils.dart';
-import 'getx_pagination/page_route.dart';
-import 'homepage/kegel_screen.dart';
-import 'homepage/m_screen_metal.dart';
-import 'homepage/warmpUp_screen.dart';
 import 'messaging_service.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -36,7 +30,6 @@ Future<void> main() async {
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-
   // // TODO: Link app with Firebase (use FlutterFire CLI tools)
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -46,7 +39,6 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-
 /// Top level function to handle incoming messages when the app is in the background
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print(" --- background message received ---");
@@ -54,19 +46,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print(message.notification!.body);
 }
 
-
 Future<void> saveTokenToDatabase(String token) async {
   // Assume user is logged in for this example
   String userId = FirebaseAuth.instance.currentUser!.uid;
 
-  await FirebaseFirestore.instance
-      .collection('users')
-      .doc(userId)
-      .update({
+  await FirebaseFirestore.instance.collection('users').doc(userId).update({
     'tokens': FieldValue.arrayUnion([token]),
   });
 }
-
 
 class MyApp extends StatefulWidget {
   MyApp({Key? key}) : super(key: key);
@@ -157,7 +144,6 @@ class _MyAppState extends State<MyApp> {
   //   FirebaseMessaging.instance.onTokenRefresh.listen(saveTokenToDatabase);
   // }
 
-
   // This widget is the root of your application.
 
   @override
@@ -166,9 +152,10 @@ class _MyAppState extends State<MyApp> {
     initDynamicLinks();
     super.initState();
   }
+
   void initDynamicLinks() async {
     final PendingDynamicLinkData? data =
-    await FirebaseDynamicLinks.instance.getInitialLink();
+        await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri? deepLink = data?.link;
 
     if (deepLink != null) {
@@ -194,6 +181,7 @@ class _MyAppState extends State<MyApp> {
       print(error.message);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     Wakelock.enable(); // Here :)
@@ -206,11 +194,58 @@ class _MyAppState extends State<MyApp> {
       // navigatorKey: NavigationService.navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Klench_12',
-      initialRoute: BindingUtils.initialRoute,
-      initialBinding: Splash_Bindnig(),
-      getPages: AppPages.getPageList,
-
+      // initialRoute: BindingUtils.initialRoute,
+      // initialBinding: Splash_Bindnig(),
+      // getPages: AppPages.getPageList,
+      // initialRoute: '/',
+      // navigatorObservers: <NavigatorObserver>[
+      //   MyRouteObserver(),
+      // ],
+      // getPages: [
+      //   GetPage(name: '/', page: () => SplashScreen()),
+      //   GetPage(name: '/warmpup', page: () => WarmUpScreen()),
+      //   GetPage(
+      //       name: '/kegel',
+      //       page: () => KegelScreen(),
+      //       transition: Transition.zoom
+      //   ),
+      //   GetPage(
+      //       name: '/masturbation',
+      //       page: () => M_ScreenMetal(),
+      //       transition: Transition.zoom
+      //   ),
+      // ],
+      // navigatorObservers: [
+      //   MyRouteObserver(),
+      // ],
+      // // home: (Token == '_' ||
+      // //         Token.toString() == 'null' ||
+      // //         Token.toString().isEmpty ||
+      // //         roles == '_' ||
+      // //         roles == 'null' ||
+      // //         roles.toString().isEmpty)
+      // //     ? loginScreen()
+      // //     : (roles == "company")
+      // //         ? addCompanyScreen()
+      // //         : (roles == "plan")
+      // //             ? subscription_Screen()
+      // //             : DashBoardScreen(),
+      // routes: {
+      //   '/': (context) {
+      //     return SplashScreen();
+      //   },
+      //   '/warmpup': (context) {
+      //     return WarmUpScreen();
+      //   },
+      //   '/kegel': (context) {
+      //     return KegelScreen();
+      //   },
+      //   '/masturbation': (context) {
+      //     return M_ScreenMetal();
+      //   },
+      // },
       home: SplashScreen(),
+      // home: SubscriptionScreen(),
       theme: ThemeData(
         primaryColor: Colors.yellow,
         dividerColor: Colors.transparent,
@@ -223,7 +258,91 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-
-
 }
 
+// class mymohit extends StatefulWidget {
+//   const mymohit({Key? key}) : super(key: key);
+//
+//   @override
+//   State<mymohit> createState() => _mymohitState();
+// }
+//
+// class _mymohitState extends State<mymohit> {
+//   TextEditingController? _controller;
+//   String value = '';
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _controller = TextEditingController();
+//
+//     WatchListener.listenForMessage((msg) {
+//       print(msg);
+//     });
+//     WatchListener.listenForDataLayer((msg) {
+//       print(msg);
+//     });
+//   }
+//
+//   void dispose() {
+//     _controller!.dispose();
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: const Text('Example app'),
+//         ),
+//         body: Center(
+//           child: SingleChildScrollView(
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children: [
+//                 TextField(
+//                   controller: _controller,
+//                   decoration: InputDecoration(
+//                       border: InputBorder.none, labelText: 'Enter some text'),
+//                   onChanged: (String val) async {
+//                     setState(() {
+//                       value = val;
+//                     });
+//                   },
+//                 ),
+//                 OutlinedButton(
+//                   child: Text('Send message to Watch'),
+//                   onPressed: () {
+//                     primaryFocus!.unfocus(disposition: UnfocusDisposition.scope);
+//                     WatchConnection.sendMessage({
+//                       "text": value
+//                     });
+//                   },
+//                 ),
+//                 OutlinedButton(
+//                   child: Text('Set data on Watch'),
+//                   onPressed: () {
+//                     primaryFocus!.unfocus(disposition: UnfocusDisposition.scope);
+//                     WatchConnection.setData("message", {
+//                       "text": value != ""
+//                           ? value
+//                           : "test", // ensure we have at least empty string
+//                       "integerValue": 1,
+//                       "intList": [1, 2, 3],
+//                       "stringList": ["one", "two", "three"],
+//                       "floatList": [1.0, 2.4, 3.6],
+//                       "longList": []
+//                     });
+//                   },
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+//

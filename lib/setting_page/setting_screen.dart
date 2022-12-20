@@ -16,6 +16,7 @@ import 'package:klench_/setting_page/qr_code/qr_code_screen.dart';
 import 'package:klench_/setting_page/refferal_link.dart';
 import 'package:klench_/setting_page/terms_conditions.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Authentication/SignUp/controller/sign_up_controller.dart';
 import '../Authentication/subscription_plan/subscription_plan_screen.dart';
@@ -74,6 +75,22 @@ class _SettingScreenState extends State<SettingScreen> {
     "Authentication",
     "Logout",
   ];
+
+  getdata() async {
+    print("insssiiiiiii");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('last_route', "/settings");
+    String? lastRoute = prefs.getString('last_route');
+    print("lastRoute $lastRoute");
+
+  }
+
+  @override
+  void initState() {
+    getdata().then((value) => print("Success"));
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {

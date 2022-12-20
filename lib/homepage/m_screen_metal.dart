@@ -20,6 +20,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../Dashboard/dashboard_screen.dart';
 import '../utils/Asset_utils.dart';
 import '../utils/Common_buttons.dart';
 import '../utils/Common_textfeild.dart';
@@ -55,12 +56,17 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
   Stopwatch watch = Stopwatch();
   Timer? timer;
+
+  Stopwatch watch2 = Stopwatch();
+  Timer? timer2;
+
   bool startStop = true;
   bool started = true;
   bool button_keep = true;
   Color? method_color;
 
   String elapsedTime = '00:00';
+  String elapsedTime2 = '00:00';
 
   // List<methods_list> _masturbation_screen_controller.method_list = <methods_list>[
   //   'Hand',
@@ -68,7 +74,6 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   //   'Sex',
   //   'Fleshlight'
   // ];
-
   String method_selected = '';
   String method_selected_id = '';
   String method_selected_color = '';
@@ -87,7 +92,48 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
     'FF8C0D37',
   ];
 
+  List List_content = [
+    "premature ejaculation is when a person ejaculates under 2 – 3 minutes. If you don’t ejaculate in 2-3 minutes you do not have premature ejaculation.",
+    "Make sure you edge 4 times.",
+    "Do not watch porn. Unless you know how to control your arousal level and you know how to edge.",
+    "Schedule when you masturbate that way there is no interruptions.",
+    "Figure out what muscles in your body tense up and the next time you masturbate try not to tense them up",
+    "Average penis size is between 4 1⁄2 and 6 inches.",
+    "When you are masturbating do not think that your main goal is to ejaculate. Your main goal is pleasure",
+    "When you are edging and you are not stimulating your penis try stimulating other parts of your body",
+    "Prostate stimulation can help you last longer in bed and have even greater orgasms.",
+    "It is a myth that women want bigger and stronger penises. If its too big it can be very painful for them.",
+    "Try to relax your butt when having sex.",
+    "Breathing technique: Breath with your stomach not with your chest. If you don’t know how are you breathing, put one hand on your stomach and one on your chest then take a deep breath and feel which hand moves first.",
+    "Breathing technique: inhale with your nose four times and exhale four times with your mouth.",
+    "Do not insert anything in your anus if is not created for anal play. Link for anal play below.",
+    "Masturbate using a flashlight or something that is soft and not rough.",
+    "Do not smoke.",
+    "If you have a delay ejaculation try masturbating 3-4 time per week.",
+    "Do not use Viagra. And if so, read the label.",
+    "Taking testosterone when not necessary can make you infertile.",
+    "You are the only one in charge of making yourself orgasm.",
+    "Try listening to music and masturbating to the rhythm of the music.",
+    "If you’re not used to condoms. You should masturbate with condoms to get used to the sensation.",
+    "Every time you ejaculate make sure you celebrate and smile.",
+    "If your insecure of your body, masturbate in front of a mirror.",
+    "Try not to eat any meat or dairy especially red meat. It thickens your blood vessels and has a lot of toxics.",
+    "If your penis is too sensitive. Try to desensitize it by stimulating the parts where is very sensitive very often while you’re masturbating.",
+    "Desensitize your visualization by visualizing the hottest girl you can. And watch porn but ONLY when you control your arousal level.",
+    "When you are masturbating do not be afraid of getting dirty/ messy, you’ll clean it after you are done.",
+    "Invest in rechargeable batteries, extension cord and or portable charger to be prepared when you’re about to masturbate.",
+    "Do not use Vaseline or vapor rub to masturbate, use lubricant or other options like coconut oil and olive oil.",
+    "If you last less than 10 minutes, set your goal to surpass 10 minutes followed by 15 and 20 minute goals.",
+    "After hitting the 20 minute mark, ejaculate.",
+    "Always use lubricant to masturbate.",
+    "If these don’t help see a doctor. If you are depressed or thinking of harming yourself in anyway seek help links are below.",
+  ];
+
   final _random = Random();
+
+  bool four_min = false;
+  bool ten_min = false;
+  bool thirty_min = false;
 
   updateTime(Timer timer) {
     if (watch.isRunning) {
@@ -95,9 +141,46 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         setState(() {
           // print("startstop Inside=$startStop");
           elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
+
+          print(elapsedTime);
+
+          if (elapsedTime == '04:00') {
+            four_min = true;
+            ten_min = false;
+          } else if (elapsedTime == '10:00') {
+            four_min = false;
+            ten_min = true;
+          }
           percent += 1;
           if (percent >= 100) {
             percent = 0.0;
+          }
+        });
+      }
+    }
+  }
+
+  updateTime2(Timer timer) {
+    if (watch2.isRunning) {
+      if (mounted) {
+        setState(() {
+          // print("startstop Inside=$startStop");
+          elapsedTime2 = transformMilliSeconds(watch2.elapsedMilliseconds);
+
+          print("elapsedTime2 $elapsedTime2");
+
+          if (elapsedTime2 == '30:00') {
+            watch2.stop();
+            watch2.reset();
+            timer_started = false;
+            elapsedTime = '00:00';
+            percent = 0.0;
+            // method_selected = '';
+            watch.reset();
+            paused_time.clear();
+            _scaleDialog2(context: context, message: '');
+            thirty_min = true;
+            print("GreetingsPopUpButton");
           }
         });
       }
@@ -264,6 +347,37 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     blurRadius: 10)
                               ],
                               borderRadius: BorderRadius.circular(15)),
+                          // decoration: BoxDecoration(
+                          //     border: Border.all(
+                          //         color: ColorUtils.primary_gold, width: 1),
+                          //     // color: Colors.black.withOpacity(0.65),
+                          //     gradient: LinearGradient(
+                          //       begin: Alignment.topLeft,
+                          //       end: Alignment.bottomRight,
+                          //       // stops: [0.1, 0.5, 0.7, 0.9],
+                          //       colors: [
+                          //         // HexColor("#000000").withOpacity(1),
+                          //         // HexColor("#000000").withOpacity(1),
+                          //         HexColor("#ce942f").withOpacity(1),
+                          //
+                          //         HexColor("#ecdc8f").withOpacity(1),
+                          //         HexColor("#e5cc79").withOpacity(1),
+                          //         HexColor("#ce942f").withOpacity(1),
+                          //         // HexColor("#37393D").withOpacity(1),
+                          //         // ColorUtils.primary_gold.withOpacity(1),
+                          //
+                          //         // HexColor("#000000").withOpacity(1),
+                          //         // ColorUtils.primary_gold.withOpacity(1),
+                          //       ],
+                          //     ),
+                          //     boxShadow: [
+                          //       BoxShadow(
+                          //           color: HexColor('#04060F'),
+                          //           offset: Offset(10, 10),
+                          //           blurRadius: 10)
+                          //     ],
+                          //     borderRadius: BorderRadius.circular(15)),
+
                           child: Align(
                               alignment: Alignment.center,
                               child: Padding(
@@ -276,16 +390,16 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
                                     Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Container(
-                                          margin: EdgeInsets.only(left: 18),
-                                          child: Text('Add more method',
-                                              style: FontStyleUtility.h14(
-                                                  fontColor:
-                                                      ColorUtils.primary_grey,
-                                                  family: 'Pr')),
-                                        ),
+                                        // Container(
+                                        //   margin: EdgeInsets.only(left: 18),
+                                        //   child: Text('Add more method',
+                                        //       style: FontStyleUtility.h14(
+                                        //           fontColor:
+                                        //               ColorUtils.primary_grey,
+                                        //           family: 'Pr')),
+                                        // ),
                                         SizedBox(
                                           height: 11,
                                         ),
@@ -293,27 +407,27 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           margin: EdgeInsets.symmetric(
                                               horizontal: 10),
                                           // width: 300,
-                                          decoration: BoxDecoration(
-                                              // color: Colors.black.withOpacity(0.65),
-                                              gradient: LinearGradient(
-                                                begin: Alignment.centerLeft,
-                                                end: Alignment.centerRight,
-                                                // stops: [0.1, 0.5, 0.7, 0.9],
-                                                colors: [
-                                                  HexColor("#36393E")
-                                                      .withOpacity(1),
-                                                  HexColor("#020204")
-                                                      .withOpacity(1),
-                                                ],
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: HexColor('#04060F'),
-                                                    offset: Offset(10, 10),
-                                                    blurRadius: 10)
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
+                                          // decoration: BoxDecoration(
+                                          //     // color: Colors.black.withOpacity(0.65),
+                                          //     gradient: LinearGradient(
+                                          //       begin: Alignment.centerLeft,
+                                          //       end: Alignment.centerRight,
+                                          //       // stops: [0.1, 0.5, 0.7, 0.9],
+                                          //       colors: [
+                                          //         HexColor("#36393E")
+                                          //             .withOpacity(1),
+                                          //         HexColor("#020204")
+                                          //             .withOpacity(1),
+                                          //       ],
+                                          //     ),
+                                          //     // boxShadow: [
+                                          //     //   BoxShadow(
+                                          //     //       color: HexColor('#04060F'),
+                                          //     //       offset: Offset(10, 10),
+                                          //     //       blurRadius: 10)
+                                          //     // ],
+                                          //     borderRadius:
+                                          //         BorderRadius.circular(20)),
 
                                           child: TextFormField(
                                             maxLength: 150,
@@ -331,14 +445,29 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               counterText: "",
                                               filled: true,
                                               border: InputBorder.none,
-                                              enabledBorder:
-                                                  const OutlineInputBorder(
+                                              focusedBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    color: Colors.transparent,
+                                                    color:
+                                                        ColorUtils.primary_gold,
                                                     width: 1),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
                                               ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        ColorUtils.primary_grey,
+                                                    width: 1),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                              ),
+                                              // disabledBorder:  OutlineInputBorder(
+                                              //   borderSide: BorderSide(
+                                              //       color: ColorUtils.primary_grey,
+                                              //       width: 1),
+                                              //   borderRadius: BorderRadius.all(
+                                              //       Radius.circular(10)),
+                                              // ),
                                               hintStyle: FontStyleUtility.h14(
                                                   fontColor:
                                                       HexColor('#CBCBCB'),
@@ -378,6 +507,28 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           setState(() {
                                             method_new.clear();
                                           });
+
+                                          setState(() {
+                                            method_selected =
+                                                _masturbation_screen_controller
+                                                    .method_list
+                                                    .last
+                                                    .method_name!;
+                                            method_selected_color =
+                                                _masturbation_screen_controller
+                                                    .method_list.last.color!;
+                                            method_selected_id =
+                                                _masturbation_screen_controller
+                                                    .method_list
+                                                    .last
+                                                    .method_id!;
+                                          });
+
+                                          print(
+                                              "method_selected $method_selected");
+                                          print(
+                                              "method_selected ${_masturbation_screen_controller.method_list[index].color!.toString()}");
+                                          started = true;
                                           // final String encodedData =
                                           // methods_list.encode(
                                           //     _masturbation_screen_controller
@@ -396,16 +547,113 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                         }
                                       },
                                       child: Container(
-                                        alignment: Alignment.topRight,
-                                        child: Text(
-                                          'Add',
-                                          style: FontStyleUtility.h12(
-                                              fontColor:
-                                                  ColorUtils.primary_grey,
-                                              family: 'PR'),
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                4,
+                                        margin: EdgeInsets.all(0),
+                                        // width: 300,
+                                        decoration: BoxDecoration(
+                                            // color: Colors.black.withOpacity(0.65),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.centerRight,
+                                              // stops: [0.1, 0.5, 0.7, 0.9],
+                                              colors: [
+                                                HexColor("#36393E")
+                                                    .withOpacity(1),
+                                                HexColor("#020204")
+                                                    .withOpacity(1),
+                                              ],
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0, horizontal: 15),
+                                          child: Text(
+                                            'Add',
+                                            textAlign: TextAlign.center,
+                                            style: FontStyleUtility.h16(
+                                                fontColor:
+                                                    ColorUtils.primary_grey,
+                                                family: 'PM'),
+                                          ),
                                         ),
                                       ),
-                                    )
+                                    ),
+
+                                    // GestureDetector(
+                                    //   onTap: () async {
+                                    //     if (method_new.text.isNotEmpty) {
+                                    //       // setState(() {
+                                    //       //   _masturbation_screen_controller
+                                    //       //       .method_list
+                                    //       //       .add(methods_list(
+                                    //       //           method_name:
+                                    //       //               method_new.text,
+                                    //       //           color: list[random.nextInt(
+                                    //       //               list.length)]));
+                                    //       //   // method_new.clear();
+                                    //       // });
+                                    //
+                                    //       await Masturbation_Post_Method(
+                                    //           method_name: method_new.text,
+                                    //           method_color: list[
+                                    //               random.nextInt(list.length)]);
+                                    //       setState(() {
+                                    //         method_new.clear();
+                                    //       });
+                                    //
+                                    //       setState(() {
+                                    //         method_selected =
+                                    //             _masturbation_screen_controller
+                                    //                 .method_list
+                                    //                 .last
+                                    //                 .method_name!;
+                                    //         method_selected_color =
+                                    //             _masturbation_screen_controller
+                                    //                 .method_list.last.color!;
+                                    //         method_selected_id =
+                                    //             _masturbation_screen_controller
+                                    //                 .method_list
+                                    //                 .last
+                                    //                 .method_id!;
+                                    //       });
+                                    //
+                                    //       print(
+                                    //           "method_selected $method_selected");
+                                    //       print(
+                                    //           "method_selected ${_masturbation_screen_controller.method_list[index].color!.toString()}");
+                                    //       started = true;
+                                    //       // final String encodedData =
+                                    //       // methods_list.encode(
+                                    //       //     _masturbation_screen_controller
+                                    //       //         .method_list);
+                                    //       // await PreferenceManager().setList(
+                                    //       //     URLConstants.method_list,
+                                    //       //     encodedData);
+                                    //
+                                    //       // await PreferenceManager()
+                                    //       //     .setList(
+                                    //       //     URLConstants
+                                    //       //         .method_list,
+                                    //       //     _masturbation_screen_controller
+                                    //       //         .method_list);
+                                    //       Navigator.pop(context);
+                                    //     }
+                                    //   },
+                                    //   child: Container(
+                                    //     alignment: Alignment.topRight,
+                                    //     child: Text(
+                                    //       'Add',
+                                    //       style: FontStyleUtility.h12(
+                                    //           fontColor:
+                                    //               ColorUtils.primary_grey,
+                                    //           family: 'PR'),
+                                    //     ),
+                                    //   ),
+                                    // )
                                     // common_button_gold(
                                     //   onTap: () {
                                     //     Get
@@ -424,7 +672,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                           Navigator.pop(context);
                         },
                         child: Container(
-                          margin: EdgeInsets.only(right: 10),
+                          margin: EdgeInsets.only(right: 3, bottom: 3),
                           alignment: Alignment.topRight,
                           child: Container(
                               decoration: BoxDecoration(
@@ -439,17 +687,17 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     ],
                                   ),
                                   boxShadow: [
-                                    BoxShadow(
-                                        color: HexColor('#04060F'),
-                                        offset: Offset(0, 3),
-                                        blurRadius: 5)
+                                    // BoxShadow(
+                                    //     color: HexColor('#04060F'),
+                                    //     offset: Offset(0, 3),
+                                    //     blurRadius: 5)
                                   ],
                                   borderRadius: BorderRadius.circular(20)),
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Icon(
                                   Icons.cancel_outlined,
-                                  size: 13,
+                                  size: 20,
                                   color: ColorUtils.primary_grey,
                                 ),
                               )),
@@ -794,12 +1042,12 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               .MasturbationData_delete_API(
                                                   context: context,
                                                   methodId: method_id,
-                                              method_name: method_old);
+                                                  method_name: method_old);
                                           if (_masturbation_screen_controller
                                                   .m_screenDeleteModel!.error ==
                                               false) {
                                             method_time.clear();
-
+                                            await Masturbation_Get_Method();
                                             await Masturbation_LifeTime_Data_get_API();
                                             await Masturbation_Daily_Data_get_API();
                                             await MasturbationWeekly_Data_get_API();
@@ -893,6 +1141,274 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
               )),
         );
       },
+    );
+  }
+
+  Widget GreetingsPopUp({
+    required BuildContext context,
+    required String message,
+  }) {
+    DateTime? selected;
+    return AlertDialog(
+        backgroundColor: Colors.transparent,
+        contentPadding: EdgeInsets.zero,
+        elevation: 0.0,
+        // title: Center(child: Text("Evaluation our APP")),
+        content: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: ColorUtils.primary_gold, width: 1),
+                        // color: Colors.black.withOpacity(0.65),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          // stops: [0.1, 0.5, 0.7, 0.9],
+                          colors: [
+                            // HexColor("#000000").withOpacity(1),
+                            // HexColor("#000000").withOpacity(1),
+                            HexColor("#ce942f").withOpacity(1),
+
+                            HexColor("#ecdc8f").withOpacity(1),
+                            HexColor("#e5cc79").withOpacity(1),
+                            HexColor("#ce942f").withOpacity(1),
+                            // HexColor("#37393D").withOpacity(1),
+                            // ColorUtils.primary_gold.withOpacity(1),
+
+                            // HexColor("#000000").withOpacity(1),
+                            // ColorUtils.primary_gold.withOpacity(1),
+                          ],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                              color: HexColor('#04060F'),
+                              offset: Offset(10, 10),
+                              blurRadius: 10)
+                        ],
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            margin: EdgeInsets.all(10),
+                            // width: 300,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 5),
+                              child: Text(
+                                message,
+                                textAlign: TextAlign.center,
+                                style: FontStyleUtility.h16(
+                                    fontColor: Colors.black, family: 'PM'),
+                              ),
+                            ),
+                          ),
+                        )),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(right: 3, bottom: 3),
+                    alignment: Alignment.topRight,
+                    child: Container(
+                        decoration: BoxDecoration(
+                            // color: Colors.black.withOpacity(0.65),
+                            gradient: LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              // stops: [0.1, 0.5, 0.7, 0.9],
+                              colors: [
+                                HexColor("#36393E").withOpacity(1),
+                                HexColor("#020204").withOpacity(1),
+                              ],
+                            ),
+                            boxShadow: [
+                              // BoxShadow(
+                              //     color: HexColor('#04060F'),
+                              //     offset: Offset(0, 3),
+                              //     blurRadius: 5)
+                            ],
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Icon(
+                            Icons.cancel_outlined,
+                            size: 20,
+                            color: ColorUtils.primary_grey,
+                          ),
+                        )),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ));
+  }
+
+  Widget GreetingsPopUpButton({
+    required BuildContext context,
+  }) {
+    DateTime? selected;
+    return AlertDialog(
+        backgroundColor: Colors.transparent,
+        contentPadding: EdgeInsets.zero,
+        elevation: 0.0,
+        // title: Center(child: Text("Evaluation our APP")),
+        content: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    border:
+                        Border.all(color: ColorUtils.primary_gold, width: 1),
+                    // color: Colors.black.withOpacity(0.65),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      // stops: [0.1, 0.5, 0.7, 0.9],
+                      colors: [
+                        // HexColor("#000000").withOpacity(1),
+                        // HexColor("#000000").withOpacity(1),
+                        HexColor("#ce942f").withOpacity(1),
+
+                        HexColor("#ecdc8f").withOpacity(1),
+                        HexColor("#e5cc79").withOpacity(1),
+                        HexColor("#ce942f").withOpacity(1),
+                        // HexColor("#37393D").withOpacity(1),
+                        // ColorUtils.primary_gold.withOpacity(1),
+
+                        // HexColor("#000000").withOpacity(1),
+                        // ColorUtils.primary_gold.withOpacity(1),
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                          color: HexColor('#04060F'),
+                          offset: Offset(10, 10),
+                          blurRadius: 10)
+                    ],
+                    borderRadius: BorderRadius.circular(15)),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        margin: EdgeInsets.all(10),
+                        // width: 300,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 5),
+                              child: Text(
+                                "You have pused for too long please start again",
+                                textAlign: TextAlign.center,
+                                style: FontStyleUtility.h16(
+                                    fontColor: Colors.black, family: 'PM'),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.to(DashboardScreen(page: 1));
+                                  },
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 5,
+                                    margin: EdgeInsets.all(10),
+                                    // width: 300,
+                                    decoration: BoxDecoration(
+                                        // color: Colors.black.withOpacity(0.65),
+                                        gradient: LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                          colors: [
+                                            HexColor("#36393E").withOpacity(1),
+                                            HexColor("#020204").withOpacity(1),
+                                          ],
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0, horizontal: 15),
+                                      child: Text(
+                                        'Ok',
+                                        textAlign: TextAlign.center,
+                                        style: FontStyleUtility.h16(
+                                            fontColor: ColorUtils.primary_grey,
+                                            family: 'PM'),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    )),
+              ),
+            ),
+          ],
+        ));
+  }
+
+  Future<void> _scaleDialog({
+    required BuildContext context,
+    required String message,
+  }) async {
+    showGeneralDialog(
+      context: context,
+      pageBuilder: (ctx, a1, a2) {
+        return Container();
+      },
+      transitionBuilder: (ctx, a1, a2, child) {
+        var curve = Curves.easeInOut.transform(a1.value);
+        return Transform.scale(
+          scale: curve,
+          child: GreetingsPopUp(context: ctx, message: message),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 300),
+    );
+  }
+
+  Future<void> _scaleDialog2({
+    required BuildContext context,
+    required String message,
+  }) async {
+    showGeneralDialog(
+      context: context,
+      pageBuilder: (ctx, a1, a2) {
+        return Container();
+      },
+      transitionBuilder: (ctx, a1, a2, child) {
+        var curve = Curves.easeInOut.transform(a1.value);
+        return Transform.scale(
+          scale: curve,
+          child: GreetingsPopUpButton(
+            context: ctx,
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 300),
     );
   }
 
@@ -1037,7 +1553,13 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                   .m_screenEditModel!.error ==
                                               false) {
                                             method_time.clear();
+                                            // await Masturbation_Daily_Data_get_API();
+
+                                            await Masturbation_Get_Method();
+                                            await Masturbation_LifeTime_Data_get_API();
                                             await Masturbation_Daily_Data_get_API();
+                                            await MasturbationWeekly_Data_get_API();
+
                                           }
                                         }
                                       },
@@ -1191,12 +1713,16 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
   getdata() async {
     print("insssiiiiiii");
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // WidgetsBinding.instance.addPostFrameCallback((_) async {
     // await _masturbation_screen_controller.MasturbationData_get_API(context);
     // await PreferenceManager()
     //     .setList(URLConstants.method_list, list);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('last_route', "/masturbation");
+    String? lastRoute = prefs.getString('last_route');
+    print("lastRoute ${lastRoute}");
 
     await Masturbation_Get_Method();
     await Masturbation_LifeTime_Data_get_API();
@@ -1302,1089 +1828,1362 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             ),
           ),
         ),
-        Scaffold(
-            backgroundColor: Colors.transparent,
-            // appBar: AppBar(
-            //   backgroundColor: Colors.transparent,
-            //   automaticallyImplyLeading: false,
-            //   leading: GestureDetector(
-            //     onTap: () {
-            //       (started
-            //           ? Navigator.pop(context)
-            //           : CommonWidget()
-            //               .showErrorToaster(msg: "Please finish the method"));
-            //       // Navigator.pop(context);
-            //     },
-            //     child: Container(
-            //         width: 41,
-            //         margin: EdgeInsets.all(8),
-            //         decoration: BoxDecoration(
-            //             color: Colors.white,
-            //             borderRadius: BorderRadius.circular(100),
-            //             gradient: LinearGradient(
-            //                 begin: Alignment(-1.0, -4.0),
-            //                 end: Alignment(1.0, 4.0),
-            //                 colors: [HexColor('#020204'), HexColor('#36393E')])),
-            //         child: Padding(
-            //           padding: const EdgeInsets.all(10.0),
-            //           child: Image.asset(
-            //             AssetUtils.arrow_back,
-            //             height: 14,
-            //             width: 15,
-            //           ),
-            //         )),
-            //   ),
-            //   title: Text(
-            //     Textutils.Masturbation,
-            //     style: FontStyleUtility.h16(
-            //         fontColor: ColorUtils.primary_grey, family: 'PM'),
-            //   ),
-            //   centerTitle: true,
-            //   actions: [
-            //     // Container(
-            //     //     width: 41,
-            //     //     margin: EdgeInsets.all(8),
-            //     //     decoration: BoxDecoration(
-            //     //         color: Colors.white,
-            //     //         borderRadius: BorderRadius.circular(100),
-            //     //         gradient: LinearGradient(
-            //     //             begin: Alignment(-1.0, -4.0),
-            //     //             end: Alignment(1.0, 4.0),
-            //     //             colors: [HexColor('#020204'), HexColor('#36393E')])),
-            //     //     child: Padding(
-            //     //       padding: const EdgeInsets.all(10.0),
-            //     //       child: Image.asset(
-            //     //         AssetUtils.notification_icon,
-            //     //         color: ColorUtils.primary_gold,
-            //     //         height: 14,
-            //     //         width: 15,
-            //     //       ),
-            //     //     ))
-            //   ],
-            // ),
-            body: NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  SliverAppBar(
-                    backgroundColor: Colors.transparent,
-                    automaticallyImplyLeading: false,
-                    snap: false,
-                    pinned: false,
-                    stretch: false,
-                    floating: false,
+        WillPopScope(
+          onWillPop: () async => false,
+          child: Scaffold(
+              backgroundColor: Colors.transparent,
+              // appBar: AppBar(
+              //   backgroundColor: Colors.transparent,
+              //   automaticallyImplyLeading: false,
+              //   leading: GestureDetector(
+              //     onTap: () {
+              //       (started
+              //           ? Navigator.pop(context)
+              //           : CommonWidget()
+              //               .showErrorToaster(msg: "Please finish the method"));
+              //       // Navigator.pop(context);
+              //     },
+              //     child: Container(
+              //         width: 41,
+              //         margin: EdgeInsets.all(8),
+              //         decoration: BoxDecoration(
+              //             color: Colors.white,
+              //             borderRadius: BorderRadius.circular(100),
+              //             gradient: LinearGradient(
+              //                 begin: Alignment(-1.0, -4.0),
+              //                 end: Alignment(1.0, 4.0),
+              //                 colors: [HexColor('#020204'), HexColor('#36393E')])),
+              //         child: Padding(
+              //           padding: const EdgeInsets.all(10.0),
+              //           child: Image.asset(
+              //             AssetUtils.arrow_back,
+              //             height: 14,
+              //             width: 15,
+              //           ),
+              //         )),
+              //   ),
+              //   title: Text(
+              //     Textutils.Masturbation,
+              //     style: FontStyleUtility.h16(
+              //         fontColor: ColorUtils.primary_grey, family: 'PM'),
+              //   ),
+              //   centerTitle: true,
+              //   actions: [
+              //     // Container(
+              //     //     width: 41,
+              //     //     margin: EdgeInsets.all(8),
+              //     //     decoration: BoxDecoration(
+              //     //         color: Colors.white,
+              //     //         borderRadius: BorderRadius.circular(100),
+              //     //         gradient: LinearGradient(
+              //     //             begin: Alignment(-1.0, -4.0),
+              //     //             end: Alignment(1.0, 4.0),
+              //     //             colors: [HexColor('#020204'), HexColor('#36393E')])),
+              //     //     child: Padding(
+              //     //       padding: const EdgeInsets.all(10.0),
+              //     //       child: Image.asset(
+              //     //         AssetUtils.notification_icon,
+              //     //         color: ColorUtils.primary_gold,
+              //     //         height: 14,
+              //     //         width: 15,
+              //     //       ),
+              //     //     ))
+              //   ],
+              // ),
+              body: NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    SliverAppBar(
+                      backgroundColor: Colors.transparent,
+                      automaticallyImplyLeading: false,
+                      snap: false,
+                      pinned: false,
+                      stretch: false,
+                      floating: false,
 
-                    leading: GestureDetector(
-                      onTap: () {
-                        (started
-                            ? Navigator.pop(context)
-                            : CommonWidget().showErrorToaster(
-                                msg: "Please finish the method"));
-                        // Navigator.pop(context);
-                      },
-                      child: Container(
-                          width: 41,
-                          margin: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(100),
-                              gradient: LinearGradient(
-                                  begin: Alignment(-1.0, -4.0),
-                                  end: Alignment(1.0, 4.0),
-                                  colors: [
-                                    HexColor('#020204'),
-                                    HexColor('#36393E')
-                                  ])),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Image.asset(
-                              AssetUtils.arrow_back,
-                              height: 14,
-                              width: 15,
-                            ),
-                          )),
-                    ),
-                    // title: Text(
-                    //   Textutils.Masturbation,
-                    //   style: FontStyleUtility.h16(
-                    //       fontColor: ColorUtils.primary_grey, family: 'PM'),
-                    // ),
-                    centerTitle: true,
-                    actions: [
-                      // Container(
-                      //     width: 41,
-                      //     margin: EdgeInsets.all(8),
-                      //     decoration: BoxDecoration(
-                      //         color: Colors.white,
-                      //         borderRadius: BorderRadius.circular(100),
-                      //         gradient: LinearGradient(
-                      //             begin: Alignment(-1.0, -4.0),
-                      //             end: Alignment(1.0, 4.0),
-                      //             colors: [HexColor('#020204'), HexColor('#36393E')])),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.all(10.0),
-                      //       child: Image.asset(
-                      //         AssetUtils.notification_icon,
-                      //         color: ColorUtils.primary_gold,
-                      //         height: 14,
-                      //         width: 15,
+                      leading: GestureDetector(
+                        onTap: () {
+                          (started
+                              ? Navigator.pop(context)
+                              // Navigator.of(context).pushReplacement(
+                              //         MaterialPageRoute(
+                              //             builder: (context) => DashboardScreen(
+                              //                   page: 1,
+                              //                 )),
+                              //       )
+                              : CommonWidget().showErrorToaster(
+                                  msg: "Please finish the method"));
+                          // Navigator.pop(context);
+                        },
+                        child: Container(
+                            width: 41,
+                            margin: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(100),
+                                gradient: LinearGradient(
+                                    begin: Alignment(-1.0, -4.0),
+                                    end: Alignment(1.0, 4.0),
+                                    colors: [
+                                      HexColor('#020204'),
+                                      HexColor('#36393E')
+                                    ])),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Image.asset(
+                                AssetUtils.arrow_back,
+                                height: 14,
+                                width: 15,
+                              ),
+                            )),
+                      ),
+                      // title: Text(
+                      //   Textutils.Masturbation,
+                      //   style: FontStyleUtility.h16(
+                      //       fontColor: ColorUtils.primary_grey, family: 'PM'),
+                      // ),
+                      centerTitle: true,
+                      actions: [
+                        // Container(
+                        //     width: 41,
+                        //     margin: EdgeInsets.all(8),
+                        //     decoration: BoxDecoration(
+                        //         color: Colors.white,
+                        //         borderRadius: BorderRadius.circular(100),
+                        //         gradient: LinearGradient(
+                        //             begin: Alignment(-1.0, -4.0),
+                        //             end: Alignment(1.0, 4.0),
+                        //             colors: [HexColor('#020204'), HexColor('#36393E')])),
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.all(10.0),
+                        //       child: Image.asset(
+                        //         AssetUtils.notification_icon,
+                        //         color: ColorUtils.primary_gold,
+                        //         height: 14,
+                        //         width: 15,
+                        //       ),
+                        //     ))
+                      ],
+                      // TabBar(
+                      //   labelPadding: EdgeInsets.zero,
+                      //   indicatorColor: Colors.black,
+                      //   controller: _tabController,
+                      //   tabs: <Widget>[
+                      //     Container(
+                      //       margin: EdgeInsets.only(bottom: 0),
+                      //       height: 50,
+                      //       width: 50,
+                      //       decoration: BoxDecoration(
+                      //           color: Colors.black,
+                      //           borderRadius: BorderRadius.circular(50),
+                      //           boxShadow: [
+                      //             BoxShadow(
+                      //               color: HexColor(CommonColor.blue),
+                      //               // spreadRadius: 5,
+                      //               blurRadius: 6,
+                      //               offset:
+                      //                   Offset(0, 3), // changes position of shadow
+                      //             ),
+                      //           ],
+                      //           gradient: LinearGradient(
+                      //             begin: Alignment.topLeft,
+                      //             end: Alignment.bottomRight,
+                      //             // stops: [0.1, 0.5, 0.7, 0.9],
+                      //             colors: [
+                      //               HexColor("#000000"),
+                      //               HexColor("#C12265"),
+                      //               // HexColor("#FFFFFF").withOpacity(0.67),
+                      //             ],
+                      //           ),
+                      //           border: Border.all(
+                      //               color: HexColor(CommonColor.blue), width: 1.5)),
+                      //       child: IconButton(
+                      //         onPressed: () {
+                      //           setState(() {
+                      //             index == 0;
+                      //           });
+                      //           print(index);
+                      //         },
+                      //         icon: Image.asset(
+                      //           AssetUtils.story1,
+                      //           height: 25,
+                      //           width: 25,
+                      //           color: HexColor(CommonColor.blue),
+                      //         ),
                       //       ),
-                      //     ))
-                    ],
-                    // TabBar(
-                    //   labelPadding: EdgeInsets.zero,
-                    //   indicatorColor: Colors.black,
-                    //   controller: _tabController,
-                    //   tabs: <Widget>[
-                    //     Container(
-                    //       margin: EdgeInsets.only(bottom: 0),
-                    //       height: 50,
-                    //       width: 50,
-                    //       decoration: BoxDecoration(
-                    //           color: Colors.black,
-                    //           borderRadius: BorderRadius.circular(50),
-                    //           boxShadow: [
-                    //             BoxShadow(
-                    //               color: HexColor(CommonColor.blue),
-                    //               // spreadRadius: 5,
-                    //               blurRadius: 6,
-                    //               offset:
-                    //                   Offset(0, 3), // changes position of shadow
-                    //             ),
-                    //           ],
-                    //           gradient: LinearGradient(
-                    //             begin: Alignment.topLeft,
-                    //             end: Alignment.bottomRight,
-                    //             // stops: [0.1, 0.5, 0.7, 0.9],
-                    //             colors: [
-                    //               HexColor("#000000"),
-                    //               HexColor("#C12265"),
-                    //               // HexColor("#FFFFFF").withOpacity(0.67),
-                    //             ],
-                    //           ),
-                    //           border: Border.all(
-                    //               color: HexColor(CommonColor.blue), width: 1.5)),
-                    //       child: IconButton(
-                    //         onPressed: () {
-                    //           setState(() {
-                    //             index == 0;
-                    //           });
-                    //           print(index);
-                    //         },
-                    //         icon: Image.asset(
-                    //           AssetUtils.story1,
-                    //           height: 25,
-                    //           width: 25,
-                    //           color: HexColor(CommonColor.blue),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     Container(
-                    //       margin: EdgeInsets.all(0),
-                    //       height: 50,
-                    //       width: 50,
-                    //       decoration: BoxDecoration(
-                    //           borderRadius: BorderRadius.circular(50),
-                    //           boxShadow: [
-                    //             BoxShadow(
-                    //               color: HexColor(CommonColor.green),
-                    //               // spreadRadius: 5,
-                    //               blurRadius: 6,
-                    //               offset:
-                    //                   Offset(0, 3), // changes position of shadow
-                    //             ),
-                    //           ],
-                    //           gradient: LinearGradient(
-                    //             begin: Alignment.topLeft,
-                    //             end: Alignment.bottomRight,
-                    //             // stops: [0.1, 0.5, 0.7, 0.9],
-                    //             colors: [
-                    //               HexColor("#000000"),
-                    //               HexColor("#C12265"),
-                    //               // HexColor("#FFFFFF").withOpacity(0.67),
-                    //             ],
-                    //           ),
-                    //           border: Border.all(
-                    //               color: HexColor(CommonColor.green), width: 1.5)),
-                    //       child: IconButton(
-                    //         onPressed: () {
-                    //           setState(() {
-                    //             index == 1;
-                    //           });
-                    //           print(index);
-                    //         },
-                    //         icon: Image.asset(
-                    //           AssetUtils.story2,
-                    //           height: 25,
-                    //           width: 25,
-                    //           color: HexColor(CommonColor.green),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     Container(
-                    //       margin: EdgeInsets.all(0),
-                    //       height: 50,
-                    //       width: 50,
-                    //       decoration: BoxDecoration(
-                    //           boxShadow: [
-                    //             BoxShadow(
-                    //               color: HexColor(CommonColor.tile),
-                    //               // spreadRadius: 5,
-                    //               blurRadius: 6,
-                    //               offset:
-                    //                   Offset(0, 3), // changes position of shadow
-                    //             ),
-                    //           ],
-                    //           gradient: LinearGradient(
-                    //             begin: Alignment.topLeft,
-                    //             end: Alignment.bottomRight,
-                    //             // stops: [0.1, 0.5, 0.7, 0.9],
-                    //             colors: [
-                    //               HexColor("#000000"),
-                    //               HexColor("#C12265"),
-                    //               // HexColor("#FFFFFF").withOpacity(0.67),
-                    //             ],
-                    //           ),
-                    //           borderRadius: BorderRadius.circular(50),
-                    //           border: Border.all(
-                    //               color: HexColor(CommonColor.tile), width: 1.5)),
-                    //       child: IconButton(
-                    //         onPressed: () {
-                    //           setState(() {
-                    //             index == 2;
-                    //           });
-                    //           print(index);
-                    //         },
-                    //         icon: Image.asset(
-                    //           AssetUtils.story3,
-                    //           height: 25,
-                    //           width: 25,
-                    //           color: HexColor(CommonColor.tile),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     Container(
-                    //       margin: EdgeInsets.all(0),
-                    //       height: 50,
-                    //       width: 50,
-                    //       decoration: BoxDecoration(
-                    //           boxShadow: [
-                    //             BoxShadow(
-                    //               color: HexColor(CommonColor.orange),
-                    //               // spreadRadius: 5,
-                    //               blurRadius: 6,
-                    //               offset:
-                    //                   Offset(0, 3), // changes position of shadow
-                    //             ),
-                    //           ],
-                    //           gradient: LinearGradient(
-                    //             begin: Alignment.topLeft,
-                    //             end: Alignment.bottomRight,
-                    //             // stops: [0.1, 0.5, 0.7, 0.9],
-                    //             colors: [
-                    //               HexColor("#000000"),
-                    //               HexColor("#C12265"),
-                    //               // HexColor("#FFFFFF").withOpacity(0.67),
-                    //             ],
-                    //           ),
-                    //           borderRadius: BorderRadius.circular(50),
-                    //           border: Border.all(
-                    //               color: HexColor(CommonColor.orange), width: 1.5)),
-                    //       child: IconButton(
-                    //         onPressed: () {
-                    //           setState(() {
-                    //             index == 3;
-                    //           });
-                    //           print(index);
-                    //         },
-                    //         icon: Image.asset(
-                    //           AssetUtils.story4,
-                    //           height: 25,
-                    //           width: 25,
-                    //           color: HexColor(CommonColor.orange),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     Container(
-                    //       margin: EdgeInsets.all(0),
-                    //       height: 50,
-                    //       width: 50,
-                    //       decoration: BoxDecoration(
-                    //           boxShadow: [
-                    //             BoxShadow(
-                    //               color: Colors.white,
-                    //               // spreadRadius: 5,
-                    //               blurRadius: 6,
-                    //               offset:
-                    //                   Offset(0, 3), // changes position of shadow
-                    //             ),
-                    //           ],
-                    //           gradient: LinearGradient(
-                    //             begin: Alignment.topLeft,
-                    //             end: Alignment.bottomRight,
-                    //             // stops: [0.1, 0.5, 0.7, 0.9],
-                    //             colors: [
-                    //               HexColor("#000000"),
-                    //               HexColor("#C12265"),
-                    //               // HexColor("#FFFFFF").withOpacity(0.67),
-                    //             ],
-                    //           ),
-                    //           borderRadius: BorderRadius.circular(50),
-                    //           border: Border.all(color: Colors.white, width: 1.5)),
-                    //       child: IconButton(
-                    //         onPressed: () {
-                    //           setState(() {
-                    //             index == 4;
-                    //           });
-                    //           print(index);
-                    //         },
-                    //         icon: Image.asset(
-                    //           AssetUtils.story5,
-                    //           height: 25,
-                    //           width: 25,
-                    //           color: Colors.white,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //
-                    //   ],
-                    // ),
-                  ),
-                ];
-              },
-              body: SingleChildScrollView(
-                physics: ClampingScrollPhysics(),
-                child: Container(
-                  margin: EdgeInsets.only(top: 15, left: 8, right: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        alignment: Alignment.centerRight,
-                        height: 20,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 2),
-                              height: 20,
-                              width: 20,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                gradient: (paused_time.length >= 4
-                                    ? LinearGradient(
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.topRight,
-                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                        colors: [
-                                          HexColor("#DD3931").withOpacity(1),
-                                          HexColor("#DD3931").withOpacity(1),
-                                        ],
-                                      )
-                                    : LinearGradient(
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.topRight,
-                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                        colors: [
-                                          HexColor("#34343E").withOpacity(1),
-                                          HexColor("#8A8B8D").withOpacity(1),
-                                        ],
-                                      )),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Icon(
-                                  Icons.pause,
-                                  size: 15,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 2),
-                              height: 20,
-                              width: 20,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                gradient: (paused_time.length >= 3
-                                    ? LinearGradient(
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.topRight,
-                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                        colors: [
-                                          HexColor("#DD3931").withOpacity(1),
-                                          HexColor("#DD3931").withOpacity(1),
-                                        ],
-                                      )
-                                    : LinearGradient(
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.topRight,
-                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                        colors: [
-                                          HexColor("#34343E").withOpacity(1),
-                                          HexColor("#8A8B8D").withOpacity(1),
-                                        ],
-                                      )),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Icon(
-                                  Icons.pause,
-                                  size: 15,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 2),
-                              height: 20,
-                              width: 20,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                gradient: (paused_time.length >= 2
-                                    ? LinearGradient(
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.topRight,
-                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                        colors: [
-                                          HexColor("#DD3931").withOpacity(1),
-                                          HexColor("#DD3931").withOpacity(1),
-                                        ],
-                                      )
-                                    : LinearGradient(
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.topRight,
-                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                        colors: [
-                                          HexColor("#34343E").withOpacity(1),
-                                          HexColor("#8A8B8D").withOpacity(1),
-                                        ],
-                                      )),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Icon(
-                                  Icons.pause,
-                                  size: 15,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 2),
-                              height: 20,
-                              width: 20,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                gradient: (paused_time.isNotEmpty
-                                    ? LinearGradient(
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.topRight,
-                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                        colors: [
-                                          HexColor("#DD3931").withOpacity(1),
-                                          HexColor("#DD3931").withOpacity(1),
-                                        ],
-                                      )
-                                    : LinearGradient(
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.topRight,
-                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                        colors: [
-                                          HexColor("#34343E").withOpacity(1),
-                                          HexColor("#8A8B8D").withOpacity(1),
-                                        ],
-                                      )),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Icon(
-                                  Icons.pause,
-                                  size: 15,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                      AvatarGlow(
-                        endRadius: 100.0,
-                        showTwoGlows: true,
-                        animate: false,
-                        // (startStop ? false : true),
-                        duration: Duration(milliseconds: 900),
-                        repeat: true,
-                        child: GestureDetector(
-                          onTap: () {
-                            print('helllllllooooooooooooooo');
-                            // startOrStop();
-                          },
-                          child: CircularPercentIndicator(
-                            circularStrokeCap: CircularStrokeCap.round,
-                            percent: percent / 100,
-                            animation: true,
-                            animateFromLastPercent: true,
-                            radius: 61,
-                            lineWidth: 0,
-                            progressColor: Colors.white,
-                            backgroundColor: Colors.transparent,
-                            center: Container(
-                              height: 125,
-                              width: 125,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      alignment: Alignment.center,
-                                      image:
-                                          AssetImage(AssetUtils.home_button)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: (animation_started
-                                          ? HexColor('#DD3931')
-                                          : Colors.transparent),
-                                      blurRadius: (animation_started
-                                          ? _animation!.value
-                                          : 0),
-                                      spreadRadius: (animation_started
-                                          ? _animation!.value
-                                          : 0),
-                                    )
-                                  ]),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    alignment: Alignment.center,
-                                    child: Text('Masturbate',
-                                        style: GoogleFonts.sourceSerifPro(
-                                          textStyle: TextStyle(
-                                              color: (timer_started
-                                                  ? HexColor('#DD3931')
-                                                      .withOpacity(0.4)
-                                                  : HexColor('#DD3931')),
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600),
+                      //     ),
+                      //     Container(
+                      //       margin: EdgeInsets.all(0),
+                      //       height: 50,
+                      //       width: 50,
+                      //       decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(50),
+                      //           boxShadow: [
+                      //             BoxShadow(
+                      //               color: HexColor(CommonColor.green),
+                      //               // spreadRadius: 5,
+                      //               blurRadius: 6,
+                      //               offset:
+                      //                   Offset(0, 3), // changes position of shadow
+                      //             ),
+                      //           ],
+                      //           gradient: LinearGradient(
+                      //             begin: Alignment.topLeft,
+                      //             end: Alignment.bottomRight,
+                      //             // stops: [0.1, 0.5, 0.7, 0.9],
+                      //             colors: [
+                      //               HexColor("#000000"),
+                      //               HexColor("#C12265"),
+                      //               // HexColor("#FFFFFF").withOpacity(0.67),
+                      //             ],
+                      //           ),
+                      //           border: Border.all(
+                      //               color: HexColor(CommonColor.green), width: 1.5)),
+                      //       child: IconButton(
+                      //         onPressed: () {
+                      //           setState(() {
+                      //             index == 1;
+                      //           });
+                      //           print(index);
+                      //         },
+                      //         icon: Image.asset(
+                      //           AssetUtils.story2,
+                      //           height: 25,
+                      //           width: 25,
+                      //           color: HexColor(CommonColor.green),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Container(
+                      //       margin: EdgeInsets.all(0),
+                      //       height: 50,
+                      //       width: 50,
+                      //       decoration: BoxDecoration(
+                      //           boxShadow: [
+                      //             BoxShadow(
+                      //               color: HexColor(CommonColor.tile),
+                      //               // spreadRadius: 5,
+                      //               blurRadius: 6,
+                      //               offset:
+                      //                   Offset(0, 3), // changes position of shadow
+                      //             ),
+                      //           ],
+                      //           gradient: LinearGradient(
+                      //             begin: Alignment.topLeft,
+                      //             end: Alignment.bottomRight,
+                      //             // stops: [0.1, 0.5, 0.7, 0.9],
+                      //             colors: [
+                      //               HexColor("#000000"),
+                      //               HexColor("#C12265"),
+                      //               // HexColor("#FFFFFF").withOpacity(0.67),
+                      //             ],
+                      //           ),
+                      //           borderRadius: BorderRadius.circular(50),
+                      //           border: Border.all(
+                      //               color: HexColor(CommonColor.tile), width: 1.5)),
+                      //       child: IconButton(
+                      //         onPressed: () {
+                      //           setState(() {
+                      //             index == 2;
+                      //           });
+                      //           print(index);
+                      //         },
+                      //         icon: Image.asset(
+                      //           AssetUtils.story3,
+                      //           height: 25,
+                      //           width: 25,
+                      //           color: HexColor(CommonColor.tile),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Container(
+                      //       margin: EdgeInsets.all(0),
+                      //       height: 50,
+                      //       width: 50,
+                      //       decoration: BoxDecoration(
+                      //           boxShadow: [
+                      //             BoxShadow(
+                      //               color: HexColor(CommonColor.orange),
+                      //               // spreadRadius: 5,
+                      //               blurRadius: 6,
+                      //               offset:
+                      //                   Offset(0, 3), // changes position of shadow
+                      //             ),
+                      //           ],
+                      //           gradient: LinearGradient(
+                      //             begin: Alignment.topLeft,
+                      //             end: Alignment.bottomRight,
+                      //             // stops: [0.1, 0.5, 0.7, 0.9],
+                      //             colors: [
+                      //               HexColor("#000000"),
+                      //               HexColor("#C12265"),
+                      //               // HexColor("#FFFFFF").withOpacity(0.67),
+                      //             ],
+                      //           ),
+                      //           borderRadius: BorderRadius.circular(50),
+                      //           border: Border.all(
+                      //               color: HexColor(CommonColor.orange), width: 1.5)),
+                      //       child: IconButton(
+                      //         onPressed: () {
+                      //           setState(() {
+                      //             index == 3;
+                      //           });
+                      //           print(index);
+                      //         },
+                      //         icon: Image.asset(
+                      //           AssetUtils.story4,
+                      //           height: 25,
+                      //           width: 25,
+                      //           color: HexColor(CommonColor.orange),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Container(
+                      //       margin: EdgeInsets.all(0),
+                      //       height: 50,
+                      //       width: 50,
+                      //       decoration: BoxDecoration(
+                      //           boxShadow: [
+                      //             BoxShadow(
+                      //               color: Colors.white,
+                      //               // spreadRadius: 5,
+                      //               blurRadius: 6,
+                      //               offset:
+                      //                   Offset(0, 3), // changes position of shadow
+                      //             ),
+                      //           ],
+                      //           gradient: LinearGradient(
+                      //             begin: Alignment.topLeft,
+                      //             end: Alignment.bottomRight,
+                      //             // stops: [0.1, 0.5, 0.7, 0.9],
+                      //             colors: [
+                      //               HexColor("#000000"),
+                      //               HexColor("#C12265"),
+                      //               // HexColor("#FFFFFF").withOpacity(0.67),
+                      //             ],
+                      //           ),
+                      //           borderRadius: BorderRadius.circular(50),
+                      //           border: Border.all(color: Colors.white, width: 1.5)),
+                      //       child: IconButton(
+                      //         onPressed: () {
+                      //           setState(() {
+                      //             index == 4;
+                      //           });
+                      //           print(index);
+                      //         },
+                      //         icon: Image.asset(
+                      //           AssetUtils.story5,
+                      //           height: 25,
+                      //           width: 25,
+                      //           color: Colors.white,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //
+                      //   ],
+                      // ),
+                    ),
+                  ];
+                },
+                body: SingleChildScrollView(
+                  physics: ClampingScrollPhysics(),
+                  child: Container(
+                    margin: EdgeInsets.only(top: 15, left: 8, right: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          alignment: Alignment.centerRight,
+                          height: 20,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 2),
+                                height: 20,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  gradient: (paused_time.length >= 4
+                                      ? LinearGradient(
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight,
+                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                          colors: [
+                                            HexColor("#DD3931").withOpacity(1),
+                                            HexColor("#DD3931").withOpacity(1),
+                                          ],
+                                        )
+                                      : LinearGradient(
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight,
+                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                          colors: [
+                                            HexColor("#34343E").withOpacity(1),
+                                            HexColor("#8A8B8D").withOpacity(1),
+                                          ],
                                         )),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Icon(
+                                    Icons.pause,
+                                    size: 15,
+                                    color: Colors.black,
                                   ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      (timer_started ? elapsedTime : ''),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w900),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 2),
+                                height: 20,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  gradient: (paused_time.length >= 3
+                                      ? LinearGradient(
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight,
+                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                          colors: [
+                                            HexColor("#DD3931").withOpacity(1),
+                                            HexColor("#DD3931").withOpacity(1),
+                                          ],
+                                        )
+                                      : LinearGradient(
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight,
+                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                          colors: [
+                                            HexColor("#34343E").withOpacity(1),
+                                            HexColor("#8A8B8D").withOpacity(1),
+                                          ],
+                                        )),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Icon(
+                                    Icons.pause,
+                                    size: 15,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 2),
+                                height: 20,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  gradient: (paused_time.length >= 2
+                                      ? LinearGradient(
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight,
+                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                          colors: [
+                                            HexColor("#DD3931").withOpacity(1),
+                                            HexColor("#DD3931").withOpacity(1),
+                                          ],
+                                        )
+                                      : LinearGradient(
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight,
+                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                          colors: [
+                                            HexColor("#34343E").withOpacity(1),
+                                            HexColor("#8A8B8D").withOpacity(1),
+                                          ],
+                                        )),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Icon(
+                                    Icons.pause,
+                                    size: 15,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 2),
+                                height: 20,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  gradient: (paused_time.isNotEmpty
+                                      ? LinearGradient(
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight,
+                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                          colors: [
+                                            HexColor("#DD3931").withOpacity(1),
+                                            HexColor("#DD3931").withOpacity(1),
+                                          ],
+                                        )
+                                      : LinearGradient(
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight,
+                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                          colors: [
+                                            HexColor("#34343E").withOpacity(1),
+                                            HexColor("#8A8B8D").withOpacity(1),
+                                          ],
+                                        )),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Icon(
+                                    Icons.pause,
+                                    size: 15,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+
+                        AvatarGlow(
+                          endRadius: 100.0,
+                          showTwoGlows: true,
+                          animate: false,
+                          // (startStop ? false : true),
+                          duration: Duration(milliseconds: 900),
+                          repeat: true,
+                          child: GestureDetector(
+                            onTap: () {
+                              print('helllllllooooooooooooooo');
+                              // startOrStop();
+                            },
+                            child: CircularPercentIndicator(
+                              circularStrokeCap: CircularStrokeCap.round,
+                              percent: percent / 100,
+                              animation: true,
+                              animateFromLastPercent: true,
+                              radius: 61,
+                              lineWidth: 0,
+                              progressColor: Colors.white,
+                              backgroundColor: Colors.transparent,
+                              center: Container(
+                                height: 125,
+                                width: 125,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        alignment: Alignment.center,
+                                        image:
+                                            AssetImage(AssetUtils.home_button)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: (animation_started
+                                            ? HexColor('#DD3931')
+                                            : Colors.transparent),
+                                        blurRadius: (animation_started
+                                            ? _animation!.value
+                                            : 0),
+                                        spreadRadius: (animation_started
+                                            ? _animation!.value
+                                            : 0),
+                                      )
+                                    ]),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.center,
+                                      child: Text('Masturbate',
+                                          style: GoogleFonts.sourceSerifPro(
+                                            textStyle: TextStyle(
+                                                color: (timer_started
+                                                    ? HexColor('#DD3931')
+                                                        .withOpacity(0.4)
+                                                    : HexColor('#DD3931')),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          )),
                                     ),
-                                  ),
-                                ],
+                                    Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        (timer_started ? elapsedTime : ''),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w900),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
+                          glowColor: Colors.white,
                         ),
-                        glowColor: Colors.white,
-                      ),
-                      SizedBox(
-                        height: 28,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          print('object');
-                          if (started == false) {
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                double width =
-                                    MediaQuery.of(context).size.width;
-                                double height =
-                                    MediaQuery.of(context).size.height;
-                                return AlertDialog(
-                                    backgroundColor: Colors.transparent,
-                                    contentPadding: EdgeInsets.zero,
-                                    elevation: 0.0,
-                                    // title: Center(child: Text("Evaluation our APP")),
-                                    content: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Stack(
-                                          children: [
-                                            Container(
-                                              // height: 150,
-                                              // height: double.maxFinite,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  4,
-                                              width: double.maxFinite,
-                                              decoration: BoxDecoration(
-                                                  // color: Colors.black.withOpacity(0.65),
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.centerLeft,
-                                                    end: Alignment.centerRight,
-                                                    // stops: [0.1, 0.5, 0.7, 0.9],
-                                                    colors: [
-                                                      HexColor("#020204")
-                                                          .withOpacity(1),
-                                                      HexColor("#36393E")
-                                                          .withOpacity(1),
-                                                    ],
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                        color:
-                                                            HexColor('#04060F'),
-                                                        offset: Offset(10, 10),
-                                                        blurRadius: 10)
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 10),
-                                              // height: 122,
-                                              // width: 133,
-                                              // padding: const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Expanded(
-                                                    child: Container(
-                                                      // color: Colors.white,
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: ListView.builder(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                bottom: 0),
-
-                                                        // physics: NeverScrollableScrollPhysics(),
-                                                        itemCount:
-                                                            _masturbation_screen_controller
-                                                                .method_list
-                                                                .length,
-                                                        shrinkWrap: true,
-                                                        itemBuilder:
-                                                            (BuildContext
-                                                                    context,
-                                                                int index) {
-                                                          return GestureDetector(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                method_selected =
-                                                                    _masturbation_screen_controller
-                                                                        .method_list[
-                                                                            index]
-                                                                        .method_name!;
-                                                                method_selected_color =
-                                                                    _masturbation_screen_controller
-                                                                        .method_list[
-                                                                            index]
-                                                                        .color!;
-                                                                method_selected_id =
-                                                                    _masturbation_screen_controller
-                                                                        .method_list[
-                                                                            index]
-                                                                        .method_id!;
-
-                                                                print(
-                                                                    "method_selected $method_selected");
-                                                                print(
-                                                                    "method_selected ${_masturbation_screen_controller.method_list[index].color!.toString()}");
-                                                                started = true;
-                                                              });
-                                                              Navigator.pop(
-                                                                  context);
-                                                            },
-                                                            child: Container(
-                                                              margin: EdgeInsets
-                                                                  .symmetric(
-                                                                      vertical:
-                                                                          8.5),
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: Text(
-                                                                _masturbation_screen_controller
-                                                                    .method_list[
-                                                                        index]
-                                                                    .method_name!,
-                                                                style: FontStyleUtility.h15(
-                                                                    fontColor: HexColor(_masturbation_screen_controller.method_list[index].color!),
-                                                                    // fontColor: (_masturbation_screen_controller.method_list[index] == 'Hand'
-                                                                    //     ? Colors.red
-                                                                    //     : (_masturbation_screen_controller.method_list[index] == 'Dildo'
-                                                                    //         ? Colors.blue
-                                                                    //         : (_masturbation_screen_controller.method_list[index] == 'Sex'
-                                                                    //             ? Colors.green
-                                                                    //             // : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
-                                                                    //             : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : list[random.nextInt(list.length)])))),
-                                                                    family: 'PM'),
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      ),
+                        SizedBox(
+                          height: 28,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            print('object');
+                            if (started == false) {
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  double width =
+                                      MediaQuery.of(context).size.width;
+                                  double height =
+                                      MediaQuery.of(context).size.height;
+                                  return AlertDialog(
+                                      backgroundColor: Colors.transparent,
+                                      contentPadding: EdgeInsets.zero,
+                                      elevation: 0.0,
+                                      // title: Center(child: Text("Evaluation our APP")),
+                                      content: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                // height: 150,
+                                                // height: double.maxFinite,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    4,
+                                                width: double.maxFinite,
+                                                decoration: BoxDecoration(
+                                                    // color: Colors.black.withOpacity(0.65),
+                                                    gradient: LinearGradient(
+                                                      begin:
+                                                          Alignment.centerLeft,
+                                                      end:
+                                                          Alignment.centerRight,
+                                                      // stops: [0.1, 0.5, 0.7, 0.9],
+                                                      colors: [
+                                                        HexColor("#020204")
+                                                            .withOpacity(1),
+                                                        HexColor("#36393E")
+                                                            .withOpacity(1),
+                                                      ],
                                                     ),
-                                                  ),
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        bottom: 20, top: 10),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        Navigator.pop(context);
-                                                        addmethod_popup(
-                                                            context);
-                                                      },
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                          color: HexColor(
+                                                              '#04060F'),
+                                                          offset:
+                                                              Offset(10, 10),
+                                                          blurRadius: 10)
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 10),
+                                                // height: 122,
+                                                // width: 133,
+                                                // padding: const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Expanded(
                                                       child: Container(
+                                                        margin: EdgeInsets.only(
+                                                            top: 10),
+                                                        // color: Colors.white,
                                                         alignment:
                                                             Alignment.center,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                border: Border(
-                                                          right: BorderSide(
-                                                              color:
-                                                                  Colors.black,
-                                                              width: 1),
-                                                        )),
-                                                        child: Padding(
+                                                        child: ListView.builder(
                                                           padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  vertical:
-                                                                      4.5),
-                                                          child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(500),
-                                                                    gradient: LinearGradient(
-                                                                      begin: Alignment
-                                                                          .centerLeft,
-                                                                      end: Alignment
-                                                                          .centerRight,
-                                                                      // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                      colors: [
-                                                                        HexColor("#020204")
-                                                                            .withOpacity(1),
-                                                                        HexColor("#36393E")
-                                                                            .withOpacity(1),
-                                                                      ],
-                                                                    ),
-                                                                    boxShadow: [
-                                                                  BoxShadow(
-                                                                      color: HexColor(
-                                                                          '#04060F'),
-                                                                      offset:
-                                                                          Offset(
-                                                                              3,
-                                                                              3),
-                                                                      blurRadius:
-                                                                          10)
-                                                                ]),
-                                                            child: Padding(
-                                                              padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      6),
-                                                              child:
-                                                                  Image.asset(
-                                                                AssetUtils
-                                                                    .plus_big,
-                                                                height: 30,
-                                                                width: 20,
-                                                                color: HexColor(
-                                                                    '#606060'),
+                                                              EdgeInsets.only(
+                                                                  bottom: 0),
+
+                                                          // physics: NeverScrollableScrollPhysics(),
+                                                          itemCount:
+                                                              _masturbation_screen_controller
+                                                                  .method_list
+                                                                  .length,
+                                                          shrinkWrap: true,
+                                                          itemBuilder:
+                                                              (BuildContext
+                                                                      context,
+                                                                  int index) {
+                                                            return GestureDetector(
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  method_selected = _masturbation_screen_controller
+                                                                      .method_list[
+                                                                          index]
+                                                                      .method_name!;
+                                                                  method_selected_color =
+                                                                      _masturbation_screen_controller
+                                                                          .method_list[
+                                                                              index]
+                                                                          .color!;
+                                                                  method_selected_id = _masturbation_screen_controller
+                                                                      .method_list[
+                                                                          index]
+                                                                      .method_id!;
+
+                                                                  print(
+                                                                      "method_selected $method_selected");
+                                                                  print(
+                                                                      "method_selected ${_masturbation_screen_controller.method_list[index].color!.toString()}");
+                                                                  started =
+                                                                      true;
+                                                                });
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              // onLongPress: () {
+                                                              //   if (index > 3) {
+                                                              //     // print(
+                                                              //     //     "Method ID : ${method_time[index].id}");
+                                                              //     methodPopUp(
+                                                              //         context:
+                                                              //             context,
+                                                              //         method_old: _masturbation_screen_controller
+                                                              //             .method_list[
+                                                              //                 index]
+                                                              //             .method_name!,
+                                                              //         method_id: _masturbation_screen_controller
+                                                              //             .method_list[
+                                                              //                 index]
+                                                              //             .method_id!);
+                                                              //   }
+                                                              // },
+                                                              child: Container(
+                                                                margin: EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            8.5),
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child:
+                                                                    (index > 3
+                                                                        ? Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                // flex: 3,
+                                                                                child: Container(
+                                                                                  // color: Colors.white,
+                                                                                  alignment: Alignment.centerRight,
+                                                                                  child: Text(
+                                                                                    _masturbation_screen_controller.method_list[index].method_name!,
+                                                                                    style: FontStyleUtility.h15(
+                                                                                        fontColor: HexColor(_masturbation_screen_controller.method_list[index].color!),
+                                                                                        // fontColor: (_masturbation_screen_controller.method_list[index] == 'Hand'
+                                                                                        //     ? Colors.red
+                                                                                        //     : (_masturbation_screen_controller.method_list[index] == 'Dildo'
+                                                                                        //         ? Colors.blue
+                                                                                        //         : (_masturbation_screen_controller.method_list[index] == 'Sex'
+                                                                                        //             ? Colors.green
+                                                                                        //             // : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
+                                                                                        //             : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : list[random.nextInt(list.length)])))),
+                                                                                        family: 'PM'),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Expanded(
+                                                                                // flex: 2,
+                                                                                  child: GestureDetector(
+                                                                                    onTap: (){
+                                                                                      methodPopUp(
+                                                                                          context:
+                                                                                          context,
+                                                                                          method_old: _masturbation_screen_controller
+                                                                                              .method_list[
+                                                                                          index]
+                                                                                              .method_name!,
+                                                                                          method_id: _masturbation_screen_controller
+                                                                                              .method_list[
+                                                                                          index]
+                                                                                              .method_id!);
+                                                                                    },
+                                                                                    child: Container(
+                                                                                      margin: EdgeInsets.only(left: 20),
+                                                                                      alignment: Alignment.centerLeft,
+                                                                                      child: Icon(
+                                                                                        Icons.delete,
+                                                                                        size: 20,
+                                                                                        color: ColorUtils.primary_gold,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ))
+                                                                            ],
+                                                                          )
+                                                                        : Container(
+                                                                      // color: Colors.white,
+                                                                      alignment: Alignment.center,
+                                                                      child: Text(
+                                                                        _masturbation_screen_controller.method_list[index].method_name!,
+                                                                        style: FontStyleUtility.h15(
+                                                                            fontColor: HexColor(_masturbation_screen_controller.method_list[index].color!),
+                                                                            // fontColor: (_masturbation_screen_controller.method_list[index] == 'Hand'
+                                                                            //     ? Colors.red
+                                                                            //     : (_masturbation_screen_controller.method_list[index] == 'Dildo'
+                                                                            //         ? Colors.blue
+                                                                            //         : (_masturbation_screen_controller.method_list[index] == 'Sex'
+                                                                            //             ? Colors.green
+                                                                            //             // : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
+                                                                            //             : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : list[random.nextInt(list.length)])))),
+                                                                            family: 'PM'),
+                                                                      ),
+                                                                    )),
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      margin: EdgeInsets.only(
+                                                          bottom: 10, top: 10),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          addmethod_popup(
+                                                              context);
+                                                        },
+                                                        child: Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  border:
+                                                                      Border(
+                                                            right: BorderSide(
+                                                                color: Colors
+                                                                    .black,
+                                                                width: 1),
+                                                          )),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        4.5),
+                                                            child: Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(500),
+                                                                      gradient: LinearGradient(
+                                                                        begin: Alignment
+                                                                            .centerLeft,
+                                                                        end: Alignment
+                                                                            .centerRight,
+                                                                        // stops: [0.1, 0.5, 0.7, 0.9],
+                                                                        colors: [
+                                                                          HexColor("#020204")
+                                                                              .withOpacity(1),
+                                                                          HexColor("#36393E")
+                                                                              .withOpacity(1),
+                                                                        ],
+                                                                      ),
+                                                                      boxShadow: [
+                                                                    BoxShadow(
+                                                                        color: HexColor(
+                                                                            '#04060F'),
+                                                                        offset: Offset(
+                                                                            3,
+                                                                            3),
+                                                                        blurRadius:
+                                                                            10)
+                                                                  ]),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        6),
+                                                                child:
+                                                                    Image.asset(
+                                                                  AssetUtils
+                                                                      .plus_big,
+                                                                  height: 30,
+                                                                  width: 20,
+                                                                  color: HexColor(
+                                                                      '#606060'),
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: Container(
-                                                margin:
-                                                    EdgeInsets.only(right: 0),
-                                                alignment: Alignment.topRight,
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
                                                 child: Container(
-                                                    decoration: BoxDecoration(
-                                                        // color: Colors.black.withOpacity(0.65),
-                                                        gradient:
-                                                            LinearGradient(
-                                                          begin: Alignment
-                                                              .centerLeft,
-                                                          end: Alignment
-                                                              .centerRight,
-                                                          // stops: [0.1, 0.5, 0.7, 0.9],
-                                                          colors: [
-                                                            HexColor("#36393E")
-                                                                .withOpacity(1),
-                                                            HexColor("#020204")
-                                                                .withOpacity(1),
+                                                  margin:
+                                                      EdgeInsets.only(right: 0),
+                                                  alignment: Alignment.topRight,
+                                                  child: Container(
+                                                      decoration: BoxDecoration(
+                                                          // color: Colors.black.withOpacity(0.65),
+                                                          gradient:
+                                                              LinearGradient(
+                                                            begin: Alignment
+                                                                .centerLeft,
+                                                            end: Alignment
+                                                                .centerRight,
+                                                            // stops: [0.1, 0.5, 0.7, 0.9],
+                                                            colors: [
+                                                              HexColor(
+                                                                      "#36393E")
+                                                                  .withOpacity(
+                                                                      1),
+                                                              HexColor(
+                                                                      "#020204")
+                                                                  .withOpacity(
+                                                                      1),
+                                                            ],
+                                                          ),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                                color: HexColor(
+                                                                    '#04060F'),
+                                                                offset: Offset(
+                                                                    0, 3),
+                                                                blurRadius: 5)
                                                           ],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20)),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(4.0),
+                                                        child: Icon(
+                                                          Icons.cancel_outlined,
+                                                          size: 25,
+                                                          color: ColorUtils
+                                                              .primary_grey,
                                                         ),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                              color: HexColor(
-                                                                  '#04060F'),
-                                                              offset:
-                                                                  Offset(0, 3),
-                                                              blurRadius: 5)
-                                                        ],
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20)),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              4.0),
-                                                      child: Icon(
-                                                        Icons.cancel_outlined,
-                                                        size: 25,
-                                                        color: ColorUtils
-                                                            .primary_grey,
-                                                      ),
-                                                    )),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ));
-                              },
-                            );
-                          }
-                        },
-                        child: Container(
-                          height: 50,
-                          margin: EdgeInsets.symmetric(horizontal: 15),
-                          // height: 45,
-                          // width:(width ?? 300) ,
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.65),
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                // stops: [0.1, 0.5, 0.7, 0.9],
-                                colors: [
-                                  HexColor("#020204").withOpacity(0.65),
-                                  HexColor("#151619").withOpacity(0.65),
-                                  HexColor("#36393E").withOpacity(0.65),
-                                ],
-                              ),
-                              borderRadius: BorderRadius.circular(10)),
+                                                      )),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ));
+                                },
+                              );
+                            }
+                          },
                           child: Container(
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.symmetric(
-                                vertical: 12,
-                              ),
-                              child: Text(
-                                (method_selected.isNotEmpty
-                                    ? method_selected
-                                    : "Select Method"),
-                                style: FontStyleUtility.h16(
-                                    fontColor: ColorUtils.primary_metal,
-                                    family: 'PM'),
-                              )),
+                            height: 50,
+                            margin: EdgeInsets.symmetric(horizontal: 15),
+                            // height: 45,
+                            // width:(width ?? 300) ,
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.65),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  // stops: [0.1, 0.5, 0.7, 0.9],
+                                  colors: [
+                                    HexColor("#020204").withOpacity(0.65),
+                                    HexColor("#151619").withOpacity(0.65),
+                                    HexColor("#36393E").withOpacity(0.65),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Container(
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
+                                child: Text(
+                                  (method_selected.isNotEmpty
+                                      ? method_selected
+                                      : "Select Method"),
+                                  style: FontStyleUtility.h16(
+                                      fontColor: ColorUtils.primary_metal,
+                                      family: 'PM'),
+                                )),
+                          ),
                         ),
-                      ),
-                      // common_button_black(
-                      //   // height_: 75,
-                      //   onTap: () {
-                      //     print('object');
-                      //     showDialog(
-                      //       context: context,
-                      //       builder: (BuildContext context) {
-                      //         double width = MediaQuery.of(context).size.width;
-                      //         double height = MediaQuery.of(context).size.height;
-                      //         return BackdropFilter(
-                      //           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      //           child: AlertDialog(
-                      //               backgroundColor: Colors.transparent,
-                      //               contentPadding: EdgeInsets.zero,
-                      //               elevation: 0.0,
-                      //               // title: Center(child: Text("Evaluation our APP")),
-                      //               content: Column(
-                      //                 mainAxisAlignment: MainAxisAlignment.center,
-                      //                 children: [
-                      //                   Container(
-                      //                     margin: EdgeInsets.symmetric(
-                      //                         horizontal: 10, vertical: 0),
-                      //                     // height: 122,
-                      //                     // width: 133,
-                      //                     // padding: const EdgeInsets.all(8.0),
-                      //                     decoration: BoxDecoration(
-                      //                         color: Colors.black,
-                      //                         border: Border.all(
-                      //                             color: ColorUtils.primary_gold,
-                      //                             width: 1),
-                      //                         borderRadius: BorderRadius.all(
-                      //                             Radius.circular(10.0))),
-                      //                     alignment: Alignment.center,
-                      //                     child: Stack(
-                      //                       children: [
-                      //                         Align(
-                      //                           alignment: Alignment.center,
-                      //                           child: ListView.builder(
-                      //                             padding: EdgeInsets.zero,
-                      //                             itemCount: _masturbation_screen_controller.method_list.length,
-                      //                             shrinkWrap: true,
-                      //                             itemBuilder: (BuildContext context,
-                      //                                 int index) {
-                      //                               return Column(
-                      //                                 mainAxisSize: MainAxisSize.min,
-                      //                                 children: [
-                      //                                   SizedBox(
-                      //                                     height: 5,
-                      //                                   ),
-                      //                                   GestureDetector(
-                      //                                     onTap: () {
-                      //                                       setState(() {
-                      //                                         method_selected =
-                      //                                         _masturbation_screen_controller.method_list[index];
-                      //                                         print(
-                      //                                             "method_selected $method_selected");
-                      //                                       });
-                      //                                       Navigator.pop(context);
-                      //                                     },
-                      //                                     child: Container(
-                      //                                       alignment: Alignment.center,
-                      //                                       child: Text(
-                      //                                         _masturbation_screen_controller.method_list[index],
-                      //                                         style: FontStyleUtility.h16(
-                      //                                             fontColor: ColorUtils
-                      //                                                 .primary_gold,
-                      //                                             family: 'PM'),
-                      //                                       ),
-                      //                                     ),
-                      //                                   ),
-                      //                                   SizedBox(
-                      //                                     height: 5,
-                      //                                   ),
-                      //                                 ],
-                      //                               );
-                      //                             },
-                      //                           ),
-                      //                         ),
-                      //                         Align(
-                      //                           alignment: Alignment.topRight,
-                      //                           child: IconButton(
-                      //                             onPressed: () {
-                      //                               Navigator.pop(context);
-                      //                             },
-                      //                             icon: Icon(
-                      //                               Icons.clear,
-                      //                               color: ColorUtils.primary_gold,
-                      //                             ),
-                      //                           ),
-                      //                         )
-                      //                       ],
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               )),
-                      //         );
-                      //       },
-                      //     );
-                      //     // Get.to(DashboardScreen());
-                      //   },
-                      //   title_text: (method_selected.isNotEmpty
-                      //       ? method_selected
-                      //       : "Select Method"),
-                      // ),
-                      const SizedBox(
-                        height: 28,
-                      ),
-                      // Container(
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //     children: [
-                      //       GestureDetector(
-                      //         onTap: () async {
-                      //           await stopWatch();
-                      //           method_time.add(ListMethodClass(
-                      //               method_name: method_selected,
-                      //               total_time: elapsedTime));
-                      //           setState(() {
-                      //             elapsedTime = '00:00:00';
-                      //             // paused_time.clear();
-                      //           });
-                      //           print('method_time : ${method_time[0].total_time}');
-                      //           print(
-                      //               'method_name : ${method_time[0].method_name}');
-                      //         },
-                      //         child: Container(
-                      //           height: 87,
-                      //           width: 87,
-                      //           decoration: BoxDecoration(
-                      //               color: Colors.black,
-                      //               border: Border.all(
-                      //                   color: ColorUtils.primary_gold, width: 1),
-                      //               borderRadius: BorderRadius.circular(100)),
-                      //           child: Container(
-                      //             alignment: Alignment.center,
-                      //             child: Text(
-                      //               'Finish',
-                      //               style: FontStyleUtility.h16(
-                      //                   fontColor: ColorUtils.primary_gold,
-                      //                   family: 'PR'),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       GestureDetector(
-                      //         onTap: () {
-                      //           startOrStop();
-                      //         },
-                      //         child: Container(
-                      //           height: 87,
-                      //           width: 87,
-                      //           decoration: BoxDecoration(
-                      //               color: ColorUtils.primary_gold,
-                      //               border: Border.all(
-                      //                   color: ColorUtils.primary_gold, width: 1),
-                      //               borderRadius: BorderRadius.circular(100)),
-                      //           child: Container(
-                      //             alignment: Alignment.center,
-                      //             child: Text(
-                      //               (startStop ? 'Start' : 'Pause'),
-                      //               style: FontStyleUtility.h16(
-                      //                   fontColor: Colors.black, family: 'PR'),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
+                        // common_button_black(
+                        //   // height_: 75,
+                        //   onTap: () {
+                        //     print('object');
+                        //     showDialog(
+                        //       context: context,
+                        //       builder: (BuildContext context) {
+                        //         double width = MediaQuery.of(context).size.width;
+                        //         double height = MediaQuery.of(context).size.height;
+                        //         return BackdropFilter(
+                        //           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        //           child: AlertDialog(
+                        //               backgroundColor: Colors.transparent,
+                        //               contentPadding: EdgeInsets.zero,
+                        //               elevation: 0.0,
+                        //               // title: Center(child: Text("Evaluation our APP")),
+                        //               content: Column(
+                        //                 mainAxisAlignment: MainAxisAlignment.center,
+                        //                 children: [
+                        //                   Container(
+                        //                     margin: EdgeInsets.symmetric(
+                        //                         horizontal: 10, vertical: 0),
+                        //                     // height: 122,
+                        //                     // width: 133,
+                        //                     // padding: const EdgeInsets.all(8.0),
+                        //                     decoration: BoxDecoration(
+                        //                         color: Colors.black,
+                        //                         border: Border.all(
+                        //                             color: ColorUtils.primary_gold,
+                        //                             width: 1),
+                        //                         borderRadius: BorderRadius.all(
+                        //                             Radius.circular(10.0))),
+                        //                     alignment: Alignment.center,
+                        //                     child: Stack(
+                        //                       children: [
+                        //                         Align(
+                        //                           alignment: Alignment.center,
+                        //                           child: ListView.builder(
+                        //                             padding: EdgeInsets.zero,
+                        //                             itemCount: _masturbation_screen_controller.method_list.length,
+                        //                             shrinkWrap: true,
+                        //                             itemBuilder: (BuildContext context,
+                        //                                 int index) {
+                        //                               return Column(
+                        //                                 mainAxisSize: MainAxisSize.min,
+                        //                                 children: [
+                        //                                   SizedBox(
+                        //                                     height: 5,
+                        //                                   ),
+                        //                                   GestureDetector(
+                        //                                     onTap: () {
+                        //                                       setState(() {
+                        //                                         method_selected =
+                        //                                         _masturbation_screen_controller.method_list[index];
+                        //                                         print(
+                        //                                             "method_selected $method_selected");
+                        //                                       });
+                        //                                       Navigator.pop(context);
+                        //                                     },
+                        //                                     child: Container(
+                        //                                       alignment: Alignment.center,
+                        //                                       child: Text(
+                        //                                         _masturbation_screen_controller.method_list[index],
+                        //                                         style: FontStyleUtility.h16(
+                        //                                             fontColor: ColorUtils
+                        //                                                 .primary_gold,
+                        //                                             family: 'PM'),
+                        //                                       ),
+                        //                                     ),
+                        //                                   ),
+                        //                                   SizedBox(
+                        //                                     height: 5,
+                        //                                   ),
+                        //                                 ],
+                        //                               );
+                        //                             },
+                        //                           ),
+                        //                         ),
+                        //                         Align(
+                        //                           alignment: Alignment.topRight,
+                        //                           child: IconButton(
+                        //                             onPressed: () {
+                        //                               Navigator.pop(context);
+                        //                             },
+                        //                             icon: Icon(
+                        //                               Icons.clear,
+                        //                               color: ColorUtils.primary_gold,
+                        //                             ),
+                        //                           ),
+                        //                         )
+                        //                       ],
+                        //                     ),
+                        //                   ),
+                        //                 ],
+                        //               )),
+                        //         );
+                        //       },
+                        //     );
+                        //     // Get.to(DashboardScreen());
+                        //   },
+                        //   title_text: (method_selected.isNotEmpty
+                        //       ? method_selected
+                        //       : "Select Method"),
+                        // ),
+                        const SizedBox(
+                          height: 28,
+                        ),
+                        // Container(
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //     children: [
+                        //       GestureDetector(
+                        //         onTap: () async {
+                        //           await stopWatch();
+                        //           method_time.add(ListMethodClass(
+                        //               method_name: method_selected,
+                        //               total_time: elapsedTime));
+                        //           setState(() {
+                        //             elapsedTime = '00:00:00';
+                        //             // paused_time.clear();
+                        //           });
+                        //           print('method_time : ${method_time[0].total_time}');
+                        //           print(
+                        //               'method_name : ${method_time[0].method_name}');
+                        //         },
+                        //         child: Container(
+                        //           height: 87,
+                        //           width: 87,
+                        //           decoration: BoxDecoration(
+                        //               color: Colors.black,
+                        //               border: Border.all(
+                        //                   color: ColorUtils.primary_gold, width: 1),
+                        //               borderRadius: BorderRadius.circular(100)),
+                        //           child: Container(
+                        //             alignment: Alignment.center,
+                        //             child: Text(
+                        //               'Finish',
+                        //               style: FontStyleUtility.h16(
+                        //                   fontColor: ColorUtils.primary_gold,
+                        //                   family: 'PR'),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //       GestureDetector(
+                        //         onTap: () {
+                        //           startOrStop();
+                        //         },
+                        //         child: Container(
+                        //           height: 87,
+                        //           width: 87,
+                        //           decoration: BoxDecoration(
+                        //               color: ColorUtils.primary_gold,
+                        //               border: Border.all(
+                        //                   color: ColorUtils.primary_gold, width: 1),
+                        //               borderRadius: BorderRadius.circular(100)),
+                        //           child: Container(
+                        //             alignment: Alignment.center,
+                        //             child: Text(
+                        //               (startStop ? 'Start' : 'Pause'),
+                        //               style: FontStyleUtility.h16(
+                        //                   fontColor: Colors.black, family: 'PR'),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: 20,
+                        // ),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              if (started == false || elapsedTime == "30:00") {
-                                if (paused) {
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                if (started == false ||
+                                    elapsedTime == "30:00") {
+                                  // if (paused) {
+
+                                  // if(paused_time.length == 4){
                                   await _kegel_controller
                                       .update_notified_status(
                                           context: context, status: 'false');
                                   await stopWatch_finish();
                                   await changeIndex();
+                                  print(
+                                      "paused_time.length}} ${paused_time.length}");
+                                  if (paused_time.length < 4) {
+                                    print(
+                                        "Remember you need to pause during masturbation 4 times per session");
+                                    showGeneralDialog(
+                                      context: context,
+                                      pageBuilder: (ctx, a1, a2) {
+                                        return Container();
+                                      },
+                                      transitionBuilder: (ctx, a1, a2, child) {
+                                        var curve = Curves.easeInOut
+                                            .transform(a1.value);
+                                        return Transform.scale(
+                                          scale: curve,
+                                          child: AlertDialog(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              contentPadding: EdgeInsets.zero,
+                                              elevation: 0.0,
+                                              // title: Center(child: Text("Evaluation our APP")),
+                                              content: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10.0),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color: ColorUtils
+                                                                  .primary_gold,
+                                                              width: 1),
+                                                          // color: Colors.black.withOpacity(0.65),
+                                                          gradient:
+                                                              LinearGradient(
+                                                            begin: Alignment
+                                                                .topLeft,
+                                                            end: Alignment
+                                                                .bottomRight,
+                                                            // stops: [0.1, 0.5, 0.7, 0.9],
+                                                            colors: [
+                                                              // HexColor("#000000").withOpacity(1),
+                                                              // HexColor("#000000").withOpacity(1),
+                                                              HexColor(
+                                                                      "#ce942f")
+                                                                  .withOpacity(
+                                                                      1),
+
+                                                              HexColor(
+                                                                      "#ecdc8f")
+                                                                  .withOpacity(
+                                                                      1),
+                                                              HexColor(
+                                                                      "#e5cc79")
+                                                                  .withOpacity(
+                                                                      1),
+                                                              HexColor(
+                                                                      "#ce942f")
+                                                                  .withOpacity(
+                                                                      1),
+                                                              // HexColor("#37393D").withOpacity(1),
+                                                              // ColorUtils.primary_gold.withOpacity(1),
+
+                                                              // HexColor("#000000").withOpacity(1),
+                                                              // ColorUtils.primary_gold.withOpacity(1),
+                                                            ],
+                                                          ),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                                color: HexColor(
+                                                                    '#04060F'),
+                                                                offset: Offset(
+                                                                    10, 10),
+                                                                blurRadius: 10)
+                                                          ],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15)),
+                                                      child: Align(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Container(
+                                                              margin: EdgeInsets
+                                                                  .all(10),
+                                                              // width: 300,
+                                                              child: Column(
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                        vertical:
+                                                                            8.0,
+                                                                        horizontal:
+                                                                            5),
+                                                                    child: Text(
+                                                                      "Remember you need to pause during masturbation 4 times per session",
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: FontStyleUtility.h16(
+                                                                          fontColor: Colors
+                                                                              .black,
+                                                                          family:
+                                                                              'PM'),
+                                                                    ),
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      GestureDetector(
+                                                                        onTap:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        },
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              MediaQuery.of(context).size.width / 5,
+                                                                          margin:
+                                                                              EdgeInsets.all(10),
+                                                                          // width: 300,
+                                                                          decoration: BoxDecoration(
+                                                                              // color: Colors.black.withOpacity(0.65),
+                                                                              gradient: LinearGradient(
+                                                                                begin: Alignment.centerLeft,
+                                                                                end: Alignment.centerRight,
+                                                                                // stops: [0.1, 0.5, 0.7, 0.9],
+                                                                                colors: [
+                                                                                  HexColor("#36393E").withOpacity(1),
+                                                                                  HexColor("#020204").withOpacity(1),
+                                                                                ],
+                                                                              ),
+                                                                              borderRadius: BorderRadius.circular(10)),
+
+                                                                          child:
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15),
+                                                                            child:
+                                                                                Text(
+                                                                              'Ok',
+                                                                              textAlign: TextAlign.center,
+                                                                              style: FontStyleUtility.h16(fontColor: ColorUtils.primary_grey, family: 'PM'),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )),
+                                        );
+                                      },
+                                      transitionDuration:
+                                          const Duration(milliseconds: 300),
+                                    );
+                                    // _scaleDialog(
+                                    //     context: context,
+                                    //     message:
+                                    //     "Remember you need to pause during masturbation 4 times per session");
+                                  }
                                   // setState(() {
                                   //   method_color = (method_selected == 'Hand'
                                   //       ? Colors.red
@@ -2457,644 +3256,525 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   methoddd2.clear();
                                   methoddd.clear();
 
+                                  if (four_min) {
+                                    _scaleDialog(
+                                        context: context,
+                                        message:
+                                            "Congratulations! You lasted over 3 minutes! Start saying to goodbye to Premature ejaculation!");
+                                  } else if (ten_min) {
+                                    _scaleDialog(
+                                        context: context,
+                                        message:
+                                            "Congratulations! You are halfway there to the 20-minute mark!");
+                                  }
+
                                   ///
                                   await Masturbation_LifeTime_Data_get_API();
                                   await Masturbation_Daily_Data_get_API();
                                   await MasturbationWeekly_Data_get_API();
                                   // print('method_time : ${method_time[0].total_time}');
                                   // print('method_name : ${method_time[0].method_name}');
-                                }
-                              }
-                            },
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              // width: MediaQuery.of(context).size.width / 3,
-                              margin: EdgeInsets.symmetric(horizontal: 15),
-                              // height: 45,
-                              // width:(width ?? 300),
-                              decoration: (started
-                                  ? BoxDecoration(
-                                      border: Border.all(
-                                          color: ColorUtils.primary_gold,
-                                          width: 1),
-                                      borderRadius: BorderRadius.circular(100))
-                                  : (paused
-                                      ? BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment.centerLeft,
-                                            end: Alignment.centerRight,
-                                            // stops: [0.1, 0.5, 0.7, 0.9],
-                                            colors: [
-                                              HexColor("#ECDD8F")
-                                                  .withOpacity(0.90),
-                                              HexColor("#E5CC79")
-                                                  .withOpacity(0.90),
-                                              HexColor("#CE952F")
-                                                  .withOpacity(0.90),
-                                            ],
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(100))
-                                      : BoxDecoration(
-                                          border: Border.all(
-                                              color: ColorUtils.primary_gold,
-                                              width: 1),
-                                          borderRadius:
-                                              BorderRadius.circular(100)))),
-                              child: Container(
-                                  alignment: Alignment.center,
-                                  margin: EdgeInsets.symmetric(
-                                    vertical: 12,
-                                  ),
-                                  child: Text(
-                                    ('Finish'),
-                                    style: FontStyleUtility.h16(
-                                        fontColor: (started
-                                            ? Colors.white
-                                            : (paused
-                                                ? Colors.black
-                                                : Colors.white)),
-                                        family: 'PM'),
-                                  )),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              if (paused_time.length >= 4) {
-                                await _kegel_controller.update_notified_status(
-                                    context: context, status: 'true');
-                                startWatch();
-                                CommonWidget().showToaster(
-                                    msg: "Only 4 pauses are available");
-                                // start_animation();
-                              } else {
-                                if (method_selected.isNotEmpty) {
-                                  // if (started) {
-                                  //   // start_animation();
-                                  //   startWatch();
-                                  // } else {
-                                  //   setState(() {
-                                  //     startStop = true;
-                                  //     started = false;
-                                  //     watch.stop();
-                                  //     setTime();
-                                  //   });
                                   // }
-                                  if (startStop) {
-                                    await _kegel_controller
-                                        .update_notified_status(
-                                            context: context, status: 'true');
-                                    startWatch();
-                                    start_animation();
-                                  } else {
-                                    await _kegel_controller
-                                        .update_notified_status(
-                                            context: context, status: 'false');
-                                    stopWatch();
-                                  }
-                                } else {
-                                  Fluttertoast.showToast(
-                                    msg: "Please select method first",
-                                    textColor: Colors.white,
-                                    backgroundColor: Colors.red,
-                                    toastLength: Toast.LENGTH_LONG,
-                                    gravity: ToastGravity.BOTTOM,
-                                  );
-                                }
-                              }
-                            },
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              // width: MediaQuery.of(context).size.width / 3,
-                              margin: EdgeInsets.symmetric(horizontal: 15),
-                              // height: 45,
-                              // width:(width ?? 300) ,
-                              decoration: BoxDecoration(
-                                  // color: ColorUtils.primary_gold,
-                                  gradient: LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    // stops: [0.1, 0.5, 0.7, 0.9],
-                                    colors: [
-                                      HexColor("#ECDD8F").withOpacity(0.6),
-                                      HexColor("#E5CC79").withOpacity(0.60),
-                                      HexColor("#CE952F").withOpacity(0.60),
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(100)),
-                              child: Container(
-                                  alignment: Alignment.center,
-                                  margin: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                  ),
-                                  child: Text(
-                                    (startStop
-                                        ? (paused ? 'Resume' : 'Start')
-                                        : 'Pause'),
-                                    style: FontStyleUtility.h16(
-                                        fontColor: Colors.black, family: 'PM'),
-                                  )),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // const SizedBox(
-                      //   height: 28,
-                      // ),
-                      // GestureDetector(
-                      //   onTap: () async {
-                      //     if (method_selected.isNotEmpty) {
-                      //       if (started) {
-                      //         start_animation();
-                      //         startWatch();
-                      //       } else {
-                      //         await stopWatch_finish();
-                      //         method_time.add(ListMethodClass(
-                      //             method_name: method_selected,
-                      //             pauses: paused_time.length.toString(),
-                      //             total_time: elapsedTime));
-                      //         setState(() {
-                      //           elapsedTime = '00:00';
-                      //           percent = 0.0;
-                      //           method_selected = '';
-                      //           watch.reset();
-                      //           paused_time.clear();
-                      //         });
-                      //         print(method_time.length);
-                      //
-                      //         await _masturbation_screen_controller
-                      //             .m_method_post_API(
-                      //                 context: context, method_data: method_time);
-                      //         // print('method_time : ${method_time[0].total_time}');
-                      //         // print('method_name : ${method_time[0].method_name}');
-                      //       }
-                      //     } else {
-                      //       await Fluttertoast.showToast(
-                      //         msg: "Please select method first",
-                      //         textColor: Colors.white,
-                      //         backgroundColor: Colors.red,
-                      //         toastLength: Toast.LENGTH_LONG,
-                      //         gravity: ToastGravity.BOTTOM,
-                      //       );
-                      //     }
-                      //   },
-                      //   child: Container(
-                      //     height: 65,
-                      //     margin: EdgeInsets.symmetric(horizontal: 15),
-                      //     // height: 45,
-                      //     // width:(width ?? 300) ,
-                      //     decoration: BoxDecoration(
-                      //         color: ColorUtils.primary_gold,
-                      //         gradient: LinearGradient(
-                      //           begin: Alignment.centerLeft,
-                      //           end: Alignment.centerRight,
-                      //           // stops: [0.1, 0.5, 0.7, 0.9],
-                      //           colors: [
-                      //             HexColor("#ECDD8F").withOpacity(0.90),
-                      //             HexColor("#E5CC79").withOpacity(0.90),
-                      //             HexColor("#CE952F").withOpacity(0.90),
-                      //           ],
-                      //         ),
-                      //         borderRadius: BorderRadius.circular(15)),
-                      //     child: Container(
-                      //         alignment: Alignment.center,
-                      //         margin: EdgeInsets.symmetric(
-                      //           vertical: 12,
-                      //         ),
-                      //         child: Text(
-                      //           (started ? 'Start' : 'Finish'),
-                      //           style: FontStyleUtility.h16(
-                      //               fontColor: Colors.black, family: 'PM'),
-                      //         )),
-                      //   ),
-                      // ),
-                      // GestureDetector(
-                      //   onTap: () async {
-                      //     await _masturbation_screen_controller
-                      //         .m_method_post_API(
-                      //             context: context, method_data: method_time);
-                      //   },
-                      //   child: Container(
-                      //     height: 65,
-                      //     margin: EdgeInsets.symmetric(horizontal: 15),
-                      //     // height: 45,
-                      //     // width:(width ?? 300) ,
-                      //     decoration: BoxDecoration(
-                      //         color: ColorUtils.primary_gold,
-                      //         gradient: LinearGradient(
-                      //           begin: Alignment.centerLeft,
-                      //           end: Alignment.centerRight,
-                      //           // stops: [0.1, 0.5, 0.7, 0.9],
-                      //           colors: [
-                      //             HexColor("#ECDD8F").withOpacity(0.90),
-                      //             HexColor("#E5CC79").withOpacity(0.90),
-                      //             HexColor("#CE952F").withOpacity(0.90),
-                      //           ],
-                      //         ),
-                      //         borderRadius: BorderRadius.circular(15)),
-                      //     child: Container(
-                      //         alignment: Alignment.center,
-                      //         margin: EdgeInsets.symmetric(
-                      //           vertical: 12,
-                      //         ),
-                      //         child: Text(
-                      //           'Add',
-                      //           style: FontStyleUtility.h16(
-                      //               fontColor: Colors.black, family: 'PM'),
-                      //         )),
-                      //   ),
-                      // ),
-                      SizedBox(
-                        height: 21,
-                      ),
+                                  // else{
+                                  //   _scaleDialog(
+                                  //       context: context,
+                                  //       message:
+                                  //       "Remember you need to pause during masturbation 4 times per session");
+                                  // }
 
-                      ///
-                      Container(
-                          child: (paused_time.isNotEmpty
-                              ? Column(
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          bottom: 0,
-                                          top: 0,
-                                          left: 15,
-                                          right: 15),
-                                      decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.65),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.centerLeft,
-                                            end: Alignment.centerRight,
-                                            // stops: [0.1, 0.5, 0.7, 0.9],
-                                            colors: [
-                                              HexColor("#020204")
-                                                  .withOpacity(0.63),
-                                              // HexColor("#151619").withOpacity(0.63),
-                                              HexColor("#36393E")
-                                                  .withOpacity(0.63),
-                                            ],
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 25, right: 25, top: 20),
-                                        child: ListView.builder(
-                                          itemCount: paused_time.length,
-                                          shrinkWrap: true,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return Container(
-                                              margin: EdgeInsets.only(
-                                                bottom: 20,
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "Pause ${index + 1}",
-                                                    style: FontStyleUtility.h15(
-                                                        fontColor: ColorUtils
-                                                            .primary_grey,
-                                                        family: 'PR'),
-                                                  ),
-                                                  Text(
-                                                    paused_time[index],
-                                                    style: FontStyleUtility.h15(
-                                                        fontColor:
-                                                            HexColor('#6E6E6E'),
-                                                        family: 'PR'),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
+                                }
+                                // }
+                              },
+                              child: Container(
+                                height: 100,
+                                width: 100,
+                                // width: MediaQuery.of(context).size.width / 3,
+                                margin: EdgeInsets.symmetric(horizontal: 15),
+                                // height: 45,
+                                // width:(width ?? 300),
+                                decoration: (started
+                                    ? BoxDecoration(
+                                        border: Border.all(
+                                            color: ColorUtils.primary_gold,
+                                            width: 1),
+                                        borderRadius:
+                                            BorderRadius.circular(100))
+                                    // : (paused
+                                    //     ? BoxDecoration(
+                                    //         gradient: LinearGradient(
+                                    //           begin: Alignment.centerLeft,
+                                    //           end: Alignment.centerRight,
+                                    //           // stops: [0.1, 0.5, 0.7, 0.9],
+                                    //           colors: [
+                                    //             HexColor("#ECDD8F")
+                                    //                 .withOpacity(0.90),
+                                    //             HexColor("#E5CC79")
+                                    //                 .withOpacity(0.90),
+                                    //             HexColor("#CE952F")
+                                    //                 .withOpacity(0.90),
+                                    //           ],
+                                    //         ),
+                                    //         borderRadius:
+                                    //             BorderRadius.circular(100))
+                                    : BoxDecoration(
+                                        border: Border.all(
+                                            color: ColorUtils.primary_gold,
+                                            width: 1),
+                                        borderRadius:
+                                            BorderRadius.circular(100))),
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    margin: EdgeInsets.symmetric(
+                                      vertical: 12,
                                     ),
-                                  ],
-                                )
-                              : SizedBox.shrink())),
-                      SizedBox(
-                        height: 21,
-                      ),
-                      (method_time.isNotEmpty
-                          ? Container(
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    // stops: [0.1, 0.5, 0.7, 0.9],
-                                    colors: [
-                                      HexColor("#36393E").withOpacity(0.45),
-                                      HexColor("#020204").withOpacity(0.45),
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 30, top: 8.5),
-                                    alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'Progress Tracker',
-                                      style: FontStyleUtility.h14(
-                                          fontColor: ColorUtils.primary_gold,
-                                          family: 'PMB'),
+                                      ('Finish'),
+                                      style: FontStyleUtility.h16(
+                                          fontColor: (started
+                                              ? Colors.white
+                                              // : (paused
+                                              //     ? Colors.black
+                                              : Colors.white),
+                                          family: 'PM'),
+                                    )),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                // _scaleDialog(
+                                //     context: context,
+                                //     message:
+                                //     "Congratulations! You lasted over 3 minutes! Start saying to goodbye to Premature ejaculation!”");
+
+                                ///
+                                if (paused_time.length >= 4) {
+                                  await _kegel_controller
+                                      .update_notified_status(
+                                          context: context, status: 'true');
+                                  startWatch();
+                                  CommonWidget().showToaster(
+                                      msg: "Only 4 pauses are available");
+                                  // start_animation();
+                                } else {
+                                  if (method_selected.isNotEmpty) {
+                                    // if (started) {
+                                    //   // start_animation();
+                                    //   startWatch();
+                                    // } else {
+                                    //   setState(() {
+                                    //     startStop = true;
+                                    //     started = false;
+                                    //     watch.stop();
+                                    //     setTime();
+                                    //   });
+                                    // }
+                                    if (startStop) {
+                                      if (thirty_min) {
+                                        GreetingsPopUpButton(
+                                          context: context,
+                                        );
+                                      } else {
+                                        await _kegel_controller
+                                            .update_notified_status(
+                                                context: context,
+                                                status: 'true');
+                                        startWatch();
+                                        watch2.stop();
+                                        watch2.reset();
+                                        start_animation();
+                                      }
+                                    } else {
+                                      await _kegel_controller
+                                          .update_notified_status(
+                                              context: context,
+                                              status: 'false');
+                                      stopWatch();
+                                      watch2.reset();
+                                      startWatch2();
+                                    }
+                                  } else {
+                                    Fluttertoast.showToast(
+                                      msg: "Please select method first",
+                                      textColor: Colors.white,
+                                      backgroundColor: Colors.red,
+                                      toastLength: Toast.LENGTH_LONG,
+                                      gravity: ToastGravity.BOTTOM,
+                                    );
+                                  }
+                                }
+
+                                ///
+                              },
+                              child: Container(
+                                height: 100,
+                                width: 100,
+                                // width: MediaQuery.of(context).size.width / 3,
+                                margin: EdgeInsets.symmetric(horizontal: 15),
+                                // height: 45,
+                                // width:(width ?? 300) ,
+                                decoration: (paused_time.length == 4
+                                    ? BoxDecoration(
+                                        border: Border.all(
+                                            color: ColorUtils.primary_gold,
+                                            width: 1),
+                                        borderRadius:
+                                            BorderRadius.circular(100))
+                                    : BoxDecoration(
+                                        // color: ColorUtils.primary_gold,
+                                        gradient: LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                          colors: [
+                                            HexColor("#ECDD8F")
+                                                .withOpacity(0.6),
+                                            HexColor("#E5CC79")
+                                                .withOpacity(0.60),
+                                            HexColor("#CE952F")
+                                                .withOpacity(0.60),
+                                          ],
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(100))),
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 12,
                                     ),
-                                  ),
-                                  // SizedBox(
-                                  //   height: 29,
-                                  // ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                          right: 15,
-                                          left: 15,
-                                          top: 15,
-                                          bottom: 20),
-                                      decoration: BoxDecoration(
-                                          // color: Colors.black.withOpacity(0.65),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.centerLeft,
-                                            end: Alignment.centerRight,
-                                            // stops: [0.1, 0.5, 0.7, 0.9],
-                                            colors: [
-                                              HexColor("#020204")
-                                                  .withOpacity(0.65),
-                                              HexColor("#36393E")
-                                                  .withOpacity(0.65),
-                                            ],
-                                          ),
-                                          // boxShadow: [
-                                          //   BoxShadow(
-                                          //       color: HexColor('#04060F'),
-                                          //       offset: Offset(10, 10),
-                                          //       blurRadius: 10)
-                                          // ],
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                            color: Colors.black,
-                                                            width: 1),
-                                                        bottom: BorderSide(
-                                                            color: Colors.black,
-                                                            width: 1),
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 12.0),
-                                                      child: Text(
-                                                        'Method Used',
-                                                        style: FontStyleUtility.h14(
-                                                            fontColor: ColorUtils
-                                                                .primary_grey,
-                                                            family: 'PR'),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                            color: Colors.black,
-                                                            width: 1),
-                                                        bottom: BorderSide(
-                                                            color: Colors.black,
-                                                            width: 1),
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 12.0),
-                                                      child: Text(
-                                                        'Pause',
-                                                        style: FontStyleUtility.h14(
-                                                            fontColor: ColorUtils
-                                                                .primary_grey,
-                                                            family: 'PR'),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        border: Border(
-                                                      bottom: BorderSide(
-                                                          color: Colors.black,
-                                                          width: 1),
-                                                    )),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 12.0),
-                                                      child: Text(
-                                                        'Current time',
-                                                        style: FontStyleUtility.h14(
-                                                            fontColor: ColorUtils
-                                                                .primary_grey,
-                                                            family: 'PR'),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
+                                    child: Text(
+                                      (startStop
+                                          ? (paused ? 'Resume' : 'Start')
+                                          : 'Pause'),
+                                      style: FontStyleUtility.h16(
+                                          fontColor: paused_time.length == 4
+                                              ? Colors.white
+                                              : Colors.black,
+                                          family: 'PM'),
+                                    )),
+                              ),
+                            ),
+                          ],
+                        ),
+                        // const SizedBox(
+                        //   height: 28,
+                        // ),
+                        // GestureDetector(
+                        //   onTap: () async {
+                        //     if (method_selected.isNotEmpty) {
+                        //       if (started) {
+                        //         start_animation();
+                        //         startWatch();
+                        //       } else {
+                        //         await stopWatch_finish();
+                        //         method_time.add(ListMethodClass(
+                        //             method_name: method_selected,
+                        //             pauses: paused_time.length.toString(),
+                        //             total_time: elapsedTime));
+                        //         setState(() {
+                        //           elapsedTime = '00:00';
+                        //           percent = 0.0;
+                        //           method_selected = '';
+                        //           watch.reset();
+                        //           paused_time.clear();
+                        //         });
+                        //         print(method_time.length);
+                        //
+                        //         await _masturbation_screen_controller
+                        //             .m_method_post_API(
+                        //                 context: context, method_data: method_time);
+                        //         // print('method_time : ${method_time[0].total_time}');
+                        //         // print('method_name : ${method_time[0].method_name}');
+                        //       }
+                        //     } else {
+                        //       await Fluttertoast.showToast(
+                        //         msg: "Please select method first",
+                        //         textColor: Colors.white,
+                        //         backgroundColor: Colors.red,
+                        //         toastLength: Toast.LENGTH_LONG,
+                        //         gravity: ToastGravity.BOTTOM,
+                        //       );
+                        //     }
+                        //   },
+                        //   child: Container(
+                        //     height: 65,
+                        //     margin: EdgeInsets.symmetric(horizontal: 15),
+                        //     // height: 45,
+                        //     // width:(width ?? 300) ,
+                        //     decoration: BoxDecoration(
+                        //         color: ColorUtils.primary_gold,
+                        //         gradient: LinearGradient(
+                        //           begin: Alignment.centerLeft,
+                        //           end: Alignment.centerRight,
+                        //           // stops: [0.1, 0.5, 0.7, 0.9],
+                        //           colors: [
+                        //             HexColor("#ECDD8F").withOpacity(0.90),
+                        //             HexColor("#E5CC79").withOpacity(0.90),
+                        //             HexColor("#CE952F").withOpacity(0.90),
+                        //           ],
+                        //         ),
+                        //         borderRadius: BorderRadius.circular(15)),
+                        //     child: Container(
+                        //         alignment: Alignment.center,
+                        //         margin: EdgeInsets.symmetric(
+                        //           vertical: 12,
+                        //         ),
+                        //         child: Text(
+                        //           (started ? 'Start' : 'Finish'),
+                        //           style: FontStyleUtility.h16(
+                        //               fontColor: Colors.black, family: 'PM'),
+                        //         )),
+                        //   ),
+                        // ),
+                        // GestureDetector(
+                        //   onTap: () async {
+                        //     await _masturbation_screen_controller
+                        //         .m_method_post_API(
+                        //             context: context, method_data: method_time);
+                        //   },
+                        //   child: Container(
+                        //     height: 65,
+                        //     margin: EdgeInsets.symmetric(horizontal: 15),
+                        //     // height: 45,
+                        //     // width:(width ?? 300) ,
+                        //     decoration: BoxDecoration(
+                        //         color: ColorUtils.primary_gold,
+                        //         gradient: LinearGradient(
+                        //           begin: Alignment.centerLeft,
+                        //           end: Alignment.centerRight,
+                        //           // stops: [0.1, 0.5, 0.7, 0.9],
+                        //           colors: [
+                        //             HexColor("#ECDD8F").withOpacity(0.90),
+                        //             HexColor("#E5CC79").withOpacity(0.90),
+                        //             HexColor("#CE952F").withOpacity(0.90),
+                        //           ],
+                        //         ),
+                        //         borderRadius: BorderRadius.circular(15)),
+                        //     child: Container(
+                        //         alignment: Alignment.center,
+                        //         margin: EdgeInsets.symmetric(
+                        //           vertical: 12,
+                        //         ),
+                        //         child: Text(
+                        //           'Add',
+                        //           style: FontStyleUtility.h16(
+                        //               fontColor: Colors.black, family: 'PM'),
+                        //         )),
+                        //   ),
+                        // ),
+                        SizedBox(
+                          height: 21,
+                        ),
+
+                        ///
+                        Container(
+                            child: (paused_time.isNotEmpty
+                                ? Column(
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                            bottom: 0,
+                                            top: 0,
+                                            left: 15,
+                                            right: 15),
+                                        decoration: BoxDecoration(
+                                            color:
+                                                Colors.black.withOpacity(0.65),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.centerRight,
+                                              // stops: [0.1, 0.5, 0.7, 0.9],
+                                              colors: [
+                                                HexColor("#020204")
+                                                    .withOpacity(0.63),
+                                                // HexColor("#151619").withOpacity(0.63),
+                                                HexColor("#36393E")
+                                                    .withOpacity(0.63),
                                               ],
                                             ),
-                                          ),
-                                          ListView.builder(
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 25, right: 25, top: 20),
+                                          child: ListView.builder(
+                                            itemCount: paused_time.length,
                                             shrinkWrap: true,
-                                            itemCount: method_time.length,
                                             physics:
                                                 NeverScrollableScrollPhysics(),
-                                            padding: EdgeInsets.zero,
                                             itemBuilder: (BuildContext context,
                                                 int index) {
-                                              return GestureDetector(
-                                                onLongPress: () {
-                                                  print(
-                                                      "Method ID : ${method_time[index].id}");
-                                                  methodPopUp(
-                                                      context: context,
-                                                      method_old:
-                                                          method_time[index]
-                                                              .method_name!,
-                                                      method_id:
-                                                          method_time[index]
-                                                              .id!);
-                                                },
+                                              return Container(
+                                                margin: EdgeInsets.only(
+                                                  bottom: 20,
+                                                ),
                                                 child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Container(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                border: Border(
-                                                          right: BorderSide(
-                                                              color:
-                                                                  Colors.black,
-                                                              width: 1),
-                                                          bottom: BorderSide(
-                                                              color:
-                                                                  Colors.black,
-                                                              width: 1),
-                                                        )),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(4.5),
-                                                          child: Text(
-                                                            '${method_time[index].method_name}',
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: FontStyleUtility.h14(
-                                                                fontColor: HexColor(method_time[index].color!),
-                                                                // (method_time[index]
-                                                                //     .method_name ==!
-                                                                //     'Hand'
-                                                                //     ? Colors
-                                                                //     .red
-                                                                //     : (method_time[index]
-                                                                //     .method_name ==
-                                                                //     'Dildo'
-                                                                //     ? Colors
-                                                                //     .blue
-                                                                //     : (method_time[index]
-                                                                //     .method_name ==
-                                                                //     'Sex'
-                                                                //     ? Colors.green
-                                                                //     : (method_time[index]
-                                                                //     .method_name ==
-                                                                //     'Fleshlight'
-                                                                //     ? Colors.purple
-                                                                //     : Colors
-                                                                //     .primaries[_random
-                                                                //     .nextInt(
-                                                                //     Colors
-                                                                //         .primaries
-                                                                //         .length)][_random
-                                                                //     .nextInt(
-                                                                //     9) *
-                                                                //     100])))),
-                                                                // (index <=
-                                                                //         3
-                                                                //     ? colors[
-                                                                //         index]
-                                                                //     : Colors
-                                                                //         .white),
-                                                                family: 'PR'),
-                                                          ),
-                                                        ),
-                                                      ),
+                                                    Text(
+                                                      "Pause ${index + 1}",
+                                                      style: FontStyleUtility.h15(
+                                                          fontColor: ColorUtils
+                                                              .primary_grey,
+                                                          family: 'PR'),
                                                     ),
-                                                    Expanded(
-                                                      child: Container(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                                border: Border(
-                                                          right: BorderSide(
-                                                              color:
-                                                                  Colors.black,
-                                                              width: 1),
-                                                          bottom: BorderSide(
-                                                              color:
-                                                                  Colors.black,
-                                                              width: 1),
-                                                        )),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(4.5),
-                                                          child: Text(
-                                                            '${method_time[index].pauses}',
-                                                            style: FontStyleUtility.h14(
-                                                                fontColor:
-                                                                    ColorUtils
-                                                                        .primary_grey,
-                                                                family: 'PR'),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Container(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                border: Border(
-                                                          bottom: BorderSide(
-                                                              color:
-                                                                  Colors.black,
-                                                              width: 1),
-                                                        )),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(4.5),
-                                                          child: Text(
-                                                            '${method_time[index].total_time}',
-                                                            style: FontStyleUtility.h14(
-                                                                fontColor:
-                                                                    HexColor(
-                                                                        '#7A7A7A'),
-                                                                family: 'PR'),
-                                                          ),
-                                                        ),
-                                                      ),
+                                                    Text(
+                                                      paused_time[index],
+                                                      style:
+                                                          FontStyleUtility.h15(
+                                                              fontColor:
+                                                                  HexColor(
+                                                                      '#6E6E6E'),
+                                                              family: 'PR'),
                                                     ),
                                                   ],
                                                 ),
                                               );
                                             },
                                           ),
-                                          Container(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      addmethod_popup(context);
-                                                    },
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : SizedBox.shrink())),
+                        SizedBox(
+                          height: 21,
+                        ),
+                        (method_time.isNotEmpty
+                            ? Container(
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      // stops: [0.1, 0.5, 0.7, 0.9],
+                                      colors: [
+                                        HexColor("#36393E").withOpacity(0.45),
+                                        HexColor("#020204").withOpacity(0.45),
+                                      ],
+                                    ),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(left: 30, top: 8.5),
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Progress Tracker',
+                                        style: FontStyleUtility.h14(
+                                            fontColor: ColorUtils.primary_gold,
+                                            family: 'PMB'),
+                                      ),
+                                    ),
+                                    // SizedBox(
+                                    //   height: 29,
+                                    // ),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            right: 15,
+                                            left: 15,
+                                            top: 15,
+                                            bottom: 20),
+                                        decoration: BoxDecoration(
+                                            // color: Colors.black.withOpacity(0.65),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.centerRight,
+                                              // stops: [0.1, 0.5, 0.7, 0.9],
+                                              colors: [
+                                                HexColor("#020204")
+                                                    .withOpacity(0.65),
+                                                HexColor("#36393E")
+                                                    .withOpacity(0.65),
+                                              ],
+                                            ),
+                                            // boxShadow: [
+                                            //   BoxShadow(
+                                            //       color: HexColor('#04060F'),
+                                            //       offset: Offset(10, 10),
+                                            //       blurRadius: 10)
+                                            // ],
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                        border: Border(
+                                                          right: BorderSide(
+                                                              color:
+                                                                  Colors.black,
+                                                              width: 1),
+                                                          bottom: BorderSide(
+                                                              color:
+                                                                  Colors.black,
+                                                              width: 1),
+                                                        ),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                vertical: 12.0),
+                                                        child: Text(
+                                                          'Method Used',
+                                                          style: FontStyleUtility.h14(
+                                                              fontColor: ColorUtils
+                                                                  .primary_grey,
+                                                              family: 'PR'),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                        border: Border(
+                                                          right: BorderSide(
+                                                              color:
+                                                                  Colors.black,
+                                                              width: 1),
+                                                          bottom: BorderSide(
+                                                              color:
+                                                                  Colors.black,
+                                                              width: 1),
+                                                        ),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                vertical: 12.0),
+                                                        child: Text(
+                                                          'Pause',
+                                                          style: FontStyleUtility.h14(
+                                                              fontColor: ColorUtils
+                                                                  .primary_grey,
+                                                              family: 'PR'),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 2,
                                                     child: Container(
                                                       alignment:
                                                           Alignment.center,
                                                       decoration: BoxDecoration(
                                                           border: Border(
-                                                        right: BorderSide(
+                                                        bottom: BorderSide(
                                                             color: Colors.black,
                                                             width: 1),
                                                       )),
@@ -3102,1126 +3782,1226 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                         padding:
                                                             const EdgeInsets
                                                                     .symmetric(
-                                                                vertical: 4.5),
+                                                                vertical: 12.0),
+                                                        child: Text(
+                                                          'Current time',
+                                                          style: FontStyleUtility.h14(
+                                                              fontColor: ColorUtils
+                                                                  .primary_grey,
+                                                              family: 'PR'),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: method_time.length,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              padding: EdgeInsets.zero,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return GestureDetector(
+                                                  onLongPress: () {
+                                                    print(
+                                                        "Method ID : ${method_time[index].id}");
+                                                    methodPopUp(
+                                                        context: context,
+                                                        method_old:
+                                                            method_time[index]
+                                                                .method_name!,
+                                                        method_id:
+                                                            method_time[index]
+                                                                .id!);
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 2,
                                                         child: Container(
+                                                          alignment:
+                                                              Alignment.center,
                                                           decoration:
                                                               BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(500),
-                                                                  gradient: LinearGradient(
-                                                                    begin: Alignment
-                                                                        .centerLeft,
-                                                                    end: Alignment
-                                                                        .centerRight,
-                                                                    // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                    colors: [
-                                                                      HexColor(
-                                                                              "#020204")
-                                                                          .withOpacity(
-                                                                              1),
-                                                                      HexColor(
-                                                                              "#36393E")
-                                                                          .withOpacity(
-                                                                              1),
-                                                                    ],
-                                                                  ),
-                                                                  boxShadow: [
-                                                                BoxShadow(
-                                                                    color: HexColor(
-                                                                        '#04060F'),
-                                                                    offset:
-                                                                        Offset(
-                                                                            3,
-                                                                            3),
-                                                                    blurRadius:
-                                                                        10)
-                                                              ]),
+                                                                  border:
+                                                                      Border(
+                                                            right: BorderSide(
+                                                                color: Colors
+                                                                    .black,
+                                                                width: 1),
+                                                            bottom: BorderSide(
+                                                                color: Colors
+                                                                    .black,
+                                                                width: 1),
+                                                          )),
                                                           child: Padding(
                                                             padding:
                                                                 const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        6),
-                                                            child: Image.asset(
-                                                              AssetUtils
-                                                                  .plus_big,
-                                                              height: 23,
-                                                              width: 10,
-                                                              color: HexColor(
-                                                                  '#606060'),
+                                                                    .all(4.5),
+                                                            child: Text(
+                                                              '${method_time[index].method_name}',
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: FontStyleUtility.h14(
+                                                                  fontColor: HexColor(method_time[index].color!),
+                                                                  // (method_time[index]
+                                                                  //     .method_name ==!
+                                                                  //     'Hand'
+                                                                  //     ? Colors
+                                                                  //     .red
+                                                                  //     : (method_time[index]
+                                                                  //     .method_name ==
+                                                                  //     'Dildo'
+                                                                  //     ? Colors
+                                                                  //     .blue
+                                                                  //     : (method_time[index]
+                                                                  //     .method_name ==
+                                                                  //     'Sex'
+                                                                  //     ? Colors.green
+                                                                  //     : (method_time[index]
+                                                                  //     .method_name ==
+                                                                  //     'Fleshlight'
+                                                                  //     ? Colors.purple
+                                                                  //     : Colors
+                                                                  //     .primaries[_random
+                                                                  //     .nextInt(
+                                                                  //     Colors
+                                                                  //         .primaries
+                                                                  //         .length)][_random
+                                                                  //     .nextInt(
+                                                                  //     9) *
+                                                                  //     100])))),
+                                                                  // (index <=
+                                                                  //         3
+                                                                  //     ? colors[
+                                                                  //         index]
+                                                                  //     : Colors
+                                                                  //         .white),
+                                                                  family: 'PR'),
                                                             ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        border: Border(
-                                                      right: BorderSide(
-                                                          color: Colors.black,
-                                                          width: 1),
-                                                    )),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              4.5),
-                                                      child: Text(
-                                                        '-',
-                                                        style: FontStyleUtility.h14(
-                                                            fontColor: ColorUtils
-                                                                .primary_gold,
-                                                            family: 'PR'),
+                                                      Expanded(
+                                                        child: Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                                  border:
+                                                                      Border(
+                                                            right: BorderSide(
+                                                                color: Colors
+                                                                    .black,
+                                                                width: 1),
+                                                            bottom: BorderSide(
+                                                                color: Colors
+                                                                    .black,
+                                                                width: 1),
+                                                          )),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(4.5),
+                                                            child: Text(
+                                                              '${method_time[index].pauses}',
+                                                              style: FontStyleUtility.h14(
+                                                                  fontColor:
+                                                                      ColorUtils
+                                                                          .primary_grey,
+                                                                  family: 'PR'),
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        border: Border()),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              5),
-                                                      child: Text(
-                                                        '-',
-                                                        style: FontStyleUtility.h14(
-                                                            fontColor: ColorUtils
-                                                                .primary_gold,
-                                                            family: 'PR'),
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                                  border:
+                                                                      Border(
+                                                            bottom: BorderSide(
+                                                                color: Colors
+                                                                    .black,
+                                                                width: 1),
+                                                          )),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(4.5),
+                                                            child: Text(
+                                                              '${method_time[index].total_time}',
+                                                              style: FontStyleUtility.h14(
+                                                                  fontColor:
+                                                                      HexColor(
+                                                                          '#7A7A7A'),
+                                                                  family: 'PR'),
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
+                                                    ],
                                                   ),
-                                                ),
-                                              ],
+                                                );
+                                              },
                                             ),
-                                          ),
-                                        ],
+                                            // Container(
+                                            //   child: Row(
+                                            //     children: [
+                                            //       Expanded(
+                                            //         flex: 2,
+                                            //         child: GestureDetector(
+                                            //           onTap: () {
+                                            //             addmethod_popup(
+                                            //                 context);
+                                            //           },
+                                            //           child: Container(
+                                            //             alignment:
+                                            //                 Alignment.center,
+                                            //             decoration:
+                                            //                 BoxDecoration(
+                                            //                     border: Border(
+                                            //               right: BorderSide(
+                                            //                   color:
+                                            //                       Colors.black,
+                                            //                   width: 1),
+                                            //             )),
+                                            //             child: Padding(
+                                            //               padding:
+                                            //                   const EdgeInsets
+                                            //                           .symmetric(
+                                            //                       vertical:
+                                            //                           4.5),
+                                            //               child: Container(
+                                            //                 decoration:
+                                            //                     BoxDecoration(
+                                            //                         borderRadius:
+                                            //                             BorderRadius.circular(500),
+                                            //                         gradient: LinearGradient(
+                                            //                           begin: Alignment
+                                            //                               .centerLeft,
+                                            //                           end: Alignment
+                                            //                               .centerRight,
+                                            //                           // stops: [0.1, 0.5, 0.7, 0.9],
+                                            //                           colors: [
+                                            //                             HexColor("#020204")
+                                            //                                 .withOpacity(1),
+                                            //                             HexColor("#36393E")
+                                            //                                 .withOpacity(1),
+                                            //                           ],
+                                            //                         ),
+                                            //                         boxShadow: [
+                                            //                       BoxShadow(
+                                            //                           color: HexColor(
+                                            //                               '#04060F'),
+                                            //                           offset:
+                                            //                               Offset(
+                                            //                                   3,
+                                            //                                   3),
+                                            //                           blurRadius:
+                                            //                               10)
+                                            //                     ]),
+                                            //                 child: Padding(
+                                            //                   padding: const EdgeInsets
+                                            //                           .symmetric(
+                                            //                       horizontal:
+                                            //                           6),
+                                            //                   child:
+                                            //                       Image.asset(
+                                            //                     AssetUtils
+                                            //                         .plus_big,
+                                            //                     height: 23,
+                                            //                     width: 10,
+                                            //                     color: HexColor(
+                                            //                         '#606060'),
+                                            //                   ),
+                                            //                 ),
+                                            //               ),
+                                            //             ),
+                                            //           ),
+                                            //         ),
+                                            //       ),
+                                            //       Expanded(
+                                            //         child: Container(
+                                            //           alignment:
+                                            //               Alignment.center,
+                                            //           decoration: BoxDecoration(
+                                            //               border: Border(
+                                            //             right: BorderSide(
+                                            //                 color: Colors.black,
+                                            //                 width: 1),
+                                            //           )),
+                                            //           child: Padding(
+                                            //             padding:
+                                            //                 const EdgeInsets
+                                            //                     .all(4.5),
+                                            //             child: Text(
+                                            //               '-',
+                                            //               style: FontStyleUtility.h14(
+                                            //                   fontColor: ColorUtils
+                                            //                       .primary_gold,
+                                            //                   family: 'PR'),
+                                            //             ),
+                                            //           ),
+                                            //         ),
+                                            //       ),
+                                            //       Expanded(
+                                            //         flex: 2,
+                                            //         child: Container(
+                                            //           alignment:
+                                            //               Alignment.center,
+                                            //           decoration: BoxDecoration(
+                                            //               border: Border()),
+                                            //           child: Padding(
+                                            //             padding:
+                                            //                 const EdgeInsets
+                                            //                     .all(5),
+                                            //             child: Text(
+                                            //               '-',
+                                            //               style: FontStyleUtility.h14(
+                                            //                   fontColor: ColorUtils
+                                            //                       .primary_gold,
+                                            //                   family: 'PR'),
+                                            //             ),
+                                            //           ),
+                                            //         ),
+                                            //       ),
+                                            //     ],
+                                            //   ),
+                                            // ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                  ],
+                                ),
+                              )
+                            : SizedBox.shrink()),
+
+                        const SizedBox(
+                          height: 21,
+                        ),
+
+                        ///
+                        Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                // stops: [0.1, 0.5, 0.7, 0.9],
+                                colors: [
+                                  HexColor("#36393E").withOpacity(0.45),
+                                  HexColor("#020204").withOpacity(0.45),
                                 ],
                               ),
-                            )
-                          : SizedBox.shrink()),
-
-                      const SizedBox(
-                        height: 21,
-                      ),
-
-                      ///
-                      Container(
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              // stops: [0.1, 0.5, 0.7, 0.9],
-                              colors: [
-                                HexColor("#36393E").withOpacity(0.45),
-                                HexColor("#020204").withOpacity(0.45),
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.all(15),
-                              // decoration: BoxDecoration(
-                              //     // color: Colors.black.withOpacity(0.65),
-                              //     gradient: LinearGradient(
-                              //       begin: Alignment.centerLeft,
-                              //       end: Alignment.centerRight,
-                              //       // stops: [0.1, 0.5, 0.7, 0.9],
-                              //       colors: [
-                              //         HexColor("#020204").withOpacity(0.65),
-                              //         HexColor("#36393E").withOpacity(0.65),
-                              //       ],
-                              //     ),
-                              //     // boxShadow: [
-                              //     //   BoxShadow(
-                              //     //       color: HexColor('#04060F'),
-                              //     //       offset: Offset(10, 10),
-                              //     //       blurRadius: 10)
-                              //     // ],
-                              //     borderRadius: BorderRadius.circular(20)),
-                              decoration: BoxDecoration(
-                                  color: HexColor('#181A1F').withOpacity(0.65),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                      bottomRight: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20))),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // Container(
-                                  //   margin: EdgeInsets.all(15),
-                                  //   child: Row(
-                                  //     children: [
-                                  //       Expanded(
-                                  //         child: Container(
-                                  //           alignment: Alignment.center,
-                                  //           child: Image.asset(
-                                  //             AssetUtils.m_screen_trophy,
-                                  //             height: 25,
-                                  //             width: 20,
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //       SizedBox(
-                                  //         width: 5,
-                                  //       ),
-                                  //       Expanded(
-                                  //         flex: 2,
-                                  //         child: Container(
-                                  //           child: Column(
-                                  //             crossAxisAlignment:
-                                  //                 CrossAxisAlignment.start,
-                                  //             children: [
-                                  //               Text('Best result',
-                                  //                   style: FontStyleUtility.h14(
-                                  //                       fontColor:
-                                  //                           HexColor('#A2A2A2'),
-                                  //                       family: 'PR')),
-                                  //               Text('72 sec',
-                                  //                   style: FontStyleUtility.h14(
-                                  //                       fontColor: Colors.white,
-                                  //                       family: 'PR')),
-                                  //             ],
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //       Expanded(
-                                  //         flex: 2,
-                                  //         child: Container(
-                                  //           child: Column(
-                                  //             crossAxisAlignment:
-                                  //                 CrossAxisAlignment.start,
-                                  //             children: [
-                                  //               Text('Last measurement',
-                                  //                   style: FontStyleUtility.h14(
-                                  //                       fontColor:
-                                  //                           HexColor('#A2A2A2'),
-                                  //                       family: 'PR')),
-                                  //               Text('26 days ago',
-                                  //                   style: FontStyleUtility.h14(
-                                  //                       fontColor: Colors.white,
-                                  //                       family: 'PR')),
-                                  //             ],
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  Container(
-                                    // decoration: BoxDecoration(
-                                    //     color: HexColor('#181A1F')
-                                    //         .withOpacity(0.65),
-                                    //     borderRadius: BorderRadius.only(
-                                    //         bottomRight: Radius.circular(20),
-                                    //         bottomLeft: Radius.circular(20))),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(13),
-                                        // border: Border.all(
-                                        //     color: HexColor('#383E46'),
-                                        //     width: 1)
-                                      ),
-                                      // margin: EdgeInsets.all(16),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.symmetric(
-                                                vertical: 15, horizontal: 20),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      'Daily Graph',
-                                                      style: FontStyleUtility.h14(
-                                                          fontColor: ColorUtils
-                                                              .primary_gold,
-                                                          family: 'PR'),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    (loading
-                                                        ? CircularProgressIndicator(
-                                                            color: Colors.green,
-                                                          )
-                                                        : (m_screenDailyDataModel!
-                                                                    .data!
-                                                                    .isEmpty ||
-                                                                m_screenDailyDataModel!
-                                                                    .data![0]
-                                                                    .days!
-                                                                    .isEmpty
-                                                            ? SizedBox.shrink()
-                                                            : Text(
-                                                                DateFormat("MM-dd-yyyy").format(DateFormat(
-                                                                        "yyyy-MM-dd hh:mm:ss")
-                                                                    .parse(m_screenDailyDataModel!
-                                                                        .data![
-                                                                            0]
-                                                                        .days![
-                                                                            0]
-                                                                        .createdDate!)),
-                                                                style: FontStyleUtility.h14(
-                                                                    fontColor:
-                                                                        HexColor(
-                                                                            '#D5D5D5'),
-                                                                    family:
-                                                                        'PR'),
-                                                              ))),
-                                                    // Text(
-                                                    //   'Top result: 40 sec',
-                                                    //   style:
-                                                    //       FontStyleUtility.h14(
-                                                    //           fontColor:
-                                                    //               HexColor(
-                                                    //                   "#66686B"),
-                                                    //           family: 'PR'),
-                                                    // ),
-                                                  ],
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              50),
-                                                      gradient: LinearGradient(
-                                                        begin: Alignment
-                                                            .centerLeft,
-                                                        end: Alignment
-                                                            .centerRight,
-                                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                                        colors: [
-                                                          HexColor("#020204")
-                                                              .withOpacity(1),
-                                                          HexColor("#36393E")
-                                                              .withOpacity(1),
-                                                        ],
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.all(15),
+                                // decoration: BoxDecoration(
+                                //     // color: Colors.black.withOpacity(0.65),
+                                //     gradient: LinearGradient(
+                                //       begin: Alignment.centerLeft,
+                                //       end: Alignment.centerRight,
+                                //       // stops: [0.1, 0.5, 0.7, 0.9],
+                                //       colors: [
+                                //         HexColor("#020204").withOpacity(0.65),
+                                //         HexColor("#36393E").withOpacity(0.65),
+                                //       ],
+                                //     ),
+                                //     // boxShadow: [
+                                //     //   BoxShadow(
+                                //     //       color: HexColor('#04060F'),
+                                //     //       offset: Offset(10, 10),
+                                //     //       blurRadius: 10)
+                                //     // ],
+                                //     borderRadius: BorderRadius.circular(20)),
+                                decoration: BoxDecoration(
+                                    color:
+                                        HexColor('#181A1F').withOpacity(0.65),
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                        bottomRight: Radius.circular(20),
+                                        bottomLeft: Radius.circular(20))),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Container(
+                                    //   margin: EdgeInsets.all(15),
+                                    //   child: Row(
+                                    //     children: [
+                                    //       Expanded(
+                                    //         child: Container(
+                                    //           alignment: Alignment.center,
+                                    //           child: Image.asset(
+                                    //             AssetUtils.m_screen_trophy,
+                                    //             height: 25,
+                                    //             width: 20,
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //       SizedBox(
+                                    //         width: 5,
+                                    //       ),
+                                    //       Expanded(
+                                    //         flex: 2,
+                                    //         child: Container(
+                                    //           child: Column(
+                                    //             crossAxisAlignment:
+                                    //                 CrossAxisAlignment.start,
+                                    //             children: [
+                                    //               Text('Best result',
+                                    //                   style: FontStyleUtility.h14(
+                                    //                       fontColor:
+                                    //                           HexColor('#A2A2A2'),
+                                    //                       family: 'PR')),
+                                    //               Text('72 sec',
+                                    //                   style: FontStyleUtility.h14(
+                                    //                       fontColor: Colors.white,
+                                    //                       family: 'PR')),
+                                    //             ],
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //       Expanded(
+                                    //         flex: 2,
+                                    //         child: Container(
+                                    //           child: Column(
+                                    //             crossAxisAlignment:
+                                    //                 CrossAxisAlignment.start,
+                                    //             children: [
+                                    //               Text('Last measurement',
+                                    //                   style: FontStyleUtility.h14(
+                                    //                       fontColor:
+                                    //                           HexColor('#A2A2A2'),
+                                    //                       family: 'PR')),
+                                    //               Text('26 days ago',
+                                    //                   style: FontStyleUtility.h14(
+                                    //                       fontColor: Colors.white,
+                                    //                       family: 'PR')),
+                                    //             ],
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                    Container(
+                                      // decoration: BoxDecoration(
+                                      //     color: HexColor('#181A1F')
+                                      //         .withOpacity(0.65),
+                                      //     borderRadius: BorderRadius.only(
+                                      //         bottomRight: Radius.circular(20),
+                                      //         bottomLeft: Radius.circular(20))),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(13),
+                                          // border: Border.all(
+                                          //     color: HexColor('#383E46'),
+                                          //     width: 1)
+                                        ),
+                                        // margin: EdgeInsets.all(16),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 15, horizontal: 20),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        'Daily Graph',
+                                                        style: FontStyleUtility.h14(
+                                                            fontColor: ColorUtils
+                                                                .primary_gold,
+                                                            family: 'PR'),
                                                       ),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                            color: HexColor(
-                                                                '#04060F'),
-                                                            offset:
-                                                                Offset(3, 3),
-                                                            blurRadius: 10)
-                                                      ]),
-                                                  child: IconButton(
-                                                    visualDensity:
-                                                        VisualDensity(
-                                                            vertical: -2,
-                                                            horizontal: -2),
-                                                    onPressed: () {
-                                                      selectdate(context);
-                                                    },
-                                                    iconSize: 15,
-                                                    icon: Icon(
-                                                      Icons.calendar_today,
-                                                      color: ColorUtils
-                                                          .primary_grey,
-                                                    ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      (loading
+                                                          ? CircularProgressIndicator(
+                                                              color:
+                                                                  Colors.green,
+                                                            )
+                                                          : (m_screenDailyDataModel!
+                                                                      .data!
+                                                                      .isEmpty ||
+                                                                  m_screenDailyDataModel!
+                                                                      .data![0]
+                                                                      .days!
+                                                                      .isEmpty
+                                                              ? SizedBox
+                                                                  .shrink()
+                                                              : Text(
+                                                                  DateFormat("MM-dd-yyyy").format(DateFormat(
+                                                                          "yyyy-MM-dd hh:mm:ss")
+                                                                      .parse(m_screenDailyDataModel!
+                                                                          .data![
+                                                                              0]
+                                                                          .days![
+                                                                              0]
+                                                                          .createdDate!)),
+                                                                  style: FontStyleUtility.h14(
+                                                                      fontColor:
+                                                                          HexColor(
+                                                                              '#D5D5D5'),
+                                                                      family:
+                                                                          'PR'),
+                                                                ))),
+                                                      // Text(
+                                                      //   'Top result: 40 sec',
+                                                      //   style:
+                                                      //       FontStyleUtility.h14(
+                                                      //           fontColor:
+                                                      //               HexColor(
+                                                      //                   "#66686B"),
+                                                      //           family: 'PR'),
+                                                      // ),
+                                                    ],
                                                   ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                              height: 250,
-                                              child: SfCartesianChart(
-                                                  plotAreaBorderWidth: 0,
-                                                  plotAreaBorderColor:
-                                                      ColorUtils.primary_grey,
-                                                  tooltipBehavior:
-                                                      _tooltipBehavior,
-                                                  zoomPanBehavior:
-                                                      _zoomPanBehavior,
-
-                                                  // legend: Legend(
-                                                  //     isVisible: true,
-                                                  //     position:
-                                                  //         LegendPosition.bottom,
-                                                  //     textStyle:
-                                                  //         FontStyleUtility.h12(
-                                                  //             fontColor:
-                                                  //                 Colors.white,
-                                                  //             family: "PM")),
-                                                  primaryXAxis: CategoryAxis(
-                                                      majorGridLines:
-                                                          MajorGridLines(
-                                                              width: 0),
-                                                      // isInversed: true,
-
-                                                      //Hide the axis line of y-axis
-                                                      axisLine:
-                                                          AxisLine(width: 0)),
-                                                  primaryYAxis: NumericAxis(
-                                                      //Hide the gridlines of y-axis
-                                                      // opposedPosition: true,
-                                                      // rangePadding: ChartRangePadding.none,
-                                                      title: AxisTitle(
-                                                          text: 'minutes'),
-                                                      minimum: 0,
-                                                      // maximum: 30,
-                                                      interval: 5,
-                                                      //Axis label customization.
-                                                      labelStyle:
-                                                          const TextStyle(
-                                                              color: Colors
-                                                                  .blueGrey,
-                                                              fontSize: 10),
-                                                      // numberFormat: NumberFormat
-                                                      //     .compact(),
-                                                      majorGridLines:
-                                                          MajorGridLines(
-                                                              width: 1,
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(50),
+                                                        gradient:
+                                                            LinearGradient(
+                                                          begin: Alignment
+                                                              .centerLeft,
+                                                          end: Alignment
+                                                              .centerRight,
+                                                          // stops: [0.1, 0.5, 0.7, 0.9],
+                                                          colors: [
+                                                            HexColor("#020204")
+                                                                .withOpacity(1),
+                                                            HexColor("#36393E")
+                                                                .withOpacity(1),
+                                                          ],
+                                                        ),
+                                                        boxShadow: [
+                                                          BoxShadow(
                                                               color: HexColor(
-                                                                  '#383E46')),
-                                                      //Hide the axis line of y-axis
-                                                      axisLine: AxisLine(
-                                                          width: 1,
+                                                                  '#04060F'),
+                                                              offset:
+                                                                  Offset(3, 3),
+                                                              blurRadius: 10)
+                                                        ]),
+                                                    child: IconButton(
+                                                      visualDensity:
+                                                          VisualDensity(
+                                                              vertical: -2,
+                                                              horizontal: -2),
+                                                      onPressed: () {
+                                                        selectdate(context);
+                                                      },
+                                                      iconSize: 15,
+                                                      icon: Icon(
+                                                        Icons.calendar_today,
+                                                        color: ColorUtils
+                                                            .primary_grey,
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                                height: 250,
+                                                child: SfCartesianChart(
+                                                    plotAreaBorderWidth: 0,
+                                                    plotAreaBorderColor:
+                                                        ColorUtils.primary_grey,
+                                                    tooltipBehavior:
+                                                        _tooltipBehavior,
+                                                    // zoomPanBehavior:
+                                                    //     _zoomPanBehavior,
+
+                                                    // legend: Legend(
+                                                    //     isVisible: true,
+                                                    //     position:
+                                                    //         LegendPosition.bottom,
+                                                    //     textStyle:
+                                                    //         FontStyleUtility.h12(
+                                                    //             fontColor:
+                                                    //                 Colors.white,
+                                                    //             family: "PM")),
+                                                    primaryXAxis: CategoryAxis(
+                                                        majorGridLines:
+                                                            MajorGridLines(
+                                                                width: 0),
+                                                        // isInversed: true,
+
+                                                        //Hide the axis line of y-axis
+                                                        axisLine:
+                                                            AxisLine(width: 0)),
+                                                    primaryYAxis: NumericAxis(
+                                                        //Hide the gridlines of y-axis
+                                                        // opposedPosition: true,
+                                                        // rangePadding: ChartRangePadding.none,
+                                                        title: AxisTitle(
+                                                            text: 'minutes'),
+                                                        minimum: 0,
+                                                        // maximum: 30,
+                                                        interval: 5,
+                                                        //Axis label customization.
+                                                        labelStyle:
+                                                            const TextStyle(
+                                                                color: Colors
+                                                                    .blueGrey,
+                                                                fontSize: 10),
+                                                        // numberFormat: NumberFormat
+                                                        //     .compact(),
+                                                        majorGridLines:
+                                                            MajorGridLines(
+                                                                width: 1,
+                                                                color: HexColor(
+                                                                    '#383E46')),
+                                                        //Hide the axis line of y-axis
+                                                        axisLine: AxisLine(
+                                                            width: 1,
+                                                            color: HexColor(
+                                                                '#383E46'))),
+                                                    // tooltipBehavior:
+                                                    //     _tooltipBehavior,
+                                                    enableSideBySideSeriesPlacement:
+                                                        false,
+                                                    series: <
+                                                        ChartSeries<ChartData2,
+                                                            String>>[
+                                                      // Renders column chart
+                                                      ColumnSeries<ChartData2,
+                                                              String>(
+                                                          dataSource:
+                                                              daily_data_list,
+                                                          enableTooltip: false,
+                                                          width: 0.5,
+                                                          // spacing: 0.6,
                                                           color: HexColor(
-                                                              '#383E46'))),
-                                                  // tooltipBehavior:
-                                                  //     _tooltipBehavior,
-                                                  enableSideBySideSeriesPlacement:
-                                                      false,
-                                                  series: <
-                                                      ChartSeries<ChartData2,
-                                                          String>>[
-                                                    // Renders column chart
-                                                    ColumnSeries<ChartData2,
-                                                            String>(
+                                                              '#F92824'),
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    5),
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    5),
+                                                          ),
+                                                          // spacing: 0.5,
+                                                          pointColorMapper:
+                                                              (ChartData2 data,
+                                                                      _) =>
+                                                                  HexColor(data
+                                                                      .color),
+                                                          xValueMapper:
+                                                              (ChartData2 data,
+                                                                      _) =>
+                                                                  data.x,
+                                                          yValueMapper:
+                                                              (ChartData2 data,
+                                                                      _) =>
+                                                                  data.y),
+
+                                                      RangeColumnSeries<
+                                                          ChartData2, String>(
                                                         dataSource:
                                                             daily_data_list,
-                                                        enableTooltip: false,
                                                         width: 0.5,
-                                                        // spacing: 0.6,
-                                                        color:
-                                                            HexColor('#F92824'),
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  5),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  5),
-                                                        ),
-                                                        // spacing: 0.5,
-                                                        pointColorMapper:
-                                                            (ChartData2 data,
-                                                                    _) =>
-                                                                HexColor(
-                                                                    data.color),
+                                                        color: Colors.black45,
                                                         xValueMapper:
                                                             (ChartData2 data,
                                                                     _) =>
                                                                 data.x,
-                                                        yValueMapper:
+                                                        lowValueMapper:
                                                             (ChartData2 data,
                                                                     _) =>
-                                                                data.y),
-
-                                                    RangeColumnSeries<
-                                                        ChartData2, String>(
-                                                      dataSource:
-                                                          daily_data_list,
-                                                      width: 0.5,
-                                                      color: Colors.black45,
-                                                      xValueMapper:
-                                                          (ChartData2 data,
-                                                                  _) =>
-                                                              data.x,
-                                                      lowValueMapper:
-                                                          (ChartData2 data,
-                                                                  _) =>
-                                                              data.pause_time -
-                                                              0.3,
-                                                      highValueMapper:
-                                                          (ChartData2 data,
-                                                                  _) =>
-                                                              data.pause_time,
-                                                    )
-                                                    // ScatterSeries<ChartData2,
-                                                    //     String>(
-                                                    //   dataSource:
-                                                    //       daily_data_list,
-                                                    //   // width: 0.5,
-                                                    //
-                                                    //   markerSettings:
-                                                    //       MarkerSettings(
-                                                    //     height: 20,
-                                                    //     color: Colors.red,
-                                                    //     width: 10,
-                                                    //     // Scatter will render in diamond shape
-                                                    //     shape: DataMarkerType
-                                                    //         .rectangle,
-                                                    //   ),
-                                                    //   color: Colors.white,
-                                                    //   xValueMapper:
-                                                    //       (ChartData2 data,
-                                                    //               _) =>
-                                                    //           data.x,
-                                                    //   yValueMapper:
-                                                    //       (ChartData2 data,
-                                                    //               _) =>
-                                                    //           data.y,
-                                                    //   // lowValueMapper: (ChartData2 data, _) => data.y-0.1,
-                                                    //   // highValueMapper: (ChartData2 data, _) => data.y,
-                                                    // )
-                                                  ])),
-                                          (loading
-                                              ? SizedBox.shrink()
-                                              : (m_screenDailyDataModel!
-                                                      .data!.isEmpty
-                                                  ? SizedBox.shrink()
-                                                  : Container(
-                                                      margin:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 0,
-                                                              horizontal: 20),
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      // width: 100,
-                                                      height: 50,
-                                                      child: ListView.builder(
-                                                        shrinkWrap: true,
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        itemCount:
-                                                            methoddd.length,
-                                                        itemBuilder:
-                                                            (BuildContext
-                                                                    context,
-                                                                int index) {
-                                                          return Row(
-                                                            children: [
-                                                              Container(
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .bar_chart,
-                                                                  color: HexColor(
-                                                                      coloring[
-                                                                          index]),
+                                                                data.pause_time -
+                                                                0.3,
+                                                        highValueMapper:
+                                                            (ChartData2 data,
+                                                                    _) =>
+                                                                data.pause_time,
+                                                      )
+                                                      // ScatterSeries<ChartData2,
+                                                      //     String>(
+                                                      //   dataSource:
+                                                      //       daily_data_list,
+                                                      //   // width: 0.5,
+                                                      //
+                                                      //   markerSettings:
+                                                      //       MarkerSettings(
+                                                      //     height: 20,
+                                                      //     color: Colors.red,
+                                                      //     width: 10,
+                                                      //     // Scatter will render in diamond shape
+                                                      //     shape: DataMarkerType
+                                                      //         .rectangle,
+                                                      //   ),
+                                                      //   color: Colors.white,
+                                                      //   xValueMapper:
+                                                      //       (ChartData2 data,
+                                                      //               _) =>
+                                                      //           data.x,
+                                                      //   yValueMapper:
+                                                      //       (ChartData2 data,
+                                                      //               _) =>
+                                                      //           data.y,
+                                                      //   // lowValueMapper: (ChartData2 data, _) => data.y-0.1,
+                                                      //   // highValueMapper: (ChartData2 data, _) => data.y,
+                                                      // )
+                                                    ])),
+                                            (loading
+                                                ? SizedBox.shrink()
+                                                : (m_screenDailyDataModel!
+                                                        .data!.isEmpty
+                                                    ? SizedBox.shrink()
+                                                    : Container(
+                                                        margin: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 0,
+                                                                horizontal: 20),
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        // width: 100,
+                                                        height: 50,
+                                                        child: ListView.builder(
+                                                          shrinkWrap: true,
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          itemCount:
+                                                              methoddd.length,
+                                                          itemBuilder:
+                                                              (BuildContext
+                                                                      context,
+                                                                  int index) {
+                                                            return Row(
+                                                              children: [
+                                                                Container(
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .bar_chart,
+                                                                    color: HexColor(
+                                                                        coloring[
+                                                                            index]),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                              Container(
-                                                                child: Text(
-                                                                  methoddd[
-                                                                      index],
-                                                                  style: FontStyleUtility.h12(
-                                                                      fontColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      family:
-                                                                          "PM"),
+                                                                Container(
+                                                                  child: Text(
+                                                                    methoddd[
+                                                                        index],
+                                                                    style: FontStyleUtility.h12(
+                                                                        fontColor:
+                                                                            Colors
+                                                                                .white,
+                                                                        family:
+                                                                            "PM"),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      ),
-                                                    )))
+                                                              ],
+                                                            );
+                                                          },
+                                                        ),
+                                                      )))
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(15),
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      // stops: [0.1, 0.5, 0.7, 0.9],
+                                      colors: [
+                                        HexColor("#020204").withOpacity(0.65),
+                                        HexColor("#36393E").withOpacity(0.65),
+                                      ],
+                                    ),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 15, horizontal: 20),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Weekly Graph',
+                                            style: FontStyleUtility.h14(
+                                                fontColor:
+                                                    ColorUtils.primary_gold,
+                                                family: 'PR'),
+                                          ),
+                                          // Container(
+                                          //   decoration: BoxDecoration(
+                                          //       borderRadius:
+                                          //           BorderRadius.circular(50),
+                                          //       gradient: LinearGradient(
+                                          //         begin: Alignment.centerLeft,
+                                          //         end: Alignment.centerRight,
+                                          //         // stops: [0.1, 0.5, 0.7, 0.9],
+                                          //         colors: [
+                                          //           HexColor("#020204")
+                                          //               .withOpacity(1),
+                                          //           HexColor("#36393E")
+                                          //               .withOpacity(1),
+                                          //         ],
+                                          //       ),
+                                          //       boxShadow: [
+                                          //         BoxShadow(
+                                          //             color: HexColor('#04060F'),
+                                          //             offset: Offset(3, 3),
+                                          //             blurRadius: 10)
+                                          //       ]),
+                                          //   child: IconButton(
+                                          //     visualDensity: VisualDensity(
+                                          //         vertical: -2, horizontal: -2),
+                                          //     onPressed: () {
+                                          //       selectdate(context);
+                                          //     },
+                                          //     iconSize: 15,
+                                          //     icon: Icon(
+                                          //       Icons.calendar_today,
+                                          //       color: ColorUtils.primary_grey,
+                                          //     ),
+                                          //   ),
+                                          // )
                                         ],
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    // stops: [0.1, 0.5, 0.7, 0.9],
-                                    colors: [
-                                      HexColor("#020204").withOpacity(0.65),
-                                      HexColor("#36393E").withOpacity(0.65),
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: 15, horizontal: 20),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Weekly Graph',
-                                          style: FontStyleUtility.h14(
-                                              fontColor:
-                                                  ColorUtils.primary_gold,
-                                              family: 'PR'),
-                                        ),
-                                        // Container(
-                                        //   decoration: BoxDecoration(
-                                        //       borderRadius:
-                                        //           BorderRadius.circular(50),
-                                        //       gradient: LinearGradient(
-                                        //         begin: Alignment.centerLeft,
-                                        //         end: Alignment.centerRight,
-                                        //         // stops: [0.1, 0.5, 0.7, 0.9],
-                                        //         colors: [
-                                        //           HexColor("#020204")
-                                        //               .withOpacity(1),
-                                        //           HexColor("#36393E")
-                                        //               .withOpacity(1),
-                                        //         ],
-                                        //       ),
-                                        //       boxShadow: [
-                                        //         BoxShadow(
-                                        //             color: HexColor('#04060F'),
-                                        //             offset: Offset(3, 3),
-                                        //             blurRadius: 10)
-                                        //       ]),
-                                        //   child: IconButton(
-                                        //     visualDensity: VisualDensity(
-                                        //         vertical: -2, horizontal: -2),
-                                        //     onPressed: () {
-                                        //       selectdate(context);
-                                        //     },
-                                        //     iconSize: 15,
-                                        //     icon: Icon(
-                                        //       Icons.calendar_today,
-                                        //       color: ColorUtils.primary_grey,
-                                        //     ),
-                                        //   ),
-                                        // )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                      height: 250,
-                                      child: SfCartesianChart(
-                                          plotAreaBorderWidth: 0,
-                                          plotAreaBorderColor:
-                                              ColorUtils.primary_grey,
-                                          tooltipBehavior: _tooltipBehavior2,
-                                          zoomPanBehavior: _zoomPanBehavior,
-                                          legend: Legend(
-                                              isVisible: false,
-                                              position: LegendPosition.bottom,
-                                              textStyle: FontStyleUtility.h12(
-                                                  fontColor: Colors.white,
-                                                  family: "PM")),
-                                          primaryXAxis: CategoryAxis(
-                                              majorGridLines:
-                                                  MajorGridLines(width: 0),
-                                              autoScrollingMode:
-                                                  AutoScrollingMode.start,
-                                              zoomFactor: 0.6,
+                                    Container(
+                                        height: 250,
+                                        child: SfCartesianChart(
+                                            plotAreaBorderWidth: 0,
+                                            plotAreaBorderColor:
+                                                ColorUtils.primary_grey,
+                                            tooltipBehavior: _tooltipBehavior2,
+                                            // zoomPanBehavior: _zoomPanBehavior,
+                                            legend: Legend(
+                                                isVisible: false,
+                                                position: LegendPosition.bottom,
+                                                textStyle: FontStyleUtility.h12(
+                                                    fontColor: Colors.white,
+                                                    family: "PM")),
+                                            primaryXAxis: CategoryAxis(
+                                                majorGridLines:
+                                                    MajorGridLines(width: 0),
+                                                autoScrollingMode:
+                                                    AutoScrollingMode.start,
+                                                // zoomFactor: 0.6,
 
-                                              // zoomFactor:2 ,
-                                              //Hide the axis line of y-axis
-                                              axisLine: AxisLine(width: 0)),
-                                          primaryYAxis: NumericAxis(
-                                              //Hide the gridlines of y-axis
-                                              title: AxisTitle(text: 'minutes'),
-                                              // minimum: 1,
-                                              // maximum: 30,
-                                              interval: 5,
-                                              labelStyle: const TextStyle(
-                                                  color: Colors.blueGrey,
-                                                  fontSize: 10),
-                                              // numberFormat: NumberFormat
-                                              //     .compact(),
-                                              majorGridLines: MajorGridLines(
-                                                  width: 1,
-                                                  color: HexColor('#383E46')),
-                                              //Hide the axis line of y-axis
-                                              axisLine: AxisLine(
-                                                  width: 1,
-                                                  color: HexColor('#383E46'))),
-                                          series: mohit
-                                          // <ChartSeries<ChartData0, String>>[
-                                          //   // Renders column chart
-                                          //   ColumnSeries<ChartData0, String>(
-                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                          //       dataSource: weekly_data,
-                                          //       enableTooltip: true,
-                                          //       legendItemText: 'Hand',
-                                          //       width: 0.5,
-                                          //       spacing: 0.3,
-                                          //       color: HexColor('#DD3931'),
-                                          //       pointColorMapper: (ChartData0
-                                          //                   data,
-                                          //               _) =>
-                                          //           (data
-                                          //                       .x1 ==
-                                          //                   'Hand'
-                                          //               ? Colors.red
-                                          //               : (data
-                                          //                           .x1 ==
-                                          //                       'Dildo'
-                                          //                   ? Colors.blue
-                                          //                   : (data
-                                          //                               .x1 ==
-                                          //                           'Sex'
-                                          //                       ? Colors.green
-                                          //                       : (data.x1 ==
-                                          //                               'Fleshlight'
-                                          //                           ? Colors
-                                          //                               .purple
-                                          //                           : HexColor(data
-                                          //                               .color))))),
-                                          //       xValueMapper:
-                                          //           (ChartData0 data, _) =>
-                                          //               data.x,
-                                          //       yValueMapper:
-                                          //           (ChartData0 data, _) =>
-                                          //               data.y),
-                                          //   ColumnSeries<ChartData0, String>(
-                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                          //       dataSource: weekly_data2,
-                                          //       enableTooltip: true,
-                                          //       legendItemText: 'Dildo',
-                                          //       width: 0.5,
-                                          //       spacing: 0.3,
-                                          //       color: Colors.blue,
-                                          //       pointColorMapper: (ChartData0
-                                          //                   data,
-                                          //               _) =>
-                                          //           (data
-                                          //                       .x1 ==
-                                          //                   'Hand'
-                                          //               ? Colors.red
-                                          //               : (data
-                                          //                           .x1 ==
-                                          //                       'Dildo'
-                                          //                   ? Colors.blue
-                                          //                   : (data
-                                          //                               .x1 ==
-                                          //                           'Sex'
-                                          //                       ? Colors.green
-                                          //                       : (data.x1 ==
-                                          //                               'Fleshlight'
-                                          //                           ? Colors
-                                          //                               .purple
-                                          //                           : HexColor(data
-                                          //                               .color))))),
-                                          //       xValueMapper:
-                                          //           (ChartData0 data, _) =>
-                                          //               data.x,
-                                          //       yValueMapper:
-                                          //           (ChartData0 data, _) =>
-                                          //               data.y),
-                                          //   ColumnSeries<ChartData0, String>(
-                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                          //       dataSource: weekly_data3,
-                                          //       enableTooltip: true,
-                                          //       legendItemText: 'Sex',
-                                          //       width: 0.5,
-                                          //       spacing: 0.3,
-                                          //       color: Colors.green,
-                                          //       pointColorMapper: (ChartData0
-                                          //                   data,
-                                          //               _) =>
-                                          //           (data
-                                          //                       .x1 ==
-                                          //                   'Hand'
-                                          //               ? Colors.red
-                                          //               : (data
-                                          //                           .x1 ==
-                                          //                       'Dildo'
-                                          //                   ? Colors.blue
-                                          //                   : (data
-                                          //                               .x1 ==
-                                          //                           'Sex'
-                                          //                       ? Colors.green
-                                          //                       : (data.x1 ==
-                                          //                               'Fleshlight'
-                                          //                           ? Colors
-                                          //                               .purple
-                                          //                           : HexColor(data
-                                          //                               .color))))),
-                                          //       xValueMapper:
-                                          //           (ChartData0 data, _) =>
-                                          //               data.x,
-                                          //       yValueMapper:
-                                          //           (ChartData0 data, _) =>
-                                          //               data.y),
-                                          //   ColumnSeries<ChartData0, String>(
-                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                          //       dataSource: weekly_data4,
-                                          //       enableTooltip: true,
-                                          //       legendItemText: 'Fleshlight',
-                                          //       width: 0.5,
-                                          //       spacing: 0.3,
-                                          //       color: Colors.purple,
-                                          //       pointColorMapper:
-                                          //           (ChartData0 data, _) => (data
-                                          //                       .x1 ==
-                                          //                   'Hand'
-                                          //               ? Colors.red
-                                          //               : (data.x1 == 'Dildo'
-                                          //                   ? Colors.blue
-                                          //                   : (data.x1 == 'Sex'
-                                          //                       ? Colors.green
-                                          //                       : (data.x1 ==
-                                          //                               'Fleshlight'
-                                          //                           ? Colors
-                                          //                               .purple
-                                          //                           : HexColor(
-                                          //                               "${data.color.substring(2)}"))))),
-                                          //       xValueMapper:
-                                          //           (ChartData0 data, _) =>
-                                          //               data.x,
-                                          //       yValueMapper:
-                                          //           (ChartData0 data, _) =>
-                                          //               data.y),
-                                          //   // ColumnSeries<ChartData2, String>(
-                                          //   //     width: 0.5,
-                                          //   //     spacing: 0.6,
-                                          //   //     color: HexColor('#75C043'),
-                                          //   //     legendItemText: 'Sex',
-                                          //   //
-                                          //   //     // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                          //   //     dataSource: weekly_data_listM,
-                                          //   //     xValueMapper:
-                                          //   //         (ChartData2 data, _) =>
-                                          //   //     data.x,
-                                          //   //     yValueMapper:
-                                          //   //         (ChartData2 data, _) =>
-                                          //   //     data.y),
-                                          //   // ColumnSeries<ChartData2, String>(
-                                          //   //     width: 0.5,
-                                          //   //     spacing: 0.6,
-                                          //   //     color: HexColor('#1880C3'),
-                                          //   //     legendItemText: 'Dildo',
-                                          //   //     dataSource: weekly_data_listT,
-                                          //   //     xValueMapper:
-                                          //   //         (ChartData2 data, _) =>
-                                          //   //     data.x,
-                                          //   //     yValueMapper:
-                                          //   //         (ChartData2 data, _) =>
-                                          //   //     data.y),
-                                          //   // ColumnSeries<ChartData2, String>(
-                                          //   //     width: 0.5,
-                                          //   //     spacing: 0.6,
-                                          //   //     color: HexColor('#1880C3'),
-                                          //   //     legendItemText: 'Dildo',
-                                          //   //     dataSource: weekly_data_listW,
-                                          //   //     xValueMapper:
-                                          //   //         (ChartData2 data, _) =>
-                                          //   //     data.x,
-                                          //   //     yValueMapper:
-                                          //   //         (ChartData2 data, _) =>
-                                          //   //     data.y),
-                                          //   // ColumnSeries<ChartData2, String>(
-                                          //   //     width: 0.5,
-                                          //   //     spacing: 0.6,
-                                          //   //     color: HexColor('#1880C3'),
-                                          //   //     legendItemText: 'Dildo',
-                                          //   //     dataSource: weekly_data_listTU,
-                                          //   //     xValueMapper:
-                                          //   //         (ChartData2 data, _) =>
-                                          //   //     data.x,
-                                          //   //     yValueMapper:
-                                          //   //         (ChartData2 data, _) =>
-                                          //   //     data.y),
-                                          //   // ColumnSeries<ChartData2, String>(
-                                          //   //     width: 0.5,
-                                          //   //     spacing: 0.6,
-                                          //   //     color: HexColor('#1880C3'),
-                                          //   //     legendItemText: 'Dildo',
-                                          //   //     dataSource: weekly_data_listF,
-                                          //   //     xValueMapper:
-                                          //   //         (ChartData2 data, _) =>
-                                          //   //     data.x,
-                                          //   //     yValueMapper:
-                                          //   //         (ChartData2 data, _) =>
-                                          //   //     data.y),
-                                          // ]
-                                          )),
-                                  (loader
-                                      ? SizedBox.shrink()
-                                      : (m_screenWeeklyDataModel!.data!.isEmpty
-                                          ? SizedBox.shrink()
-                                          : Container(
-                                              // color: Colors.pink,
-                                              margin: EdgeInsets.symmetric(
-                                                  vertical: 0, horizontal: 20),
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              // width: 100,
-                                              height: 50,
-                                              child: ListView.builder(
-                                                shrinkWrap: true,
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                itemCount: methoddd2.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return Row(
-                                                    children: [
-                                                      Container(
-                                                        child: Icon(
-                                                          Icons.bar_chart,
-                                                          color: HexColor(
-                                                              coloring2[index]),
+                                                // zoomFactor:2 ,
+                                                //Hide the axis line of y-axis
+                                                axisLine: AxisLine(width: 0)),
+                                            primaryYAxis: NumericAxis(
+                                                //Hide the gridlines of y-axis
+                                                title:
+                                                    AxisTitle(text: 'minutes'),
+                                                // minimum: 1,
+                                                // maximum: 30,
+                                                interval: 5,
+                                                labelStyle: const TextStyle(
+                                                    color: Colors.blueGrey,
+                                                    fontSize: 10),
+                                                // numberFormat: NumberFormat
+                                                //     .compact(),
+                                                majorGridLines: MajorGridLines(
+                                                    width: 1,
+                                                    color: HexColor('#383E46')),
+                                                //Hide the axis line of y-axis
+                                                axisLine: AxisLine(
+                                                    width: 1,
+                                                    color:
+                                                        HexColor('#383E46'))),
+                                            series: mohit
+                                            // <ChartSeries<ChartData0, String>>[
+                                            //   // Renders column chart
+                                            //   ColumnSeries<ChartData0, String>(
+                                            //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                            //       dataSource: weekly_data,
+                                            //       enableTooltip: true,
+                                            //       legendItemText: 'Hand',
+                                            //       width: 0.5,
+                                            //       spacing: 0.3,
+                                            //       color: HexColor('#DD3931'),
+                                            //       pointColorMapper: (ChartData0
+                                            //                   data,
+                                            //               _) =>
+                                            //           (data
+                                            //                       .x1 ==
+                                            //                   'Hand'
+                                            //               ? Colors.red
+                                            //               : (data
+                                            //                           .x1 ==
+                                            //                       'Dildo'
+                                            //                   ? Colors.blue
+                                            //                   : (data
+                                            //                               .x1 ==
+                                            //                           'Sex'
+                                            //                       ? Colors.green
+                                            //                       : (data.x1 ==
+                                            //                               'Fleshlight'
+                                            //                           ? Colors
+                                            //                               .purple
+                                            //                           : HexColor(data
+                                            //                               .color))))),
+                                            //       xValueMapper:
+                                            //           (ChartData0 data, _) =>
+                                            //               data.x,
+                                            //       yValueMapper:
+                                            //           (ChartData0 data, _) =>
+                                            //               data.y),
+                                            //   ColumnSeries<ChartData0, String>(
+                                            //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                            //       dataSource: weekly_data2,
+                                            //       enableTooltip: true,
+                                            //       legendItemText: 'Dildo',
+                                            //       width: 0.5,
+                                            //       spacing: 0.3,
+                                            //       color: Colors.blue,
+                                            //       pointColorMapper: (ChartData0
+                                            //                   data,
+                                            //               _) =>
+                                            //           (data
+                                            //                       .x1 ==
+                                            //                   'Hand'
+                                            //               ? Colors.red
+                                            //               : (data
+                                            //                           .x1 ==
+                                            //                       'Dildo'
+                                            //                   ? Colors.blue
+                                            //                   : (data
+                                            //                               .x1 ==
+                                            //                           'Sex'
+                                            //                       ? Colors.green
+                                            //                       : (data.x1 ==
+                                            //                               'Fleshlight'
+                                            //                           ? Colors
+                                            //                               .purple
+                                            //                           : HexColor(data
+                                            //                               .color))))),
+                                            //       xValueMapper:
+                                            //           (ChartData0 data, _) =>
+                                            //               data.x,
+                                            //       yValueMapper:
+                                            //           (ChartData0 data, _) =>
+                                            //               data.y),
+                                            //   ColumnSeries<ChartData0, String>(
+                                            //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                            //       dataSource: weekly_data3,
+                                            //       enableTooltip: true,
+                                            //       legendItemText: 'Sex',
+                                            //       width: 0.5,
+                                            //       spacing: 0.3,
+                                            //       color: Colors.green,
+                                            //       pointColorMapper: (ChartData0
+                                            //                   data,
+                                            //               _) =>
+                                            //           (data
+                                            //                       .x1 ==
+                                            //                   'Hand'
+                                            //               ? Colors.red
+                                            //               : (data
+                                            //                           .x1 ==
+                                            //                       'Dildo'
+                                            //                   ? Colors.blue
+                                            //                   : (data
+                                            //                               .x1 ==
+                                            //                           'Sex'
+                                            //                       ? Colors.green
+                                            //                       : (data.x1 ==
+                                            //                               'Fleshlight'
+                                            //                           ? Colors
+                                            //                               .purple
+                                            //                           : HexColor(data
+                                            //                               .color))))),
+                                            //       xValueMapper:
+                                            //           (ChartData0 data, _) =>
+                                            //               data.x,
+                                            //       yValueMapper:
+                                            //           (ChartData0 data, _) =>
+                                            //               data.y),
+                                            //   ColumnSeries<ChartData0, String>(
+                                            //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                            //       dataSource: weekly_data4,
+                                            //       enableTooltip: true,
+                                            //       legendItemText: 'Fleshlight',
+                                            //       width: 0.5,
+                                            //       spacing: 0.3,
+                                            //       color: Colors.purple,
+                                            //       pointColorMapper:
+                                            //           (ChartData0 data, _) => (data
+                                            //                       .x1 ==
+                                            //                   'Hand'
+                                            //               ? Colors.red
+                                            //               : (data.x1 == 'Dildo'
+                                            //                   ? Colors.blue
+                                            //                   : (data.x1 == 'Sex'
+                                            //                       ? Colors.green
+                                            //                       : (data.x1 ==
+                                            //                               'Fleshlight'
+                                            //                           ? Colors
+                                            //                               .purple
+                                            //                           : HexColor(
+                                            //                               "${data.color.substring(2)}"))))),
+                                            //       xValueMapper:
+                                            //           (ChartData0 data, _) =>
+                                            //               data.x,
+                                            //       yValueMapper:
+                                            //           (ChartData0 data, _) =>
+                                            //               data.y),
+                                            //   // ColumnSeries<ChartData2, String>(
+                                            //   //     width: 0.5,
+                                            //   //     spacing: 0.6,
+                                            //   //     color: HexColor('#75C043'),
+                                            //   //     legendItemText: 'Sex',
+                                            //   //
+                                            //   //     // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                            //   //     dataSource: weekly_data_listM,
+                                            //   //     xValueMapper:
+                                            //   //         (ChartData2 data, _) =>
+                                            //   //     data.x,
+                                            //   //     yValueMapper:
+                                            //   //         (ChartData2 data, _) =>
+                                            //   //     data.y),
+                                            //   // ColumnSeries<ChartData2, String>(
+                                            //   //     width: 0.5,
+                                            //   //     spacing: 0.6,
+                                            //   //     color: HexColor('#1880C3'),
+                                            //   //     legendItemText: 'Dildo',
+                                            //   //     dataSource: weekly_data_listT,
+                                            //   //     xValueMapper:
+                                            //   //         (ChartData2 data, _) =>
+                                            //   //     data.x,
+                                            //   //     yValueMapper:
+                                            //   //         (ChartData2 data, _) =>
+                                            //   //     data.y),
+                                            //   // ColumnSeries<ChartData2, String>(
+                                            //   //     width: 0.5,
+                                            //   //     spacing: 0.6,
+                                            //   //     color: HexColor('#1880C3'),
+                                            //   //     legendItemText: 'Dildo',
+                                            //   //     dataSource: weekly_data_listW,
+                                            //   //     xValueMapper:
+                                            //   //         (ChartData2 data, _) =>
+                                            //   //     data.x,
+                                            //   //     yValueMapper:
+                                            //   //         (ChartData2 data, _) =>
+                                            //   //     data.y),
+                                            //   // ColumnSeries<ChartData2, String>(
+                                            //   //     width: 0.5,
+                                            //   //     spacing: 0.6,
+                                            //   //     color: HexColor('#1880C3'),
+                                            //   //     legendItemText: 'Dildo',
+                                            //   //     dataSource: weekly_data_listTU,
+                                            //   //     xValueMapper:
+                                            //   //         (ChartData2 data, _) =>
+                                            //   //     data.x,
+                                            //   //     yValueMapper:
+                                            //   //         (ChartData2 data, _) =>
+                                            //   //     data.y),
+                                            //   // ColumnSeries<ChartData2, String>(
+                                            //   //     width: 0.5,
+                                            //   //     spacing: 0.6,
+                                            //   //     color: HexColor('#1880C3'),
+                                            //   //     legendItemText: 'Dildo',
+                                            //   //     dataSource: weekly_data_listF,
+                                            //   //     xValueMapper:
+                                            //   //         (ChartData2 data, _) =>
+                                            //   //     data.x,
+                                            //   //     yValueMapper:
+                                            //   //         (ChartData2 data, _) =>
+                                            //   //     data.y),
+                                            // ]
+                                            )),
+                                    (loader
+                                        ? SizedBox.shrink()
+                                        : (m_screenWeeklyDataModel!
+                                                .data!.isEmpty
+                                            ? SizedBox.shrink()
+                                            : Container(
+                                                // color: Colors.pink,
+                                                margin: EdgeInsets.symmetric(
+                                                    vertical: 0,
+                                                    horizontal: 20),
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                // width: 100,
+                                                height: 50,
+                                                child: ListView.builder(
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemCount: methoddd2.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return Row(
+                                                      children: [
+                                                        Container(
+                                                          child: Icon(
+                                                            Icons.bar_chart,
+                                                            color: HexColor(
+                                                                coloring2[
+                                                                    index]),
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Container(
-                                                        child: Text(
-                                                          methoddd2[index],
-                                                          style: FontStyleUtility
-                                                              .h12(
-                                                                  fontColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  family: "PM"),
+                                                        Container(
+                                                          child: Text(
+                                                            methoddd2[index],
+                                                            style: FontStyleUtility
+                                                                .h12(
+                                                                    fontColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    family:
+                                                                        "PM"),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              ),
-                                            )))
-                                ],
+                                                      ],
+                                                    );
+                                                  },
+                                                ),
+                                              )))
+                                  ],
+                                ),
                               ),
-                            ),
-                            // Container(
-                            //   width: 250,
-                            //   decoration: BoxDecoration(
-                            //       color: HexColor('#181B23').withOpacity(0.65),
-                            //       // boxShadow: [
-                            //       //   BoxShadow(
-                            //       //       color: HexColor('#000000'),
-                            //       //       offset: Offset(0, 6),
-                            //       //       blurRadius: 6)
-                            //       // ],
-                            //       borderRadius: BorderRadius.circular(100)),
-                            //   margin: EdgeInsets.symmetric(vertical: 7),
-                            //   child: Padding(
-                            //     padding:
-                            //         const EdgeInsets.symmetric(vertical: 10.0),
-                            //     child: Row(
-                            //       mainAxisAlignment:
-                            //           MainAxisAlignment.spaceEvenly,
-                            //       children: [
-                            //         GestureDetector(
-                            //           onTap: () {
-                            //             setState(() {
-                            //               selected_time = 'days';
-                            //               graph_life = daily_data_list;
-                            //             });
-                            //           },
-                            //           child: Container(
-                            //             decoration: BoxDecoration(
-                            //               borderRadius:
-                            //                   BorderRadius.circular(100),
-                            //               color: (selected_time == 'days'
-                            //                   ? HexColor('#21252E')
-                            //                   : Colors.transparent),
-                            //             ),
-                            //             child: Padding(
-                            //               padding: EdgeInsets.symmetric(
-                            //                   vertical: 5, horizontal: 14),
-                            //               child: Text('Days',
-                            //                   style: FontStyleUtility.h13(
-                            //                       fontColor: (selected_time ==
-                            //                               'days'
-                            //                           ? Colors.white
-                            //                           : HexColor('#656565')),
-                            //                       family: 'PM')),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         GestureDetector(
-                            //           onTap: () {
-                            //             setState(() {
-                            //               selected_time = 'weeks';
-                            //               graph_life = weekly_data5;
-                            //             });
-                            //           },
-                            //           child: Container(
-                            //             decoration: BoxDecoration(
-                            //                 borderRadius:
-                            //                     BorderRadius.circular(100),
-                            //                 color: (selected_time == 'weeks'
-                            //                     ? HexColor('#21252E')
-                            //                     : Colors.transparent)),
-                            //             child: Padding(
-                            //               padding: EdgeInsets.symmetric(
-                            //                   vertical: 5, horizontal: 14),
-                            //               child: Text('Weeks',
-                            //                   style: FontStyleUtility.h13(
-                            //                       fontColor: (selected_time ==
-                            //                               'weeks'
-                            //                           ? Colors.white
-                            //                           : HexColor('#656565')),
-                            //                       family: 'PM')),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         GestureDetector(
-                            //           onTap: () {
-                            //             setState(() {
-                            //               selected_time = 'months';
-                            //               graph_life = lifetime_data_list;
-                            //             });
-                            //           },
-                            //           child: Container(
-                            //             decoration: BoxDecoration(
-                            //                 borderRadius:
-                            //                     BorderRadius.circular(100),
-                            //                 color: (selected_time == 'months'
-                            //                     ? HexColor('#21252E')
-                            //                     : Colors.transparent)),
-                            //             child: Padding(
-                            //               padding: EdgeInsets.symmetric(
-                            //                   vertical: 5, horizontal: 14),
-                            //               child: Text('Months',
-                            //                   style: FontStyleUtility.h13(
-                            //                       fontColor: (selected_time ==
-                            //                               'months'
-                            //                           ? Colors.white
-                            //                           : HexColor('#656565')),
-                            //                       family: 'PM')),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
-                            Container(
-                              margin: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                  // color: Colors.black.withOpacity(0.65),
-                                  gradient: LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    // stops: [0.1, 0.5, 0.7, 0.9],
-                                    colors: [
-                                      HexColor("#020204").withOpacity(0.65),
-                                      HexColor("#36393E").withOpacity(0.65),
-                                    ],
-                                  ),
-                                  // boxShadow: [
-                                  //   BoxShadow(
-                                  //       color: HexColor('#04060F'),
-                                  //       offset: Offset(10, 10),
-                                  //       blurRadius: 10)
-                                  // ],
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        top: 13, left: 31, bottom: 25),
-                                    child: Text(
-                                      'Life time',
-                                      style: FontStyleUtility.h16(
-                                          fontColor: ColorUtils.primary_grey,
-                                          family: 'PR'),
-                                    ),
-                                  ),
-                                  Container(
-                                      height: 250,
-                                      child: SfCartesianChart(
-                                          plotAreaBorderWidth: 0,
-                                          plotAreaBorderColor:
-                                              ColorUtils.primary_grey,
-
-                                          // tooltipBehavior: _tooltipBehavior,
-                                          // crosshairBehavior: _crosshairBehavior,
-                                          trackballBehavior: _trackballBehavior,
-                                          // zoomPanBehavior: _zoomPanBehavior,
-                                          primaryXAxis: CategoryAxis(
-                                              rangePadding:
-                                                  ChartRangePadding.auto,
-                                              majorGridLines:
-                                                  MajorGridLines(width: 0),
-                                              // arrangeByIndex: true,
-                                              // zoomFactor: 0.45,
-                                              //Hide the axis line of y-axis
-                                              axisLine: AxisLine(width: 0)),
-                                          primaryYAxis: NumericAxis(
-                                              //Hide the gridlines of y-axis
-                                              // opposedPosition: true,
-                                              // rangePadding: ChartRangePadding.none,
-                                              title: AxisTitle(text: 'minutes'),
-                                              // minimum: 1,
-                                              // maximum: 30,
-                                              interval: 5,
-                                              //Axis label ustomization.
-                                              labelStyle: const TextStyle(
-                                                  color: Colors.blueGrey,
-                                                  fontSize: 10),
-                                              // numberFormat: NumberFormat
-                                              //     .compact(),
-                                              majorGridLines: MajorGridLines(
-                                                  width: 1,
-                                                  color: HexColor('#383E46')),
-                                              //Hide the axis line of y-axis
-                                              axisLine: AxisLine(
-                                                  width: 1,
-                                                  color: HexColor('#383E46'))),
-                                          // primaryYAxis: NumericAxis(
-                                          //     //Hide the gridlines of y-axis
-                                          //     majorGridLines:
-                                          //         MajorGridLines(width: 0),
-                                          //     //Hide the axis line of y-axis
-                                          //     axisLine: AxisLine(width: 3)),
-                                          series: <ChartSeries>[
-                                            SplineSeries<ChartData2, String>(
-                                                markerSettings:
-                                                    const MarkerSettings(
-                                                        isVisible: true,
-                                                        borderWidth: 1,
-                                                        height: 6,
-                                                        width: 6),
-                                                dataSource: graph_life,
-                                                // gst_payable_list,
-                                                // Bind the color for all the data points from the data source
-                                                // color: Colors.purple,
-                                                // selectionBehavior:_selectionBehavior ,
-                                                pointColorMapper:
-                                                    (ChartData2 data, _) =>
-                                                        Colors.green,
-                                                xValueMapper:
-                                                    (ChartData2 data, _) =>
-                                                        data.x,
-                                                yValueMapper:
-                                                    (ChartData2 data, _) =>
-                                                        data.y)
-                                          ])),
-                                ],
-                              ),
-                            ),
-                            Container(
+                              // Container(
+                              //   width: 250,
+                              //   decoration: BoxDecoration(
+                              //       color: HexColor('#181B23').withOpacity(0.65),
+                              //       // boxShadow: [
+                              //       //   BoxShadow(
+                              //       //       color: HexColor('#000000'),
+                              //       //       offset: Offset(0, 6),
+                              //       //       blurRadius: 6)
+                              //       // ],
+                              //       borderRadius: BorderRadius.circular(100)),
+                              //   margin: EdgeInsets.symmetric(vertical: 7),
+                              //   child: Padding(
+                              //     padding:
+                              //         const EdgeInsets.symmetric(vertical: 10.0),
+                              //     child: Row(
+                              //       mainAxisAlignment:
+                              //           MainAxisAlignment.spaceEvenly,
+                              //       children: [
+                              //         GestureDetector(
+                              //           onTap: () {
+                              //             setState(() {
+                              //               selected_time = 'days';
+                              //               graph_life = daily_data_list;
+                              //             });
+                              //           },
+                              //           child: Container(
+                              //             decoration: BoxDecoration(
+                              //               borderRadius:
+                              //                   BorderRadius.circular(100),
+                              //               color: (selected_time == 'days'
+                              //                   ? HexColor('#21252E')
+                              //                   : Colors.transparent),
+                              //             ),
+                              //             child: Padding(
+                              //               padding: EdgeInsets.symmetric(
+                              //                   vertical: 5, horizontal: 14),
+                              //               child: Text('Days',
+                              //                   style: FontStyleUtility.h13(
+                              //                       fontColor: (selected_time ==
+                              //                               'days'
+                              //                           ? Colors.white
+                              //                           : HexColor('#656565')),
+                              //                       family: 'PM')),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //         GestureDetector(
+                              //           onTap: () {
+                              //             setState(() {
+                              //               selected_time = 'weeks';
+                              //               graph_life = weekly_data5;
+                              //             });
+                              //           },
+                              //           child: Container(
+                              //             decoration: BoxDecoration(
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(100),
+                              //                 color: (selected_time == 'weeks'
+                              //                     ? HexColor('#21252E')
+                              //                     : Colors.transparent)),
+                              //             child: Padding(
+                              //               padding: EdgeInsets.symmetric(
+                              //                   vertical: 5, horizontal: 14),
+                              //               child: Text('Weeks',
+                              //                   style: FontStyleUtility.h13(
+                              //                       fontColor: (selected_time ==
+                              //                               'weeks'
+                              //                           ? Colors.white
+                              //                           : HexColor('#656565')),
+                              //                       family: 'PM')),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //         GestureDetector(
+                              //           onTap: () {
+                              //             setState(() {
+                              //               selected_time = 'months';
+                              //               graph_life = lifetime_data_list;
+                              //             });
+                              //           },
+                              //           child: Container(
+                              //             decoration: BoxDecoration(
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(100),
+                              //                 color: (selected_time == 'months'
+                              //                     ? HexColor('#21252E')
+                              //                     : Colors.transparent)),
+                              //             child: Padding(
+                              //               padding: EdgeInsets.symmetric(
+                              //                   vertical: 5, horizontal: 14),
+                              //               child: Text('Months',
+                              //                   style: FontStyleUtility.h13(
+                              //                       fontColor: (selected_time ==
+                              //                               'months'
+                              //                           ? Colors.white
+                              //                           : HexColor('#656565')),
+                              //                       family: 'PM')),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                              Container(
                                 margin: EdgeInsets.all(15),
                                 decoration: BoxDecoration(
                                     // color: Colors.black.withOpacity(0.65),
@@ -4245,80 +5025,263 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 40,
-                                            top: 15,
-                                            right: 15,
-                                            bottom: 15),
-                                        child: Text(
-                                          "Technique",
-                                          style: FontStyleUtility.h15(
+                                      margin: EdgeInsets.only(
+                                          top: 13, left: 31, bottom: 25),
+                                      child: Text('Life time',
+                                          style: FontStyleUtility.h14(
                                               fontColor:
-                                                  ColorUtils.primary_grey,
-                                              family: 'PM'),
-                                        ),
-                                      ),
+                                                  ColorUtils.primary_gold,
+                                              family: 'PR')),
                                     ),
-                                    ListTile(
-                                      title: Text(
-                                        '1.   Use different tools',
+                                    Container(
+                                        height: 250,
+                                        child: SfCartesianChart(
+                                            plotAreaBorderWidth: 0,
+                                            plotAreaBorderColor:
+                                                ColorUtils.primary_grey,
+
+                                            // tooltipBehavior: _tooltipBehavior,
+                                            // crosshairBehavior: _crosshairBehavior,
+                                            trackballBehavior:
+                                                _trackballBehavior,
+                                            // zoomPanBehavior: _zoomPanBehavior,
+                                            primaryXAxis: CategoryAxis(
+                                                rangePadding:
+                                                    ChartRangePadding.auto,
+                                                majorGridLines:
+                                                    MajorGridLines(width: 0),
+                                                // arrangeByIndex: true,
+                                                // zoomFactor: 0.2,
+                                                //Hide the axis line of y-axis
+                                                axisLine: AxisLine(width: 0)),
+                                            primaryYAxis: NumericAxis(
+                                                //Hide the gridlines of y-axis
+                                                // opposedPosition: true,
+                                                // rangePadding: ChartRangePadding.none,
+                                                title:
+                                                    AxisTitle(text: 'minutes'),
+                                                // minimum: 1,
+                                                // maximum: 30,
+                                                interval: 5,
+                                                //Axis label ustomization.
+                                                labelStyle: const TextStyle(
+                                                    color: Colors.blueGrey,
+                                                    fontSize: 10),
+                                                // numberFormat: NumberFormat
+                                                //     .compact(),
+                                                majorGridLines: MajorGridLines(
+                                                    width: 1,
+                                                    color: HexColor('#383E46')),
+                                                //Hide the axis line of y-axis
+                                                axisLine: AxisLine(
+                                                    width: 1,
+                                                    color:
+                                                        HexColor('#383E46'))),
+                                            // primaryYAxis: NumericAxis(
+                                            //     //Hide the gridlines of y-axis
+                                            //     majorGridLines:
+                                            //         MajorGridLines(width: 0),
+                                            //     //Hide the axis line of y-axis
+                                            //     axisLine: AxisLine(width: 3)),
+                                            series: <ChartSeries>[
+                                              SplineSeries<ChartData2, String>(
+                                                  markerSettings:
+                                                      const MarkerSettings(
+                                                          isVisible: true,
+                                                          borderWidth: 1,
+                                                          height: 6,
+                                                          width: 6),
+                                                  dataSource: graph_life,
+                                                  // gst_payable_list,
+                                                  // Bind the color for all the data points from the data source
+                                                  // color: Colors.purple,
+                                                  // selectionBehavior:_selectionBehavior ,
+                                                  pointColorMapper:
+                                                      (ChartData2 data, _) =>
+                                                          Colors.green,
+                                                  xValueMapper:
+                                                      (ChartData2 data, _) =>
+                                                          data.x,
+                                                  yValueMapper:
+                                                      (ChartData2 data, _) =>
+                                                          data.y)
+                                            ])),
+                                  ],
+                                ),
+                              ),
+
+                              Container(
+                                margin: EdgeInsets.all(15),
+                                decoration: BoxDecoration(
+                                    // color: Colors.black.withOpacity(0.65),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      // stops: [0.1, 0.5, 0.7, 0.9],
+                                      colors: [
+                                        HexColor("#020204").withOpacity(0.65),
+                                        HexColor("#36393E").withOpacity(0.65),
+                                      ],
+                                    ),
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //       color: HexColor('#04060F'),
+                                    //       offset: Offset(10, 10),
+                                    //       blurRadius: 10)
+                                    // ],
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: ExpansionTile(
+                                  iconColor: ColorUtils.primary_gold,
+                                  title: Container(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 0,
+                                          top: 15,
+                                          right: 15,
+                                          bottom: 15),
+                                      child: Text(
+                                        "Technique",
+                                        textAlign: TextAlign.left,
                                         style: FontStyleUtility.h15(
                                             fontColor: ColorUtils.primary_grey,
                                             family: 'PM'),
                                       ),
                                     ),
-                                    ListTile(
-                                      title: Text(
-                                        '2.   Try edging',
-                                        style: FontStyleUtility.h15(
-                                            fontColor: ColorUtils.primary_grey,
-                                            family: 'PM'),
-                                      ),
-                                    ),
-                                    ListTile(
-                                      title: Text(
-                                        '3.   Use different tools',
-                                        style: FontStyleUtility.h15(
-                                            fontColor: ColorUtils.primary_grey,
-                                            family: 'PM'),
-                                      ),
-                                    ),
-                                    ListTile(
-                                      title: Text(
-                                        '4.   Try edging',
-                                        style: FontStyleUtility.h15(
-                                            fontColor: ColorUtils.primary_grey,
-                                            family: 'PM'),
-                                      ),
-                                    ),
-                                    ListTile(
-                                      title: Text(
-                                        '5.   Use different tools',
-                                        style: FontStyleUtility.h15(
-                                            fontColor: ColorUtils.primary_grey,
-                                            family: 'PM'),
-                                      ),
+                                  ),
+                                  children: <Widget>[
+                                    ListView.builder(
+                                      itemCount: List_content.length,
+                                      shrinkWrap: true,
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 15),
+                                      physics: ClampingScrollPhysics(),
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${index + 1}. ",
+                                              textAlign: TextAlign.justify,
+                                              style: FontStyleUtility.h15(
+                                                  fontColor:
+                                                      ColorUtils.primary_grey,
+                                                  family: 'PM'),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                List_content[index],
+                                                textAlign: TextAlign.left,
+                                                style: FontStyleUtility.h15(
+                                                    fontColor:
+                                                        ColorUtils.primary_grey,
+                                                    family: 'PM'),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     ),
                                   ],
-                                )),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
+                                ),
+                              ),
+                              // Container(
+                              //     margin: EdgeInsets.all(15),
+                              //     decoration: BoxDecoration(
+                              //         // color: Colors.black.withOpacity(0.65),
+                              //         gradient: LinearGradient(
+                              //           begin: Alignment.centerLeft,
+                              //           end: Alignment.centerRight,
+                              //           // stops: [0.1, 0.5, 0.7, 0.9],
+                              //           colors: [
+                              //             HexColor("#020204").withOpacity(0.65),
+                              //             HexColor("#36393E").withOpacity(0.65),
+                              //           ],
+                              //         ),
+                              //         // boxShadow: [
+                              //         //   BoxShadow(
+                              //         //       color: HexColor('#04060F'),
+                              //         //       offset: Offset(10, 10),
+                              //         //       blurRadius: 10)
+                              //         // ],
+                              //         borderRadius: BorderRadius.circular(20)),
+                              //     child: Column(
+                              //       crossAxisAlignment:
+                              //           CrossAxisAlignment.start,
+                              //       children: [
+                              //         Container(
+                              //           child: Padding(
+                              //             padding: const EdgeInsets.only(
+                              //                 left: 40,
+                              //                 top: 15,
+                              //                 right: 15,
+                              //                 bottom: 15),
+                              //             child: Text(
+                              //               "Technique",
+                              //               style: FontStyleUtility.h15(
+                              //                   fontColor:
+                              //                       ColorUtils.primary_grey,
+                              //                   family: 'PM'),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //         Container(
+                              //         height: 500,
+                              //           child: ListView.builder(
+                              //             itemCount: List_content.length,
+                              //               shrinkWrap: true,
+                              //               padding: EdgeInsets.symmetric(horizontal: 15),
+                              //               physics: ClampingScrollPhysics(),
+                              //               itemBuilder: (BuildContext context, int index){
+                              //               return Row(
+                              //                 crossAxisAlignment:
+                              //                 CrossAxisAlignment.start,
+                              //                 children: [
+                              //                   Text(
+                              //                     "${index+1}. ",
+                              //                     textAlign: TextAlign.justify,
+                              //                     style: FontStyleUtility.h15(
+                              //                         fontColor:
+                              //                         ColorUtils.primary_grey,
+                              //                         family: 'PM'),
+                              //                   ),
+                              //                   Expanded(
+                              //                     child: Text(
+                              //                       List_content[index],
+                              //                       textAlign: TextAlign.justify,
+                              //                       style: FontStyleUtility.h15(
+                              //                           fontColor:
+                              //                           ColorUtils.primary_grey,
+                              //                           family: 'PM'),
+                              //                     ),
+                              //                   ),
+                              //                 ],
+                              //               );
+                              //               },
+                              //           ),
+                              //         ),
+                              //
+                              //       ],
+                              //     )),
+                              SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                    ],
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ))
+              )),
+        )
       ],
     );
   }
@@ -4441,13 +5404,19 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   startWatch() {
     setState(() {
       timer_started = true;
-
       _swipe_setup_controller.m_running = true;
       startStop = false;
       paused = false;
       started = false;
       watch.start();
       timer = Timer.periodic(Duration(milliseconds: 100), updateTime);
+    });
+  }
+
+  startWatch2() {
+    setState(() {
+      watch2.start();
+      timer2 = Timer.periodic(Duration(milliseconds: 100), updateTime2);
     });
   }
 
@@ -4545,10 +5514,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         // getUSerModelList(userInfoModel_email);
         if (getMasturbationMethod!.error == false) {
           // hideLoader(context);
-          debugPrint(
-              '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${getMasturbationMethod!.data!.length}');
-
-          if(_masturbation_screen_controller.method_list.isNotEmpty){
+          debugPrint('2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${getMasturbationMethod!.data!.length}');
+          if (_masturbation_screen_controller.method_list.isNotEmpty) {
             _masturbation_screen_controller.method_list.clear();
           }
           for (var i = 0; i < getMasturbationMethod!.data!.length; i++) {
@@ -4615,7 +5582,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
       postMasturbationMethod = PostMasturbationMethod.fromJson(data);
       print(postMasturbationMethod);
       if (postMasturbationMethod!.error == false) {
-       await Masturbation_Get_Method();
+        await Masturbation_Get_Method();
         CommonWidget().showToaster(msg: postMasturbationMethod!.message!);
         // hideLoader(context);
       } else {
@@ -4677,6 +5644,10 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
               var datar = ColumnSeries(
                   dataSource: m_screenWeeklyDataModel!.data![i].days!,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(5),
+                    topLeft: Radius.circular(5),
+                  ),
                   pointColorMapper: (Days_weekly data, _) =>
                       HexColor(weeklyData!.data![i].days![k].colorCode!),
                   xValueMapper: (Days_weekly data, _) => DateFormat('EEEE')
@@ -4996,7 +5967,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         "${URLConstants.base_url}${URLConstants.masturbation_get_lifetime_data}?userId=$idUser";
 
     try {
-      showLoader(context);
+      // showLoader(context);
       var response = await http.get(Uri.parse(url));
       print(response.body);
       print(response.request);
@@ -5009,7 +5980,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         m_screenLifeTimeDataModel = M_ScreenLifeTimeDataModel.fromJson(data);
         // getUSerModelList(userInfoModel_email);
         if (m_screenLifeTimeDataModel!.error == false) {
-          hideLoader(context);
+          // hideLoader(context);
           debugPrint(
               '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${m_screenLifeTimeDataModel!.data!.length}');
           // CommonWidget().showToaster(msg: breathingGetModel!.message!);
@@ -5048,8 +6019,13 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             var y = double.parse((totalTime / 60).toString());
 
             setState(() {
-              lifetime_data_list
-                  .add(ChartData2(formattedTime, x1!, y, '#75C043', y));
+              lifetime_data_list.add(ChartData2(
+                  formattedTime,
+                  x1!,
+                  y,
+                  '#75C043',
+                  double.parse(m_screenLifeTimeDataModel!
+                      .data![0].methods![i].pauses!)));
             });
             // print(lifetime_data_list[i].x1);
           }
@@ -5057,16 +6033,16 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
           return m_screenWeeklyDataModel;
         } else {
-          hideLoader(context);
+          // hideLoader(context);
 
           // CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
           return null;
         }
       } else if (response.statusCode == 422) {
-        hideLoader(context);
+        // hideLoader(context);
         CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
       } else if (response.statusCode == 401) {
-        hideLoader(context);
+        // hideLoader(context);
         CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
       } else {
         // CommonWidget().showToaster(msg: msg.toString());
@@ -5089,7 +6065,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         "${URLConstants.base_url}${URLConstants.masturbation_get_daily_data}?userId=$idUser&createdDate=$selected_date";
 
     try {
-      showLoader(context);
+      // showLoader(context);
       var response = await http.get(Uri.parse(url));
       print(response.body);
       print(response.request);
@@ -5106,7 +6082,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
           loading = false;
         });
         if (m_screenDailyDataModel!.error == false) {
-          hideLoader(context);
+          // hideLoader(context);
           debugPrint(
               '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${m_screenDailyDataModel!.data!.length}');
           // CommonWidget().showToaster(msg: breathingGetModel!.message!);
@@ -5241,16 +6217,15 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
           print(_masturbation_screen_controller.method_list);
           return m_screenWeeklyDataModel;
         } else {
-          hideLoader(context);
-
+          // hideLoader(context);
           // CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
           return null;
         }
       } else if (response.statusCode == 422) {
-        hideLoader(context);
+        // hideLoader(context);
         CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
       } else if (response.statusCode == 401) {
-        hideLoader(context);
+        // hideLoader(context);
         CommonWidget().showToaster(msg: m_screenWeeklyDataModel!.message!);
       } else {
         // CommonWidget().showToaster(msg: msg.toString());

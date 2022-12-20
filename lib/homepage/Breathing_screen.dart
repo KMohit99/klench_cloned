@@ -15,6 +15,7 @@ import 'package:klench_/homepage/controller/breathing_controller.dart';
 import 'package:klench_/utils/TexrUtils.dart';
 import 'package:klench_/utils/common_widgets.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
 
 import '../Dashboard/dashboard_screen.dart';
@@ -80,7 +81,8 @@ class _BreathingScreenState extends State<BreathingScreen>
                 });
                 _breathing_controller.sets++;
                 await _breathing_controller.Breathing_post_API(context);
-                await _kegel_controller.update_notified_status(context: context,status: 'false');
+                await _kegel_controller.update_notified_status(
+                    context: context, status: 'false');
                 // if (_breathing_controller.breathingPostModel!.error == false) {
                 await getdata();
                 // }
@@ -435,29 +437,29 @@ class _BreathingScreenState extends State<BreathingScreen>
         vsync: this, duration: const Duration(milliseconds: 500));
     _animationController_middle!.forward();
     _animation_middle =
-    Tween(begin: 15.0, end: 30.0).animate(_animationController_middle!)
-      ..addStatusListener((status) {
-        // print(status);
-        // shadow_animation1_completed = true;
-      });
+        Tween(begin: 15.0, end: 30.0).animate(_animationController_middle!)
+          ..addStatusListener((status) {
+            // print(status);
+            // shadow_animation1_completed = true;
+          });
     _animation_middle2 =
-    Tween(begin: 15.0, end: 60.0).animate(_animationController_middle!)
-      ..addStatusListener((status) {
-        // print(status);
-        // shadow_animation1_completed = true;
-      });
+        Tween(begin: 15.0, end: 60.0).animate(_animationController_middle!)
+          ..addStatusListener((status) {
+            // print(status);
+            // shadow_animation1_completed = true;
+          });
     _animation_middle3 =
-    Tween(begin: 15.0, end: 160.0).animate(_animationController_middle!)
-      ..addStatusListener((status) {
-        // print(status);
-        // shadow_animation1_completed = true;
-      });
+        Tween(begin: 15.0, end: 160.0).animate(_animationController_middle!)
+          ..addStatusListener((status) {
+            // print(status);
+            // shadow_animation1_completed = true;
+          });
     _animation_middle4 =
-    Tween(begin: 15.0, end: 120.0).animate(_animationController_middle!)
-      ..addStatusListener((status) {
-        // print(status);
-        // shadow_animation1_completed = true;
-      });
+        Tween(begin: 15.0, end: 120.0).animate(_animationController_middle!)
+          ..addStatusListener((status) {
+            // print(status);
+            // shadow_animation1_completed = true;
+          });
   }
 
   @override
@@ -484,6 +486,12 @@ class _BreathingScreenState extends State<BreathingScreen>
 
   Future getdata() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      print("insssiiiiiii");
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('last_route', "/breathing");
+      String? lastRoute = prefs.getString('last_route');
+      print("lastRoute ${lastRoute}");
+
       await _breathing_controller.Breathing_get_API(context);
       if (_breathing_controller.breathingGetModel!.error == false) {
         setState(() {
@@ -495,8 +503,7 @@ class _BreathingScreenState extends State<BreathingScreen>
   }
 
   final Kegel_controller _kegel_controller =
-  Get.put(Kegel_controller(), tag: Kegel_controller().toString());
-
+      Get.put(Kegel_controller(), tag: Kegel_controller().toString());
 
   @override
   Widget build(BuildContext context) {
@@ -547,64 +554,6 @@ class _BreathingScreenState extends State<BreathingScreen>
         Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: Colors.transparent,
-            // appBar: AppBar(
-            //   backgroundColor: Colors.transparent,
-            //   automaticallyImplyLeading: false,
-            //   title: Text(
-            //     Textutils.breathing,
-            //     style: FontStyleUtility.h16(
-            //         fontColor: ColorUtils.primary_gold, family: 'PM'),
-            //   ),
-            //   centerTitle: true,
-            //   actions: [
-            //     Container(
-            //         margin: EdgeInsets.symmetric(horizontal: 10),
-            //         alignment: Alignment.center,
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.end,
-            //           crossAxisAlignment: CrossAxisAlignment.center,
-            //           children: [
-            //             Image.asset(
-            //               AssetUtils.star_icon,
-            //               color: (_breathing_controller.sets >= 1
-            //                   ? ColorUtils.primary_gold
-            //                   : Colors.grey),
-            //               height: 22,
-            //               width: 22,
-            //             ),
-            //             SizedBox(
-            //               width: 7,
-            //             ),
-            //             Image.asset(
-            //               AssetUtils.star_icon,
-            //               height: 22,
-            //               color: (_breathing_controller.sets >= 2
-            //                   ? ColorUtils.primary_gold
-            //                   : Colors.grey),
-            //               width: 22,
-            //             ),
-            //             SizedBox(
-            //               width: 7,
-            //             ),
-            //             Image.asset(
-            //               AssetUtils.star_icon,
-            //               color: (_breathing_controller.sets >= 3
-            //                   ? ColorUtils.primary_gold
-            //                   : Colors.grey),
-            //               height: 22,
-            //               width: 22,
-            //             ),
-            //           ],
-            //         )),
-            //
-            //     // IconButton(
-            //     //     onPressed: () {},
-            //     //     icon: Icon(
-            //     //       Icons.notifications_none_rounded,
-            //     //       color: ColorUtils.primary_gold,
-            //     //     ))
-            //   ],
-            // ),
             body: NestedScrollView(
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
@@ -621,6 +570,45 @@ class _BreathingScreenState extends State<BreathingScreen>
                     //   style: FontStyleUtility.h16(
                     //       fontColor: ColorUtils.primary_gold, family: 'PM'),
                     // ),
+                    leading: GestureDetector(
+                      onTap: () {
+                        (started
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        DashboardScreen(page: 1)))
+                            // Navigator.of(context).pushReplacement(
+                            //         MaterialPageRoute(
+                            //             builder: (context) => DashboardScreen(
+                            //                   page: 1,
+                            //                 )),
+                            //       )
+                            : CommonWidget().showErrorToaster(
+                                msg: "Please finish the method"));
+                      },
+                      child: Container(
+                          width: 41,
+                          margin: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                              gradient: LinearGradient(
+                                  begin: const Alignment(-1.0, -4.0),
+                                  end: const Alignment(1.0, 4.0),
+                                  colors: [
+                                    HexColor('#020204'),
+                                    HexColor('#36393E')
+                                  ])),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Image.asset(
+                              AssetUtils.arrow_back,
+                              height: 14,
+                              width: 15,
+                            ),
+                          )),
+                    ),
                     centerTitle: true,
                     actions: [
                       Container(
@@ -801,23 +789,22 @@ class _BreathingScreenState extends State<BreathingScreen>
                       Container(
                         height: (screenHeight >= 600 && screenHeight <= 700
                             ? (animation_started_middle
-                            ? _animation_middle2!.value
-                            : 15)
+                                ? _animation_middle2!.value
+                                : 15)
                             : (screenHeight >= 700 && screenHeight <= 800
-                            ? (animation_started_middle
-                            ? _animation_middle!.value
-                            : 15)
-                            : (screenHeight >= 800 && screenHeight <= 850
-                            ? (animation_started_middle
-                            ? _animation_middle4!.value
-                            : 15)
-                            : (screenHeight >= 850
-                            ? (animation_started_middle
-                            ? _animation_middle3!.value
-                            : 15)
-                            : 0)))),
+                                ? (animation_started_middle
+                                    ? _animation_middle!.value
+                                    : 15)
+                                : (screenHeight >= 800 && screenHeight <= 850
+                                    ? (animation_started_middle
+                                        ? _animation_middle4!.value
+                                        : 15)
+                                    : (screenHeight >= 850
+                                        ? (animation_started_middle
+                                            ? _animation_middle3!.value
+                                            : 15)
+                                        : 0)))),
                       ),
-
 
                       AvatarGlow(
                           endRadius: 130.0,
@@ -852,7 +839,6 @@ class _BreathingScreenState extends State<BreathingScreen>
                                     BoxShadow(
                                       color: (animation_started
                                           ? ColorUtils.primary_gold
-
                                           : Colors.transparent),
                                       spreadRadius: (animation_started
                                           ? (shadow_animation1_completed
@@ -866,147 +852,147 @@ class _BreathingScreenState extends State<BreathingScreen>
                               ),
                               (animation_started
                                   ? DottedBorder(
-                                borderType: BorderType.Oval,
-                                strokeWidth: 7.5,
-                                dashPattern: [0, 19],
-                                strokeCap: StrokeCap.round,
-                                radius: Radius.circular(100),
-                                padding: EdgeInsets.all(0),
-                                color: Colors.black,
-                                child: Container(
-                                  height: 350,
-                                  width: 350,
-                                  padding: EdgeInsets.all(5),
-                                ),
-                              )
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 7.5,
+                                      dashPattern: [0, 19],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 350,
+                                        width: 350,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                borderType: BorderType.Oval,
-                                strokeWidth: 7.5,
-                                dashPattern: [0, 19],
-                                strokeCap: StrokeCap.round,
-                                radius: Radius.circular(100),
-                                padding: EdgeInsets.all(0),
-                                color: Colors.black,
-                                child: Container(
-                                  height: 320,
-                                  width: 320,
-                                  padding: EdgeInsets.all(5),
-                                ),
-                              )
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 7.5,
+                                      dashPattern: [0, 19],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 320,
+                                        width: 320,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                borderType: BorderType.Oval,
-                                strokeWidth: 7,
-                                dashPattern: [0, 19],
-                                strokeCap: StrokeCap.round,
-                                radius: Radius.circular(100),
-                                padding: EdgeInsets.all(0),
-                                color: Colors.black,
-                                child: Container(
-                                  height: 290,
-                                  width: 290,
-                                  padding: EdgeInsets.all(5),
-                                ),
-                              )
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 7,
+                                      dashPattern: [0, 19],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 290,
+                                        width: 290,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                borderType: BorderType.Oval,
-                                strokeWidth: 8,
-                                dashPattern: [0, 19],
-                                strokeCap: StrokeCap.round,
-                                radius: Radius.circular(100),
-                                padding: EdgeInsets.all(0),
-                                color: Colors.black,
-                                child: Container(
-                                  height: 265,
-                                  width: 265,
-                                  padding: EdgeInsets.all(5),
-                                ),
-                              )
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 8,
+                                      dashPattern: [0, 19],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 265,
+                                        width: 265,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                borderType: BorderType.Oval,
-                                strokeWidth: 7,
-                                dashPattern: [0, 18],
-                                strokeCap: StrokeCap.round,
-                                radius: Radius.circular(100),
-                                padding: EdgeInsets.all(0),
-                                color: Colors.black,
-                                child: Container(
-                                  height: 240,
-                                  width: 240,
-                                  padding: EdgeInsets.all(5),
-                                ),
-                              )
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 7,
+                                      dashPattern: [0, 18],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 240,
+                                        width: 240,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                borderType: BorderType.Oval,
-                                strokeWidth: 6,
-                                dashPattern: [0, 16],
-                                strokeCap: StrokeCap.round,
-                                radius: Radius.circular(100),
-                                padding: EdgeInsets.all(0),
-                                color: Colors.black,
-                                child: Container(
-                                  height: 220,
-                                  width: 220,
-                                  padding: EdgeInsets.all(5),
-                                ),
-                              )
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 6,
+                                      dashPattern: [0, 16],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 220,
+                                        width: 220,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                borderType: BorderType.Oval,
-                                strokeWidth: 5,
-                                dashPattern: [0, 14],
-                                strokeCap: StrokeCap.round,
-                                radius: Radius.circular(100),
-                                padding: EdgeInsets.all(0),
-                                color: Colors.black,
-                                child: Container(
-                                  height: 200,
-                                  width: 200,
-                                  padding: EdgeInsets.all(5),
-                                ),
-                              )
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 5,
+                                      dashPattern: [0, 14],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 200,
+                                        width: 200,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                borderType: BorderType.Oval,
-                                strokeWidth: 4,
-                                dashPattern: [0, 12],
-                                strokeCap: StrokeCap.round,
-                                radius: Radius.circular(100),
-                                padding: EdgeInsets.all(0),
-                                color: Colors.black,
-                                child: Container(
-                                  height: 180,
-                                  width: 180,
-                                  padding: EdgeInsets.all(5),
-                                ),
-                              )
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 4,
+                                      dashPattern: [0, 12],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 180,
+                                        width: 180,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                borderType: BorderType.Oval,
-                                strokeWidth: 3,
-                                dashPattern: [0, 10],
-                                strokeCap: StrokeCap.round,
-                                radius: Radius.circular(100),
-                                padding: EdgeInsets.all(0),
-                                color: Colors.black,
-                                child: Container(
-                                  height: 160,
-                                  width: 160,
-                                  padding: EdgeInsets.all(5),
-                                ),
-                              )
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 3,
+                                      dashPattern: [0, 10],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 160,
+                                        width: 160,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
                                   : SizedBox.shrink()),
                               Container(
                                 height: (animation_started
@@ -1109,7 +1095,13 @@ class _BreathingScreenState extends State<BreathingScreen>
                                                   style: GoogleFonts
                                                       .sourceSerifPro(
                                                     textStyle: TextStyle(
-                                                        color:(timer_started? HexColor('#F5C921').withOpacity(0.4):HexColor('#F5C921')),
+                                                        color: (timer_started
+                                                            ? HexColor(
+                                                                    '#F5C921')
+                                                                .withOpacity(
+                                                                    0.4)
+                                                            : HexColor(
+                                                                '#F5C921')),
                                                         fontSize: 30,
                                                         fontWeight:
                                                             FontWeight.w600),
@@ -1147,26 +1139,25 @@ class _BreathingScreenState extends State<BreathingScreen>
                                 ),
                               ),
                             ],
-                          )
-                      ),
+                          )),
                       Container(
                         height: (screenHeight >= 600 && screenHeight <= 700
                             ? (animation_started_middle
-                            ? _animation_middle2!.value
-                            : 15)
+                                ? _animation_middle2!.value
+                                : 15)
                             : (screenHeight >= 700 && screenHeight <= 800
-                            ? (animation_started_middle
-                            ? _animation_middle!.value
-                            : 15)
-                            : (screenHeight >= 800 && screenHeight <= 850
-                            ? (animation_started_middle
-                            ? _animation_middle4!.value
-                            : 15)
-                            : (screenHeight >= 850
-                            ? (animation_started_middle
-                            ? _animation_middle3!.value
-                            : 15)
-                            : 0)))),
+                                ? (animation_started_middle
+                                    ? _animation_middle!.value
+                                    : 15)
+                                : (screenHeight >= 800 && screenHeight <= 850
+                                    ? (animation_started_middle
+                                        ? _animation_middle4!.value
+                                        : 15)
+                                    : (screenHeight >= 850
+                                        ? (animation_started_middle
+                                            ? _animation_middle3!.value
+                                            : 15)
+                                        : 0)))),
                       ),
 
                       Text(('$counter/10'),
@@ -1192,10 +1183,10 @@ class _BreathingScreenState extends State<BreathingScreen>
                             if (startStop) {
                               if (_breathing_controller.sets <= 3) {
                                 startWatch();
-                                await _kegel_controller.update_notified_status(context: context,status: 'true');
+                                await _kegel_controller.update_notified_status(
+                                    context: context, status: 'true');
                                 middle_animation();
                                 back_wallpaper = false;
-
                               } else {
                                 CommonWidget().showErrorToaster(
                                     msg:
@@ -1203,7 +1194,8 @@ class _BreathingScreenState extends State<BreathingScreen>
                               }
                             } else {
                               await _animationController_middle!.reverse();
-                              await _kegel_controller.update_notified_status(context: context,status: 'false');
+                              await _kegel_controller.update_notified_status(
+                                  context: context, status: 'false');
                               stopWatch();
                               setState(() {
                                 back_wallpaper = true;
@@ -1258,170 +1250,295 @@ class _BreathingScreenState extends State<BreathingScreen>
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
                       Container(
-                        decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.58),
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              // stops: [0.1, 0.5, 0.7, 0.9],
-                              colors: [
-                                HexColor("#020204").withOpacity(0.8),
-                                // HexColor("#151619").withOpacity(0.63),
-                                HexColor("#36393E").withOpacity(0.8),
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(20)),
+                        // decoration: BoxDecoration(
+                        //     color: Colors.black.withOpacity(0.58),
+                        //     gradient: LinearGradient(
+                        //       begin: Alignment.centerLeft,
+                        //       end: Alignment.centerRight,
+                        //       // stops: [0.1, 0.5, 0.7, 0.9],
+                        //       colors: [
+                        //         HexColor("#020204").withOpacity(0.8),
+                        //         // HexColor("#151619").withOpacity(0.63),
+                        //         HexColor("#36393E").withOpacity(0.8),
+                        //       ],
+                        //     ),
+                        //     borderRadius: BorderRadius.circular(20)),
                         child: Padding(
+                          // padding: const EdgeInsets.symmetric(
+                          //     vertical: 15, horizontal: 8),
                           padding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 8),
+                              vertical: 0, horizontal: 0),
                           child: Column(
                             children: [
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
+                                  // Container(
+                                  //   height: 50,
+                                  //   decoration: BoxDecoration(
+                                  //       // color: Colors.black.withOpacity(0.65),
+                                  //       gradient: LinearGradient(
+                                  //         begin: Alignment.centerLeft,
+                                  //         end: Alignment.centerRight,
+                                  //         // stops: [0.1, 0.5, 0.7, 0.9],
+                                  //         colors: [
+                                  //           HexColor("#020204").withOpacity(1),
+                                  //           HexColor("#36393E").withOpacity(1),
+                                  //         ],
+                                  //       ),
+                                  //       boxShadow: [
+                                  //         BoxShadow(
+                                  //           color: HexColor('#04060F'),
+                                  //           offset: Offset(10, 10),
+                                  //           blurRadius: 20,
+                                  //         ),
+                                  //       ],
+                                  //       borderRadius:
+                                  //           BorderRadius.circular(10)),
+                                  //   child: Container(
+                                  //       alignment: Alignment.center,
+                                  //       margin: EdgeInsets.symmetric(),
+                                  //       child: Text(
+                                  //         'Breathing information',
+                                  //         style: FontStyleUtility.h15(
+                                  //             fontColor: HexColor('#AAAAAA'),
+                                  //             family: 'PM'),
+                                  //       )),
+                                  // ),
                                   Container(
-                                    height: 50,
+                                    // margin: EdgeInsets.all(15),
                                     decoration: BoxDecoration(
-                                        // color: Colors.black.withOpacity(0.65),
+                                      // color: Colors.black.withOpacity(0.65),
                                         gradient: LinearGradient(
                                           begin: Alignment.centerLeft,
                                           end: Alignment.centerRight,
                                           // stops: [0.1, 0.5, 0.7, 0.9],
                                           colors: [
-                                            HexColor("#020204").withOpacity(1),
-                                            HexColor("#36393E").withOpacity(1),
+                                            HexColor("#020204").withOpacity(0.65),
+                                            HexColor("#36393E").withOpacity(0.65),
                                           ],
                                         ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: HexColor('#04060F'),
-                                            offset: Offset(10, 10),
-                                            blurRadius: 20,
-                                          ),
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Container(
-                                        alignment: Alignment.center,
-                                        margin: EdgeInsets.symmetric(),
-                                        child: Text(
-                                          'Breathing information',
-                                          style: FontStyleUtility.h15(
-                                              fontColor: HexColor('#AAAAAA'),
-                                              family: 'PM'),
-                                        )),
-                                  ),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                        // color: Colors.black.withOpacity(0.65),
-                                        //   gradient: LinearGradient(
-                                        //     begin: Alignment.centerLeft,
-                                        //     end: Alignment.centerRight,
-                                        //     // stops: [0.1, 0.5, 0.7, 0.9],
-                                        //     colors: [
-                                        //       HexColor("#020204").withOpacity(1),
-                                        //       HexColor("#36393E").withOpacity(1),
-                                        //     ],
-                                        //   ),
-                                        //   boxShadow: [
-                                        //     BoxShadow(
+                                        // boxShadow: [
+                                        //   BoxShadow(
                                         //       color: HexColor('#04060F'),
-                                        //       offset: Offset(10,10),
-                                        //       blurRadius: 20,
-                                        //     ),
-                                        //   ],
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 17, vertical: 15),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            child: Text(
-                                              '1. Inhale 4',
-                                              style: FontStyleUtility.h15(
-                                                  fontColor:
-                                                      HexColor('#DCDCDC'),
-                                                  family: 'PR'),
-                                            ),
+                                        //       offset: Offset(10, 10),
+                                        //       blurRadius: 10)
+                                        // ],
+                                        borderRadius: BorderRadius.circular(20)),
+                                    child: ExpansionTile(
+                                      iconColor: ColorUtils.primary_gold,
+                                      title: Container(
+
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 0,
+                                              top: 15,
+                                              right: 15,
+                                              bottom: 15),
+                                          child: Text(
+                                            "Technique",
+                                            textAlign: TextAlign.left,
+                                            style: FontStyleUtility.h16(
+                                                fontColor: ColorUtils.primary_gold,
+                                                family: 'PR'),
                                           ),
-                                          SizedBox(
-                                            height: 17,
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              '2. Hold 4 sec',
-                                              style: FontStyleUtility.h15(
-                                                  fontColor:
-                                                      HexColor('#DCDCDC'),
-                                                  family: 'PR'),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 17,
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              '3. Exhale 4 sec',
-                                              style: FontStyleUtility.h15(
-                                                  fontColor:
-                                                      HexColor('#DCDCDC'),
-                                                  family: 'PR'),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 17,
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              '4. Repeat process 10 times is consider 1 set',
-                                              style: FontStyleUtility.h15(
-                                                  fontColor:
-                                                      HexColor('#DCDCDC'),
-                                                  family: 'PR'),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 17,
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              '5. After user completes 1 set, user will receive the color star',
-                                              style: FontStyleUtility.h15(
-                                                  fontColor:
-                                                      HexColor('#DCDCDC'),
-                                                  family: 'PR'),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 17,
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              '6. Star will reset daily',
-                                              style: FontStyleUtility.h15(
-                                                  fontColor:
-                                                      HexColor('#DCDCDC'),
-                                                  family: 'PR'),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-                                        ],
+                                        ),
                                       ),
+                                      children: <Widget>[
+                                        ListView(
+                                          shrinkWrap: true,
+                                          padding:
+                                          EdgeInsets.symmetric(horizontal: 15),
+                                          physics: ClampingScrollPhysics(),
+                                         children: [
+                                           Container(
+                                           child: Text(
+                                             '1. Inhale 4',
+                                             style: FontStyleUtility.h15(
+                                                 fontColor:
+                                                 HexColor('#DCDCDC'),
+                                                 family: 'PR'),
+                                           ),
+                                         ),
+                                           SizedBox(
+                                             height: 17,
+                                           ),
+                                           Container(
+                                             child: Text(
+                                               '2. Hold 4 sec',
+                                               style: FontStyleUtility.h15(
+                                                   fontColor:
+                                                   HexColor('#DCDCDC'),
+                                                   family: 'PR'),
+                                             ),
+                                           ),
+                                           SizedBox(
+                                             height: 17,
+                                           ),
+                                           Container(
+                                             child: Text(
+                                               '3. Exhale 4 sec',
+                                               style: FontStyleUtility.h15(
+                                                   fontColor:
+                                                   HexColor('#DCDCDC'),
+                                                   family: 'PR'),
+                                             ),
+                                           ),
+                                           SizedBox(
+                                             height: 17,
+                                           ),
+                                           Container(
+                                             child: Text(
+                                               '4. Repeat process 10 times is consider 1 set',
+                                               style: FontStyleUtility.h15(
+                                                   fontColor:
+                                                   HexColor('#DCDCDC'),
+                                                   family: 'PR'),
+                                             ),
+                                           ),
+                                           SizedBox(
+                                             height: 17,
+                                           ),
+                                           Container(
+                                             child: Text(
+                                               '5. After user completes 1 set, user will receive the color star',
+                                               style: FontStyleUtility.h15(
+                                                   fontColor:
+                                                   HexColor('#DCDCDC'),
+                                                   family: 'PR'),
+                                             ),
+                                           ),
+                                           SizedBox(
+                                             height: 17,
+                                           ),
+                                           Container(
+                                             child: Text(
+                                               '6. Star will reset daily',
+                                               style: FontStyleUtility.h15(
+                                                   fontColor:
+                                                   HexColor('#DCDCDC'),
+                                                   family: 'PR'),
+                                             ),
+                                           ),
+                                           SizedBox(
+                                             height: 20,
+                                           ),],
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
+
+                                  // Container(
+                                  //   width: MediaQuery.of(context).size.width,
+                                  //   decoration: BoxDecoration(
+                                  //       // color: Colors.black.withOpacity(0.65),
+                                  //       //   gradient: LinearGradient(
+                                  //       //     begin: Alignment.centerLeft,
+                                  //       //     end: Alignment.centerRight,
+                                  //       //     // stops: [0.1, 0.5, 0.7, 0.9],
+                                  //       //     colors: [
+                                  //       //       HexColor("#020204").withOpacity(1),
+                                  //       //       HexColor("#36393E").withOpacity(1),
+                                  //       //     ],
+                                  //       //   ),
+                                  //       //   boxShadow: [
+                                  //       //     BoxShadow(
+                                  //       //       color: HexColor('#04060F'),
+                                  //       //       offset: Offset(10,10),
+                                  //       //       blurRadius: 20,
+                                  //       //     ),
+                                  //       //   ],
+                                  //       borderRadius:
+                                  //           BorderRadius.circular(10)),
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.symmetric(
+                                  //         horizontal: 17, vertical: 15),
+                                  //     child: Column(
+                                  //       crossAxisAlignment:
+                                  //           CrossAxisAlignment.start,
+                                  //       children: [
+                                  //         Container(
+                                  //           child: Text(
+                                  //             '1. Inhale 4',
+                                  //             style: FontStyleUtility.h15(
+                                  //                 fontColor:
+                                  //                     HexColor('#DCDCDC'),
+                                  //                 family: 'PR'),
+                                  //           ),
+                                  //         ),
+                                  //         SizedBox(
+                                  //           height: 17,
+                                  //         ),
+                                  //         Container(
+                                  //           child: Text(
+                                  //             '2. Hold 4 sec',
+                                  //             style: FontStyleUtility.h15(
+                                  //                 fontColor:
+                                  //                     HexColor('#DCDCDC'),
+                                  //                 family: 'PR'),
+                                  //           ),
+                                  //         ),
+                                  //         SizedBox(
+                                  //           height: 17,
+                                  //         ),
+                                  //         Container(
+                                  //           child: Text(
+                                  //             '3. Exhale 4 sec',
+                                  //             style: FontStyleUtility.h15(
+                                  //                 fontColor:
+                                  //                     HexColor('#DCDCDC'),
+                                  //                 family: 'PR'),
+                                  //           ),
+                                  //         ),
+                                  //         SizedBox(
+                                  //           height: 17,
+                                  //         ),
+                                  //         Container(
+                                  //           child: Text(
+                                  //             '4. Repeat process 10 times is consider 1 set',
+                                  //             style: FontStyleUtility.h15(
+                                  //                 fontColor:
+                                  //                     HexColor('#DCDCDC'),
+                                  //                 family: 'PR'),
+                                  //           ),
+                                  //         ),
+                                  //         SizedBox(
+                                  //           height: 17,
+                                  //         ),
+                                  //         Container(
+                                  //           child: Text(
+                                  //             '5. After user completes 1 set, user will receive the color star',
+                                  //             style: FontStyleUtility.h15(
+                                  //                 fontColor:
+                                  //                     HexColor('#DCDCDC'),
+                                  //                 family: 'PR'),
+                                  //           ),
+                                  //         ),
+                                  //         SizedBox(
+                                  //           height: 17,
+                                  //         ),
+                                  //         Container(
+                                  //           child: Text(
+                                  //             '6. Star will reset daily',
+                                  //             style: FontStyleUtility.h15(
+                                  //                 fontColor:
+                                  //                     HexColor('#DCDCDC'),
+                                  //                 family: 'PR'),
+                                  //           ),
+                                  //         ),
+                                  //         SizedBox(
+                                  //           height: 20,
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 15,
+                                  // ),
                                 ],
                               ),
                             ],

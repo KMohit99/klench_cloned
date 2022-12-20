@@ -72,7 +72,7 @@ dependencies:
   firebase_dynamic_links: ^4.3.11
   video_thumbnail: ^0.5.0
   video_thumbnail_imageview: ^0.0.5
-
+#  watch_ble_connection: ^1.0.0
 
 #  firebase_dynamic_links: ^5.0.4
 

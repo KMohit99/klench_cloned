@@ -84,7 +84,7 @@ class SignInScreenController extends GetxController {
         await clear_method();
        // await Get.to(WelcomeVideoScreen(signup: false,));
         await GetUserInfo( context);
-        hideLoader(context);
+        // hideLoader(context);
       } else {
         hideLoader(context);
         CommonWidget().showErrorToaster(msg: "Invalid Details");
@@ -151,7 +151,7 @@ class SignInScreenController extends GetxController {
                     ? level_rank = 2
                     : (userInfoModel!.data![0].levels == 'Hard'
                         ? level_rank = 3
-                        : (userInfoModel!.data![0].levels == 'ထ'
+                        : (userInfoModel!.data![0].levels == 'Infinite'
                             ? level_rank = 4
                             : level_rank = 0)))));
 
@@ -420,7 +420,8 @@ class SignInScreenController extends GetxController {
   }
 
   Future<dynamic> Add_token_API(BuildContext context) async {
-    debugPrint('0-0-0-0-0-0-0 username');
+    debugPrint('0-0-0-0-0-0-0 token');
+
     // try {
     //
     // } catch (e) {

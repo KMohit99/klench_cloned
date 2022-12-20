@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:klench_/homepage/homepage_screen.dart';
 import 'package:klench_/utils/Asset_utils.dart';
 import 'package:klench_/utils/TextStyle_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Authentication/SignUp/local_auth_api.dart';
 import '../Authentication/SingIn/SigIn_screen.dart';
@@ -71,13 +72,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void initState() {
+    // navigateToLastPage();
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
       // Add Your Code here.
       // init();
     });
   }
+  getdata() async {
+    print("insssiiiiiii");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('last_route', "/warmpup");
+    String? lastRoute = prefs.getString('last_route');
+    print("lastRoute ${lastRoute}");
 
+  }
+
+
+  void navigateToLastPage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? lastRoute = prefs.getString('last_route');
+    print("LAST ROUTE :${lastRoute}");
+    if (lastRoute!.isNotEmpty && lastRoute != '/') {
+      Navigator.of(context).pushNamed(lastRoute);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery

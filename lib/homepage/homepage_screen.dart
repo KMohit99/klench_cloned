@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:klench_/homepage/swipe_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 import '../utils/Asset_utils.dart';
@@ -42,18 +43,23 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_){
-
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       // Add Your Code here.
       init();
-
     });
     super.initState();
   }
+
   final Kegel_controller _kegel_controller =
-  Get.put(Kegel_controller(), tag: Kegel_controller().toString());
+      Get.put(Kegel_controller(), tag: Kegel_controller().toString());
 
   init() async {
+    print("insssiiiiiii");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('last_route', "/homepage");
+    String? lastRoute = prefs.getString('last_route');
+    print("lastRoute ${lastRoute}");
+
     await _kegel_controller.Kegel_get_API(context);
     await _kegel_controller.IntroVideo_get_API(context);
   }
@@ -155,98 +161,98 @@ class _HomepageScreenState extends State<HomepageScreen> {
                         margin: const EdgeInsets.symmetric(horizontal: 10),
                         alignment: Alignment.center,
                         child: Obx(() => (_kegel_controller
-                            .isuserinfoLoading.value ==
-                            true
+                                    .isuserinfoLoading.value ==
+                                true
                             ? Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              AssetUtils.star_icon,
-                              color: Colors.grey,
-                              height: 22,
-                              width: 22,
-                            ),
-                            const SizedBox(
-                              width: 7,
-                            ),
-                            Image.asset(
-                              AssetUtils.star_icon,
-                              height: 22,
-                              color: Colors.grey,
-                              width: 22,
-                            ),
-                            const SizedBox(
-                              width: 7,
-                            ),
-                            Image.asset(
-                              AssetUtils.star_icon,
-                              color: Colors.grey,
-                              height: 22,
-                              width: 22,
-                            ),
-                          ],
-                        )
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    AssetUtils.star_icon,
+                                    color: Colors.grey,
+                                    height: 22,
+                                    width: 22,
+                                  ),
+                                  const SizedBox(
+                                    width: 7,
+                                  ),
+                                  Image.asset(
+                                    AssetUtils.star_icon,
+                                    height: 22,
+                                    color: Colors.grey,
+                                    width: 22,
+                                  ),
+                                  const SizedBox(
+                                    width: 7,
+                                  ),
+                                  Image.asset(
+                                    AssetUtils.star_icon,
+                                    color: Colors.grey,
+                                    height: 22,
+                                    width: 22,
+                                  ),
+                                ],
+                              )
                             : Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              AssetUtils.star_icon,
-                              color: (int.parse(_kegel_controller
-                                  .kegelGetModel!
-                                  .data![_kegel_controller
-                                  .kegelGetModel!
-                                  .data!
-                                  .length -
-                                  1]
-                                  .sets!) >=
-                                  1
-                                  ? ColorUtils.primary_gold
-                                  : Colors.grey),
-                              height: 22,
-                              width: 22,
-                            ),
-                            const SizedBox(
-                              width: 7,
-                            ),
-                            Image.asset(
-                              AssetUtils.star_icon,
-                              height: 22,
-                              color: (int.parse(_kegel_controller
-                                  .kegelGetModel!
-                                  .data![_kegel_controller
-                                  .kegelGetModel!
-                                  .data!
-                                  .length -
-                                  1]
-                                  .sets!) >=
-                                  2
-                                  ? ColorUtils.primary_gold
-                                  : Colors.grey),
-                              width: 22,
-                            ),
-                            const SizedBox(
-                              width: 7,
-                            ),
-                            Image.asset(
-                              AssetUtils.star_icon,
-                              color: (int.parse(_kegel_controller
-                                  .kegelGetModel!
-                                  .data![_kegel_controller
-                                  .kegelGetModel!
-                                  .data!
-                                  .length -
-                                  1]
-                                  .sets!) >=
-                                  3
-                                  ? ColorUtils.primary_gold
-                                  : Colors.grey),
-                              height: 22,
-                              width: 22,
-                            ),
-                          ],
-                        )))),
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    AssetUtils.star_icon,
+                                    color: (int.parse(_kegel_controller
+                                                .kegelGetModel!
+                                                .data![_kegel_controller
+                                                        .kegelGetModel!
+                                                        .data!
+                                                        .length -
+                                                    1]
+                                                .sets!) >=
+                                            1
+                                        ? ColorUtils.primary_gold
+                                        : Colors.grey),
+                                    height: 22,
+                                    width: 22,
+                                  ),
+                                  const SizedBox(
+                                    width: 7,
+                                  ),
+                                  Image.asset(
+                                    AssetUtils.star_icon,
+                                    height: 22,
+                                    color: (int.parse(_kegel_controller
+                                                .kegelGetModel!
+                                                .data![_kegel_controller
+                                                        .kegelGetModel!
+                                                        .data!
+                                                        .length -
+                                                    1]
+                                                .sets!) >=
+                                            2
+                                        ? ColorUtils.primary_gold
+                                        : Colors.grey),
+                                    width: 22,
+                                  ),
+                                  const SizedBox(
+                                    width: 7,
+                                  ),
+                                  Image.asset(
+                                    AssetUtils.star_icon,
+                                    color: (int.parse(_kegel_controller
+                                                .kegelGetModel!
+                                                .data![_kegel_controller
+                                                        .kegelGetModel!
+                                                        .data!
+                                                        .length -
+                                                    1]
+                                                .sets!) >=
+                                            3
+                                        ? ColorUtils.primary_gold
+                                        : Colors.grey),
+                                    height: 22,
+                                    width: 22,
+                                  ),
+                                ],
+                              )))),
                     Container(
                       margin: EdgeInsets.symmetric(
                           vertical: (screenHeight >= 600 && screenHeight <= 700
@@ -260,7 +266,10 @@ class _HomepageScreenState extends State<HomepageScreen> {
                             onTap: () {
                               // Get.to(KegelScreen());
                               final int page_no = 0;
-                              Get.to(SwipeScreen(PageNo: page_no,));
+                              // Navigator.of(context).pushNamed('/kegel');
+                              Get.to(SwipeScreen(
+                                PageNo: page_no,
+                              ));
                             },
                             child: Container(
                               margin: EdgeInsets.only(top: 0),
@@ -287,11 +296,10 @@ class _HomepageScreenState extends State<HomepageScreen> {
                               child: Container(
                                 height: 140,
                                 width: 135,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   image: DecorationImage(
                                       alignment: Alignment.center,
-                                      image:
-                                          AssetImage(AssetUtils.home_button)),
+                                      image: AssetImage(AssetUtils.home_button)),
                                 ),
                                 child: Container(
                                   alignment: Alignment.center,
@@ -318,7 +326,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
                               GestureDetector(
                                 onTap: () {
                                   final int page_no = 3;
-                                  Get.to(SwipeScreen(PageNo: page_no,));
+                                  Get.to(SwipeScreen(
+                                    PageNo: page_no,
+                                  ));
                                 },
                                 child: Container(
                                   height: 140,
@@ -352,8 +362,10 @@ class _HomepageScreenState extends State<HomepageScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  final int page_no =1;
-                                  Get.to(SwipeScreen(PageNo: page_no,));
+                                  final int page_no = 1;
+                                  Get.to(SwipeScreen(
+                                    PageNo: page_no,
+                                  ));
                                 },
                                 child: Container(
                                   height: 140,
@@ -387,8 +399,10 @@ class _HomepageScreenState extends State<HomepageScreen> {
                           GestureDetector(
                             onTap: () {
                               final int page_no = 2;
-                              Get.to(SwipeScreen(PageNo: page_no,));
-                              },
+                              Get.to(SwipeScreen(
+                                PageNo: page_no,
+                              ));
+                            },
                             child: Container(
                               height: 140,
                               width: 135,
@@ -681,9 +695,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                       //     .center,
                       children: [
                         GestureDetector(
-                          onTap: () {
-
-                          },
+                          onTap: () {},
                           child: Column(
                             children: [
                               IconButton(
@@ -694,7 +706,6 @@ class _HomepageScreenState extends State<HomepageScreen> {
                                 ),
                                 onPressed: () {
                                   // camera_upload();
-
                                 },
                               ),
                               SizedBox(
@@ -702,7 +713,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                               ),
                               Container(
                                 margin:
-                                const EdgeInsets.symmetric(horizontal: 0),
+                                    const EdgeInsets.symmetric(horizontal: 0),
                                 // height: 45,
                                 // width:(width ?? 300) ,
                                 decoration: BoxDecoration(
@@ -770,7 +781,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                               ),
                               Container(
                                 margin:
-                                const EdgeInsets.symmetric(horizontal: 0),
+                                    const EdgeInsets.symmetric(horizontal: 0),
                                 // height: 45,
                                 // width:(width ?? 300) ,
                                 decoration: BoxDecoration(
@@ -821,5 +832,4 @@ class _HomepageScreenState extends State<HomepageScreen> {
       ),
     );
   }
-
 }

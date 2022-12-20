@@ -85,7 +85,7 @@ class PeeScreenController extends GetxController {
     // } catch (e) {
     //   print('1-1-1-1 Get Purchase ${e.toString()}');
     // }
-    showLoader(context);
+    // showLoader(context);
 
     var response = await http.get(Uri.parse(url));
 
@@ -101,7 +101,7 @@ class PeeScreenController extends GetxController {
       // getUSerModelList(userInfoModel_email);
       if (peeGetModel!.error == false) {
         isLoading(false);
-        hideLoader(context);
+        // hideLoader(context);
         debugPrint(
             '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${peeGetModel!.data!.length}');
         // CommonWidget().showToaster(msg: breathingGetModel!.message!);
@@ -112,19 +112,18 @@ class PeeScreenController extends GetxController {
         return peeGetModel;
       } else {
         isLoading(true);
-
-        hideLoader(context);
+        // hideLoader(context);
 
         // CommonWidget().showToaster(msg: peeGetModel!.message!);
         return null;
       }
     } else if (response.statusCode == 422) {
       isLoading(true);
-      hideLoader(context);
+      // hideLoader(context);
       CommonWidget().showToaster(msg: peeGetModel!.message!);
     } else if (response.statusCode == 401) {
       isLoading(true);
-      hideLoader(context);
+      // hideLoader(context);
       CommonWidget().showToaster(msg: peeGetModel!.message!);
     } else {
       // CommonWidget().showToaster(msg: msg.toString());

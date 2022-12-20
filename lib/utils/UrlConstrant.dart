@@ -26,8 +26,15 @@ class URLConstants {
 
  ///Kegel
   static const kegel_get = "get-kegel.php";
+  static const kegel_alarm_get = "get-kegel-alarm.php";
   static const kegel_post = "kegel.php";
   static const kegel_alarm_post = "kegel-alarm.php";
+  static const kegel_alarm_delete = "deleteKegelAlarm.php";
+  ///
+  ///
+  static const start_end_notification = "postSetTime.php";
+  static const get_start_end_notification = "getSetTime.php";
+
 
   ///masturbation
   static const masturbation_get_method = "getMasturbationExercise.php";
@@ -55,6 +62,10 @@ class URLConstants {
 
  ///intro_video
   static const intro_video_get = "introvideoList.php";
+
+ ///intro_video
+  static const postNotificationSetting = "postNotificationSetting.php";
+  static const getNotificationSetting = "getNotificationSetting.php";
 
 
   static String id = "id";

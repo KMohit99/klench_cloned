@@ -98,6 +98,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             centerTitle: true,
           ),
           body: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
             child: Container(
               color: Colors.transparent,
               margin: EdgeInsets.symmetric(horizontal: 15),
@@ -256,13 +257,23 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                               height: 154,
                               decoration: BoxDecoration(
                                   // color: Colors.black.withOpacity(0.65),
+                                  // gradient: LinearGradient(
+                                  //   begin: Alignment.centerLeft,
+                                  //   end: Alignment.centerRight,
+                                  //   // stops: [0.1, 0.5, 0.7, 0.9],
+                                  //   colors: [
+                                  //     HexColor("#020204").withOpacity(1),
+                                  //     HexColor("#36393E").withOpacity(1),
+                                  //   ],
+                                  // ),
                                   gradient: LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
                                     // stops: [0.1, 0.5, 0.7, 0.9],
                                     colors: [
-                                      HexColor("#020204").withOpacity(1),
-                                      HexColor("#36393E").withOpacity(1),
+                                      HexColor("#ECDD8F"),
+                                      HexColor("#E5CC79"),
+                                      HexColor("#CE952F"),
                                     ],
                                   ),
                                   boxShadow: [
@@ -293,31 +304,31 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                             margin: EdgeInsets.only(
                                                 left: 0, right: 9, bottom: 0),
                                             child: Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red
-                                                      .withOpacity(0.65),
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.centerLeft,
-                                                    end: Alignment.centerRight,
-                                                    // stops: [0.1, 0.5, 0.7, 0.9],
-                                                    colors: [
-                                                      HexColor("#020204")
-                                                          .withOpacity(1),
-                                                      HexColor("#36393E")
-                                                          .withOpacity(1),
-                                                    ],
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color:
-                                                          HexColor('#04060F'),
-                                                      offset: Offset(5, 5),
-                                                      blurRadius: 20,
-                                                    ),
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          50)),
+                                              // decoration: BoxDecoration(
+                                              //     color: Colors.red
+                                              //         .withOpacity(0.65),
+                                              //     gradient: LinearGradient(
+                                              //       begin: Alignment.centerLeft,
+                                              //       end: Alignment.centerRight,
+                                              //       // stops: [0.1, 0.5, 0.7, 0.9],
+                                              //       colors: [
+                                              //         HexColor("#020204")
+                                              //             .withOpacity(1),
+                                              //         HexColor("#36393E")
+                                              //             .withOpacity(1),
+                                              //       ],
+                                              //     ),
+                                              //     boxShadow: [
+                                              //       BoxShadow(
+                                              //         color:
+                                              //             HexColor('#04060F'),
+                                              //         offset: Offset(5, 5),
+                                              //         blurRadius: 20,
+                                              //       ),
+                                              //     ],
+                                              //     borderRadius:
+                                              //         BorderRadius.circular(
+                                              //             50)),
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(9.0),
@@ -332,7 +343,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                           child: Text(
                                             '6',
                                             style: FontStyleUtility.h22(
-                                                fontColor: HexColor('#CB8325'),
+                                                fontColor: Colors.black,
                                                 family: 'PR'),
                                           ),
                                         ),
@@ -341,7 +352,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                     Text(
                                       'Months',
                                       style: FontStyleUtility.h16(
-                                          fontColor: HexColor('#777777')),
+                                          fontColor: Colors.black),
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
@@ -370,8 +381,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                       child: Text(
                                         "\$100(In Full)",
                                         style: FontStyleUtility.h16(
-                                            fontColor: HexColor('#CB8325'),
-                                            family: 'PR'),
+                                            fontColor: ColorUtils.primary_grey,
+                                            family: 'PSB'),
                                       ),
                                     ),
                                     SizedBox(
@@ -380,7 +391,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                     Text(
                                       'Save \$20',
                                       style: FontStyleUtility.h12(
-                                          fontColor: HexColor('#A5A5A5'),
+                                          fontColor: HexColor('#000000'),
                                           family: 'PR'),
                                     ),
                                   ],
