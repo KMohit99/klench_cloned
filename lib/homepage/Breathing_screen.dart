@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 // import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,7 @@ import '../Dashboard/dashboard_screen.dart';
 import '../utils/Asset_utils.dart';
 import '../utils/Common_buttons.dart';
 import '../utils/TextStyle_utils.dart';
+import '../utils/UrlConstrant.dart';
 import '../utils/colorUtils.dart';
 import 'controller/kegel_excercise_controller.dart';
 
@@ -493,6 +495,8 @@ class _BreathingScreenState extends State<BreathingScreen>
       print("lastRoute ${lastRoute}");
 
       await _breathing_controller.Breathing_get_API(context);
+      await _kegel_controller.Kegel_technique_API(
+          context: context, method: URLConstants.breathing_technique);
       if (_breathing_controller.breathingGetModel!.error == false) {
         setState(() {
           _breathing_controller.sets = int.parse(
@@ -1348,85 +1352,125 @@ class _BreathingScreenState extends State<BreathingScreen>
                                         ),
                                       ),
                                       children: <Widget>[
-                                        ListView(
-                                          shrinkWrap: true,
-                                          padding:
-                                          EdgeInsets.symmetric(horizontal: 15),
-                                          physics: ClampingScrollPhysics(),
-                                         children: [
-                                           Container(
-                                           child: Text(
-                                             '1. Inhale 4',
-                                             style: FontStyleUtility.h15(
-                                                 fontColor:
-                                                 HexColor('#DCDCDC'),
-                                                 family: 'PR'),
-                                           ),
-                                         ),
-                                           SizedBox(
-                                             height: 17,
-                                           ),
-                                           Container(
-                                             child: Text(
-                                               '2. Hold 4 sec',
-                                               style: FontStyleUtility.h15(
-                                                   fontColor:
-                                                   HexColor('#DCDCDC'),
-                                                   family: 'PR'),
-                                             ),
-                                           ),
-                                           SizedBox(
-                                             height: 17,
-                                           ),
-                                           Container(
-                                             child: Text(
-                                               '3. Exhale 4 sec',
-                                               style: FontStyleUtility.h15(
-                                                   fontColor:
-                                                   HexColor('#DCDCDC'),
-                                                   family: 'PR'),
-                                             ),
-                                           ),
-                                           SizedBox(
-                                             height: 17,
-                                           ),
-                                           Container(
-                                             child: Text(
-                                               '4. Repeat process 10 times is consider 1 set',
-                                               style: FontStyleUtility.h15(
-                                                   fontColor:
-                                                   HexColor('#DCDCDC'),
-                                                   family: 'PR'),
-                                             ),
-                                           ),
-                                           SizedBox(
-                                             height: 17,
-                                           ),
-                                           Container(
-                                             child: Text(
-                                               '5. After user completes 1 set, user will receive the color star',
-                                               style: FontStyleUtility.h15(
-                                                   fontColor:
-                                                   HexColor('#DCDCDC'),
-                                                   family: 'PR'),
-                                             ),
-                                           ),
-                                           SizedBox(
-                                             height: 17,
-                                           ),
-                                           Container(
-                                             child: Text(
-                                               '6. Star will reset daily',
-                                               style: FontStyleUtility.h15(
-                                                   fontColor:
-                                                   HexColor('#DCDCDC'),
-                                                   family: 'PR'),
-                                             ),
-                                           ),
-                                           SizedBox(
-                                             height: 20,
-                                           ),],
-                                        ),
+                                        Obx(() => _kegel_controller
+                                            .isinfoLoading.value ==
+                                            true
+                                            ? SizedBox()
+                                            : Html(
+                                          anchorKey: GlobalKey(),
+                                          data: _kegel_controller
+                                              .getTechniqueModel!
+                                              .data!
+                                              .technique,
+                                          // data: "<h5>check 1<\/p>\r\n",
+                                          style: {
+                                            "body": Style(
+                                              // backgroundColor: const Color.fromARGB(
+                                              //     0x50, 0xee, 0xee, 0xee),
+                                              backgroundColor:
+                                              Colors.transparent,
+                                            ),
+                                            "tr": Style(
+                                              border: const Border(
+                                                  bottom: BorderSide(
+                                                      color: Colors.grey)),
+                                            ),
+                                            "th": Style(
+                                              padding:
+                                              const EdgeInsets.all(6),
+                                              backgroundColor: Colors.grey,
+                                            ),
+                                            "td": Style(
+                                              padding:
+                                              const EdgeInsets.all(6),
+                                              alignment: Alignment.topLeft,
+                                            ),
+                                            'h5': Style(
+                                                maxLines: 2,
+                                                color: Colors.red,
+                                                textOverflow:
+                                                TextOverflow.ellipsis),
+                                          },
+                                        )),
+                                        // ListView(
+                                        //   shrinkWrap: true,
+                                        //   padding:
+                                        //   EdgeInsets.symmetric(horizontal: 15),
+                                        //   physics: ClampingScrollPhysics(),
+                                        //  children: [
+                                        //    Container(
+                                        //    child: Text(
+                                        //      '1. Inhale 4',
+                                        //      style: FontStyleUtility.h15(
+                                        //          fontColor:
+                                        //          HexColor('#DCDCDC'),
+                                        //          family: 'PR'),
+                                        //    ),
+                                        //  ),
+                                        //    SizedBox(
+                                        //      height: 17,
+                                        //    ),
+                                        //    Container(
+                                        //      child: Text(
+                                        //        '2. Hold 4 sec',
+                                        //        style: FontStyleUtility.h15(
+                                        //            fontColor:
+                                        //            HexColor('#DCDCDC'),
+                                        //            family: 'PR'),
+                                        //      ),
+                                        //    ),
+                                        //    SizedBox(
+                                        //      height: 17,
+                                        //    ),
+                                        //    Container(
+                                        //      child: Text(
+                                          //        '3. Exhale 4 sec',
+                                        //        style: FontStyleUtility.h15(
+                                        //            fontColor:
+                                        //            HexColor('#DCDCDC'),
+                                        //            family: 'PR'),
+                                        //      ),
+                                        //    ),
+                                        //    SizedBox(
+                                        //      height: 17,
+                                        //    ),
+                                        //    Container(
+                                        //      child: Text(
+                                        //        '4. Repeat process 10 times is consider 1 set',
+                                        //        style: FontStyleUtility.h15(
+                                        //            fontColor:
+                                        //            HexColor('#DCDCDC'),
+                                        //            family: 'PR'),
+                                        //      ),
+                                        //    ),
+                                        //    SizedBox(
+                                        //      height: 17,
+                                        //    ),
+                                        //    Container(
+                                        //      child: Text(
+                                        //        '5. After user completes 1 set, user will receive the color star',
+                                        //        style: FontStyleUtility.h15(
+                                        //            fontColor:
+                                        //            HexColor('#DCDCDC'),
+                                        //            family: 'PR'),
+                                        //      ),
+                                        //    ),
+                                        //    SizedBox(
+                                        //      height: 17,
+                                        //    ),
+                                        //    Container(
+                                        //      child: Text(
+                                        //        '6. Star will reset daily',
+                                        //        style: FontStyleUtility.h15(
+                                        //            fontColor:
+                                        //            HexColor('#DCDCDC'),
+                                        //            family: 'PR'),
+                                        //      ),
+                                        //    ),
+                                        //    SizedBox(
+                                        //      height: 20,
+                                        //    ),],
+                                        // ),
                                       ],
                                     ),
                                   ),

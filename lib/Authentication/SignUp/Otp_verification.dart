@@ -7,13 +7,10 @@ import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:klench_/utils/common_widgets.dart';
-import 'package:klench_/utils/page_loader.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
-import '../../front_page/FrontpageScreen.dart';
 import '../../utils/Asset_utils.dart';
-import '../../utils/Common_buttons.dart';
 import '../../utils/Common_container_color.dart';
 import '../../utils/TextStyle_utils.dart';
 import '../../utils/colorUtils.dart';
@@ -39,18 +36,27 @@ class _VerifyOtpState extends State<VerifyOtp> {
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: _signUpScreenController.dialCodedigits +
             _signUpScreenController.phoneController.text,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await FirebaseAuth.instance
-              .signInWithCredential(credential)
-              .then((value) {
-            if (value.user != null) {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => createUser()));
-              print("Otp verifiredddddddd");
+        // verificationCompleted: (PhoneAuthCredential credential) async {
+        //   await FirebaseAuth.instance
+        //       .signInWithCredential(credential)
+        //       .then((value) {
+        //     if (value.user != null) {
+        //       // Navigator.push(context,
+        //       //     MaterialPageRoute(builder: (context) => createUser()));
+        //       print("Otp verifiredddddddd");
+        //     }
+        //
+        //   });
+          verificationCompleted: (PhoneAuthCredential credential) async {
+            _signUpScreenController
+                .OtpController.text = credential.smsCode.toString();
+            await FirebaseAuth.instance.currentUser!.reload();
+            if (FirebaseAuth.instance.currentUser == null) {
+              await FirebaseAuth.instance.signInWithCredential(credential);
             }
-          });
         },
         verificationFailed: (FirebaseAuthException e) {
+          print(e.message);
           print(e.message);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(e.message.toString()),
@@ -227,44 +233,44 @@ class _VerifyOtpState extends State<VerifyOtp> {
                     // ),
                     Stack(
                       children: [
-                        PinFieldAutoFill(
-                          currentCode: codeValue,
-                          codeLength: 4,
-                          onCodeChanged: (code) async {
-                            print("onCodeChanged $code");
-                            setState(() {
-                              codeValue = code.toString();
-                              _signUpScreenController.OtpController.text =
-                                  codeValue;
-                            });
-                            await _signUpScreenController.VerifyOtpAPi(
-                                context: context);
-                            if (_signUpScreenController.signUpModel!.error ==
-                                false) {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => FaceScanScreen()));
-                              // await selectTowerBottomSheet(context);
-                              // (ontapped)
-                              //     ? Navigator.pop(context)
-                              //     : {
-                              //   Future.delayed(
-                              //       const Duration(seconds: 5),
-                              //           () async {
-                              //         Navigator.pop(context);
-                              //         await Navigator.push(context,
-                              //             MaterialPageRoute(
-                              //                 builder: (context) =>
-                              //                     FaceScanScreen()));
-                              //         // await Get.to(FaceScanScreen());
-                              //         // setState(() {});
-                              //       })
-                              // };
-                            }
-                          },
-                          onCodeSubmitted: (val) {
-                            print("onCodeSubmitted $val");
-                          },
-                        ),
+                        // PinFieldAutoFill(
+                        //   currentCode: codeValue,
+                        //   codeLength: 4,
+                        //   onCodeChanged: (code) async {
+                        //     print("onCodeChanged $code");
+                        //     setState(() {
+                        //       codeValue = code.toString();
+                        //       _signUpScreenController.OtpController.text =
+                        //           codeValue;
+                        //     });
+                        //     await _signUpScreenController.VerifyOtpAPi(
+                        //         context: context);
+                        //     if (_signUpScreenController.signUpModel!.error ==
+                        //         false) {
+                        //       Navigator.of(context).push(MaterialPageRoute(
+                        //           builder: (context) => FaceScanScreen()));
+                        //       // await selectTowerBottomSheet(context);
+                        //       // (ontapped)
+                        //       //     ? Navigator.pop(context)
+                        //       //     : {
+                        //       //   Future.delayed(
+                        //       //       const Duration(seconds: 5),
+                        //       //           () async {
+                        //       //         Navigator.pop(context);
+                        //       //         await Navigator.push(context,
+                        //       //             MaterialPageRoute(
+                        //       //                 builder: (context) =>
+                        //       //                     FaceScanScreen()));
+                        //       //         // await Get.to(FaceScanScreen());
+                        //       //         // setState(() {});
+                        //       //       })
+                        //       // };
+                        //     }
+                        //   },
+                        //   onCodeSubmitted: (val) {
+                        //     print("onCodeSubmitted $val");
+                        //   },
+                        // ),
                         Container(
                           decoration: BoxDecoration(
                               // color: Colors.black.withOpacity(0.65),
@@ -497,7 +503,9 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                   //   }
                                   // },
                                   onTap: () async {
-                                    try {
+                                    print("_signUpScreenController.OtpController.text ${_signUpScreenController
+                                        .OtpController.text}");
+                                    // try {
                                       // showLoader(context);
                                       await FirebaseAuth.instance
                                           .signInWithCredential(
@@ -508,6 +516,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                                           .OtpController.text))
                                           .then((value) async {
                                         if (value.user != null) {
+                                          print("USER DATA FILLED");
                                           await _signUpScreenController
                                               .SignUpAPi(context: context);
                                           //     context: context);
@@ -530,18 +539,21 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                           });
 
                                           print("Otp verifiredddddddd");
+                                        }else{
+                                          print("USER DATA NULL");
+
                                         }
                                       });
-                                    } catch (e) {
-                                      FocusScope.of(context).unfocus();
-                                      CommonWidget()
-                                          .showErrorToaster(msg: "Invalid otp");
-                                      // ScaffoldMessenger.of(context)
-                                      //     .showSnackBar(SnackBar(
-                                      // content: Text('invalid otp'),
-                                      // duration: Duration(seconds: 3),
-                                      // ));
-                                    }
+                                    // } catch (e) {
+                                    //   FocusScope.of(context).unfocus();
+                                    //   CommonWidget()
+                                    //       .showErrorToaster(msg: "Invalid otpppp");
+                                    //   // ScaffoldMessenger.of(context)
+                                    //   //     .showSnackBar(SnackBar(
+                                    //   // content: Text('invalid otp'),
+                                    //   // duration: Duration(seconds: 3),
+                                    //   // ));
+                                    // }
                                     // try {
                                     // User? user1;
                                     //   await FirebaseAuth.instance
@@ -587,6 +599,9 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                     // }
                                   },
                                   child: Container(
+                                    // margin: Edge,
+                                    margin: EdgeInsets.symmetric(horizontal: 20),
+
                                     decoration: BoxDecoration(
                                         // color: Colors.black.withOpacity(0.65),
                                         gradient: LinearGradient(

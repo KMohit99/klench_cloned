@@ -5,9 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:klench_/Authentication/SingIn/SigIn_screen.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../Dashboard/dashboard_screen.dart';
 import '../../../profile_page/controller/profile_page_controller.dart';
@@ -16,14 +15,9 @@ import '../../../profile_page/model/userInfoModel.dart';
 import '../../../utils/UrlConstrant.dart';
 import '../../../utils/common_widgets.dart';
 import '../../../utils/page_loader.dart';
-import '../../SignUp/controller/sign_up_controller.dart';
 import '../../SignUp/face_scan_screen.dart';
 import '../../SignUp/model/signUpmodel.dart';
-import '../../welcom_video/welcome_video_screen.dart';
 import '../model/SignInModel.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
-
 import '../social_signup_details.dart';
 
 class SignInScreenController extends GetxController {

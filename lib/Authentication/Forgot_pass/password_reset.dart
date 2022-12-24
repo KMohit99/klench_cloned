@@ -274,18 +274,17 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
                             await _forgotPasswordController.ResetPasswordAPi(
                                 context: context,
                                 id: _forgotPasswordController
-                                    .forgotPasswordModel!.user![0].id!);
+                                    .forgotPasswordModel!.data!.id!);
                             if (_forgotPasswordController
                                     .passwordResetModel!.error ==
                                 false) {
                               selectTowerBottomSheet(context);
-                              Future.delayed(const Duration(seconds: 5),
-                                  () async {
-                                Navigator.pop(context);
-                                await Get.to(SignInScreen());
-
-                                setState(() {});
-                              });
+                              // Future.delayed(const Duration(seconds: 5),
+                              //     () async {
+                              //   Navigator.pop(context);
+                              //   await Get.to(SignInScreen());
+                              //   setState(() {});
+                              // });
                             }
                           },
                           title_text: 'Done',

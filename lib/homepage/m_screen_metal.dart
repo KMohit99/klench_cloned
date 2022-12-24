@@ -7,6 +7,7 @@ import 'dart:ui';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -1713,6 +1714,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
   getdata() async {
     print("insssiiiiiii");
+
     // final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -1725,6 +1727,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
     print("lastRoute ${lastRoute}");
 
     await Masturbation_Get_Method();
+    await _kegel_controller.Kegel_technique_API(
+        context: context, method: URLConstants.masturbation_technique);
+
     await Masturbation_LifeTime_Data_get_API();
     await Masturbation_Daily_Data_get_API();
     await MasturbationWeekly_Data_get_API();
@@ -5149,40 +5154,80 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     ),
                                   ),
                                   children: <Widget>[
-                                    ListView.builder(
-                                      itemCount: List_content.length,
-                                      shrinkWrap: true,
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 15),
-                                      physics: ClampingScrollPhysics(),
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${index + 1}. ",
-                                              textAlign: TextAlign.justify,
-                                              style: FontStyleUtility.h15(
-                                                  fontColor:
-                                                      ColorUtils.primary_grey,
-                                                  family: 'PM'),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                List_content[index],
-                                                textAlign: TextAlign.left,
-                                                style: FontStyleUtility.h15(
-                                                    fontColor:
-                                                        ColorUtils.primary_grey,
-                                                    family: 'PM'),
-                                              ),
-                                            ),
-                                          ],
-                                        );
+                                    Obx(() => _kegel_controller
+                                        .isinfoLoading.value ==
+                                        true
+                                        ? SizedBox()
+                                        : Html(
+                                      anchorKey: GlobalKey(),
+                                      data: _kegel_controller
+                                          .getTechniqueModel!
+                                          .data!
+                                          .technique,
+                                      // data: "<h5>check 1<\/p>\r\n",
+                                      style: {
+                                        "body": Style(
+                                          // backgroundColor: const Color.fromARGB(
+                                          //     0x50, 0xee, 0xee, 0xee),
+                                          backgroundColor:
+                                          Colors.transparent,
+                                        ),
+                                        "tr": Style(
+                                          border: const Border(
+                                              bottom: BorderSide(
+                                                  color: Colors.grey)),
+                                        ),
+                                        "th": Style(
+                                          padding:
+                                          const EdgeInsets.all(6),
+                                          backgroundColor: Colors.grey,
+                                        ),
+                                        "td": Style(
+                                          padding:
+                                          const EdgeInsets.all(6),
+                                          alignment: Alignment.topLeft,
+                                        ),
+                                        'h5': Style(
+                                            maxLines: 2,
+                                            color: Colors.red,
+                                            textOverflow:
+                                            TextOverflow.ellipsis),
                                       },
-                                    ),
+                                    )),
+                                    // ListView.builder(
+                                    //   itemCount: List_content.length,
+                                    //   shrinkWrap: true,
+                                    //   padding:
+                                    //       EdgeInsets.symmetric(horizontal: 15),
+                                    //   physics: ClampingScrollPhysics(),
+                                    //   itemBuilder:
+                                    //       (BuildContext context, int index) {
+                                    //     return Row(
+                                    //       crossAxisAlignment:
+                                    //           CrossAxisAlignment.start,
+                                    //       children: [
+                                    //         Text(
+                                    //           "${index + 1}. ",
+                                    //           textAlign: TextAlign.justify,
+                                    //           style: FontStyleUtility.h15(
+                                    //               fontColor:
+                                    //                   ColorUtils.primary_grey,
+                                    //               family: 'PM'),
+                                    //         ),
+                                    //         Expanded(
+                                    //           child: Text(
+                                    //             List_content[index],
+                                    //             textAlign: TextAlign.left,
+                                    //             style: FontStyleUtility.h15(
+                                    //                 fontColor:
+                                    //                     ColorUtils.primary_grey,
+                                    //                 family: 'PM'),
+                                    //           ),
+                                    //         ),
+                                    //       ],
+                                    //     );
+                                    //   },
+                                    // ),
                                   ],
                                 ),
                               ),

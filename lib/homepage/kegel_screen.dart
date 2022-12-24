@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -1429,6 +1430,8 @@ class _KegelScreenState extends State<KegelScreen>
     stages = await PreferenceManager().getPref(URLConstants.stages);
     setState(() {});
     await _kegel_controller.Kegel_get_API(context);
+    await _kegel_controller.Kegel_technique_API(
+        context: context, method: URLConstants.kegel_technique);
     await _kegel_controller.Kegel_alarm_get_API(context);
     if (_kegel_controller.kegelGetModel!.error == false) {
       setState(() {
@@ -3858,8 +3861,7 @@ class _KegelScreenState extends State<KegelScreen>
                                     transitionDuration:
                                         const Duration(milliseconds: 300),
                                   );
-                                }
-                                else {
+                                } else {
                                   back_wallpaper = false;
 
                                   setState(() {
@@ -7335,19 +7337,26 @@ class _KegelScreenState extends State<KegelScreen>
                                                     .format(selectedDate);
                                             // Alarm_title.text =
                                             //     "Kegel ${(_currentAlarms!.length + 1)}";
-                                            if(_kegel_controller.kegelGetAlarmModel!.error == false){
-                                              if (_kegel_controller.kegelGetAlarmModel!.data!.length >= 3) {
+                                            if (_kegel_controller
+                                                    .kegelGetAlarmModel!
+                                                    .error ==
+                                                false) {
+                                              if (_kegel_controller
+                                                      .kegelGetAlarmModel!
+                                                      .data!
+                                                      .length >=
+                                                  3) {
                                                 CommonWidget().showErrorToaster(
                                                     msg: "Only 3 alarams/Day");
-                                              }else {
+                                              } else {
                                                 showModalBottomSheet(
                                                   useRootNavigator: true,
                                                   context: context,
                                                   clipBehavior: Clip.antiAlias,
                                                   shape:
-                                                  const RoundedRectangleBorder(
+                                                      const RoundedRectangleBorder(
                                                     borderRadius:
-                                                    BorderRadius.vertical(
+                                                        BorderRadius.vertical(
                                                       top: Radius.circular(24),
                                                     ),
                                                   ),
@@ -7357,51 +7366,52 @@ class _KegelScreenState extends State<KegelScreen>
                                                           setModalState) {
                                                         return Container(
                                                           decoration:
-                                                          BoxDecoration(
-                                                            // color: Colors.black.withOpacity(0.65),
-                                                              gradient:
-                                                              LinearGradient(
-                                                                begin: Alignment
-                                                                    .centerLeft,
-                                                                end: Alignment
-                                                                    .centerRight,
-                                                                // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                colors: [
-                                                                  HexColor(
-                                                                      "#020204")
-                                                                      .withOpacity(
-                                                                      1),
-                                                                  HexColor(
-                                                                      "#36393E")
-                                                                      .withOpacity(
-                                                                      1),
-                                                                ],
-                                                              ),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                    color: HexColor(
-                                                                        '#04060F'),
-                                                                    offset: const Offset(
-                                                                        -10,
-                                                                        10),
-                                                                    blurRadius:
-                                                                    20)
-                                                              ],
-                                                              borderRadius: const BorderRadius
-                                                                  .only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                      20),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                      20))),
+                                                              BoxDecoration(
+                                                                  // color: Colors.black.withOpacity(0.65),
+                                                                  gradient:
+                                                                      LinearGradient(
+                                                                    begin: Alignment
+                                                                        .centerLeft,
+                                                                    end: Alignment
+                                                                        .centerRight,
+                                                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                                                    colors: [
+                                                                      HexColor(
+                                                                              "#020204")
+                                                                          .withOpacity(
+                                                                              1),
+                                                                      HexColor(
+                                                                              "#36393E")
+                                                                          .withOpacity(
+                                                                              1),
+                                                                    ],
+                                                                  ),
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                        color: HexColor(
+                                                                            '#04060F'),
+                                                                        offset: const Offset(
+                                                                            -10,
+                                                                            10),
+                                                                        blurRadius:
+                                                                            20)
+                                                                  ],
+                                                                  borderRadius: const BorderRadius
+                                                                          .only(
+                                                                      topLeft: Radius
+                                                                          .circular(
+                                                                              20),
+                                                                      topRight:
+                                                                          Radius.circular(
+                                                                              20))),
                                                           padding:
-                                                          const EdgeInsets
-                                                              .symmetric(
-                                                              horizontal: 32,
-                                                              vertical: 10),
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      32,
+                                                                  vertical: 10),
                                                           child:
-                                                          SingleChildScrollView(
+                                                              SingleChildScrollView(
                                                             child: Column(
                                                               children: [
                                                                 // FlatButton(
@@ -7484,69 +7494,59 @@ class _KegelScreenState extends State<KegelScreen>
                                                                 Container(
                                                                   height: 150,
                                                                   decoration:
-                                                                  BoxDecoration(
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(15),
-                                                                      gradient: LinearGradient(
-                                                                        begin:
-                                                                        Alignment.topCenter,
-                                                                        end: Alignment
-                                                                            .bottomCenter,
-                                                                        colors: [
-                                                                          HexColor("#000000").withOpacity(1),
-                                                                          HexColor("#04060F").withOpacity(1),
-                                                                          HexColor("#000000").withOpacity(1),
-                                                                        ],
-                                                                      ),
-                                                                      boxShadow: [
+                                                                      BoxDecoration(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(15),
+                                                                          gradient: LinearGradient(
+                                                                            begin:
+                                                                                Alignment.topCenter,
+                                                                            end:
+                                                                                Alignment.bottomCenter,
+                                                                            colors: [
+                                                                              HexColor("#000000").withOpacity(1),
+                                                                              HexColor("#04060F").withOpacity(1),
+                                                                              HexColor("#000000").withOpacity(1),
+                                                                            ],
+                                                                          ),
+                                                                          boxShadow: [
                                                                         BoxShadow(
                                                                             color: HexColor(
                                                                                 '#04060F'),
-                                                                            offset: Offset(
-                                                                                3,
+                                                                            offset: Offset(3,
                                                                                 3),
                                                                             blurRadius:
-                                                                            10)
+                                                                                10)
                                                                       ]),
                                                                   child: Stack(
                                                                     children: [
                                                                       CupertinoTheme(
                                                                         data:
-                                                                        CupertinoThemeData(
+                                                                            CupertinoThemeData(
                                                                           brightness:
-                                                                          Brightness.dark,
+                                                                              Brightness.dark,
                                                                         ),
                                                                         child:
-                                                                        CupertinoDatePicker(
+                                                                            CupertinoDatePicker(
                                                                           // use24hFormat: true,
-                                                                          mode: CupertinoDatePickerMode
-                                                                              .time,
+                                                                          mode:
+                                                                              CupertinoDatePickerMode.time,
                                                                           use24hFormat:
-                                                                          true,
+                                                                              true,
                                                                           onDateTimeChanged:
-                                                                              (DateTime
-                                                                          value) {
+                                                                              (DateTime value) {
                                                                             selected_time =
                                                                                 DateFormat('HH:mm').format(value);
                                                                             selected_time_main =
                                                                                 value;
-                                                                            print(
-                                                                                DateFormat('HH:mm').format(value));
+                                                                            print(DateFormat('HH:mm').format(value));
                                                                             // print(
                                                                             //     "${value.hour}:${value.minute}");
 
                                                                             if (selected_time_main !=
                                                                                 null) {
-                                                                              final now =
-                                                                              DateTime.now();
-                                                                              var selectedDateTime = DateTime(
-                                                                                  now.year,
-                                                                                  now.month,
-                                                                                  now.day,
-                                                                                  selected_time_main.hour,
-                                                                                  selected_time_main.minute);
-                                                                              _alarmTime =
-                                                                                  selectedDateTime;
+                                                                              final now = DateTime.now();
+                                                                              var selectedDateTime = DateTime(now.year, now.month, now.day, selected_time_main.hour, selected_time_main.minute);
+                                                                              _alarmTime = selectedDateTime;
                                                                               setModalState(() {
                                                                                 _alarmTimeString = DateFormat('HH:mm').format(selectedDateTime);
                                                                               });
@@ -7560,9 +7560,9 @@ class _KegelScreenState extends State<KegelScreen>
 
                                                                 ListTile(
                                                                   visualDensity:
-                                                                  VisualDensity(
-                                                                      vertical:
-                                                                      -4),
+                                                                      VisualDensity(
+                                                                          vertical:
+                                                                              -4),
                                                                   onTap: () {
                                                                     // showDialog(
                                                                     //   context:
@@ -7754,14 +7754,13 @@ class _KegelScreenState extends State<KegelScreen>
                                                                     // );
                                                                   },
                                                                   title: Text(
-                                                                    // 'Title',
+                                                                      // 'Title',
                                                                       "Kegel ${1}",
                                                                       style: FontStyleUtility.h14(
-                                                                          fontColor:
-                                                                          ColorUtils
+                                                                          fontColor: ColorUtils
                                                                               .primary_grey,
                                                                           family:
-                                                                          'PR')),
+                                                                              'PR')),
                                                                   trailing: const Icon(
                                                                       Icons
                                                                           .arrow_forward_ios,
@@ -7771,20 +7770,20 @@ class _KegelScreenState extends State<KegelScreen>
                                                                 ),
                                                                 ListTile(
                                                                   visualDensity:
-                                                                  VisualDensity(
-                                                                      vertical:
-                                                                      -4),
+                                                                      VisualDensity(
+                                                                          vertical:
+                                                                              -4),
                                                                   title: Text(
                                                                     'Repeat',
                                                                     style: FontStyleUtility.h14(
                                                                         fontColor:
-                                                                        ColorUtils
-                                                                            .primary_gold,
+                                                                            ColorUtils
+                                                                                .primary_gold,
                                                                         family:
-                                                                        'PR'),
+                                                                            'PR'),
                                                                   ),
                                                                   trailing:
-                                                                  const Icon(
+                                                                      const Icon(
                                                                     Icons
                                                                         .arrow_forward_ios,
                                                                     size: 15,
@@ -7973,7 +7972,7 @@ class _KegelScreenState extends State<KegelScreen>
                                                                           selected_time_main
                                                                               .minute,
                                                                           title:
-                                                                          'Kegel 1');
+                                                                              'Kegel 1');
                                                                     }
                                                                     await onSaveAlarm();
                                                                     await Alarm_post_API(
@@ -7981,51 +7980,47 @@ class _KegelScreenState extends State<KegelScreen>
                                                                     // }
                                                                   },
                                                                   child:
-                                                                  Container(
-                                                                    width: MediaQuery.of(
-                                                                        context)
-                                                                        .size
-                                                                        .width /
+                                                                      Container(
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width /
                                                                         3,
                                                                     decoration: BoxDecoration(
                                                                         borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            30),
+                                                                            BorderRadius.circular(
+                                                                                30),
                                                                         border: Border.all(
-                                                                            color: ColorUtils
-                                                                                .primary_grey,
-                                                                            width:
-                                                                            1)),
+                                                                            color:
+                                                                                ColorUtils.primary_grey,
+                                                                            width: 1)),
                                                                     child:
-                                                                    Padding(
+                                                                        Padding(
                                                                       padding: const EdgeInsets
-                                                                          .symmetric(
+                                                                              .symmetric(
                                                                           vertical:
-                                                                          12.0,
+                                                                              12.0,
                                                                           horizontal:
-                                                                          8),
-                                                                      child: Row(
+                                                                              8),
+                                                                      child:
+                                                                          Row(
                                                                         mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
+                                                                            MainAxisAlignment.center,
                                                                         children: [
                                                                           const Icon(
-                                                                            Icons
-                                                                                .alarm,
+                                                                            Icons.alarm,
                                                                             color:
-                                                                            Colors.white,
+                                                                                Colors.white,
                                                                             size:
-                                                                            25,
+                                                                                25,
                                                                           ),
                                                                           const SizedBox(
                                                                             width:
-                                                                            10,
+                                                                                10,
                                                                           ),
                                                                           Text(
                                                                             'Save',
-                                                                            style: FontStyleUtility.h16(
-                                                                                fontColor: ColorUtils.primary_gold,
-                                                                                family: 'PR'),
+                                                                            style:
+                                                                                FontStyleUtility.h16(fontColor: ColorUtils.primary_gold, family: 'PR'),
                                                                           ),
                                                                         ],
                                                                       ),
@@ -8041,17 +8036,15 @@ class _KegelScreenState extends State<KegelScreen>
                                                   },
                                                 );
                                               }
-
-                                            }
-                                            else {
+                                            } else {
                                               showModalBottomSheet(
                                                 useRootNavigator: true,
                                                 context: context,
                                                 clipBehavior: Clip.antiAlias,
                                                 shape:
-                                                const RoundedRectangleBorder(
+                                                    const RoundedRectangleBorder(
                                                   borderRadius:
-                                                  BorderRadius.vertical(
+                                                      BorderRadius.vertical(
                                                     top: Radius.circular(24),
                                                   ),
                                                 ),
@@ -8061,51 +8054,51 @@ class _KegelScreenState extends State<KegelScreen>
                                                         setModalState) {
                                                       return Container(
                                                         decoration:
-                                                        BoxDecoration(
-                                                          // color: Colors.black.withOpacity(0.65),
-                                                            gradient:
-                                                            LinearGradient(
-                                                              begin: Alignment
-                                                                  .centerLeft,
-                                                              end: Alignment
-                                                                  .centerRight,
-                                                              // stops: [0.1, 0.5, 0.7, 0.9],
-                                                              colors: [
-                                                                HexColor(
-                                                                    "#020204")
-                                                                    .withOpacity(
-                                                                    1),
-                                                                HexColor(
-                                                                    "#36393E")
-                                                                    .withOpacity(
-                                                                    1),
-                                                              ],
-                                                            ),
-                                                            boxShadow: [
-                                                              BoxShadow(
-                                                                  color: HexColor(
-                                                                      '#04060F'),
-                                                                  offset: const Offset(
-                                                                      -10,
-                                                                      10),
-                                                                  blurRadius:
-                                                                  20)
-                                                            ],
-                                                            borderRadius: const BorderRadius
-                                                                .only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                    20),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                    20))),
+                                                            BoxDecoration(
+                                                                // color: Colors.black.withOpacity(0.65),
+                                                                gradient:
+                                                                    LinearGradient(
+                                                                  begin: Alignment
+                                                                      .centerLeft,
+                                                                  end: Alignment
+                                                                      .centerRight,
+                                                                  // stops: [0.1, 0.5, 0.7, 0.9],
+                                                                  colors: [
+                                                                    HexColor(
+                                                                            "#020204")
+                                                                        .withOpacity(
+                                                                            1),
+                                                                    HexColor(
+                                                                            "#36393E")
+                                                                        .withOpacity(
+                                                                            1),
+                                                                  ],
+                                                                ),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                      color: HexColor(
+                                                                          '#04060F'),
+                                                                      offset: const Offset(
+                                                                          -10,
+                                                                          10),
+                                                                      blurRadius:
+                                                                          20)
+                                                                ],
+                                                                borderRadius: const BorderRadius
+                                                                        .only(
+                                                                    topLeft: Radius
+                                                                        .circular(
+                                                                            20),
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            20))),
                                                         padding:
-                                                        const EdgeInsets
-                                                            .symmetric(
-                                                            horizontal: 32,
-                                                            vertical: 10),
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 32,
+                                                                vertical: 10),
                                                         child:
-                                                        SingleChildScrollView(
+                                                            SingleChildScrollView(
                                                           child: Column(
                                                             children: [
                                                               // FlatButton(
@@ -8188,21 +8181,21 @@ class _KegelScreenState extends State<KegelScreen>
                                                               Container(
                                                                 height: 150,
                                                                 decoration:
-                                                                BoxDecoration(
-                                                                    borderRadius:
-                                                                    BorderRadius.circular(15),
-                                                                    gradient: LinearGradient(
-                                                                      begin:
-                                                                      Alignment.topCenter,
-                                                                      end: Alignment
-                                                                          .bottomCenter,
-                                                                      colors: [
-                                                                        HexColor("#000000").withOpacity(1),
-                                                                        HexColor("#04060F").withOpacity(1),
-                                                                        HexColor("#000000").withOpacity(1),
-                                                                      ],
-                                                                    ),
-                                                                    boxShadow: [
+                                                                    BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(15),
+                                                                        gradient: LinearGradient(
+                                                                          begin:
+                                                                              Alignment.topCenter,
+                                                                          end: Alignment
+                                                                              .bottomCenter,
+                                                                          colors: [
+                                                                            HexColor("#000000").withOpacity(1),
+                                                                            HexColor("#04060F").withOpacity(1),
+                                                                            HexColor("#000000").withOpacity(1),
+                                                                          ],
+                                                                        ),
+                                                                        boxShadow: [
                                                                       BoxShadow(
                                                                           color: HexColor(
                                                                               '#04060F'),
@@ -8210,26 +8203,26 @@ class _KegelScreenState extends State<KegelScreen>
                                                                               3,
                                                                               3),
                                                                           blurRadius:
-                                                                          10)
+                                                                              10)
                                                                     ]),
                                                                 child: Stack(
                                                                   children: [
                                                                     CupertinoTheme(
                                                                       data:
-                                                                      CupertinoThemeData(
+                                                                          CupertinoThemeData(
                                                                         brightness:
-                                                                        Brightness.dark,
+                                                                            Brightness.dark,
                                                                       ),
                                                                       child:
-                                                                      CupertinoDatePicker(
+                                                                          CupertinoDatePicker(
                                                                         // use24hFormat: true,
                                                                         mode: CupertinoDatePickerMode
                                                                             .time,
                                                                         use24hFormat:
-                                                                        true,
+                                                                            true,
                                                                         onDateTimeChanged:
                                                                             (DateTime
-                                                                        value) {
+                                                                                value) {
                                                                           selected_time =
                                                                               DateFormat('HH:mm').format(value);
                                                                           selected_time_main =
@@ -8242,7 +8235,7 @@ class _KegelScreenState extends State<KegelScreen>
                                                                           if (selected_time_main !=
                                                                               null) {
                                                                             final now =
-                                                                            DateTime.now();
+                                                                                DateTime.now();
                                                                             var selectedDateTime = DateTime(
                                                                                 now.year,
                                                                                 now.month,
@@ -8264,9 +8257,9 @@ class _KegelScreenState extends State<KegelScreen>
 
                                                               ListTile(
                                                                 visualDensity:
-                                                                VisualDensity(
-                                                                    vertical:
-                                                                    -4),
+                                                                    VisualDensity(
+                                                                        vertical:
+                                                                            -4),
                                                                 onTap: () {
                                                                   // showDialog(
                                                                   //   context:
@@ -8458,14 +8451,14 @@ class _KegelScreenState extends State<KegelScreen>
                                                                   // );
                                                                 },
                                                                 title: Text(
-                                                                  // 'Title',
+                                                                    // 'Title',
                                                                     "Kegel ${1}",
                                                                     style: FontStyleUtility.h14(
                                                                         fontColor:
-                                                                        ColorUtils
-                                                                            .primary_grey,
+                                                                            ColorUtils
+                                                                                .primary_grey,
                                                                         family:
-                                                                        'PR')),
+                                                                            'PR')),
                                                                 trailing: const Icon(
                                                                     Icons
                                                                         .arrow_forward_ios,
@@ -8475,20 +8468,20 @@ class _KegelScreenState extends State<KegelScreen>
                                                               ),
                                                               ListTile(
                                                                 visualDensity:
-                                                                VisualDensity(
-                                                                    vertical:
-                                                                    -4),
+                                                                    VisualDensity(
+                                                                        vertical:
+                                                                            -4),
                                                                 title: Text(
                                                                   'Repeat',
                                                                   style: FontStyleUtility.h14(
                                                                       fontColor:
-                                                                      ColorUtils
-                                                                          .primary_gold,
+                                                                          ColorUtils
+                                                                              .primary_gold,
                                                                       family:
-                                                                      'PR'),
+                                                                          'PR'),
                                                                 ),
                                                                 trailing:
-                                                                const Icon(
+                                                                    const Icon(
                                                                   Icons
                                                                       .arrow_forward_ios,
                                                                   size: 15,
@@ -8666,64 +8659,64 @@ class _KegelScreenState extends State<KegelScreen>
                                                                   //       "Enter Alarm title");
                                                                   //   return;
                                                                   // } else {
-                                                                    Alarm_title_list.add(
-                                                                        Alarm_title
-                                                                            .text);
-                                                                    if (Platform
-                                                                        .isAndroid) {
-                                                                      FlutterAlarmClock.createAlarm(
-                                                                          selected_time_main
-                                                                              .hour,
-                                                                          selected_time_main
-                                                                              .minute,
-                                                                          title:
-                                                                          'Kegel 1');
-                                                                    }
-                                                                    await onSaveAlarm();
-                                                                    await Alarm_post_API(
-                                                                        context);
+                                                                  Alarm_title_list.add(
+                                                                      Alarm_title
+                                                                          .text);
+                                                                  if (Platform
+                                                                      .isAndroid) {
+                                                                    FlutterAlarmClock.createAlarm(
+                                                                        selected_time_main
+                                                                            .hour,
+                                                                        selected_time_main
+                                                                            .minute,
+                                                                        title:
+                                                                            'Kegel 1');
+                                                                  }
+                                                                  await onSaveAlarm();
+                                                                  await Alarm_post_API(
+                                                                      context);
                                                                   // }
                                                                 },
                                                                 child:
-                                                                Container(
+                                                                    Container(
                                                                   width: MediaQuery.of(
-                                                                      context)
-                                                                      .size
-                                                                      .width /
+                                                                              context)
+                                                                          .size
+                                                                          .width /
                                                                       3,
                                                                   decoration: BoxDecoration(
                                                                       borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          30),
+                                                                          BorderRadius.circular(
+                                                                              30),
                                                                       border: Border.all(
                                                                           color: ColorUtils
                                                                               .primary_grey,
                                                                           width:
-                                                                          1)),
+                                                                              1)),
                                                                   child:
-                                                                  Padding(
+                                                                      Padding(
                                                                     padding: const EdgeInsets
-                                                                        .symmetric(
+                                                                            .symmetric(
                                                                         vertical:
-                                                                        12.0,
+                                                                            12.0,
                                                                         horizontal:
-                                                                        8),
+                                                                            8),
                                                                     child: Row(
                                                                       mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
+                                                                          MainAxisAlignment
+                                                                              .center,
                                                                       children: [
                                                                         const Icon(
                                                                           Icons
                                                                               .alarm,
                                                                           color:
-                                                                          Colors.white,
+                                                                              Colors.white,
                                                                           size:
-                                                                          25,
+                                                                              25,
                                                                         ),
                                                                         const SizedBox(
                                                                           width:
-                                                                          10,
+                                                                              10,
                                                                         ),
                                                                         Text(
                                                                           'Save',
@@ -9866,40 +9859,80 @@ class _KegelScreenState extends State<KegelScreen>
                                     ),
                                   ),
                                   children: <Widget>[
-                                    ListView.builder(
-                                      itemCount: List_content.length,
-                                      shrinkWrap: true,
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 15),
-                                      physics: ClampingScrollPhysics(),
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${index + 1}. ",
-                                              textAlign: TextAlign.justify,
-                                              style: FontStyleUtility.h15(
-                                                  fontColor:
-                                                      ColorUtils.primary_grey,
-                                                  family: 'PM'),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                List_content[index],
-                                                textAlign: TextAlign.left,
-                                                style: FontStyleUtility.h15(
-                                                    fontColor:
-                                                        ColorUtils.primary_grey,
-                                                    family: 'PM'),
+                                    Obx(() => _kegel_controller
+                                                .isinfoLoading.value ==
+                                            true
+                                        ? SizedBox()
+                                        : Html(
+                                            anchorKey: GlobalKey(),
+                                            data: _kegel_controller
+                                                .getTechniqueModel!
+                                                .data!
+                                                .technique,
+                                            // data: "<h5>check 1<\/p>\r\n",
+                                            style: {
+                                              "body": Style(
+                                                // backgroundColor: const Color.fromARGB(
+                                                //     0x50, 0xee, 0xee, 0xee),
+                                                backgroundColor:
+                                                    Colors.transparent,
                                               ),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ),
+                                              "tr": Style(
+                                                border: const Border(
+                                                    bottom: BorderSide(
+                                                        color: Colors.grey)),
+                                              ),
+                                              "th": Style(
+                                                padding:
+                                                    const EdgeInsets.all(6),
+                                                backgroundColor: Colors.grey,
+                                              ),
+                                              "td": Style(
+                                                padding:
+                                                    const EdgeInsets.all(6),
+                                                alignment: Alignment.topLeft,
+                                              ),
+                                              'h5': Style(
+                                                  maxLines: 2,
+                                                  color: Colors.red,
+                                                  textOverflow:
+                                                      TextOverflow.ellipsis),
+                                            },
+                                          )),
+                                    // ListView.builder(
+                                    //   itemCount: List_content.length,
+                                    //   shrinkWrap: true,
+                                    //   padding:
+                                    //       EdgeInsets.symmetric(horizontal: 15),
+                                    //   physics: ClampingScrollPhysics(),
+                                    //   itemBuilder:
+                                    //       (BuildContext context, int index) {
+                                    //     return Row(
+                                    //       crossAxisAlignment:
+                                    //           CrossAxisAlignment.start,
+                                    //       children: [
+                                    //         Text(
+                                    //           "${index + 1}. ",
+                                    //           textAlign: TextAlign.justify,
+                                    //           style: FontStyleUtility.h15(
+                                    //               fontColor:
+                                    //                   ColorUtils.primary_grey,
+                                    //               family: 'PM'),
+                                    //         ),
+                                    //         Expanded(
+                                    //           child: Text(
+                                    //             List_content[index],
+                                    //             textAlign: TextAlign.left,
+                                    //             style: FontStyleUtility.h15(
+                                    //                 fontColor:
+                                    //                     ColorUtils.primary_grey,
+                                    //                 family: 'PM'),
+                                    //           ),
+                                    //         ),
+                                    //       ],
+                                    //     );
+                                    //   },
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -10444,7 +10477,9 @@ class _KegelScreenState extends State<KegelScreen>
         print('Please try again');
         print('Please try again');
       }
-    } else {}
+    } else {
+      hideLoader(context);
+    }
   }
 
   Future<dynamic> Alarm_delete_API(

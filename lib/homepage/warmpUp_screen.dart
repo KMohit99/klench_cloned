@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,6 +18,7 @@ import 'package:vibration/vibration.dart';
 
 import '../utils/Asset_utils.dart';
 import '../utils/TextStyle_utils.dart';
+import '../utils/UrlConstrant.dart';
 import '../utils/colorUtils.dart';
 import '../utils/common_widgets.dart';
 import 'alarm_info.dart';
@@ -592,6 +594,8 @@ class _WarmUpScreenState extends State<WarmUpScreen>
     prefs.setString('last_route', "/warmpup");
     String? lastRoute = prefs.getString('last_route');
     print("lastRoute ${lastRoute}");
+    await _kegel_controller.Kegel_technique_API(
+        context: context, method: URLConstants.warmup_technique);
   }
 
   @override
@@ -2495,58 +2499,98 @@ class _WarmUpScreenState extends State<WarmUpScreen>
                               ),
                             ),
                             children: <Widget>[
-                              ListView(
-                                shrinkWrap: true,
-                                padding:
-                                EdgeInsets.symmetric(horizontal: 15),
-                                physics: ClampingScrollPhysics(),
-                                children: [
-                                  Container(
-                                    child: Text(
-                                      'Sample text from admin ',
-                                      style: FontStyleUtility.h16(
-                                          fontColor: HexColor('#DCDCDC'),
-                                          family: 'PR'),
-                                    ),
+                              Obx(() => _kegel_controller
+                                  .isinfoLoading.value ==
+                                  true
+                                  ? SizedBox()
+                                  : Html(
+                                anchorKey: GlobalKey(),
+                                data: _kegel_controller
+                                    .getTechniqueModel!
+                                    .data!
+                                    .technique,
+                                // data: "<h5>check 1<\/p>\r\n",
+                                style: {
+                                  "body": Style(
+                                    // backgroundColor: const Color.fromARGB(
+                                    //     0x50, 0xee, 0xee, 0xee),
+                                    backgroundColor:
+                                    Colors.transparent,
                                   ),
-                                  const SizedBox(
-                                    height: 17,
+                                  "tr": Style(
+                                    border: const Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey)),
                                   ),
-                                  Container(
-                                    child: Text(
-                                      'Admin will put the text here',
-                                      style: FontStyleUtility.h16(
-                                          fontColor: HexColor('#DCDCDC'),
-                                          family: 'PR'),
-                                    ),
+                                  "th": Style(
+                                    padding:
+                                    const EdgeInsets.all(6),
+                                    backgroundColor: Colors.grey,
                                   ),
-                                  const SizedBox(
-                                    height: 17,
+                                  "td": Style(
+                                    padding:
+                                    const EdgeInsets.all(6),
+                                    alignment: Alignment.topLeft,
                                   ),
-                                  Container(
-                                    child: Text(
-                                      'Sample text from admin',
-                                      style: FontStyleUtility.h16(
-                                          fontColor: HexColor('#DCDCDC'),
-                                          family: 'PR'),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 17,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      'Admin will put the text here',
-                                      style: FontStyleUtility.h16(
-                                          fontColor: HexColor('#DCDCDC'),
-                                          family: 'PR'),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 17,
-                                  ),
-                                ],
-                              ),
+                                  'h5': Style(
+                                      maxLines: 2,
+                                      color: Colors.red,
+                                      textOverflow:
+                                      TextOverflow.ellipsis),
+                                },
+                              )),
+                              // ListView(
+                              //   shrinkWrap: true,
+                              //   padding:
+                              //   EdgeInsets.symmetric(horizontal: 15),
+                              //   physics: ClampingScrollPhysics(),
+                              //   children: [
+                              //     Container(
+                              //       child: Text(
+                              //         'Sample text from admin ',
+                              //         style: FontStyleUtility.h16(
+                              //             fontColor: HexColor('#DCDCDC'),
+                              //             family: 'PR'),
+                              //       ),
+                              //     ),
+                              //     const SizedBox(
+                              //       height: 17,
+                              //     ),
+                              //     Container(
+                              //       child: Text(
+                              //         'Admin will put the text here',
+                              //         style: FontStyleUtility.h16(
+                              //             fontColor: HexColor('#DCDCDC'),
+                              //             family: 'PR'),
+                              //       ),
+                              //     ),
+                              //     const SizedBox(
+                              //       height: 17,
+                              //     ),
+                              //     Container(
+                              //       child: Text(
+                              //         'Sample text from admin',
+                              //         style: FontStyleUtility.h16(
+                              //             fontColor: HexColor('#DCDCDC'),
+                              //             family: 'PR'),
+                              //       ),
+                              //     ),
+                              //     const SizedBox(
+                              //       height: 17,
+                              //     ),
+                              //     Container(
+                              //       child: Text(
+                              //         'Admin will put the text here',
+                              //         style: FontStyleUtility.h16(
+                              //             fontColor: HexColor('#DCDCDC'),
+                              //             family: 'PR'),
+                              //       ),
+                              //     ),
+                              //     const SizedBox(
+                              //       height: 17,
+                              //     ),
+                              //   ],
+                              // ),
                             ],
                           ),
                         ),

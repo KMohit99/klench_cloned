@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get/get.dart';
 import 'package:klench_/Authentication/SignUp/model/verifyOtpModel.dart';
 import 'package:klench_/Dashboard/dashboard_screen.dart';
@@ -107,6 +108,9 @@ class SignUpScreenController extends GetxController {
     // List<int> imageBytes = imgFile!.readAsBytesSync();
     // String baseimage = base64Encode(imageBytes);
 
+    final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+    print(currentTimeZone);
+
     if (imgFile != null) {
       var files = await http.MultipartFile(
           'image',
@@ -127,6 +131,7 @@ class SignUpScreenController extends GetxController {
     request.fields['stage'] = 1.toString();
     request.fields['type'] = 'normal';
     request.fields['freeTrial'] = free_trials!;
+    request.fields['timeZone'] = currentTimeZone;
 
     //userId,tagLine,description,address,postImage,uploadVideo,isVideo
     // request.files.add(await http.MultipartFile.fromPath(
@@ -161,14 +166,14 @@ class SignUpScreenController extends GetxController {
        // await  SendOtpAPi(context: context);
        //  await Get.to(DashboardScreen());
 
-        hideLoader(context);
+        // hideLoader(context);
       } else {
-        hideLoader(context);
+        // hideLoader(context);
         CommonWidget().showErrorToaster(msg: signUpModel!.message!);
         // print('Please try again');
         // print('Please try again');
       }
-      hideLoader(context);
+      // hideLoader(context);
     } else {
       print("ERROR");
     }

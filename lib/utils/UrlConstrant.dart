@@ -16,6 +16,7 @@ class URLConstants {
   static const ForgotpassverifyOtpApi = "forgot-verify-otp.php";
   static const getProfileApi = "get-profile.php";
   static const forgotPasswordApi = "forgot-password.php";
+  static const checkUserApi = "checkUser.php";
   static const resetPasswordApi = "reset-password.php";
   static const CheckUserApi = "check-user.php";
   static const CheckPasswordApi = "check-pssword.php";
@@ -30,7 +31,13 @@ class URLConstants {
   static const kegel_post = "kegel.php";
   static const kegel_alarm_post = "kegel-alarm.php";
   static const kegel_alarm_delete = "deleteKegelAlarm.php";
-  ///
+
+  static const kegel_technique = "getKegelTechnique.php";
+  static const breathing_technique = "getBreathTechnique.php";
+  static const masturbation_technique = "getMasturbateTechnique.php";
+  static const pee_technique = "getPeeTechnique.php";
+  static const warmup_technique = "getWarmupTechnique.php";
+  ///http://foxyserver.com/klench/api/getKegelTechnique.php
   ///
   static const start_end_notification = "postSetTime.php";
   static const get_start_end_notification = "getSetTime.php";

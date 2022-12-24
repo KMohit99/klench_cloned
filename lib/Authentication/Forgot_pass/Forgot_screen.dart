@@ -35,10 +35,16 @@ class _ForgotScreenState extends State<ForgotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
+    final screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
@@ -90,7 +96,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                     child: Image.asset(AssetUtils.Logo_white_icon)),
                 Container(
                   decoration: BoxDecoration(
-                      // color: Colors.black.withOpacity(0.65),
+                    // color: Colors.black.withOpacity(0.65),
                       gradient: LinearGradient(
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
@@ -110,7 +116,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                       borderRadius: BorderRadius.circular(20)),
                   child: Padding(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 58, horizontal: 14),
+                    const EdgeInsets.symmetric(vertical: 58, horizontal: 14),
                     child: Column(
                       children: [
                         Text("We need to verify your identity",
@@ -171,10 +177,10 @@ class _ForgotScreenState extends State<ForgotScreen> {
                             labelText: 'Email Address',
                             maxLines: 1,
                             controller:
-                                _forgotPasswordController.emailAddressController,
+                            _forgotPasswordController.emailAddressController,
                             iconData: IconButton(
                               visualDensity:
-                                  VisualDensity(vertical: -4, horizontal: -4),
+                              VisualDensity(vertical: -4, horizontal: -4),
                               icon: Image.asset(
                                 AssetUtils.key_icons,
                                 color: HexColor("#606060"),
@@ -220,8 +226,10 @@ class _ForgotScreenState extends State<ForgotScreen> {
                               child: CountryCodePicker(
                                 onChanged: (country) {
                                   setState(() {
-                                    _forgotPasswordController.dialCodedigits = country.dialCode!;
-                                    print(_forgotPasswordController.dialCodedigits);
+                                    _forgotPasswordController.dialCodedigits =
+                                    country.dialCode!;
+                                    print(_forgotPasswordController
+                                        .dialCodedigits);
                                   });
                                 },
                                 initialSelection: "IN",
@@ -236,7 +244,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                                 favorite: ["+1", "US", "+91", "IN"],
                                 barrierColor: Colors.white,
                                 backgroundColor: Colors.black,
-                                dialogSize: Size.fromHeight(screenHeight/2),
+                                dialogSize: Size.fromHeight(screenHeight / 2),
                               ),
                             ),
                             Container(
@@ -248,10 +256,10 @@ class _ForgotScreenState extends State<ForgotScreen> {
                                   maxLines: 1,
                                   keyboardType: TextInputType.number,
                                   controller:
-                                      _forgotPasswordController.MobilenoController,
+                                  _forgotPasswordController.MobilenoController,
                                   iconData: IconButton(
                                     visualDensity:
-                                        VisualDensity(vertical: -4, horizontal: -4),
+                                    VisualDensity(vertical: -4, horizontal: -4),
                                     icon: Image.asset(
                                       AssetUtils.mobile_icons,
                                       color: HexColor("#606060"),
@@ -270,14 +278,22 @@ class _ForgotScreenState extends State<ForgotScreen> {
                           onTap: () async {
                             // Get.to(DashboardScreen());
                             await _forgotPasswordController.ForgotPasswordAPi(
-                                context: context);
+                                context: context,
+                                phone_no: _forgotPasswordController
+                                    .MobilenoController.text);
                             if(_forgotPasswordController.forgotPasswordModel!.error == false){
-                              await selectTowerBottomSheet(context);
-                              Future.delayed(const Duration(seconds: 5), () async {
-                                Navigator.pop(context);
-                                await Get.to(OtpScreen());
-                              });
+                              await Get.to(OtpScreen());
                             }
+
+                            // await _forgotPasswordController.ForgotPasswordAPi(
+                            //     context: context);
+                            // if(_forgotPasswordController.forgotPasswordModel!.error == false){
+                            //   await selectTowerBottomSheet(context);
+                            //   Future.delayed(const Duration(seconds: 5), () async {
+                            //     Navigator.pop(context);
+                            //     await Get.to(OtpScreen());
+                            //   });
+                            // }
                           },
                           title_text: 'Verify',
                         ),
@@ -294,8 +310,14 @@ class _ForgotScreenState extends State<ForgotScreen> {
   }
 
   selectTowerBottomSheet(BuildContext context) {
-    final screenheight = MediaQuery.of(context).size.height;
-    final screenwidth = MediaQuery.of(context).size.width;
+    final screenheight = MediaQuery
+        .of(context)
+        .size
+        .height;
+    final screenwidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     showModalBottomSheet(
       backgroundColor: Colors.black,
       shape: RoundedRectangleBorder(

@@ -29,27 +29,30 @@ class ForgotPasswordController extends GetxController {
   RxBool isLoading = false.obs;
 
   Future<dynamic> ForgotPasswordAPi(
-      {required BuildContext context}) async {
+      {required BuildContext context,required String phone_no}) async {
     debugPrint('0-0-0-0-0-0-0 username');
     isLoading(true);
     showLoader(context);
     // username,phone,email,dob,gender,password,image
-    Map data = {
-      'email': emailAddressController.text,
-      'phone':  MobilenoController.text,
-      'countryCode': dialCodedigits ,
-    };
-    print(data);
+    // Map data = {
+    //   'email': emailAddressController.text,
+    //   'phone':  MobilenoController.text,
+    //   'countryCode': dialCodedigits ,
+    // };
+    // print(data);
     // String body = json.encode(data);
 
-    var url = (URLConstants.base_url + URLConstants.forgotPasswordApi);
+    // var url = (URLConstants.base_url + URLConstants.forgotPasswordApi);
+    var url = ("${URLConstants.base_url +URLConstants.checkUserApi}?phone_number=$phone_no");
     print("url : $url");
-    print("body : $data");
+    // print("body : $data");
 
-    var response = await http.post(
-      Uri.parse(url),
-      body: data,
-    );
+    // var response = await http.post(
+    //   Uri.parse(url),
+    //   body: data,
+    // );
+    var response = await http.get(Uri.parse(url));
+
     print(response.body);
     print(response.request);
     print(response.statusCode);
@@ -64,11 +67,11 @@ class ForgotPasswordController extends GetxController {
       print(forgotPasswordModel);
       if (forgotPasswordModel!.error == false) {
 
-        print(forgotPasswordModel!.user![0].id!);
+        // print(forgotPasswordModel!.user![0].id!);
         // await PreferenceManager()
         //     .setPref(URLConstants.type, signUpModel!.user![0].type!);
         // await CreatorgetUserInfo_Email(UserId: signUpModel!.user![0].id!);
-        await CommonWidget().showToaster(msg: 'OTP sent');
+        // await CommonWidget().showToaster(msg: 'OTP sent');
         // await Get.to(DashboardScreen());
         hideLoader(context);
       } else {
@@ -140,9 +143,12 @@ class ForgotPasswordController extends GetxController {
     print(data);
     // String body = json.encode(data);
 
+
     var url = (URLConstants.base_url + URLConstants.resetPasswordApi);
     print("url : $url");
     print("body : $data");
+
+    // var response = await http.get(Uri.parse(url));
 
     var response = await http.post(
       Uri.parse(url),

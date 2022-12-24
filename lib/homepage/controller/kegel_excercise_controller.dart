@@ -18,6 +18,7 @@ import '../../utils/UrlConstrant.dart';
 import '../../utils/common_widgets.dart';
 import '../alarm_info.dart';
 import '../model/IntroVideoModel.dart';
+import '../model/getTechniqueModel.dart';
 import '../model/kegelGetAlarmModel.dart';
 import '../model/kegel_get_model.dart';
 import '../model/kegel_post_model.dart';
@@ -60,6 +61,56 @@ class Kegel_controller extends GetxController {
         return kegelGetModel;
       } else {
         isuserinfoLoading(true);
+
+        // hideLoader(context);
+
+        // CommonWidget().showToaster(msg: kegelGetModel!.message!);
+        return null;
+      }
+    } else if (response.statusCode == 422) {
+      // hideLoader(context);
+
+      CommonWidget().showToaster(msg: kegelGetModel!.message!);
+    } else if (response.statusCode == 401) {
+      // hideLoader(context);
+      CommonWidget().showToaster(msg: kegelGetModel!.message!);
+    } else {
+      // CommonWidget().showToaster(msg: msg.toString());
+    }
+  }
+
+  RxBool isinfoLoading = true.obs;
+  GetTechniqueModel? getTechniqueModel;
+
+  Future<dynamic> Kegel_technique_API({required BuildContext context,required String method}) async {
+    isinfoLoading(true);
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    String url =
+        // "${URLConstants.base_url}${URLConstants.kegel_technique}";
+        "${URLConstants.base_url}$method";
+    // showLoader(context);
+
+    var response = await http.get(Uri.parse(url));
+
+    print('Response request: ${response.request}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // var data = convert.jsonDecode(response.body);
+      Map<String, dynamic> data =
+          json.decode(response.body.replaceAll('}[]', '}'));
+      getTechniqueModel = GetTechniqueModel.fromJson(data);
+      // getUSerModelList(userInfoModel_email);
+      if (getTechniqueModel!.error == false) {
+        // hideLoader(context);
+        debugPrint(
+            '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${getTechniqueModel!.data!}');
+        isinfoLoading(false);
+
+        return getTechniqueModel;
+      } else {
+        isinfoLoading(true);
 
         // hideLoader(context);
 

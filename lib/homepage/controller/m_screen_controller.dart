@@ -249,7 +249,10 @@ class Masturbation_screen_controller {
     debugPrint('0-0-0-0-0-0-0 username');
     showLoader(context);
     // username,phone,email,dob,gender,password,image
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+
     Map data = {
+      'login_user_id': id_user,
       'id': methodId,
       'methodName' : method_new_name.text
     };

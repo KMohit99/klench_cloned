@@ -59,6 +59,8 @@ dependencies:
   carousel_slider: ^4.1.1
 
   flutter_facebook_auth: ^4.1.2
+#  flutter_facebook_auth: ^5.0.0
+
 #  flutter_webview_plugin: ^0.4.0
   webview_flutter: ^3.0.4
   dio: ^4.0.0
@@ -72,6 +74,8 @@ dependencies:
   firebase_dynamic_links: ^4.3.11
   video_thumbnail: ^0.5.0
   video_thumbnail_imageview: ^0.0.5
+  flutter_native_timezone: ^2.0.0
+  flutter_html: ^3.0.0-alpha.6
 #  watch_ble_connection: ^1.0.0
 
 #  firebase_dynamic_links: ^5.0.4

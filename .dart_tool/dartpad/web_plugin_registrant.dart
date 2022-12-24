@@ -13,6 +13,7 @@ import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:firebase_messaging_web/firebase_messaging_web.dart';
 import 'package:flutter_facebook_auth_web/flutter_facebook_auth_web.dart';
 import 'package:flutter_native_splash/flutter_native_splash_web.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone_web.dart';
 import 'package:fluttertoast/fluttertoast_web.dart';
 import 'package:image_picker_for_web/image_picker_for_web.dart';
 import 'package:share_plus_web/share_plus_web.dart';
@@ -31,6 +32,7 @@ void registerPlugins([final Registrar? pluginRegistrar]) {
   FirebaseMessagingWeb.registerWith(registrar);
   FlutterFacebookAuthPlugin.registerWith(registrar);
   FlutterNativeSplashWeb.registerWith(registrar);
+  FlutterNativeTimezonePlugin.registerWith(registrar);
   FluttertoastWebPlugin.registerWith(registrar);
   ImagePickerPlugin.registerWith(registrar);
   SharePlusPlugin.registerWith(registrar);

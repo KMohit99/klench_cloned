@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:klench_/Authentication/SignUp/SignUp_screen.dart';
@@ -43,6 +44,18 @@ class _SignInScreenState extends State<SignInScreen> {
       SignUpScreenController(),
       tag: SignUpScreenController().toString());
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    inti();
+    super.initState();
+  }
+
+  inti() async {
+    final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+    print(currentTimeZone);
+  }
 
   @override
   Widget build(BuildContext context) {
