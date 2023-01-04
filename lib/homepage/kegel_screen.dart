@@ -10,7 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
-import 'package:flutter_html/flutter_html.dart';
+
+// import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +23,7 @@ import 'package:klench_/homepage/controller/kegel_excercise_controller.dart';
 import 'package:klench_/homepage/swipe_controller.dart';
 import 'package:klench_/homepage/theme_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_html_css/simple_html_css.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:vibration/vibration.dart';
 
@@ -38,6 +40,7 @@ import 'alarm_helper.dart';
 import 'alarm_info.dart';
 import 'model/AlarmPostModel.dart';
 import 'model/AlarmdeleteModel.dart';
+import 'model/getTechniqueModel.dart';
 
 class KegelScreen extends StatefulWidget {
   KegelScreen({
@@ -55,7 +58,7 @@ class KegelScreen extends StatefulWidget {
 class _KegelScreenState extends State<KegelScreen>
     with TickerProviderStateMixin {
   final Kegel_controller _kegel_controller =
-      Get.put(Kegel_controller(), tag: Kegel_controller().toString());
+  Get.put(Kegel_controller(), tag: Kegel_controller().toString());
 
   Stopwatch watch = Stopwatch();
   Stopwatch watch3 = Stopwatch();
@@ -204,7 +207,7 @@ class _KegelScreenState extends State<KegelScreen>
                   _scaleDialog(
                       context: context,
                       message:
-                          "Congratulations! You have completed your daily sessions!");
+                      "Congratulations! You have completed your daily sessions!");
 
                   // Future.delayed(const Duration(seconds: 2), () {
                   //   CommonWidget().showErrorToaster(
@@ -308,7 +311,7 @@ class _KegelScreenState extends State<KegelScreen>
                   _scaleDialog(
                       context: context,
                       message:
-                          "Congratulations! You have completed your daily sessions!");
+                      "Congratulations! You have completed your daily sessions!");
 
                   // Future.delayed(const Duration(seconds: 5), () {
                   //   CommonWidget().showErrorToaster(
@@ -411,7 +414,7 @@ class _KegelScreenState extends State<KegelScreen>
                   _scaleDialog(
                       context: context,
                       message:
-                          "Congratulations! You have completed your daily sessions!");
+                      "Congratulations! You have completed your daily sessions!");
 
                   // Future.delayed(const Duration(seconds: 5), () {
                   //   CommonWidget().showErrorToaster(
@@ -514,7 +517,7 @@ class _KegelScreenState extends State<KegelScreen>
                   _scaleDialog(
                       context: context,
                       message:
-                          "Congratulations! You have completed your daily sessions!");
+                      "Congratulations! You have completed your daily sessions!");
 
                   // Future.delayed(const Duration(seconds: 5), () {
                   //   CommonWidget().showErrorToaster(
@@ -625,7 +628,7 @@ class _KegelScreenState extends State<KegelScreen>
                   _scaleDialog(
                       context: context,
                       message:
-                          "Congratulations! You have completed your daily sessions!");
+                      "Congratulations! You have completed your daily sessions!");
 
                   // Future.delayed(const Duration(seconds: 5), () {
                   //   CommonWidget().showErrorToaster(
@@ -750,7 +753,7 @@ class _KegelScreenState extends State<KegelScreen>
                   _scaleDialog(
                       context: context,
                       message:
-                          "Congratulations! You have completed your daily sessions!");
+                      "Congratulations! You have completed your daily sessions!");
 
                   // CommonWidget().showToaster(msg: "Method Complete");
                   // Future.delayed(const Duration(seconds: 5), () {
@@ -875,7 +878,7 @@ class _KegelScreenState extends State<KegelScreen>
                   _scaleDialog(
                       context: context,
                       message:
-                          "Congratulations! You have completed your daily sessions!");
+                      "Congratulations! You have completed your daily sessions!");
 
                   // CommonWidget().showToaster(msg: "Method Complete");
                   // Future.delayed(const Duration(seconds: 5), () {
@@ -1135,62 +1138,62 @@ class _KegelScreenState extends State<KegelScreen>
         AnimationController(vsync: this, duration: Duration(seconds: 1));
     _animationController_shadow1!.forward();
     _animation_shadow1 =
-        Tween(begin: 0.0, end: 65.0).animate(_animationController_shadow1!)
-          ..addStatusListener((status) {
-            print(status);
-            if (status == AnimationStatus.completed) {
-              // print("elapsedTime");
-              setState(() {
-                shadow_animation1_completed = true;
-                // print(shadow_animation1_completed);
-              });
-            }
-            // shadow_animation1_completed = true;
+    Tween(begin: 0.0, end: 75.0).animate(_animationController_shadow1!)
+      ..addStatusListener((status) {
+        print(status);
+        if (status == AnimationStatus.completed) {
+          // print("elapsedTime");
+          setState(() {
+            shadow_animation1_completed = true;
+            // print(shadow_animation1_completed);
           });
+        }
+        // shadow_animation1_completed = true;
+      });
 
     _animationController_shadow2 =
         AnimationController(vsync: this, duration: Duration(milliseconds: 100));
     _animationController_shadow2!.repeat(reverse: true);
     _animation_shadow2 =
-        Tween(begin: 65.0, end: 70.0).animate(_animationController_shadow2!)
-          ..addStatusListener((status) {
-            if (shadow_animation_pause == true) {}
-            // print(status);
-            // if (status == AnimationStatus.completed) {}
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 75.0, end: 80.0).animate(_animationController_shadow2!)
+      ..addStatusListener((status) {
+        if (shadow_animation_pause == true) {}
+        // print(status);
+        // if (status == AnimationStatus.completed) {}
+        // shadow_animation1_completed = true;
+      });
 
     // _animationController_textK =
     //     AnimationController(vsync: this, duration: Duration(seconds: 5));
     // _animationController_textK!.forward();
     _animation_textK =
-        Tween(begin: 50.0, end: 30.0).animate(_animationController_button!)
-          ..addStatusListener((status) {
-            // print(status);
-            // if (status == AnimationStatus.completed) {
-            //   setState(() {});
-            //   _animationController_button!.reverse();
-            // } else if (status == AnimationStatus.dismissed) {
-            //   setState(() {});
-            //   _animationController_button!.forward();
-            // }
-          });
+    Tween(begin: 50.0, end: 30.0).animate(_animationController_button!)
+      ..addStatusListener((status) {
+        // print(status);
+        // if (status == AnimationStatus.completed) {
+        //   setState(() {});
+        //   _animationController_button!.reverse();
+        // } else if (status == AnimationStatus.dismissed) {
+        //   setState(() {});
+        //   _animationController_button!.forward();
+        // }
+      });
 
     // _animationController_textTime =
     //     AnimationController(vsync: this, duration: Duration(seconds: 5));
     // _animationController_textTime!.forward();
     _animation_textTime =
-        Tween(begin: 40.0, end: 25.0).animate(_animationController_button!)
-          ..addStatusListener((status) {
-            // print(status);
-            // if (status == AnimationStatus.completed) {
-            //   setState(() {});
-            //   _animationController_button!.reverse();
-            // } else if (status == AnimationStatus.dismissed) {
-            //   setState(() {});
-            //   _animationController_button!.forward();
-            // }
-          });
+    Tween(begin: 40.0, end: 25.0).animate(_animationController_button!)
+      ..addStatusListener((status) {
+        // print(status);
+        // if (status == AnimationStatus.completed) {
+        //   setState(() {});
+        //   _animationController_button!.reverse();
+        // } else if (status == AnimationStatus.dismissed) {
+        //   setState(() {});
+        //   _animationController_button!.forward();
+        // }
+      });
   }
 
   AnimationController? _animationController_middle;
@@ -1208,30 +1211,30 @@ class _KegelScreenState extends State<KegelScreen>
         vsync: this, duration: const Duration(milliseconds: 500));
     _animationController_middle!.forward();
     _animation_middle =
-        Tween(begin: 15.0, end: 50.0).animate(_animationController_middle!)
-          ..addStatusListener((status) {
-            print("status $status");
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 15.0, end: 50.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        print("status $status");
+        // shadow_animation1_completed = true;
+      });
     _animation_middle2 =
-        Tween(begin: 15.0, end: 45.0).animate(_animationController_middle!)
-          ..addStatusListener((status) {
-            print("status $status");
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 15.0, end: 45.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        print("status $status");
+        // shadow_animation1_completed = true;
+      });
     _animation_middle3 =
-        Tween(begin: 15.0, end: 120.0).animate(_animationController_middle!)
-          ..addStatusListener((status) {
-            print("status $status");
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 15.0, end: 120.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        print("status $status");
+        // shadow_animation1_completed = true;
+      });
     _animation_middle4 =
-        Tween(begin: 15.0, end: 100.0).animate(_animationController_middle!)
-          ..addStatusListener((status) {
-            print("status $status");
+    Tween(begin: 15.0, end: 100.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        print("status $status");
 
-            // shadow_animation1_completed = true;
-          });
+        // shadow_animation1_completed = true;
+      });
   }
 
   done_animation() {
@@ -1239,30 +1242,30 @@ class _KegelScreenState extends State<KegelScreen>
         vsync: this, duration: const Duration(milliseconds: 200));
     _animationController_middle2!.forward();
     _animation_middle =
-        Tween(begin: 50.0, end: 15.0).animate(_animationController_middle2!)
-          ..addStatusListener((status) {
-            print("status $status");
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 50.0, end: 15.0).animate(_animationController_middle2!)
+      ..addStatusListener((status) {
+        print("status $status");
+        // shadow_animation1_completed = true;
+      });
     _animation_middle2 =
-        Tween(begin: 45.0, end: 15.0).animate(_animationController_middle2!)
-          ..addStatusListener((status) {
-            print("status $status");
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 45.0, end: 15.0).animate(_animationController_middle2!)
+      ..addStatusListener((status) {
+        print("status $status");
+        // shadow_animation1_completed = true;
+      });
     _animation_middle3 =
-        Tween(begin: 120.0, end: 15.0).animate(_animationController_middle2!)
-          ..addStatusListener((status) {
-            print("status $status");
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 120.0, end: 15.0).animate(_animationController_middle2!)
+      ..addStatusListener((status) {
+        print("status $status");
+        // shadow_animation1_completed = true;
+      });
     _animation_middle4 =
-        Tween(begin: 100.0, end: 15.0).animate(_animationController_middle2!)
-          ..addStatusListener((status) {
-            print("status $status");
+    Tween(begin: 100.0, end: 15.0).animate(_animationController_middle2!)
+      ..addStatusListener((status) {
+        print("status $status");
 
-            // shadow_animation1_completed = true;
-          });
+        // shadow_animation1_completed = true;
+      });
 
     _animationController_button =
         AnimationController(vsync: this, duration: const Duration(seconds: 5));
@@ -1274,62 +1277,62 @@ class _KegelScreenState extends State<KegelScreen>
         AnimationController(vsync: this, duration: Duration(seconds: 1));
     _animationController_shadow1!.forward();
     _animation_shadow1 =
-        Tween(begin: 65.0, end: 0.0).animate(_animationController_shadow1!)
-          ..addStatusListener((status) {
-            print(status);
-            if (status == AnimationStatus.completed) {
-              // print("elapsedTime");
-              setState(() {
-                shadow_animation1_completed = true;
-                // print(shadow_animation1_completed);
-              });
-            }
-            // shadow_animation1_completed = true;
+    Tween(begin: 75.0, end: 0.0).animate(_animationController_shadow1!)
+      ..addStatusListener((status) {
+        print(status);
+        if (status == AnimationStatus.completed) {
+          // print("elapsedTime");
+          setState(() {
+            shadow_animation1_completed = true;
+            // print(shadow_animation1_completed);
           });
+        }
+        // shadow_animation1_completed = true;
+      });
 
     _animationController_shadow2 =
         AnimationController(vsync: this, duration: Duration(milliseconds: 100));
     _animationController_shadow2!.repeat(reverse: false);
     _animation_shadow2 =
-        Tween(begin: 70.0, end: 65.0).animate(_animationController_shadow2!)
-          ..addStatusListener((status) {
-            if (shadow_animation_pause == true) {}
-            // print(status);
-            // if (status == AnimationStatus.completed) {}
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 80.0, end: 75.0).animate(_animationController_shadow2!)
+      ..addStatusListener((status) {
+        if (shadow_animation_pause == true) {}
+        // print(status);
+        // if (status == AnimationStatus.completed) {}
+        // shadow_animation1_completed = true;
+      });
 
     // _animationController_textK =
     //     AnimationController(vsync: this, duration: Duration(seconds: 5));
     // _animationController_textK!.forward();
     _animation_textK =
-        Tween(begin: 30.0, end: 50.0).animate(_animationController_button!)
-          ..addStatusListener((status) {
-            // print(status);
-            // if (status == AnimationStatus.completed) {
-            //   setState(() {});
-            //   _animationController_button!.reverse();
-            // } else if (status == AnimationStatus.dismissed) {
-            //   setState(() {});
-            //   _animationController_button!.forward();
-            // }
-          });
+    Tween(begin: 30.0, end: 50.0).animate(_animationController_button!)
+      ..addStatusListener((status) {
+        // print(status);
+        // if (status == AnimationStatus.completed) {
+        //   setState(() {});
+        //   _animationController_button!.reverse();
+        // } else if (status == AnimationStatus.dismissed) {
+        //   setState(() {});
+        //   _animationController_button!.forward();
+        // }
+      });
 
     // _animationController_textTime =
     //     AnimationController(vsync: this, duration: Duration(seconds: 5));
     // _animationController_textTime!.forward();
     _animation_textTime =
-        Tween(begin: 25.0, end: 40.0).animate(_animationController_button!)
-          ..addStatusListener((status) {
-            // print(status);
-            // if (status == AnimationStatus.completed) {
-            //   setState(() {});
-            //   _animationController_button!.reverse();
-            // } else if (status == AnimationStatus.dismissed) {
-            //   setState(() {});
-            //   _animationController_button!.forward();
-            // }
-          });
+    Tween(begin: 25.0, end: 40.0).animate(_animationController_button!)
+      ..addStatusListener((status) {
+        // print(status);
+        // if (status == AnimationStatus.completed) {
+        //   setState(() {});
+        //   _animationController_button!.reverse();
+        // } else if (status == AnimationStatus.dismissed) {
+        //   setState(() {});
+        //   _animationController_button!.forward();
+        // }
+      });
   }
 
   AnimationController? _animController;
@@ -1343,7 +1346,7 @@ class _KegelScreenState extends State<KegelScreen>
     _animController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     final curve =
-        CurvedAnimation(curve: Curves.decelerate, parent: _animController!);
+    CurvedAnimation(curve: Curves.decelerate, parent: _animController!);
     _animOffset =
         Tween<Offset>(begin: const Offset(0.0, 0.35), end: Offset.zero)
             .animate(curve);
@@ -1428,9 +1431,12 @@ class _KegelScreenState extends State<KegelScreen>
     levels = await PreferenceManager().getPref(URLConstants.levels);
     print("LEvelsssssssssssssssss $levels");
     stages = await PreferenceManager().getPref(URLConstants.stages);
+    setState(() {
+      selected_time = DateFormat('HH:mm').format(DateTime.now());
+    });
     setState(() {});
     await _kegel_controller.Kegel_get_API(context);
-    await _kegel_controller.Kegel_technique_API(
+    await Kegel_technique_API(
         context: context, method: URLConstants.kegel_technique);
     await _kegel_controller.Kegel_alarm_get_API(context);
     if (_kegel_controller.kegelGetModel!.error == false) {
@@ -1528,7 +1534,7 @@ class _KegelScreenState extends State<KegelScreen>
                     alignment: Alignment.topRight,
                     child: Container(
                         decoration: BoxDecoration(
-                            // color: Colors.black.withOpacity(0.65),
+                          // color: Colors.black.withOpacity(0.65),
                             gradient: LinearGradient(
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
@@ -1617,6 +1623,32 @@ class _KegelScreenState extends State<KegelScreen>
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     print(screenHeight);
+    final TextSpan textSpan = HTML.toTextSpan(
+      context,
+      (isinfoLoading == true ? '' : KegelTechniqueModel!.data!.technique!),
+      linksCallback: (dynamic link) {
+        debugPrint('You clicked on ${link.toString()}');
+      },
+      // as name suggests, optionally set the default text style
+      defaultTextStyle: TextStyle(
+        color: Colors.grey[700],
+      ),
+
+      overrideStyle: <String, TextStyle>{
+        'p': TextStyle(
+            fontSize: 14,
+            color: ColorUtils.primary_grey,
+            fontFamily: 'PR',
+            fontWeight: FontWeight.w200,
+            decoration: TextDecoration.none),
+        // FontStyleUtility.h16(
+        //     fontColor: ColorUtils.primary_grey,
+        //     family: 'PR'),
+        'a': const TextStyle(wordSpacing: 2),
+        // specify any tag not just the supported ones,
+        // and apply TextStyles to them and/override them
+      },
+    );
 
     return Stack(
       children: [
@@ -1634,25 +1666,25 @@ class _KegelScreenState extends State<KegelScreen>
           // ),
           decoration: (back_wallpaper
               ? const BoxDecoration(
-                  // gradient: LinearGradient(
-                  //   begin: Alignment.topCenter,`
-                  //   end: Alignment.bottomCenter,
-                  //   // stops: [0.1, 0.5, 0.7, 0.9],
-                  //   colors: [
-                  //     HexColor("#000000").withOpacity(0.86),
-                  //     HexColor("#000000").withOpacity(0.81),
-                  //     HexColor("#000000").withOpacity(0.44),
-                  //     HexColor("#000000").withOpacity(1),
-                  //
-                  //   ],
-                  // ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage(
-                      AssetUtils.k_screen_back,
-                    ),
-                  ),
-                )
+            // gradient: LinearGradient(
+            //   begin: Alignment.topCenter,`
+            //   end: Alignment.bottomCenter,
+            //   // stops: [0.1, 0.5, 0.7, 0.9],
+            //   colors: [
+            //     HexColor("#000000").withOpacity(0.86),
+            //     HexColor("#000000").withOpacity(0.81),
+            //     HexColor("#000000").withOpacity(0.44),
+            //     HexColor("#000000").withOpacity(1),
+            //
+            //   ],
+            // ),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(
+                AssetUtils.k_screen_back,
+              ),
+            ),
+          )
               : BoxDecoration()),
         ),
         WillPopScope(
@@ -1771,13 +1803,13 @@ class _KegelScreenState extends State<KegelScreen>
                         onTap: () {
                           (started
                               ? Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => DashboardScreen(
-                                            page: 1,
-                                          )),
-                                )
+                            MaterialPageRoute(
+                                builder: (context) => DashboardScreen(
+                                  page: 1,
+                                )),
+                          )
                               : CommonWidget().showErrorToaster(
-                                  msg: "Please finish the method"));
+                              msg: "Please finish the method"));
                         },
                         child: Container(
                             width: 41,
@@ -1812,100 +1844,100 @@ class _KegelScreenState extends State<KegelScreen>
                             margin: const EdgeInsets.symmetric(horizontal: 10),
                             alignment: Alignment.center,
                             child: Obx(() => (_kegel_controller
-                                        .isuserinfoLoading.value ==
-                                    true
+                                .isuserinfoLoading.value ==
+                                true
                                 ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        AssetUtils.star_icon,
-                                        color: Colors.grey,
-                                        height: 22,
-                                        width: 22,
-                                      ),
-                                      const SizedBox(
-                                        width: 7,
-                                      ),
-                                      Image.asset(
-                                        AssetUtils.star_icon,
-                                        height: 22,
-                                        color: Colors.grey,
-                                        width: 22,
-                                      ),
-                                      const SizedBox(
-                                        width: 7,
-                                      ),
-                                      Image.asset(
-                                        AssetUtils.star_icon,
-                                        color: Colors.grey,
-                                        height: 22,
-                                        width: 22,
-                                      ),
-                                    ],
-                                  )
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  color: Colors.grey,
+                                  height: 22,
+                                  width: 22,
+                                ),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  height: 22,
+                                  color: Colors.grey,
+                                  width: 22,
+                                ),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  color: Colors.grey,
+                                  height: 22,
+                                  width: 22,
+                                ),
+                              ],
+                            )
                                 : Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        AssetUtils.star_icon,
-                                        color: (int.parse(_kegel_controller
-                                                    .kegelGetModel!
-                                                    .data![_kegel_controller
-                                                            .kegelGetModel!
-                                                            .data!
-                                                            .length -
-                                                        1]
-                                                    .sets!) >=
-                                                1
-                                            ? ColorUtils.primary_gold
-                                            : Colors.grey),
-                                        height: 22,
-                                        width: 22,
-                                      ),
-                                      const SizedBox(
-                                        width: 7,
-                                      ),
-                                      Image.asset(
-                                        AssetUtils.star_icon,
-                                        height: 22,
-                                        color: (int.parse(_kegel_controller
-                                                    .kegelGetModel!
-                                                    .data![_kegel_controller
-                                                            .kegelGetModel!
-                                                            .data!
-                                                            .length -
-                                                        1]
-                                                    .sets!) >=
-                                                2
-                                            ? ColorUtils.primary_gold
-                                            : Colors.grey),
-                                        width: 22,
-                                      ),
-                                      const SizedBox(
-                                        width: 7,
-                                      ),
-                                      Image.asset(
-                                        AssetUtils.star_icon,
-                                        color: (int.parse(_kegel_controller
-                                                    .kegelGetModel!
-                                                    .data![_kegel_controller
-                                                            .kegelGetModel!
-                                                            .data!
-                                                            .length -
-                                                        1]
-                                                    .sets!) >=
-                                                3
-                                            ? ColorUtils.primary_gold
-                                            : Colors.grey),
-                                        height: 22,
-                                        width: 22,
-                                      ),
-                                    ],
-                                  )))),
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  color: (int.parse(_kegel_controller
+                                      .kegelGetModel!
+                                      .data![_kegel_controller
+                                      .kegelGetModel!
+                                      .data!
+                                      .length -
+                                      1]
+                                      .sets!) >=
+                                      1
+                                      ? ColorUtils.primary_gold
+                                      : Colors.grey),
+                                  height: 22,
+                                  width: 22,
+                                ),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  height: 22,
+                                  color: (int.parse(_kegel_controller
+                                      .kegelGetModel!
+                                      .data![_kegel_controller
+                                      .kegelGetModel!
+                                      .data!
+                                      .length -
+                                      1]
+                                      .sets!) >=
+                                      2
+                                      ? ColorUtils.primary_gold
+                                      : Colors.grey),
+                                  width: 22,
+                                ),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  color: (int.parse(_kegel_controller
+                                      .kegelGetModel!
+                                      .data![_kegel_controller
+                                      .kegelGetModel!
+                                      .data!
+                                      .length -
+                                      1]
+                                      .sets!) >=
+                                      3
+                                      ? ColorUtils.primary_gold
+                                      : Colors.grey),
+                                  height: 22,
+                                  width: 22,
+                                ),
+                              ],
+                            )))),
                         // Container(
                         //     width: 41,
                         //     margin: EdgeInsets.all(8),
@@ -2163,647 +2195,647 @@ class _KegelScreenState extends State<KegelScreen>
                         Container(
                           height: (screenHeight >= 600 && screenHeight <= 700
                               ? (animation_started_middle
-                                  ? _animation_middle2!.value
-                                  : 15)
+                              ? _animation_middle2!.value
+                              : 15)
                               : (screenHeight >= 700 && screenHeight <= 800
-                                  ? (animation_started_middle
-                                      ? _animation_middle!.value
-                                      : 15)
-                                  : (screenHeight >= 800 && screenHeight <= 850
-                                      ? (animation_started_middle
-                                          ? _animation_middle4!.value
-                                          : 15)
-                                      : (screenHeight >= 850
-                                          ? (animation_started_middle
-                                              ? _animation_middle3!.value
-                                              : 15)
-                                          : 0)))),
+                              ? (animation_started_middle
+                              ? _animation_middle!.value
+                              : 15)
+                              : (screenHeight >= 800 && screenHeight <= 850
+                              ? (animation_started_middle
+                              ? _animation_middle4!.value
+                              : 15)
+                              : (screenHeight >= 850
+                              ? (animation_started_middle
+                              ? _animation_middle3!.value
+                              : 15)
+                              : 0)))),
                         ),
                         Container(
-                            // color: Colors.white,
+                          // color: Colors.white,
                             child: AvatarGlow(
-                          endRadius: 170.0,
-                          showTwoGlows: true,
-                          animate: false,
-                          // (startStop ? false : true),
-                          duration: const Duration(milliseconds: 900),
-                          repeat: true,
-                          child: GestureDetector(
-                            onTap: () {
-                              print('helllllllooooooooooooooo');
-                              // startOrStop();
-                            },
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  height: 150,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.black,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: const Offset(0, 0),
-                                        color: (animation_started
-                                            ? HexColor('#E64A9B')
-                                            : Colors.transparent),
-                                        spreadRadius: (animation_started
-                                            ? (shadow_animation1_completed
+                              endRadius: 170.0,
+                              showTwoGlows: true,
+                              animate: false,
+                              // (startStop ? false : true),
+                              duration: const Duration(milliseconds: 900),
+                              repeat: true,
+                              child: GestureDetector(
+                                onTap: () {
+                                  print('helllllllooooooooooooooo');
+                                  // startOrStop();
+                                },
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Container(
+                                      height: 150,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            offset: const Offset(0, 0),
+                                            color: (animation_started
+                                                ? HexColor('#E64A9B')
+                                                : Colors.transparent),
+                                            spreadRadius: (animation_started
+                                                ? (shadow_animation1_completed
                                                 ? _animation_shadow2!.value
                                                 : _animation_shadow1!.value)
-                                            : 0),
-                                        blurRadius: 35,
+                                                : 0),
+                                            blurRadius: 35,
+                                          ),
+                                          // BoxShadow(
+                                          //   // offset: Offset(0,10),
+                                          //   color: (animation_started
+                                          //       ? HexColor('#000000')
+                                          //       : Colors.transparent),
+                                          //   spreadRadius: 35,
+                                          //   blurRadius: 35,
+                                          // ),
+                                        ],
+                                        // boxShadow: [
+                                        //   BoxShadow(
+                                        //     color: (animation_started
+                                        //         ? HexColor('#E64A9B')
+                                        //         : Colors.transparent),
+                                        //     blurRadius: (animation_started
+                                        //         ? _animation!.value
+                                        //         : 0),
+                                        //     spreadRadius: (animation_started
+                                        //         ? _animation!.value
+                                        //         : 0),
+                                        //   )
+                                        // ]
                                       ),
-                                      BoxShadow(
-                                        // offset: Offset(0,10),
-                                        color: (animation_started
-                                            ? HexColor('#000000')
-                                            : Colors.transparent),
-                                        spreadRadius: 35,
-                                        blurRadius: 35,
+                                    ),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Circle,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 6],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 340,
+                                    //           width: 340,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Circle,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 8.5],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 330,
+                                    //           width: 330,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Circle,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 7.5],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 320,
+                                    //           width: 320,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Circle,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 7.5],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 310,
+                                    //           width: 310,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Circle,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 8],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 300,
+                                    //           width: 300,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Circle,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 8.5],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 290,
+                                    //           width: 290,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Circle,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 9],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 280,
+                                    //           width: 280,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Circle,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 8.5],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 270,
+                                    //           width: 270,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Oval,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 10],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 260,
+                                    //           width: 260,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Oval,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 9.5],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 250,
+                                    //           width: 250,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Oval,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 9],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 240,
+                                    //           width: 240,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Oval,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 8.5],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 230,
+                                    //           width: 230,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Oval,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 7],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 220,
+                                    //           width: 220,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Oval,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 7.5],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 210,
+                                    //           width: 210,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Oval,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 7],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 200,
+                                    //           width: 200,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Oval,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 6.5],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 190,
+                                    //           width: 190,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Oval,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 6],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 180,
+                                    //           width: 180,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Oval,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 5.5],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 170,
+                                    //           width: 170,
+                                    //           padding: EdgeInsets.all(5),
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+                                    // (animation_started
+                                    //     ? DottedBorder(
+                                    //         borderType: BorderType.Oval,
+                                    //         strokeWidth: 3,
+                                    //         dashPattern: [0, 7],
+                                    //         strokeCap: StrokeCap.round,
+                                    //         radius: Radius.circular(100),
+                                    //         padding: EdgeInsets.all(0),
+                                    //         color: Colors.black,
+                                    //         child: Container(
+                                    //           height: 160,
+                                    //           width: 160,
+                                    //           padding: EdgeInsets.all(5),
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink()),
+
+                                    (animation_started
+                                        ? DottedBorder(
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 5.5,
+                                      dashPattern: [0, 15],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 330,
+                                        width: 330,
+                                        padding: EdgeInsets.all(5),
                                       ),
-                                    ],
-                                    // boxShadow: [
-                                    //   BoxShadow(
-                                    //     color: (animation_started
-                                    //         ? HexColor('#E64A9B')
-                                    //         : Colors.transparent),
-                                    //     blurRadius: (animation_started
-                                    //         ? _animation!.value
-                                    //         : 0),
-                                    //     spreadRadius: (animation_started
-                                    //         ? _animation!.value
-                                    //         : 0),
-                                    //   )
-                                    // ]
-                                  ),
-                                ),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Circle,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 6],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 340,
-                                //           width: 340,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Circle,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 8.5],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 330,
-                                //           width: 330,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Circle,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 7.5],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 320,
-                                //           width: 320,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Circle,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 7.5],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 310,
-                                //           width: 310,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Circle,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 8],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 300,
-                                //           width: 300,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Circle,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 8.5],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 290,
-                                //           width: 290,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Circle,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 9],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 280,
-                                //           width: 280,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Circle,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 8.5],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 270,
-                                //           width: 270,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Oval,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 10],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 260,
-                                //           width: 260,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Oval,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 9.5],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 250,
-                                //           width: 250,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Oval,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 9],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 240,
-                                //           width: 240,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Oval,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 8.5],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 230,
-                                //           width: 230,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Oval,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 7],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 220,
-                                //           width: 220,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Oval,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 7.5],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 210,
-                                //           width: 210,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Oval,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 7],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 200,
-                                //           width: 200,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Oval,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 6.5],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 190,
-                                //           width: 190,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Oval,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 6],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 180,
-                                //           width: 180,
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Oval,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 5.5],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 170,
-                                //           width: 170,
-                                //           padding: EdgeInsets.all(5),
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
-                                // (animation_started
-                                //     ? DottedBorder(
-                                //         borderType: BorderType.Oval,
-                                //         strokeWidth: 3,
-                                //         dashPattern: [0, 7],
-                                //         strokeCap: StrokeCap.round,
-                                //         radius: Radius.circular(100),
-                                //         padding: EdgeInsets.all(0),
-                                //         color: Colors.black,
-                                //         child: Container(
-                                //           height: 160,
-                                //           width: 160,
-                                //           padding: EdgeInsets.all(5),
-                                //         ),
-                                //       )
-                                //     : SizedBox.shrink()),
+                                    )
+                                        : SizedBox.shrink()),
+                                    (animation_started
+                                        ? DottedBorder(
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 5.5,
+                                      dashPattern: [0, 15],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 310,
+                                        width: 310,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
+                                        : SizedBox.shrink()),
+                                    (animation_started
+                                        ? DottedBorder(
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 5,
+                                      dashPattern: [0, 14],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 285,
+                                        width: 285,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
+                                        : SizedBox.shrink()),
+                                    (animation_started
+                                        ? DottedBorder(
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 5,
+                                      dashPattern: [0, 16],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 265,
+                                        width: 265,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
+                                        : SizedBox.shrink()),
+                                    (animation_started
+                                        ? DottedBorder(
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 5,
+                                      dashPattern: [0, 14],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 240,
+                                        width: 240,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
+                                        : SizedBox.shrink()),
+                                    (animation_started
+                                        ? DottedBorder(
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 5,
+                                      dashPattern: [0, 15],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 220,
+                                        width: 220,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
+                                        : SizedBox.shrink()),
+                                    (animation_started
+                                        ? DottedBorder(
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 5,
+                                      dashPattern: [0, 14],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 200,
+                                        width: 200,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
+                                        : SizedBox.shrink()),
+                                    (animation_started
+                                        ? DottedBorder(
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 4,
+                                      dashPattern: [0, 12],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 180,
+                                        width: 180,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
+                                        : SizedBox.shrink()),
+                                    (animation_started
+                                        ? DottedBorder(
+                                      borderType: BorderType.Oval,
+                                      strokeWidth: 3,
+                                      dashPattern: [0, 10],
+                                      strokeCap: StrokeCap.round,
+                                      radius: Radius.circular(100),
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.black,
+                                      child: Container(
+                                        height: 160,
+                                        width: 160,
+                                        padding: EdgeInsets.all(5),
+                                      ),
+                                    )
+                                        : SizedBox.shrink()),
 
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 7.5,
-                                        dashPattern: [0, 19],
-                                        strokeCap: StrokeCap.round,
-                                        radius: Radius.circular(100),
-                                        padding: EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 350,
-                                          width: 350,
-                                          padding: EdgeInsets.all(5),
-                                        ),
+                                    Container(
+                                      height: (animation_started
+                                          ? _animation_button!.value
+                                          : button_height),
+                                      width: (animation_started
+                                          ? _animation_button!.value
+                                          : button_height),
+                                      decoration: (animation_started
+                                          ? BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color: Colors.pinkAccent,
+                                            width: 2.5),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: HexColor(
+                                                '#E64A9B'), // darker color
+                                          ),
+                                          BoxShadow(
+                                            color: HexColor('#000000'),
+                                            // background color
+                                            spreadRadius: -7.0,
+                                            blurRadius: 10.0,
+                                          ),
+                                        ],
                                       )
-                                    : SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 7.5,
-                                        dashPattern: [0, 19],
-                                        strokeCap: StrokeCap.round,
-                                        radius: Radius.circular(100),
-                                        padding: EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 320,
-                                          width: 320,
-                                          padding: EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 7,
-                                        dashPattern: [0, 19],
-                                        strokeCap: StrokeCap.round,
-                                        radius: Radius.circular(100),
-                                        padding: EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 290,
-                                          width: 290,
-                                          padding: EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 8,
-                                        dashPattern: [0, 19],
-                                        strokeCap: StrokeCap.round,
-                                        radius: Radius.circular(100),
-                                        padding: EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 265,
-                                          width: 265,
-                                          padding: EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 7,
-                                        dashPattern: [0, 18],
-                                        strokeCap: StrokeCap.round,
-                                        radius: Radius.circular(100),
-                                        padding: EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 240,
-                                          width: 240,
-                                          padding: EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 6,
-                                        dashPattern: [0, 16],
-                                        strokeCap: StrokeCap.round,
-                                        radius: Radius.circular(100),
-                                        padding: EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 220,
-                                          width: 220,
-                                          padding: EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 5,
-                                        dashPattern: [0, 14],
-                                        strokeCap: StrokeCap.round,
-                                        radius: Radius.circular(100),
-                                        padding: EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 200,
-                                          width: 200,
-                                          padding: EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 4,
-                                        dashPattern: [0, 12],
-                                        strokeCap: StrokeCap.round,
-                                        radius: Radius.circular(100),
-                                        padding: EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 180,
-                                          width: 180,
-                                          padding: EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : SizedBox.shrink()),
-                                (animation_started
-                                    ? DottedBorder(
-                                        borderType: BorderType.Oval,
-                                        strokeWidth: 3,
-                                        dashPattern: [0, 10],
-                                        strokeCap: StrokeCap.round,
-                                        radius: Radius.circular(100),
-                                        padding: EdgeInsets.all(0),
-                                        color: Colors.black,
-                                        child: Container(
-                                          height: 160,
-                                          width: 160,
-                                          padding: EdgeInsets.all(5),
-                                        ),
-                                      )
-                                    : SizedBox.shrink()),
-
-                                Container(
-                                  height: (animation_started
-                                      ? _animation_button!.value
-                                      : button_height),
-                                  width: (animation_started
-                                      ? _animation_button!.value
-                                      : button_height),
-                                  decoration: (animation_started
-                                      ? BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                              color: Colors.pinkAccent,
-                                              width: 2.5),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: HexColor(
-                                                  '#E64A9B'), // darker color
-                                            ),
-                                            BoxShadow(
-                                              color: HexColor('#000000'),
-                                              // background color
-                                              spreadRadius: -7.0,
-                                              blurRadius: 10.0,
-                                            ),
-                                          ],
-                                        )
-                                      : const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                              alignment: Alignment.center,
-                                              image: AssetImage(
-                                                  AssetUtils.home_button)),
-                                          // boxShadow: [
-                                          //   BoxShadow(
-                                          //     color: (animation_started
-                                          //         ? HexColor('#F5C921')
-                                          //         : Colors.transparent),
-                                          //     blurRadius: (animation_started
-                                          //         ? _animation!.value
-                                          //         : 0),
-                                          //     spreadRadius: (animation_started
-                                          //         ? _animation!.value
-                                          //         : 0),
-                                          //   )
-                                          // ]
-                                        )),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.center,
-                                        child: Text('Kegel',
-                                            style: GoogleFonts.sourceSerifPro(
-                                                textStyle: TextStyle(
-                                              color: (four_started
-                                                  ? HexColor('#E64A9B')
-                                                      .withOpacity(0.4)
-                                                  : (timer_started
-                                                      ? HexColor('#E64A9B')
+                                          : const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            alignment: Alignment.center,
+                                            image: AssetImage(
+                                                AssetUtils.home_button)),
+                                        // boxShadow: [
+                                        //   BoxShadow(
+                                        //     color: (animation_started
+                                        //         ? HexColor('#F5C921')
+                                        //         : Colors.transparent),
+                                        //     blurRadius: (animation_started
+                                        //         ? _animation!.value
+                                        //         : 0),
+                                        //     spreadRadius: (animation_started
+                                        //         ? _animation!.value
+                                        //         : 0),
+                                        //   )
+                                        // ]
+                                      )),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            alignment: Alignment.center,
+                                            child: Text('Kegel',
+                                                style: GoogleFonts.sourceSerifPro(
+                                                    textStyle: TextStyle(
+                                                      color: (four_started
+                                                          ? HexColor('#E64A9B')
                                                           .withOpacity(0.4)
-                                                      : HexColor('#E64A9B'))),
-                                              fontSize: (animation_started
-                                                  ? _animation_textK!.value
-                                                  : text_k_size),
-                                              fontWeight: FontWeight.w600,
-                                            ))
-                                            // style: TextStyle(
-                                            //     color: HexColor('#E64A9B')
-                                            //         .withOpacity(0.4),
-                                            //     fontSize: (animation_started
-                                            //         ? _animation_textK!.value
-                                            //         : text_k_size),
-                                            //     fontWeight: FontWeight.w600),
+                                                          : (timer_started
+                                                          ? HexColor('#E64A9B')
+                                                          .withOpacity(0.4)
+                                                          : HexColor('#E64A9B'))),
+                                                      fontSize: (animation_started
+                                                          ? _animation_textK!.value
+                                                          : text_k_size),
+                                                      fontWeight: FontWeight.w600,
+                                                    ))
+                                              // style: TextStyle(
+                                              //     color: HexColor('#E64A9B')
+                                              //         .withOpacity(0.4),
+                                              //     fontSize: (animation_started
+                                              //         ? _animation_textK!.value
+                                              //         : text_k_size),
+                                              //     fontWeight: FontWeight.w600),
                                             ),
+                                          ),
+                                          Container(
+                                            alignment: Alignment.center,
+                                            child: (four_started
+                                                ? Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "PUSH",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: (animation_started
+                                                          ? _animation_textTime!
+                                                          .value
+                                                          : text_time_size),
+                                                      fontWeight:
+                                                      FontWeight.w900),
+                                                ),
+                                                Text(
+                                                  elapsedTime,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: (animation_started
+                                                          ? _animation_textTime!
+                                                          .value
+                                                          : text_time_size),
+                                                      fontWeight:
+                                                      FontWeight.w900),
+                                                ),
+                                              ],
+                                            )
+                                                : Text(
+                                              (timer_started
+                                                  ? ('$seconds' == '3'
+                                                  ? 'Ready'
+                                                  : ('$seconds' == '2'
+                                                  ? 'Set'
+                                                  : ('$seconds' == '1'
+                                                  ? 'Kegel'
+                                                  : elapsedTime)))
+                                                  : ''),
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: (animation_started
+                                                      ? _animation_textTime!
+                                                      .value
+                                                      : text_time_size),
+                                                  fontWeight:
+                                                  FontWeight.w900),
+                                            )),
+                                          ),
+                                        ],
                                       ),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        child: (four_started
-                                            ? Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "PUSH",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: (animation_started
-                                                            ? _animation_textTime!
-                                                                .value
-                                                            : text_time_size),
-                                                        fontWeight:
-                                                            FontWeight.w900),
-                                                  ),
-                                                  Text(
-                                                    elapsedTime,
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: (animation_started
-                                                            ? _animation_textTime!
-                                                                .value
-                                                            : text_time_size),
-                                                        fontWeight:
-                                                            FontWeight.w900),
-                                                  ),
-                                                ],
-                                              )
-                                            : Text(
-                                                (timer_started
-                                                    ? ('$seconds' == '3'
-                                                        ? 'Ready'
-                                                        : ('$seconds' == '2'
-                                                            ? 'Set'
-                                                            : ('$seconds' == '1'
-                                                                ? 'Kegel'
-                                                                : elapsedTime)))
-                                                    : ''),
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: (animation_started
-                                                        ? _animation_textTime!
-                                                            .value
-                                                        : text_time_size),
-                                                    fontWeight:
-                                                        FontWeight.w900),
-                                              )),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        )),
+                              ),
+                            )),
                         // SizedBox(
                         //   height: (animation_started_middle
                         //       ? _animation_middle!.value
@@ -2813,21 +2845,21 @@ class _KegelScreenState extends State<KegelScreen>
                         Container(
                           height: (screenHeight >= 600 && screenHeight <= 700
                               ? (animation_started_middle
-                                  ? _animation_middle2!.value
-                                  : 15)
+                              ? _animation_middle2!.value
+                              : 15)
                               : (screenHeight >= 700 && screenHeight <= 800
-                                  ? (animation_started_middle
-                                      ? _animation_middle!.value
-                                      : 15)
-                                  : (screenHeight >= 800 && screenHeight <= 850
-                                      ? (animation_started_middle
-                                          ? _animation_middle4!.value
-                                          : 15)
-                                      : (screenHeight >= 850
-                                          ? (animation_started_middle
-                                              ? _animation_middle3!.value
-                                              : 15)
-                                          : 0)))),
+                              ? (animation_started_middle
+                              ? _animation_middle!.value
+                              : 15)
+                              : (screenHeight >= 800 && screenHeight <= 850
+                              ? (animation_started_middle
+                              ? _animation_middle4!.value
+                              : 15)
+                              : (screenHeight >= 850
+                              ? (animation_started_middle
+                              ? _animation_middle3!.value
+                              : 15)
+                              : 0)))),
                         ),
                         // (timer_started
                         //     ? Container(
@@ -2843,713 +2875,713 @@ class _KegelScreenState extends State<KegelScreen>
                         //     : SizedBox.shrink()),
                         (timer_started
                             ? Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Container(
-                                          // color: Colors.red,
-                                          child: ('$seconds' == '3'
-                                              ? Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Container(
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Text(
-                                                            'Set',
-                                                            style: FontStyleUtility.h18(
-                                                                fontColor: Colors
-                                                                    .transparent,
-                                                                family: "PR"),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Container(
-                                                        width: 80,
-                                                        // decoration: BoxDecoration(
-                                                        //     borderRadius:
-                                                        //         BorderRadius
-                                                        //             .circular(10),
-                                                        //     border: Border.all(
-                                                        //         color:
-                                                        //             Colors.white,
-                                                        //         width: 0.5)),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Text(
-                                                            'Ready',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: FontStyleUtility.h22(
-                                                                fontColor:
-                                                                    ColorUtils
-                                                                        .primary_gold,
-                                                                family: "PM"),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )
-                                              : ('$seconds' == '2'
-                                                  ? Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Expanded(
-                                                          flex: 1,
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
-                                                            children: [
-                                                              Container(
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Text(
-                                                                    'Ready',
-                                                                    style: FontStyleUtility.h14(
-                                                                        fontColor:
-                                                                            Colors
-                                                                                .white,
-                                                                        family:
-                                                                            "PR"),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          flex: 1,
-                                                          child: Container(
-                                                            width: 80,
-                                                            // decoration: BoxDecoration(
-                                                            //     borderRadius:
-                                                            //         BorderRadius
-                                                            //             .circular(
-                                                            //                 10),
-                                                            //     border: Border.all(
-                                                            //         color: Colors
-                                                            //             .white,
-                                                            //         width: 0.5)),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Text(
-                                                                'Set',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: FontStyleUtility.h22(
-                                                                    fontColor:
-                                                                        ColorUtils
-                                                                            .primary_gold,
-                                                                    family:
-                                                                        "PM"),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  : ('$seconds' == '1'
-                                                      ? Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: Container(
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          0.0),
-                                                                  child: Text(
-                                                                    'Ready',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .right,
-                                                                    style: FontStyleUtility.h14(
-                                                                        fontColor:
-                                                                            Colors
-                                                                                .white,
-                                                                        family:
-                                                                            "PR"),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 1,
-                                                              child: Container(
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          0.0),
-                                                                  child: Text(
-                                                                    'Set',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .right,
-                                                                    style: FontStyleUtility.h14(
-                                                                        fontColor:
-                                                                            Colors
-                                                                                .white,
-                                                                        family:
-                                                                            "PR"),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child: Container(
-                                                                width: 100,
-                                                                // decoration: BoxDecoration(
-                                                                //     borderRadius:
-                                                                //         BorderRadius
-                                                                //             .circular(
-                                                                //                 10),
-                                                                //     border: Border.all(
-                                                                //         color: Colors
-                                                                //             .white,
-                                                                //         width:
-                                                                //             0.5)),
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Text(
-                                                                    'Squeeze',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                    style: FontStyleUtility.h22(
-                                                                        fontColor:
-                                                                            ColorUtils
-                                                                                .primary_gold,
-                                                                        family:
-                                                                            "PM"),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )
-                                                      : (four_started
-                                                          ? Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .end,
-                                                              children: [
-                                                                Expanded(
-                                                                  flex: 2,
-                                                                  child:
-                                                                      Container(
-                                                                    child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              0.0),
-                                                                      child:
-                                                                          Text(
-                                                                        'Push',
-                                                                        textAlign:
-                                                                            TextAlign.right,
-                                                                        style: FontStyleUtility.h14(
-                                                                            fontColor:
-                                                                                Colors.white,
-                                                                            family: "PR"),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Expanded(
-                                                                  flex: 2,
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              0.0),
-                                                                      child:
-                                                                          Text(
-                                                                        'Squeeze',
-                                                                        textAlign:
-                                                                            TextAlign.right,
-                                                                        style: FontStyleUtility.h14(
-                                                                            fontColor:
-                                                                                Colors.white,
-                                                                            family: "PR"),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Expanded(
-                                                                  flex: 3,
-                                                                  child:
-                                                                      Container(
-                                                                    width: 80,
-                                                                    // decoration: BoxDecoration(
-                                                                    //     borderRadius:
-                                                                    //         BorderRadius.circular(
-                                                                    //             10),
-                                                                    //     border: Border.all(
-                                                                    //         color: Colors
-                                                                    //             .white,
-                                                                    //         width:
-                                                                    //             0.5)),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
-                                                                      child:
-                                                                          Text(
-                                                                        'Push',
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        style: FontStyleUtility.h22(
-                                                                            fontColor:
-                                                                                ColorUtils.primary_gold,
-                                                                            family: "PM"),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            )
-                                                          : (counter > 0
-                                                              ? Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .end,
-                                                                  children: [
-                                                                    Expanded(
-                                                                      flex: 2,
-                                                                      child:
-                                                                          Container(
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.all(0.0),
-                                                                          child:
-                                                                              Text(
-                                                                            'Squeeze',
-                                                                            textAlign:
-                                                                                TextAlign.right,
-                                                                            style:
-                                                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      flex: 1,
-                                                                      child:
-                                                                          Container(
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.all(0.0),
-                                                                          child:
-                                                                              Text(
-                                                                            'Push',
-                                                                            textAlign:
-                                                                                TextAlign.right,
-                                                                            style:
-                                                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      flex: 3,
-                                                                      child:
-                                                                          Container(
-                                                                        width:
-                                                                            100,
-                                                                        // decoration: BoxDecoration(
-                                                                        //     borderRadius:
-                                                                        //         BorderRadius
-                                                                        //             .circular(
-                                                                        //                 10),
-                                                                        //     border: Border.all(
-                                                                        //         color: Colors
-                                                                        //             .white,
-                                                                        //         width:
-                                                                        //             0.5)),
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.all(8.0),
-                                                                          child:
-                                                                              Text(
-                                                                            'Squeeze',
-                                                                            textAlign:
-                                                                                TextAlign.center,
-                                                                            style:
-                                                                                FontStyleUtility.h22(fontColor: ColorUtils.primary_gold, family: "PM"),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                )
-                                                              : Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .end,
-                                                                  children: [
-                                                                    Expanded(
-                                                                      flex: 2,
-                                                                      child:
-                                                                          Container(
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.all(0.0),
-                                                                          child:
-                                                                              Text(
-                                                                            'Ready',
-                                                                            textAlign:
-                                                                                TextAlign.right,
-                                                                            style:
-                                                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      flex: 1,
-                                                                      child:
-                                                                          Container(
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.all(0.0),
-                                                                          child:
-                                                                              Text(
-                                                                            'Set',
-                                                                            textAlign:
-                                                                                TextAlign.right,
-                                                                            style:
-                                                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      flex: 3,
-                                                                      child:
-                                                                          Container(
-                                                                        width:
-                                                                            100,
-                                                                        // decoration: BoxDecoration(
-                                                                        //     borderRadius:
-                                                                        //         BorderRadius
-                                                                        //             .circular(
-                                                                        //                 10),
-                                                                        //     border: Border.all(
-                                                                        //         color: Colors
-                                                                        //             .white,
-                                                                        //         width:
-                                                                        //             0.5)),
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.all(8.0),
-                                                                          child:
-                                                                              Text(
-                                                                            'Squeeze',
-                                                                            textAlign:
-                                                                                TextAlign.center,
-                                                                            style:
-                                                                                FontStyleUtility.h22(fontColor: ColorUtils.primary_gold, family: "PM"),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                )))))),
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    // color: Colors.red,
+                                    child: ('$seconds' == '3'
+                                        ? Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets
+                                                  .all(8.0),
+                                              child: Text(
+                                                'Set',
+                                                style: FontStyleUtility.h18(
+                                                    fontColor: Colors
+                                                        .transparent,
+                                                    family: "PR"),
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Container(
-                                          // color: Colors.red,
-                                          child: ('$seconds' == '3'
-                                              ? Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Text(
-                                                          'Set',
-                                                          style: FontStyleUtility
-                                                              .h14(
-                                                                  fontColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  family: "PR"),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )
-                                              : ('$seconds' == '2'
-                                                  ? Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Container(
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Text(
-                                                              'Squeeze',
-                                                              style: FontStyleUtility
-                                                                  .h14(
-                                                                      fontColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      family:
-                                                                          "PR"),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  : ('$seconds' == '1'
-                                                      ? Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Container(
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        0.0),
-                                                                child: Text(
-                                                                  'Push',
-                                                                  style: FontStyleUtility.h14(
-                                                                      fontColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      family:
-                                                                          "PR"),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        8.0),
-                                                                child: Text(
-                                                                  'Squeeze',
-                                                                  style: FontStyleUtility.h14(
-                                                                      fontColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      family:
-                                                                          "PR"),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )
-                                                      : (four_started
-                                                          ? Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Container(
-                                                                  // width: 100,
-
-                                                                  child:
-                                                                      Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      'Squeeze',
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .right,
-                                                                      style: FontStyleUtility.h14(
-                                                                          fontColor: Colors
-                                                                              .white,
-                                                                          family:
-                                                                              "PR"),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Container(
-                                                                  child:
-                                                                      Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            8.0),
-                                                                    child: Text(
-                                                                      'Push',
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .right,
-                                                                      style: FontStyleUtility.h14(
-                                                                          fontColor: Colors
-                                                                              .white,
-                                                                          family:
-                                                                              "PR"),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            )
-                                                          : Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Container(
-                                                                  child:
-                                                                      Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      'Push',
-                                                                      style: FontStyleUtility.h14(
-                                                                          fontColor: Colors
-                                                                              .white,
-                                                                          family:
-                                                                              "PR"),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Container(
-                                                                  child:
-                                                                      Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            8.0),
-                                                                    child: Text(
-                                                                      'Squeeze',
-                                                                      style: FontStyleUtility.h14(
-                                                                          fontColor: Colors
-                                                                              .white,
-                                                                          family:
-                                                                              "PR"),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ))))),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                            width: 80,
+                                            // decoration: BoxDecoration(
+                                            //     borderRadius:
+                                            //         BorderRadius
+                                            //             .circular(10),
+                                            //     border: Border.all(
+                                            //         color:
+                                            //             Colors.white,
+                                            //         width: 0.5)),
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets
+                                                  .all(8.0),
+                                              child: Text(
+                                                'Ready',
+                                                textAlign: TextAlign
+                                                    .center,
+                                                style: FontStyleUtility.h22(
+                                                    fontColor:
+                                                    ColorUtils
+                                                        .primary_gold,
+                                                    family: "PM"),
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      )
-                                    ],
+                                      ],
+                                    )
+                                        : ('$seconds' == '2'
+                                        ? Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .center,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .end,
+                                            children: [
+                                              Container(
+                                                child: Padding(
+                                                  padding:
+                                                  const EdgeInsets
+                                                      .all(
+                                                      8.0),
+                                                  child: Text(
+                                                    'Ready',
+                                                    style: FontStyleUtility.h14(
+                                                        fontColor:
+                                                        Colors
+                                                            .white,
+                                                        family:
+                                                        "PR"),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                            width: 80,
+                                            // decoration: BoxDecoration(
+                                            //     borderRadius:
+                                            //         BorderRadius
+                                            //             .circular(
+                                            //                 10),
+                                            //     border: Border.all(
+                                            //         color: Colors
+                                            //             .white,
+                                            //         width: 0.5)),
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets
+                                                  .all(8.0),
+                                              child: Text(
+                                                'Set',
+                                                textAlign:
+                                                TextAlign
+                                                    .center,
+                                                style: FontStyleUtility.h22(
+                                                    fontColor:
+                                                    ColorUtils
+                                                        .primary_gold,
+                                                    family:
+                                                    "PM"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                        : ('$seconds' == '1'
+                                        ? Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .end,
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child: Container(
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets
+                                                  .all(
+                                                  0.0),
+                                              child: Text(
+                                                'Ready',
+                                                textAlign:
+                                                TextAlign
+                                                    .right,
+                                                style: FontStyleUtility.h14(
+                                                    fontColor:
+                                                    Colors
+                                                        .white,
+                                                    family:
+                                                    "PR"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets
+                                                  .all(
+                                                  0.0),
+                                              child: Text(
+                                                'Set',
+                                                textAlign:
+                                                TextAlign
+                                                    .right,
+                                                style: FontStyleUtility.h14(
+                                                    fontColor:
+                                                    Colors
+                                                        .white,
+                                                    family:
+                                                    "PR"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: Container(
+                                            width: 100,
+                                            // decoration: BoxDecoration(
+                                            //     borderRadius:
+                                            //         BorderRadius
+                                            //             .circular(
+                                            //                 10),
+                                            //     border: Border.all(
+                                            //         color: Colors
+                                            //             .white,
+                                            //         width:
+                                            //             0.5)),
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets
+                                                  .all(
+                                                  8.0),
+                                              child: Text(
+                                                'Squeeze',
+                                                textAlign:
+                                                TextAlign
+                                                    .center,
+                                                style: FontStyleUtility.h22(
+                                                    fontColor:
+                                                    ColorUtils
+                                                        .primary_gold,
+                                                    family:
+                                                    "PM"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                        : (four_started
+                                        ? Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .end,
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child:
+                                          Container(
+                                            child:
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.all(
+                                                  0.0),
+                                              child:
+                                              Text(
+                                                'Push',
+                                                textAlign:
+                                                TextAlign.right,
+                                                style: FontStyleUtility.h14(
+                                                    fontColor:
+                                                    Colors.white,
+                                                    family: "PR"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child:
+                                          Container(
+                                            width: 100,
+                                            child:
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.all(
+                                                  0.0),
+                                              child:
+                                              Text(
+                                                'Squeeze',
+                                                textAlign:
+                                                TextAlign.right,
+                                                style: FontStyleUtility.h14(
+                                                    fontColor:
+                                                    Colors.white,
+                                                    family: "PR"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child:
+                                          Container(
+                                            width: 80,
+                                            // decoration: BoxDecoration(
+                                            //     borderRadius:
+                                            //         BorderRadius.circular(
+                                            //             10),
+                                            //     border: Border.all(
+                                            //         color: Colors
+                                            //             .white,
+                                            //         width:
+                                            //             0.5)),
+                                            child:
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.all(
+                                                  8.0),
+                                              child:
+                                              Text(
+                                                'Push',
+                                                textAlign:
+                                                TextAlign.center,
+                                                style: FontStyleUtility.h22(
+                                                    fontColor:
+                                                    ColorUtils.primary_gold,
+                                                    family: "PM"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                        : (counter > 0
+                                        ? Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .end,
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child:
+                                          Container(
+                                            child:
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.all(0.0),
+                                              child:
+                                              Text(
+                                                'Squeeze',
+                                                textAlign:
+                                                TextAlign.right,
+                                                style:
+                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child:
+                                          Container(
+                                            child:
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.all(0.0),
+                                              child:
+                                              Text(
+                                                'Push',
+                                                textAlign:
+                                                TextAlign.right,
+                                                style:
+                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child:
+                                          Container(
+                                            width:
+                                            100,
+                                            // decoration: BoxDecoration(
+                                            //     borderRadius:
+                                            //         BorderRadius
+                                            //             .circular(
+                                            //                 10),
+                                            //     border: Border.all(
+                                            //         color: Colors
+                                            //             .white,
+                                            //         width:
+                                            //             0.5)),
+                                            child:
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.all(8.0),
+                                              child:
+                                              Text(
+                                                'Squeeze',
+                                                textAlign:
+                                                TextAlign.center,
+                                                style:
+                                                FontStyleUtility.h22(fontColor: ColorUtils.primary_gold, family: "PM"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                        : Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .end,
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child:
+                                          Container(
+                                            child:
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.all(0.0),
+                                              child:
+                                              Text(
+                                                'Ready',
+                                                textAlign:
+                                                TextAlign.right,
+                                                style:
+                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child:
+                                          Container(
+                                            child:
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.all(0.0),
+                                              child:
+                                              Text(
+                                                'Set',
+                                                textAlign:
+                                                TextAlign.right,
+                                                style:
+                                                FontStyleUtility.h14(fontColor: Colors.white, family: "PR"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child:
+                                          Container(
+                                            width:
+                                            100,
+                                            // decoration: BoxDecoration(
+                                            //     borderRadius:
+                                            //         BorderRadius
+                                            //             .circular(
+                                            //                 10),
+                                            //     border: Border.all(
+                                            //         color: Colors
+                                            //             .white,
+                                            //         width:
+                                            //             0.5)),
+                                            child:
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.all(8.0),
+                                              child:
+                                              Text(
+                                                'Squeeze',
+                                                textAlign:
+                                                TextAlign.center,
+                                                style:
+                                                FontStyleUtility.h22(fontColor: ColorUtils.primary_gold, family: "PM"),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )))))),
                                   ),
-                                  // Container(
-                                  //   // color: Colors.red,
-                                  //   child: ('$seconds' == '3'
-                                  //       ? SizedBox(
-                                  //     height : 40
-                                  //   )
-                                  //       : ('$seconds' == '2'
-                                  //       ? const SizedBox(height : 40
-                                  //   )
-                                  //       :('$seconds' == '1'?
-                                  //   Container(
-                                  //     child: Padding(
-                                  //       padding:
-                                  //       const EdgeInsets
-                                  //           .all(8.0),
-                                  //       child: Text(
-                                  //         'Squeeze',
-                                  //         textAlign:
-                                  //         TextAlign
-                                  //             .center,
-                                  //         style: FontStyleUtility.h16(
-                                  //             fontColor: Colors
-                                  //                 .white,
-                                  //             family:
-                                  //             "PR"),
-                                  //       ),
-                                  //     ),
-                                  //   )  : (four_started
-                                  //       ? Container(
-                                  //     height : 40,
-                                  //
-                                  //     child: Text(
-                                  //       'Push',
-                                  //       textAlign:
-                                  //       TextAlign
-                                  //           .center,
-                                  //       style: FontStyleUtility.h16(
-                                  //           fontColor: Colors.white,
-                                  //           family:
-                                  //           "PM"),
-                                  //     ),
-                                  //   )
-                                  //       : Container(
-                                  //     height : 40,
-                                  //     child: Padding(
-                                  //       padding:
-                                  //       const EdgeInsets
-                                  //           .all(8.0),
-                                  //       child: Text(
-                                  //         'Squeeze',
-                                  //         textAlign:
-                                  //         TextAlign
-                                  //             .center,
-                                  //         style: FontStyleUtility.h16(
-                                  //             fontColor: Colors
-                                  //                 .white,
-                                  //             family:
-                                  //             "PR"),
-                                  //       ),
-                                  //     ),
-                                  //   ) )))),
-                                  // ),
-                                ],
-                              )
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    // color: Colors.red,
+                                    child: ('$seconds' == '3'
+                                        ? Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets
+                                                .all(8.0),
+                                            child: Text(
+                                              'Set',
+                                              style: FontStyleUtility
+                                                  .h14(
+                                                  fontColor:
+                                                  Colors
+                                                      .white,
+                                                  family: "PR"),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                        : ('$seconds' == '2'
+                                        ? Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .start,
+                                      children: [
+                                        Container(
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets
+                                                .all(8.0),
+                                            child: Text(
+                                              'Squeeze',
+                                              style: FontStyleUtility
+                                                  .h14(
+                                                  fontColor:
+                                                  Colors
+                                                      .white,
+                                                  family:
+                                                  "PR"),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                        : ('$seconds' == '1'
+                                        ? Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .start,
+                                      children: [
+                                        Container(
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets
+                                                .all(
+                                                0.0),
+                                            child: Text(
+                                              'Push',
+                                              style: FontStyleUtility.h14(
+                                                  fontColor:
+                                                  Colors
+                                                      .white,
+                                                  family:
+                                                  "PR"),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets
+                                                .all(
+                                                8.0),
+                                            child: Text(
+                                              'Squeeze',
+                                              style: FontStyleUtility.h14(
+                                                  fontColor:
+                                                  Colors
+                                                      .white,
+                                                  family:
+                                                  "PR"),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                        : (four_started
+                                        ? Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .start,
+                                      children: [
+                                        Container(
+                                          // width: 100,
+
+                                          child:
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.all(
+                                                0.0),
+                                            child: Text(
+                                              'Squeeze',
+                                              textAlign:
+                                              TextAlign
+                                                  .right,
+                                              style: FontStyleUtility.h14(
+                                                  fontColor: Colors
+                                                      .white,
+                                                  family:
+                                                  "PR"),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          child:
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.all(
+                                                8.0),
+                                            child: Text(
+                                              'Push',
+                                              textAlign:
+                                              TextAlign
+                                                  .right,
+                                              style: FontStyleUtility.h14(
+                                                  fontColor: Colors
+                                                      .white,
+                                                  family:
+                                                  "PR"),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                        : Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .start,
+                                      children: [
+                                        Container(
+                                          child:
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.all(
+                                                0.0),
+                                            child: Text(
+                                              'Push',
+                                              style: FontStyleUtility.h14(
+                                                  fontColor: Colors
+                                                      .white,
+                                                  family:
+                                                  "PR"),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          child:
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.all(
+                                                8.0),
+                                            child: Text(
+                                              'Squeeze',
+                                              style: FontStyleUtility.h14(
+                                                  fontColor: Colors
+                                                      .white,
+                                                  family:
+                                                  "PR"),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ))))),
+                                  ),
+                                )
+                              ],
+                            ),
+                            // Container(
+                            //   // color: Colors.red,
+                            //   child: ('$seconds' == '3'
+                            //       ? SizedBox(
+                            //     height : 40
+                            //   )
+                            //       : ('$seconds' == '2'
+                            //       ? const SizedBox(height : 40
+                            //   )
+                            //       :('$seconds' == '1'?
+                            //   Container(
+                            //     child: Padding(
+                            //       padding:
+                            //       const EdgeInsets
+                            //           .all(8.0),
+                            //       child: Text(
+                            //         'Squeeze',
+                            //         textAlign:
+                            //         TextAlign
+                            //             .center,
+                            //         style: FontStyleUtility.h16(
+                            //             fontColor: Colors
+                            //                 .white,
+                            //             family:
+                            //             "PR"),
+                            //       ),
+                            //     ),
+                            //   )  : (four_started
+                            //       ? Container(
+                            //     height : 40,
+                            //
+                            //     child: Text(
+                            //       'Push',
+                            //       textAlign:
+                            //       TextAlign
+                            //           .center,
+                            //       style: FontStyleUtility.h16(
+                            //           fontColor: Colors.white,
+                            //           family:
+                            //           "PM"),
+                            //     ),
+                            //   )
+                            //       : Container(
+                            //     height : 40,
+                            //     child: Padding(
+                            //       padding:
+                            //       const EdgeInsets
+                            //           .all(8.0),
+                            //       child: Text(
+                            //         'Squeeze',
+                            //         textAlign:
+                            //         TextAlign
+                            //             .center,
+                            //         style: FontStyleUtility.h16(
+                            //             fontColor: Colors
+                            //                 .white,
+                            //             family:
+                            //             "PR"),
+                            //       ),
+                            //     ),
+                            //   ) )))),
+                            // ),
+                          ],
+                        )
                             : SizedBox(
-                                height: 0,
-                              )),
+                          height: 0,
+                        )),
 
                         // (text_started_middle
                         //     ? FadeTransition(
@@ -3584,29 +3616,29 @@ class _KegelScreenState extends State<KegelScreen>
                               mohit = _kegel_controller
                                   .kegelGetAlarmModel!.data!
                                   .firstWhereOrNull((element) =>
-                                      element.alarmTime == formattedDate);
+                              element.alarmTime == formattedDate);
                               print("mohit");
                               // print(mohit.alarmTime);
                             }
                             if (_kegel_controller.kegelGetModel!.error ==
-                                    false &&
+                                false &&
                                 int.parse(_kegel_controller
-                                        .kegelGetModel!
-                                        .data![_kegel_controller
-                                                .kegelGetModel!.data!.length -
-                                            1]
-                                        .sets!) >=
+                                    .kegelGetModel!
+                                    .data![_kegel_controller
+                                    .kegelGetModel!.data!.length -
+                                    1]
+                                    .sets!) >=
                                     3) {
                               print(int.parse(_kegel_controller
                                   .kegelGetModel!
                                   .data![_kegel_controller
-                                          .kegelGetModel!.data!.length -
-                                      1]
+                                  .kegelGetModel!.data!.length -
+                                  1]
                                   .sets!));
                               _scaleDialog(
                                   context: context,
                                   message:
-                                      "Congratulations! You have completed your daily sessions!");
+                                  "Congratulations! You have completed your daily sessions!");
 
                               // CommonWidget().showErrorToaster(
                               //     msg: "You have completed your today's sets");
@@ -3614,7 +3646,7 @@ class _KegelScreenState extends State<KegelScreen>
                               if (started) {
                                 if (mohit == null &&
                                     _kegel_controller
-                                            .kegelGetAlarmModel!.error! !=
+                                        .kegelGetAlarmModel!.error! !=
                                         true) {
                                   showGeneralDialog(
                                     context: context,
@@ -3623,7 +3655,7 @@ class _KegelScreenState extends State<KegelScreen>
                                     },
                                     transitionBuilder: (ctx, a1, a2, child) {
                                       var curve =
-                                          Curves.easeInOut.transform(a1.value);
+                                      Curves.easeInOut.transform(a1.value);
                                       return Transform.scale(
                                         scale: curve,
                                         child: AlertDialog(
@@ -3633,103 +3665,103 @@ class _KegelScreenState extends State<KegelScreen>
                                             // title: Center(child: Text("Evaluation our APP")),
                                             content: Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                               children: [
                                                 Stack(
                                                   children: [
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsets.all(
-                                                              10.0),
+                                                      const EdgeInsets.all(
+                                                          10.0),
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsets
-                                                                .all(5.0),
+                                                        const EdgeInsets
+                                                            .all(5.0),
                                                         child: Container(
                                                           decoration:
-                                                              BoxDecoration(
-                                                                  border: Border.all(
-                                                                      color: ColorUtils
-                                                                          .primary_gold,
-                                                                      width: 1),
-                                                                  // color: Colors.black.withOpacity(0.65),
-                                                                  gradient:
-                                                                      LinearGradient(
-                                                                    begin: Alignment
-                                                                        .topLeft,
-                                                                    end: Alignment
-                                                                        .bottomRight,
-                                                                    // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                    colors: [
-                                                                      // HexColor("#000000").withOpacity(1),
-                                                                      // HexColor("#000000").withOpacity(1),
-                                                                      HexColor(
-                                                                              "#ce942f")
-                                                                          .withOpacity(
-                                                                              1),
+                                                          BoxDecoration(
+                                                              border: Border.all(
+                                                                  color: ColorUtils
+                                                                      .primary_gold,
+                                                                  width: 1),
+                                                              // color: Colors.black.withOpacity(0.65),
+                                                              gradient:
+                                                              LinearGradient(
+                                                                begin: Alignment
+                                                                    .topLeft,
+                                                                end: Alignment
+                                                                    .bottomRight,
+                                                                // stops: [0.1, 0.5, 0.7, 0.9],
+                                                                colors: [
+                                                                  // HexColor("#000000").withOpacity(1),
+                                                                  // HexColor("#000000").withOpacity(1),
+                                                                  HexColor(
+                                                                      "#ce942f")
+                                                                      .withOpacity(
+                                                                      1),
 
-                                                                      HexColor(
-                                                                              "#ecdc8f")
-                                                                          .withOpacity(
-                                                                              1),
-                                                                      HexColor(
-                                                                              "#e5cc79")
-                                                                          .withOpacity(
-                                                                              1),
-                                                                      HexColor(
-                                                                              "#ce942f")
-                                                                          .withOpacity(
-                                                                              1),
-                                                                      // HexColor("#37393D").withOpacity(1),
-                                                                      // ColorUtils.primary_gold.withOpacity(1),
+                                                                  HexColor(
+                                                                      "#ecdc8f")
+                                                                      .withOpacity(
+                                                                      1),
+                                                                  HexColor(
+                                                                      "#e5cc79")
+                                                                      .withOpacity(
+                                                                      1),
+                                                                  HexColor(
+                                                                      "#ce942f")
+                                                                      .withOpacity(
+                                                                      1),
+                                                                  // HexColor("#37393D").withOpacity(1),
+                                                                  // ColorUtils.primary_gold.withOpacity(1),
 
-                                                                      // HexColor("#000000").withOpacity(1),
-                                                                      // ColorUtils.primary_gold.withOpacity(1),
-                                                                    ],
-                                                                  ),
-                                                                  boxShadow: [
-                                                                    BoxShadow(
-                                                                        color: HexColor(
-                                                                            '#04060F'),
-                                                                        offset: Offset(
-                                                                            10,
-                                                                            10),
-                                                                        blurRadius:
-                                                                            10)
-                                                                  ],
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              15)),
+                                                                  // HexColor("#000000").withOpacity(1),
+                                                                  // ColorUtils.primary_gold.withOpacity(1),
+                                                                ],
+                                                              ),
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                    color: HexColor(
+                                                                        '#04060F'),
+                                                                    offset: Offset(
+                                                                        10,
+                                                                        10),
+                                                                    blurRadius:
+                                                                    10)
+                                                              ],
+                                                              borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                  15)),
                                                           child: Align(
                                                               alignment:
-                                                                  Alignment
-                                                                      .center,
+                                                              Alignment
+                                                                  .center,
                                                               child: Padding(
                                                                 padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        8.0),
+                                                                const EdgeInsets
+                                                                    .all(
+                                                                    8.0),
                                                                 child:
-                                                                    Container(
+                                                                Container(
                                                                   margin:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              10),
+                                                                  EdgeInsets
+                                                                      .all(
+                                                                      10),
                                                                   // width: 300,
                                                                   child: Column(
                                                                     children: [
                                                                       Padding(
                                                                         padding: const EdgeInsets.symmetric(
                                                                             vertical:
-                                                                                8.0,
+                                                                            8.0,
                                                                             horizontal:
-                                                                                5),
+                                                                            5),
                                                                         child:
-                                                                            Text(
+                                                                        Text(
                                                                           "You are ahead of your schedule. To complete your session now your upcoming alarm will be deleted. Press Continue to Proceed",
                                                                           textAlign:
-                                                                              TextAlign.center,
+                                                                          TextAlign.center,
                                                                           style: FontStyleUtility.h16(
                                                                               fontColor: Colors.black,
                                                                               family: 'PM'),
@@ -3737,7 +3769,7 @@ class _KegelScreenState extends State<KegelScreen>
                                                                       ),
                                                                       Row(
                                                                         mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
+                                                                        MainAxisAlignment.center,
                                                                         children: [
                                                                           GestureDetector(
                                                                             onTap:
@@ -3762,7 +3794,7 @@ class _KegelScreenState extends State<KegelScreen>
                                                                               Navigator.pop(context);
                                                                             },
                                                                             child:
-                                                                                Container(
+                                                                            Container(
                                                                               // width: MediaQuery.of(context)
                                                                               //         .size
                                                                               //         .width /
@@ -3770,7 +3802,7 @@ class _KegelScreenState extends State<KegelScreen>
                                                                               margin: EdgeInsets.all(10),
                                                                               // width: 300,
                                                                               decoration: BoxDecoration(
-                                                                                  // color: Colors.black.withOpacity(0.65),
+                                                                                // color: Colors.black.withOpacity(0.65),
                                                                                   gradient: LinearGradient(
                                                                                     begin: Alignment.centerLeft,
                                                                                     end: Alignment.centerRight,
@@ -3810,38 +3842,38 @@ class _KegelScreenState extends State<KegelScreen>
                                                             right: 3,
                                                             bottom: 3),
                                                         alignment:
-                                                            Alignment.topRight,
+                                                        Alignment.topRight,
                                                         child: Container(
                                                             decoration:
-                                                                BoxDecoration(
-                                                                    // color: Colors.black.withOpacity(0.65),
-                                                                    gradient:
-                                                                        LinearGradient(
-                                                                      begin: Alignment
-                                                                          .centerLeft,
-                                                                      end: Alignment
-                                                                          .centerRight,
-                                                                      // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                      colors: [
-                                                                        HexColor("#36393E")
-                                                                            .withOpacity(1),
-                                                                        HexColor("#020204")
-                                                                            .withOpacity(1),
-                                                                      ],
-                                                                    ),
-                                                                    boxShadow: [
-                                                                      // BoxShadow(
-                                                                      //     color: HexColor('#04060F'),
-                                                                      //     offset: Offset(0, 3),
-                                                                      //     blurRadius: 5)
-                                                                    ],
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            20)),
+                                                            BoxDecoration(
+                                                              // color: Colors.black.withOpacity(0.65),
+                                                                gradient:
+                                                                LinearGradient(
+                                                                  begin: Alignment
+                                                                      .centerLeft,
+                                                                  end: Alignment
+                                                                      .centerRight,
+                                                                  // stops: [0.1, 0.5, 0.7, 0.9],
+                                                                  colors: [
+                                                                    HexColor("#36393E")
+                                                                        .withOpacity(1),
+                                                                    HexColor("#020204")
+                                                                        .withOpacity(1),
+                                                                  ],
+                                                                ),
+                                                                boxShadow: [
+                                                                  // BoxShadow(
+                                                                  //     color: HexColor('#04060F'),
+                                                                  //     offset: Offset(0, 3),
+                                                                  //     blurRadius: 5)
+                                                                ],
+                                                                borderRadius:
+                                                                BorderRadius.circular(
+                                                                    20)),
                                                             child: Padding(
                                                               padding:
-                                                                  const EdgeInsets
-                                                                      .all(4.0),
+                                                              const EdgeInsets
+                                                                  .all(4.0),
                                                               child: Icon(
                                                                 Icons
                                                                     .cancel_outlined,
@@ -3859,7 +3891,7 @@ class _KegelScreenState extends State<KegelScreen>
                                       );
                                     },
                                     transitionDuration:
-                                        const Duration(milliseconds: 300),
+                                    const Duration(milliseconds: 300),
                                   );
                                 } else {
                                   back_wallpaper = false;
@@ -3873,7 +3905,7 @@ class _KegelScreenState extends State<KegelScreen>
                                   });
                                   await _kegel_controller
                                       .update_notified_status(
-                                          context: context, status: 'true');
+                                      context: context, status: 'true');
                                   print(_kegel_controller.start_time);
                                   // start_animation();
                                   // start_button_animation();
@@ -3888,24 +3920,23 @@ class _KegelScreenState extends State<KegelScreen>
                                   await startWatch();
 
                                   Future.delayed(const Duration(seconds: 1),
-                                      () async {
-                                    // startTimer();
-                                  });
+                                          () async {
+                                        // startTimer();
+                                      });
                                   Future.delayed(const Duration(seconds: 3),
-                                      () async {
-                                    await startWatch();
-                                  });
+                                          () async {
+                                        await startWatch();
+                                      });
                                 }
                               } else {
-                                // await done_animation();
+                                await done_animation();
                                 await _animationController_middle!.reverse();
                                 // await _kegel_controller.update_notified_status(context: context,status: 'false');
                                 if (four_started) {
                                   null;
                                 } else {
-                                  await _kegel_controller
-                                      .update_notified_status(
-                                          context: context, status: 'false');
+                                  await _kegel_controller.update_notified_status(
+                                      context: context, status: 'false');
                                   await stopWatch_finish();
                                   // await _animationController_middle!.reverse();
                                   Vibration.cancel();
@@ -3924,6 +3955,7 @@ class _KegelScreenState extends State<KegelScreen>
                                     // paused_time.clear();
                                   });
                                 }
+                                ///
                                 // print('method_time : ${method_time[0].total_time}');
                                 // print('method_name : ${method_time[0].method_name}');
                               }
@@ -4034,28 +4066,28 @@ class _KegelScreenState extends State<KegelScreen>
                         //   height: 12,
                         // ),
                         Text(
-                            // (levels == 'Easy'
-                            //     ? ('$counter/8')
-                            //     : (levels == 'Normal'
-                            //         ? ('$counter/10')
-                            //         : ('$counter/10'))),
+                          // (levels == 'Easy'
+                          //     ? ('$counter/8')
+                          //     : (levels == 'Normal'
+                          //         ? ('$counter/10')
+                          //         : ('$counter/10'))),
                             (levels == 'Easy'
                                 ? '$counter/8'
                                 : (levels == 'Normal'
-                                    ? '$counter/10'
-                                    : (levels == 'Super Easy'
-                                        ? (stages == '1'
-                                            ? '$counter/4'
-                                            : (stages == '2'
-                                                ? '$counter/6'
-                                                : (stages == '3'
-                                                    ? '$counter/8'
-                                                    : '$counter/10')))
-                                        : (levels == 'Hard'
-                                            ? '$counter/12'
-                                            : (levels == 'Infinite'
-                                                ? '$counter/12'
-                                                : '$counter/10'))))),
+                                ? '$counter/10'
+                                : (levels == 'Super Easy'
+                                ? (stages == '1'
+                                ? '$counter/4'
+                                : (stages == '2'
+                                ? '$counter/6'
+                                : (stages == '3'
+                                ? '$counter/8'
+                                : '$counter/10')))
+                                : (levels == 'Hard'
+                                ? '$counter/12'
+                                : (levels == 'Infinite'
+                                ? '$counter/12'
+                                : '$counter/10'))))),
                             style: FontStyleUtility.h25(
                                 fontColor: ColorUtils.primary_gold,
                                 family: 'PM')),
@@ -4063,249 +4095,249 @@ class _KegelScreenState extends State<KegelScreen>
                           height: 10,
                         ),
                         Obx(() => _kegel_controller.isuserinfoLoading.value ==
-                                false
+                            false
                             ? Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 0),
-                                // height: 45,
-                                // width:(width ?? 300) ,
-                                decoration: BoxDecoration(
-                                    // color: Colors.black.withOpacity(0.65),
-                                    gradient: LinearGradient(
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
-                                      // stops: [0.1, 0.5, 0.7, 0.9],
-                                      colors: [
-                                        HexColor("#36393E").withOpacity(0.9),
-                                        HexColor("#020204").withOpacity(0.9),
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TableCalendar(
-                                    availableGestures: AvailableGestures.none,
+                          margin:
+                          const EdgeInsets.symmetric(horizontal: 0),
+                          // height: 45,
+                          // width:(width ?? 300) ,
+                          decoration: BoxDecoration(
+                            // color: Colors.black.withOpacity(0.65),
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                // stops: [0.1, 0.5, 0.7, 0.9],
+                                colors: [
+                                  HexColor("#36393E").withOpacity(0.9),
+                                  HexColor("#020204").withOpacity(0.9),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TableCalendar(
+                              availableGestures: AvailableGestures.none,
 
-                                    // initialCalendarFormat: CalendarFormat.week,
-                                    calendarStyle: CalendarStyle(
-                                      defaultTextStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14.0,
-                                          color: Colors.white),
-                                      todayTextStyle: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14.0,
-                                          color: Colors.white),
-                                      todayDecoration: BoxDecoration(
-                                          color: Colors.transparent,
-                                          borderRadius:
-                                              BorderRadius.circular(100)),
-                                      // todayColor: Colors.orange,
-                                      selectedTextStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16.0,
-                                          color: Colors.green),
-                                      weekendTextStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14.0,
-                                          color: Colors.white),
-                                      isTodayHighlighted: true,
-                                      selectedDecoration: BoxDecoration(
-                                        color: Colors.blue,
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                    ),
-
-                                    headerStyle: HeaderStyle(
-                                      leftChevronIcon: Icon(
-                                        Icons.arrow_back_ios,
-                                        color: ColorUtils.primary_gold,
-                                        size: 15,
-                                      ),
-                                      rightChevronIcon: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: ColorUtils.primary_gold,
-                                        size: 15,
-                                      ),
-                                      formatButtonVisible: false,
-                                      titleTextStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16.0,
-                                          color: Colors.white),
-                                      // centerHeaderTitle: true,
-                                      formatButtonDecoration: BoxDecoration(
-                                        color: ColorUtils.primary_gold,
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                      ),
-                                      formatButtonTextStyle:
-                                          const TextStyle(color: Colors.black),
-                                      formatButtonShowsNext: false,
-                                    ),
-                                    daysOfWeekStyle: DaysOfWeekStyle(
-                                        weekdayStyle: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12.0,
-                                            color: Colors.white),
-                                        weekendStyle: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12.0,
-                                            color: Colors.white)),
-                                    startingDayOfWeek: StartingDayOfWeek.monday,
-                                    onDaySelected: (date, events) async {
-                                      // print(date);
-                                      // print(DateFormat('yyyy-MM-dd').format(date));
-                                      //
-                                      // Data? person = await _peeScreenController
-                                      //     .peeGetModel!.data!
-                                      //     .firstWhereOrNull(
-                                      //   (element) =>
-                                      //       element.createdDate ==
-                                      //       DateFormat('yyyy-MM-dd').format(date),
-                                      // );
-                                      // // print("person  $person");
-                                      // if (person != null) {
-                                      //   print("person ${person.sets}");
-                                      //   print(
-                                      //       "User peed ${person.sets} on ${person.createdDate}");
-                                      // } else {
-                                      //   print("no data found");
-                                      // }
-                                    },
-                                    // builders: CalendarBuilders(
-                                    //   selectedDayBuilder: (context, date, events) => Container(
-                                    //       margin: const EdgeInsets.all(4.0),
-                                    //       alignment: Alignment.center,
-                                    //       decoration: BoxDecoration(
-                                    //           color: Theme.of(context).primaryColor,
-                                    //           borderRadius: BorderRadius.circular(10.0)),
-                                    //       child: Text(
-                                    //         date.day.toString(),
-                                    //         style: TextStyle(color: Colors.white),
-                                    //       )),
-                                    //   todayDayBuilder: (context, date, events) => Container(
-                                    //       margin: const EdgeInsets.all(4.0),
-                                    //       alignment: Alignment.center,
-                                    //       decoration: BoxDecoration(
-                                    //           color: Colors.orange,
-                                    //           borderRadius: BorderRadius.circular(10.0)),
-                                    //       child: Text(
-                                    //         date.day.toString(),
-                                    //         style: TextStyle(color: Colors.white),
-                                    //       )),
-
-                                    calendarBuilders: CalendarBuilders(
-                                      markerBuilder:
-                                          (BuildContext context, date, events) {
-                                        for (var i = 0;
-                                            i <
-                                                _kegel_controller.kegelGetModel!
-                                                    .data!.length;
-                                            i++) {
-                                          if (DateFormat('yyyy-MM-dd')
-                                                  .format(date) ==
-                                              _kegel_controller.kegelGetModel!
-                                                  .data![i].createdDate) {
-                                            return GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  selected_date_sets =
-                                                      _kegel_controller
-                                                          .kegelGetModel!
-                                                          .data![i]
-                                                          .numberOfSets!;
-                                                  selected_date =
-                                                      _kegel_controller
-                                                          .kegelGetModel!
-                                                          .data![i]
-                                                          .createdDate!;
-                                                });
-                                                print(selected_date_sets);
-                                                print(selected_date);
-                                              },
-                                              child: Container(
-                                                // color: Colors.white60,
-                                                alignment: Alignment.center,
-                                                padding:
-                                                    EdgeInsets.only(bottom: 7),
-                                                // margin: EdgeInsets.only(bottom: 7),
-                                                // decoration: BoxDecoration(
-                                                //   borderRadius:
-                                                //       BorderRadius.circular(100),
-                                                //   border: Border.all(
-                                                //       color:
-                                                //           ColorUtils.primary_gold,
-                                                //       width: 2),
-                                                // ),
-                                                child:
-                                                    (int.parse(_kegel_controller
-                                                                .kegelGetModel!
-                                                                .data![i]
-                                                                .numberOfSets!) <
-                                                            3
-                                                        ? Image.asset(
-                                                            "assets/images/white-star.png",
-                                                            color: Colors.white,
-                                                            height: 40,
-                                                          )
-                                                        // Icon(
-                                                        //         Icons
-                                                        //             .star_border_rounded,
-                                                        //         color: Colors.white
-                                                        //             .withOpacity(0.8),
-                                                        //         size: 50,
-                                                        //       )
-                                                        : Image.asset(
-                                                            "assets/images/white-star (1).png",
-                                                            color: ColorUtils
-                                                                .primary_gold
-                                                                .withOpacity(
-                                                                    0.8),
-                                                            height: 40,
-                                                          )
-                                                    // Icon(
-                                                    //         Icons.star_rounded,
-                                                    //         color: ColorUtils
-                                                    //             .primary_gold
-                                                    //             .withOpacity(0.8),
-                                                    //         size: 50,
-                                                    //       )
-                                                    ),
-                                              ),
-                                            );
-                                          }
-                                        }
-                                        // return ListView.builder(
-                                        //     shrinkWrap: true,
-                                        //     scrollDirection: Axis.horizontal,
-                                        //     itemCount: events.length,
-                                        //     itemBuilder: (context, index) {
-                                        //       return Container(
-                                        //         margin: const EdgeInsets.only(top: 20),
-                                        //         padding: const EdgeInsets.all(1),
-                                        //         child: Container(
-                                        //           // height: 7,
-                                        //           width: 5,
-                                        //           decoration: BoxDecoration(
-                                        //               shape: BoxShape.circle,
-                                        //               color: Colors.primaries[Random()
-                                        //                   .nextInt(Colors.primaries.length)]),
-                                        //         ),
-                                        //       );
-                                        //     });
-                                      },
-                                    ),
-
-                                    calendarFormat: CalendarFormat.month,
-                                    // calendarController: _controller,
-                                    firstDay: DateTime.utc(2010, 10, 16),
-                                    lastDay: DateTime.utc(2030, 3, 14),
-                                    focusedDay: DateTime.now(),
-                                  ),
+                              // initialCalendarFormat: CalendarFormat.week,
+                              calendarStyle: CalendarStyle(
+                                defaultTextStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.0,
+                                    color: Colors.white),
+                                todayTextStyle: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.0,
+                                    color: Colors.white),
+                                todayDecoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    borderRadius:
+                                    BorderRadius.circular(100)),
+                                // todayColor: Colors.orange,
+                                selectedTextStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0,
+                                    color: Colors.green),
+                                weekendTextStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.0,
+                                    color: Colors.white),
+                                isTodayHighlighted: true,
+                                selectedDecoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius:
+                                  BorderRadius.circular(5.0),
                                 ),
-                              )
+                              ),
+
+                              headerStyle: HeaderStyle(
+                                leftChevronIcon: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: ColorUtils.primary_gold,
+                                  size: 15,
+                                ),
+                                rightChevronIcon: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: ColorUtils.primary_gold,
+                                  size: 15,
+                                ),
+                                formatButtonVisible: false,
+                                titleTextStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0,
+                                    color: Colors.white),
+                                // centerHeaderTitle: true,
+                                formatButtonDecoration: BoxDecoration(
+                                  color: ColorUtils.primary_gold,
+                                  borderRadius:
+                                  BorderRadius.circular(20.0),
+                                ),
+                                formatButtonTextStyle:
+                                const TextStyle(color: Colors.black),
+                                formatButtonShowsNext: false,
+                              ),
+                              daysOfWeekStyle: DaysOfWeekStyle(
+                                  weekdayStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12.0,
+                                      color: Colors.white),
+                                  weekendStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12.0,
+                                      color: Colors.white)),
+                              startingDayOfWeek: StartingDayOfWeek.monday,
+                              onDaySelected: (date, events) async {
+                                // print(date);
+                                // print(DateFormat('yyyy-MM-dd').format(date));
+                                //
+                                // Data? person = await _peeScreenController
+                                //     .peeGetModel!.data!
+                                //     .firstWhereOrNull(
+                                //   (element) =>
+                                //       element.createdDate ==
+                                //       DateFormat('yyyy-MM-dd').format(date),
+                                // );
+                                // // print("person  $person");
+                                // if (person != null) {
+                                //   print("person ${person.sets}");
+                                //   print(
+                                //       "User peed ${person.sets} on ${person.createdDate}");
+                                // } else {
+                                //   print("no data found");
+                                // }
+                              },
+                              // builders: CalendarBuilders(
+                              //   selectedDayBuilder: (context, date, events) => Container(
+                              //       margin: const EdgeInsets.all(4.0),
+                              //       alignment: Alignment.center,
+                              //       decoration: BoxDecoration(
+                              //           color: Theme.of(context).primaryColor,
+                              //           borderRadius: BorderRadius.circular(10.0)),
+                              //       child: Text(
+                              //         date.day.toString(),
+                              //         style: TextStyle(color: Colors.white),
+                              //       )),
+                              //   todayDayBuilder: (context, date, events) => Container(
+                              //       margin: const EdgeInsets.all(4.0),
+                              //       alignment: Alignment.center,
+                              //       decoration: BoxDecoration(
+                              //           color: Colors.orange,
+                              //           borderRadius: BorderRadius.circular(10.0)),
+                              //       child: Text(
+                              //         date.day.toString(),
+                              //         style: TextStyle(color: Colors.white),
+                              //       )),
+
+                              calendarBuilders: CalendarBuilders(
+                                markerBuilder:
+                                    (BuildContext context, date, events) {
+                                  for (var i = 0;
+                                  i <
+                                      _kegel_controller.kegelGetModel!
+                                          .data!.length;
+                                  i++) {
+                                    if (DateFormat('yyyy-MM-dd')
+                                        .format(date) ==
+                                        _kegel_controller.kegelGetModel!
+                                            .data![i].createdDate) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            selected_date_sets =
+                                            _kegel_controller
+                                                .kegelGetModel!
+                                                .data![i]
+                                                .numberOfSets!;
+                                            selected_date =
+                                            _kegel_controller
+                                                .kegelGetModel!
+                                                .data![i]
+                                                .createdDate!;
+                                          });
+                                          print(selected_date_sets);
+                                          print(selected_date);
+                                        },
+                                        child: Container(
+                                          // color: Colors.white60,
+                                          alignment: Alignment.center,
+                                          padding:
+                                          EdgeInsets.only(bottom: 7),
+                                          // margin: EdgeInsets.only(bottom: 7),
+                                          // decoration: BoxDecoration(
+                                          //   borderRadius:
+                                          //       BorderRadius.circular(100),
+                                          //   border: Border.all(
+                                          //       color:
+                                          //           ColorUtils.primary_gold,
+                                          //       width: 2),
+                                          // ),
+                                          child:
+                                          (int.parse(_kegel_controller
+                                              .kegelGetModel!
+                                              .data![i]
+                                              .numberOfSets!) <
+                                              3
+                                              ? Image.asset(
+                                            "assets/images/white-star.png",
+                                            color: Colors.white,
+                                            height: 40,
+                                          )
+                                          // Icon(
+                                          //         Icons
+                                          //             .star_border_rounded,
+                                          //         color: Colors.white
+                                          //             .withOpacity(0.8),
+                                          //         size: 50,
+                                          //       )
+                                              : Image.asset(
+                                            "assets/images/white-star (1).png",
+                                            color: ColorUtils
+                                                .primary_gold
+                                                .withOpacity(
+                                                0.8),
+                                            height: 40,
+                                          )
+                                              // Icon(
+                                              //         Icons.star_rounded,
+                                              //         color: ColorUtils
+                                              //             .primary_gold
+                                              //             .withOpacity(0.8),
+                                              //         size: 50,
+                                              //       )
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  }
+                                  // return ListView.builder(
+                                  //     shrinkWrap: true,
+                                  //     scrollDirection: Axis.horizontal,
+                                  //     itemCount: events.length,
+                                  //     itemBuilder: (context, index) {
+                                  //       return Container(
+                                  //         margin: const EdgeInsets.only(top: 20),
+                                  //         padding: const EdgeInsets.all(1),
+                                  //         child: Container(
+                                  //           // height: 7,
+                                  //           width: 5,
+                                  //           decoration: BoxDecoration(
+                                  //               shape: BoxShape.circle,
+                                  //               color: Colors.primaries[Random()
+                                  //                   .nextInt(Colors.primaries.length)]),
+                                  //         ),
+                                  //       );
+                                  //     });
+                                },
+                              ),
+
+                              calendarFormat: CalendarFormat.month,
+                              // calendarController: _controller,
+                              firstDay: DateTime.utc(2010, 10, 16),
+                              lastDay: DateTime.utc(2030, 3, 14),
+                              focusedDay: DateTime.now(),
+                            ),
+                          ),
+                        )
                             : SizedBox.shrink()),
                         const SizedBox(
                           height: 10,
@@ -4313,29 +4345,29 @@ class _KegelScreenState extends State<KegelScreen>
                         (selected_date_sets!.isEmpty
                             ? SizedBox.shrink()
                             : Container(
-                                decoration: BoxDecoration(
-                                    // color: Colors.black.withOpacity(0.65),
-                                    gradient: LinearGradient(
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
-                                      // stops: [0.1, 0.5, 0.7, 0.9],
-                                      colors: [
-                                        HexColor("#36393E").withOpacity(1),
-                                        HexColor("#020204").withOpacity(1),
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 15),
-                                  child: Text(
-                                    'Exercise performed ${selected_date_sets} times on ${selected_date}',
-                                    style: FontStyleUtility.h14(
-                                        fontColor: HexColor('#FFFFFF'),
-                                        family: 'PM'),
-                                  ),
-                                ),
-                              )),
+                          decoration: BoxDecoration(
+                            // color: Colors.black.withOpacity(0.65),
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                // stops: [0.1, 0.5, 0.7, 0.9],
+                                colors: [
+                                  HexColor("#36393E").withOpacity(1),
+                                  HexColor("#020204").withOpacity(1),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 15),
+                            child: Text(
+                              'Exercise performed ${selected_date_sets} times on ${selected_date}',
+                              style: FontStyleUtility.h14(
+                                  fontColor: HexColor('#FFFFFF'),
+                                  family: 'PM'),
+                            ),
+                          ),
+                        )),
                         const SizedBox(
                           height: 10,
                         ),
@@ -7285,7 +7317,7 @@ class _KegelScreenState extends State<KegelScreen>
                         // ),
                         Container(
                           decoration: BoxDecoration(
-                              // color: Colors.black.withOpacity(0.65),
+                            // color: Colors.black.withOpacity(0.65),
                               gradient: LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
@@ -7318,7 +7350,7 @@ class _KegelScreenState extends State<KegelScreen>
                                           "Add Alarm",
                                           style: FontStyleUtility.h16(
                                               fontColor:
-                                                  ColorUtils.primary_gold,
+                                              ColorUtils.primary_gold,
                                               family: 'PM'),
                                         ),
                                       ),
@@ -7338,13 +7370,13 @@ class _KegelScreenState extends State<KegelScreen>
                                             // Alarm_title.text =
                                             //     "Kegel ${(_currentAlarms!.length + 1)}";
                                             if (_kegel_controller
-                                                    .kegelGetAlarmModel!
-                                                    .error ==
+                                                .kegelGetAlarmModel!
+                                                .error ==
                                                 false) {
                                               if (_kegel_controller
-                                                      .kegelGetAlarmModel!
-                                                      .data!
-                                                      .length >=
+                                                  .kegelGetAlarmModel!
+                                                  .data!
+                                                  .length >=
                                                   3) {
                                                 CommonWidget().showErrorToaster(
                                                     msg: "Only 3 alarams/Day");
@@ -7354,9 +7386,9 @@ class _KegelScreenState extends State<KegelScreen>
                                                   context: context,
                                                   clipBehavior: Clip.antiAlias,
                                                   shape:
-                                                      const RoundedRectangleBorder(
+                                                  const RoundedRectangleBorder(
                                                     borderRadius:
-                                                        BorderRadius.vertical(
+                                                    BorderRadius.vertical(
                                                       top: Radius.circular(24),
                                                     ),
                                                   ),
@@ -7366,52 +7398,52 @@ class _KegelScreenState extends State<KegelScreen>
                                                           setModalState) {
                                                         return Container(
                                                           decoration:
-                                                              BoxDecoration(
-                                                                  // color: Colors.black.withOpacity(0.65),
-                                                                  gradient:
-                                                                      LinearGradient(
-                                                                    begin: Alignment
-                                                                        .centerLeft,
-                                                                    end: Alignment
-                                                                        .centerRight,
-                                                                    // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                    colors: [
-                                                                      HexColor(
-                                                                              "#020204")
-                                                                          .withOpacity(
-                                                                              1),
-                                                                      HexColor(
-                                                                              "#36393E")
-                                                                          .withOpacity(
-                                                                              1),
-                                                                    ],
-                                                                  ),
-                                                                  boxShadow: [
-                                                                    BoxShadow(
-                                                                        color: HexColor(
-                                                                            '#04060F'),
-                                                                        offset: const Offset(
-                                                                            -10,
-                                                                            10),
-                                                                        blurRadius:
-                                                                            20)
-                                                                  ],
-                                                                  borderRadius: const BorderRadius
-                                                                          .only(
-                                                                      topLeft: Radius
-                                                                          .circular(
-                                                                              20),
-                                                                      topRight:
-                                                                          Radius.circular(
-                                                                              20))),
+                                                          BoxDecoration(
+                                                            // color: Colors.black.withOpacity(0.65),
+                                                              gradient:
+                                                              LinearGradient(
+                                                                begin: Alignment
+                                                                    .centerLeft,
+                                                                end: Alignment
+                                                                    .centerRight,
+                                                                // stops: [0.1, 0.5, 0.7, 0.9],
+                                                                colors: [
+                                                                  HexColor(
+                                                                      "#020204")
+                                                                      .withOpacity(
+                                                                      1),
+                                                                  HexColor(
+                                                                      "#36393E")
+                                                                      .withOpacity(
+                                                                      1),
+                                                                ],
+                                                              ),
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                    color: HexColor(
+                                                                        '#04060F'),
+                                                                    offset: const Offset(
+                                                                        -10,
+                                                                        10),
+                                                                    blurRadius:
+                                                                    20)
+                                                              ],
+                                                              borderRadius: const BorderRadius
+                                                                  .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                      20),
+                                                                  topRight:
+                                                                  Radius.circular(
+                                                                      20))),
                                                           padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      32,
-                                                                  vertical: 10),
+                                                          const EdgeInsets
+                                                              .symmetric(
+                                                              horizontal:
+                                                              32,
+                                                              vertical: 10),
                                                           child:
-                                                              SingleChildScrollView(
+                                                          SingleChildScrollView(
                                                             child: Column(
                                                               children: [
                                                                 // FlatButton(
@@ -7494,48 +7526,48 @@ class _KegelScreenState extends State<KegelScreen>
                                                                 Container(
                                                                   height: 150,
                                                                   decoration:
-                                                                      BoxDecoration(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(15),
-                                                                          gradient: LinearGradient(
-                                                                            begin:
-                                                                                Alignment.topCenter,
-                                                                            end:
-                                                                                Alignment.bottomCenter,
-                                                                            colors: [
-                                                                              HexColor("#000000").withOpacity(1),
-                                                                              HexColor("#04060F").withOpacity(1),
-                                                                              HexColor("#000000").withOpacity(1),
-                                                                            ],
-                                                                          ),
-                                                                          boxShadow: [
+                                                                  BoxDecoration(
+                                                                      borderRadius:
+                                                                      BorderRadius.circular(15),
+                                                                      gradient: LinearGradient(
+                                                                        begin:
+                                                                        Alignment.topCenter,
+                                                                        end:
+                                                                        Alignment.bottomCenter,
+                                                                        colors: [
+                                                                          HexColor("#000000").withOpacity(1),
+                                                                          HexColor("#04060F").withOpacity(1),
+                                                                          HexColor("#000000").withOpacity(1),
+                                                                        ],
+                                                                      ),
+                                                                      boxShadow: [
                                                                         BoxShadow(
                                                                             color: HexColor(
                                                                                 '#04060F'),
                                                                             offset: Offset(3,
                                                                                 3),
                                                                             blurRadius:
-                                                                                10)
+                                                                            10)
                                                                       ]),
                                                                   child: Stack(
                                                                     children: [
                                                                       CupertinoTheme(
                                                                         data:
-                                                                            CupertinoThemeData(
+                                                                        CupertinoThemeData(
                                                                           brightness:
-                                                                              Brightness.dark,
+                                                                          Brightness.dark,
                                                                         ),
                                                                         child:
-                                                                            CupertinoDatePicker(
+                                                                        CupertinoDatePicker(
                                                                           // use24hFormat: true,
                                                                           mode:
-                                                                              CupertinoDatePickerMode.time,
+                                                                          CupertinoDatePickerMode.time,
                                                                           use24hFormat:
-                                                                              true,
+                                                                          false,
                                                                           onDateTimeChanged:
                                                                               (DateTime value) {
                                                                             selected_time =
-                                                                                DateFormat('HH:mm').format(value);
+                                                                                DateFormat('HH:mm:ss').format(value);
                                                                             selected_time_main =
                                                                                 value;
                                                                             print(DateFormat('HH:mm').format(value));
@@ -7560,9 +7592,9 @@ class _KegelScreenState extends State<KegelScreen>
 
                                                                 ListTile(
                                                                   visualDensity:
-                                                                      VisualDensity(
-                                                                          vertical:
-                                                                              -4),
+                                                                  VisualDensity(
+                                                                      vertical:
+                                                                      -4),
                                                                   onTap: () {
                                                                     // showDialog(
                                                                     //   context:
@@ -7754,13 +7786,13 @@ class _KegelScreenState extends State<KegelScreen>
                                                                     // );
                                                                   },
                                                                   title: Text(
-                                                                      // 'Title',
+                                                                    // 'Title',
                                                                       "Kegel ${1}",
                                                                       style: FontStyleUtility.h14(
                                                                           fontColor: ColorUtils
                                                                               .primary_grey,
                                                                           family:
-                                                                              'PR')),
+                                                                          'PR')),
                                                                   trailing: const Icon(
                                                                       Icons
                                                                           .arrow_forward_ios,
@@ -7770,20 +7802,20 @@ class _KegelScreenState extends State<KegelScreen>
                                                                 ),
                                                                 ListTile(
                                                                   visualDensity:
-                                                                      VisualDensity(
-                                                                          vertical:
-                                                                              -4),
+                                                                  VisualDensity(
+                                                                      vertical:
+                                                                      -4),
                                                                   title: Text(
                                                                     'Repeat',
                                                                     style: FontStyleUtility.h14(
                                                                         fontColor:
-                                                                            ColorUtils
-                                                                                .primary_gold,
+                                                                        ColorUtils
+                                                                            .primary_gold,
                                                                         family:
-                                                                            'PR'),
+                                                                        'PR'),
                                                                   ),
                                                                   trailing:
-                                                                      const Icon(
+                                                                  const Icon(
                                                                     Icons
                                                                         .arrow_forward_ios,
                                                                     size: 15,
@@ -7972,7 +8004,7 @@ class _KegelScreenState extends State<KegelScreen>
                                                                           selected_time_main
                                                                               .minute,
                                                                           title:
-                                                                              'Kegel 1');
+                                                                          'Kegel 1');
                                                                     }
                                                                     await onSaveAlarm();
                                                                     await Alarm_post_API(
@@ -7980,47 +8012,47 @@ class _KegelScreenState extends State<KegelScreen>
                                                                     // }
                                                                   },
                                                                   child:
-                                                                      Container(
+                                                                  Container(
                                                                     width: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width /
+                                                                        .size
+                                                                        .width /
                                                                         3,
                                                                     decoration: BoxDecoration(
                                                                         borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                30),
+                                                                        BorderRadius.circular(
+                                                                            30),
                                                                         border: Border.all(
                                                                             color:
-                                                                                ColorUtils.primary_grey,
+                                                                            ColorUtils.primary_grey,
                                                                             width: 1)),
                                                                     child:
-                                                                        Padding(
+                                                                    Padding(
                                                                       padding: const EdgeInsets
-                                                                              .symmetric(
+                                                                          .symmetric(
                                                                           vertical:
-                                                                              12.0,
+                                                                          12.0,
                                                                           horizontal:
-                                                                              8),
+                                                                          8),
                                                                       child:
-                                                                          Row(
+                                                                      Row(
                                                                         mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
+                                                                        MainAxisAlignment.center,
                                                                         children: [
                                                                           const Icon(
                                                                             Icons.alarm,
                                                                             color:
-                                                                                Colors.white,
+                                                                            Colors.white,
                                                                             size:
-                                                                                25,
+                                                                            25,
                                                                           ),
                                                                           const SizedBox(
                                                                             width:
-                                                                                10,
+                                                                            10,
                                                                           ),
                                                                           Text(
                                                                             'Save',
                                                                             style:
-                                                                                FontStyleUtility.h16(fontColor: ColorUtils.primary_gold, family: 'PR'),
+                                                                            FontStyleUtility.h16(fontColor: ColorUtils.primary_gold, family: 'PR'),
                                                                           ),
                                                                         ],
                                                                       ),
@@ -8042,9 +8074,9 @@ class _KegelScreenState extends State<KegelScreen>
                                                 context: context,
                                                 clipBehavior: Clip.antiAlias,
                                                 shape:
-                                                    const RoundedRectangleBorder(
+                                                const RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.vertical(
+                                                  BorderRadius.vertical(
                                                     top: Radius.circular(24),
                                                   ),
                                                 ),
@@ -8054,51 +8086,51 @@ class _KegelScreenState extends State<KegelScreen>
                                                         setModalState) {
                                                       return Container(
                                                         decoration:
-                                                            BoxDecoration(
-                                                                // color: Colors.black.withOpacity(0.65),
-                                                                gradient:
-                                                                    LinearGradient(
-                                                                  begin: Alignment
-                                                                      .centerLeft,
-                                                                  end: Alignment
-                                                                      .centerRight,
-                                                                  // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                  colors: [
-                                                                    HexColor(
-                                                                            "#020204")
-                                                                        .withOpacity(
-                                                                            1),
-                                                                    HexColor(
-                                                                            "#36393E")
-                                                                        .withOpacity(
-                                                                            1),
-                                                                  ],
-                                                                ),
-                                                                boxShadow: [
-                                                                  BoxShadow(
-                                                                      color: HexColor(
-                                                                          '#04060F'),
-                                                                      offset: const Offset(
-                                                                          -10,
-                                                                          10),
-                                                                      blurRadius:
-                                                                          20)
-                                                                ],
-                                                                borderRadius: const BorderRadius
-                                                                        .only(
-                                                                    topLeft: Radius
-                                                                        .circular(
-                                                                            20),
-                                                                    topRight: Radius
-                                                                        .circular(
-                                                                            20))),
+                                                        BoxDecoration(
+                                                          // color: Colors.black.withOpacity(0.65),
+                                                            gradient:
+                                                            LinearGradient(
+                                                              begin: Alignment
+                                                                  .centerLeft,
+                                                              end: Alignment
+                                                                  .centerRight,
+                                                              // stops: [0.1, 0.5, 0.7, 0.9],
+                                                              colors: [
+                                                                HexColor(
+                                                                    "#020204")
+                                                                    .withOpacity(
+                                                                    1),
+                                                                HexColor(
+                                                                    "#36393E")
+                                                                    .withOpacity(
+                                                                    1),
+                                                              ],
+                                                            ),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                  color: HexColor(
+                                                                      '#04060F'),
+                                                                  offset: const Offset(
+                                                                      -10,
+                                                                      10),
+                                                                  blurRadius:
+                                                                  20)
+                                                            ],
+                                                            borderRadius: const BorderRadius
+                                                                .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                    20),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                    20))),
                                                         padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 32,
-                                                                vertical: 10),
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                            horizontal: 32,
+                                                            vertical: 10),
                                                         child:
-                                                            SingleChildScrollView(
+                                                        SingleChildScrollView(
                                                           child: Column(
                                                             children: [
                                                               // FlatButton(
@@ -8181,21 +8213,21 @@ class _KegelScreenState extends State<KegelScreen>
                                                               Container(
                                                                 height: 150,
                                                                 decoration:
-                                                                    BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(15),
-                                                                        gradient: LinearGradient(
-                                                                          begin:
-                                                                              Alignment.topCenter,
-                                                                          end: Alignment
-                                                                              .bottomCenter,
-                                                                          colors: [
-                                                                            HexColor("#000000").withOpacity(1),
-                                                                            HexColor("#04060F").withOpacity(1),
-                                                                            HexColor("#000000").withOpacity(1),
-                                                                          ],
-                                                                        ),
-                                                                        boxShadow: [
+                                                                BoxDecoration(
+                                                                    borderRadius:
+                                                                    BorderRadius.circular(15),
+                                                                    gradient: LinearGradient(
+                                                                      begin:
+                                                                      Alignment.topCenter,
+                                                                      end: Alignment
+                                                                          .bottomCenter,
+                                                                      colors: [
+                                                                        HexColor("#000000").withOpacity(1),
+                                                                        HexColor("#04060F").withOpacity(1),
+                                                                        HexColor("#000000").withOpacity(1),
+                                                                      ],
+                                                                    ),
+                                                                    boxShadow: [
                                                                       BoxShadow(
                                                                           color: HexColor(
                                                                               '#04060F'),
@@ -8203,28 +8235,28 @@ class _KegelScreenState extends State<KegelScreen>
                                                                               3,
                                                                               3),
                                                                           blurRadius:
-                                                                              10)
+                                                                          10)
                                                                     ]),
                                                                 child: Stack(
                                                                   children: [
                                                                     CupertinoTheme(
                                                                       data:
-                                                                          CupertinoThemeData(
+                                                                      CupertinoThemeData(
                                                                         brightness:
-                                                                            Brightness.dark,
+                                                                        Brightness.dark,
                                                                       ),
                                                                       child:
-                                                                          CupertinoDatePicker(
+                                                                      CupertinoDatePicker(
                                                                         // use24hFormat: true,
                                                                         mode: CupertinoDatePickerMode
                                                                             .time,
                                                                         use24hFormat:
-                                                                            true,
+                                                                        false,
                                                                         onDateTimeChanged:
                                                                             (DateTime
-                                                                                value) {
+                                                                        value) {
                                                                           selected_time =
-                                                                              DateFormat('HH:mm').format(value);
+                                                                              DateFormat('HH:mm:ss').format(value);
                                                                           selected_time_main =
                                                                               value;
                                                                           print(
@@ -8235,7 +8267,7 @@ class _KegelScreenState extends State<KegelScreen>
                                                                           if (selected_time_main !=
                                                                               null) {
                                                                             final now =
-                                                                                DateTime.now();
+                                                                            DateTime.now();
                                                                             var selectedDateTime = DateTime(
                                                                                 now.year,
                                                                                 now.month,
@@ -8257,9 +8289,9 @@ class _KegelScreenState extends State<KegelScreen>
 
                                                               ListTile(
                                                                 visualDensity:
-                                                                    VisualDensity(
-                                                                        vertical:
-                                                                            -4),
+                                                                VisualDensity(
+                                                                    vertical:
+                                                                    -4),
                                                                 onTap: () {
                                                                   // showDialog(
                                                                   //   context:
@@ -8451,14 +8483,14 @@ class _KegelScreenState extends State<KegelScreen>
                                                                   // );
                                                                 },
                                                                 title: Text(
-                                                                    // 'Title',
+                                                                  // 'Title',
                                                                     "Kegel ${1}",
                                                                     style: FontStyleUtility.h14(
                                                                         fontColor:
-                                                                            ColorUtils
-                                                                                .primary_grey,
+                                                                        ColorUtils
+                                                                            .primary_grey,
                                                                         family:
-                                                                            'PR')),
+                                                                        'PR')),
                                                                 trailing: const Icon(
                                                                     Icons
                                                                         .arrow_forward_ios,
@@ -8468,20 +8500,20 @@ class _KegelScreenState extends State<KegelScreen>
                                                               ),
                                                               ListTile(
                                                                 visualDensity:
-                                                                    VisualDensity(
-                                                                        vertical:
-                                                                            -4),
+                                                                VisualDensity(
+                                                                    vertical:
+                                                                    -4),
                                                                 title: Text(
                                                                   'Repeat',
                                                                   style: FontStyleUtility.h14(
                                                                       fontColor:
-                                                                          ColorUtils
-                                                                              .primary_gold,
+                                                                      ColorUtils
+                                                                          .primary_gold,
                                                                       family:
-                                                                          'PR'),
+                                                                      'PR'),
                                                                 ),
                                                                 trailing:
-                                                                    const Icon(
+                                                                const Icon(
                                                                   Icons
                                                                       .arrow_forward_ios,
                                                                   size: 15,
@@ -8670,7 +8702,7 @@ class _KegelScreenState extends State<KegelScreen>
                                                                         selected_time_main
                                                                             .minute,
                                                                         title:
-                                                                            'Kegel 1');
+                                                                        'Kegel 1');
                                                                   }
                                                                   await onSaveAlarm();
                                                                   await Alarm_post_API(
@@ -8678,45 +8710,45 @@ class _KegelScreenState extends State<KegelScreen>
                                                                   // }
                                                                 },
                                                                 child:
-                                                                    Container(
+                                                                Container(
                                                                   width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width /
+                                                                      context)
+                                                                      .size
+                                                                      .width /
                                                                       3,
                                                                   decoration: BoxDecoration(
                                                                       borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              30),
+                                                                      BorderRadius.circular(
+                                                                          30),
                                                                       border: Border.all(
                                                                           color: ColorUtils
                                                                               .primary_grey,
                                                                           width:
-                                                                              1)),
+                                                                          1)),
                                                                   child:
-                                                                      Padding(
+                                                                  Padding(
                                                                     padding: const EdgeInsets
-                                                                            .symmetric(
+                                                                        .symmetric(
                                                                         vertical:
-                                                                            12.0,
+                                                                        12.0,
                                                                         horizontal:
-                                                                            8),
+                                                                        8),
                                                                     child: Row(
                                                                       mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
+                                                                      MainAxisAlignment
+                                                                          .center,
                                                                       children: [
                                                                         const Icon(
                                                                           Icons
                                                                               .alarm,
                                                                           color:
-                                                                              Colors.white,
+                                                                          Colors.white,
                                                                           size:
-                                                                              25,
+                                                                          25,
                                                                         ),
                                                                         const SizedBox(
                                                                           width:
-                                                                              10,
+                                                                          10,
                                                                         ),
                                                                         Text(
                                                                           'Save',
@@ -8748,11 +8780,11 @@ class _KegelScreenState extends State<KegelScreen>
                                             child: Container(
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(0.0),
+                                                const EdgeInsets.all(0.0),
                                                 child: Icon(
                                                   Icons.add_circle_outline,
                                                   color:
-                                                      ColorUtils.primary_grey,
+                                                  ColorUtils.primary_grey,
                                                 ),
                                               ),
                                             ),
@@ -9618,120 +9650,120 @@ class _KegelScreenState extends State<KegelScreen>
                               //   },
                               // ),
                               Obx(() => _kegel_controller
-                                          .isAlarmLoading.value ==
-                                      false
+                                  .isAlarmLoading.value ==
+                                  false
                                   ? (_kegel_controller
-                                              .kegelGetAlarmModel!.error ==
-                                          false
-                                      ? ListView.builder(
-                                          shrinkWrap: true,
-                                          padding: EdgeInsets.zero,
-                                          itemCount: _kegel_controller
-                                              .kegelGetAlarmModel!.data!.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return Container(
-                                              margin: const EdgeInsets.only(
-                                                  bottom: 0),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 16,
-                                                      vertical: 0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  // color: Colors.black.withOpacity(0.65),
-                                                  // gradient: LinearGradient(
-                                                  //   begin: Alignment.centerLeft,
-                                                  //   end: Alignment.centerRight,
-                                                  //   // stops: [0.1, 0.5, 0.7, 0.9],
-                                                  //   colors: [
-                                                  //     HexColor("#020204").withOpacity(1),
-                                                  //     HexColor("#36393E").withOpacity(1),
-                                                  //   ],
-                                                  // ),
-                                                  // boxShadow: [
-                                                  //   BoxShadow(
-                                                  //       color: HexColor('#04060F'),
-                                                  //       offset: Offset(-10, 10),
-                                                  //       blurRadius: 20)
-                                                  // ],
-                                                  border: Border(
-                                                    bottom: BorderSide(
-                                                      //                   <--- left side
-                                                      color:
-                                                          HexColor('#1d1d1d'),
-                                                      width: 1.5,
-                                                    ),
-                                                  ),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 8.0),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: <Widget>[
-                                                      ListTile(
-                                                        title: Text(
-                                                          _kegel_controller
-                                                              .kegelGetAlarmModel!
-                                                              .data![index]
-                                                              .alarmTime!,
-                                                          style: FontStyleUtility
-                                                              .h16(
-                                                                  fontColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  family: 'PR'),
-                                                        ),
-                                                        subtitle: Text(
-                                                            'Kegel ${index + 1}',
-                                                            style: FontStyleUtility.h14(
-                                                                fontColor:
-                                                                    HexColor(
-                                                                        '#8A8A8A'),
-                                                                family: 'PR')),
-                                                        trailing: IconButton(
-                                                            icon: const Icon(
-                                                                Icons.delete),
-                                                            color: ColorUtils
-                                                                .primary_gold,
-                                                            onPressed: () {
-                                                              Alarm_delete_API(
-                                                                  context:
-                                                                      context,
-                                                                  alarm_id: _kegel_controller
-                                                                      .kegelGetAlarmModel!
-                                                                      .data![
-                                                                          index]
-                                                                      .id!);
-                                                              // deleteAlarm(
-                                                              // _kegel_controller.kegelGetAlarmModel!.data![index].id!.toString());
-                                                            }),
-                                                        // Container(
-                                                        //   width: 20,
-                                                        //   child: Transform.scale(
-                                                        //     scale: 0.5,
-                                                        //     child: CupertinoSwitch(
-                                                        //       onChanged: (bool value) {},
-                                                        //       value: true,
-                                                        //       trackColor: HexColor('#717171'),
-                                                        //       thumbColor: Colors.black87,
-                                                        //       activeColor:
-                                                        //           ColorUtils.primary_gold,
-                                                        //     ),
-                                                        //   ),
-                                                        // ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
+                                  .kegelGetAlarmModel!.error ==
+                                  false
+                                  ? ListView.builder(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.zero,
+                                itemCount: _kegel_controller
+                                    .kegelGetAlarmModel!.data!.length,
+                                itemBuilder: (BuildContext context,
+                                    int index) {
+                                  return Container(
+                                    margin: const EdgeInsets.only(
+                                        bottom: 0),
+                                    padding:
+                                    const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        // color: Colors.black.withOpacity(0.65),
+                                        // gradient: LinearGradient(
+                                        //   begin: Alignment.centerLeft,
+                                        //   end: Alignment.centerRight,
+                                        //   // stops: [0.1, 0.5, 0.7, 0.9],
+                                        //   colors: [
+                                        //     HexColor("#020204").withOpacity(1),
+                                        //     HexColor("#36393E").withOpacity(1),
+                                        //   ],
+                                        // ),
+                                        // boxShadow: [
+                                        //   BoxShadow(
+                                        //       color: HexColor('#04060F'),
+                                        //       offset: Offset(-10, 10),
+                                        //       blurRadius: 20)
+                                        // ],
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            //                   <--- left side
+                                            color:
+                                            HexColor('#1d1d1d'),
+                                            width: 1.5,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets
+                                            .symmetric(vertical: 8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment
+                                              .start,
+                                          children: <Widget>[
+                                            ListTile(
+                                              title: Text(
+                                                _kegel_controller
+                                                    .kegelGetAlarmModel!
+                                                    .data![index]
+                                                    .alarmTime!,
+                                                style: FontStyleUtility
+                                                    .h16(
+                                                    fontColor:
+                                                    Colors
+                                                        .white,
+                                                    family: 'PR'),
                                               ),
-                                            );
-                                          },
-                                        )
-                                      : SizedBox.shrink())
+                                              subtitle: Text(
+                                                  'Kegel ${index + 1}',
+                                                  style: FontStyleUtility.h14(
+                                                      fontColor:
+                                                      HexColor(
+                                                          '#8A8A8A'),
+                                                      family: 'PR')),
+                                              trailing: IconButton(
+                                                  icon: const Icon(
+                                                      Icons.delete),
+                                                  color: ColorUtils
+                                                      .primary_gold,
+                                                  onPressed: () {
+                                                    Alarm_delete_API(
+                                                        context:
+                                                        context,
+                                                        alarm_id: _kegel_controller
+                                                            .kegelGetAlarmModel!
+                                                            .data![
+                                                        index]
+                                                            .id!);
+                                                    // deleteAlarm(
+                                                    // _kegel_controller.kegelGetAlarmModel!.data![index].id!.toString());
+                                                  }),
+                                              // Container(
+                                              //   width: 20,
+                                              //   child: Transform.scale(
+                                              //     scale: 0.5,
+                                              //     child: CupertinoSwitch(
+                                              //       onChanged: (bool value) {},
+                                              //       value: true,
+                                              //       trackColor: HexColor('#717171'),
+                                              //       thumbColor: Colors.black87,
+                                              //       activeColor:
+                                              //           ColorUtils.primary_gold,
+                                              //     ),
+                                              //   ),
+                                              // ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
+                                  : SizedBox.shrink())
                                   : SizedBox.shrink())
                             ],
                           ),
@@ -9741,7 +9773,7 @@ class _KegelScreenState extends State<KegelScreen>
                         ),
                         Container(
                           decoration: BoxDecoration(
-                              // color: Colors.black.withOpacity(0.65),
+                            // color: Colors.black.withOpacity(0.65),
                               gradient: LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
@@ -9794,20 +9826,20 @@ class _KegelScreenState extends State<KegelScreen>
                                         (levels == 'Easy'
                                             ? "Each exercise has a duration of 8 seconds and stop for 2 seconds (repeating the process 8 times is considered 1 set). \nUser needs to complete 3 sets per day"
                                             : (levels == 'Normal'
-                                                ? "Each exercise has a duration of 10 seconds and stop for 2 seconds (repeating the process 10 times is considered 1 set). \nUser needs to complete 3 sets per day"
-                                                : (levels == 'Super Easy'
-                                                    ? (stages == '1'
-                                                        ? "Each exercise has a duration of 2 seconds and stop for 2 seconds (repeating the process 4 times is considered 1 set). \nUser needs to complete 3 sets per day"
-                                                        : (stages == '2'
-                                                            ? "Each exercise has a duration of 4 seconds and stop for 2 seconds (repeating the process 6 times is considered 1 set). \nUser needs to complete 3 sets per day"
-                                                            : (stages == '3'
-                                                                ? "Each exercise has a duration of 6 seconds and stop for 2 seconds (repeating the process 8 times is considered 1 set). \nUser needs to complete 3 sets per day"
-                                                                : "Each exercise has a duration of 2 seconds and stop for 2 seconds (repeating the process 4 times is considered 1 set). \nUser needs to complete 3 sets per day")))
-                                                    : (levels == 'Hard'
-                                                        ? "Each exercise has a duration of 12 seconds and stop for 2 seconds (repeating the process 12 times is considered 1 set). \nUser needs to complete 3 sets per day"
-                                                        : (levels == 'Infinite'
-                                                            ? "Each exercise has a duration of 12 seconds and stop for 2 seconds (repeating the process 12 times is considered 1 set). \nUser needs to complete 3 sets per day"
-                                                            : "kegel info"))))),
+                                            ? "Each exercise has a duration of 10 seconds and stop for 2 seconds (repeating the process 10 times is considered 1 set). \nUser needs to complete 3 sets per day"
+                                            : (levels == 'Super Easy'
+                                            ? (stages == '1'
+                                            ? "Each exercise has a duration of 2 seconds and stop for 2 seconds (repeating the process 4 times is considered 1 set). \nUser needs to complete 3 sets per day"
+                                            : (stages == '2'
+                                            ? "Each exercise has a duration of 4 seconds and stop for 2 seconds (repeating the process 6 times is considered 1 set). \nUser needs to complete 3 sets per day"
+                                            : (stages == '3'
+                                            ? "Each exercise has a duration of 6 seconds and stop for 2 seconds (repeating the process 8 times is considered 1 set). \nUser needs to complete 3 sets per day"
+                                            : "Each exercise has a duration of 2 seconds and stop for 2 seconds (repeating the process 4 times is considered 1 set). \nUser needs to complete 3 sets per day")))
+                                            : (levels == 'Hard'
+                                            ? "Each exercise has a duration of 12 seconds and stop for 2 seconds (repeating the process 12 times is considered 1 set). \nUser needs to complete 3 sets per day"
+                                            : (levels == 'Infinite'
+                                            ? "Each exercise has a duration of 12 seconds and stop for 2 seconds (repeating the process 12 times is considered 1 set). \nUser needs to complete 3 sets per day"
+                                            : "kegel info"))))),
                                         textAlign: TextAlign.justify,
                                         style: FontStyleUtility.h16(
                                             fontColor: ColorUtils.primary_grey,
@@ -9823,7 +9855,7 @@ class _KegelScreenState extends State<KegelScreen>
                               Container(
                                 margin: EdgeInsets.all(15),
                                 decoration: BoxDecoration(
-                                    // color: Colors.black.withOpacity(0.65),
+                                  // color: Colors.black.withOpacity(0.65),
                                     gradient: LinearGradient(
                                       begin: Alignment.centerLeft,
                                       end: Alignment.centerRight,
@@ -9859,46 +9891,47 @@ class _KegelScreenState extends State<KegelScreen>
                                     ),
                                   ),
                                   children: <Widget>[
-                                    Obx(() => _kegel_controller
-                                                .isinfoLoading.value ==
-                                            true
+                                    isinfoLoading
                                         ? SizedBox()
-                                        : Html(
-                                            anchorKey: GlobalKey(),
-                                            data: _kegel_controller
-                                                .getTechniqueModel!
-                                                .data!
-                                                .technique,
-                                            // data: "<h5>check 1<\/p>\r\n",
-                                            style: {
-                                              "body": Style(
-                                                // backgroundColor: const Color.fromARGB(
-                                                //     0x50, 0xee, 0xee, 0xee),
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                              ),
-                                              "tr": Style(
-                                                border: const Border(
-                                                    bottom: BorderSide(
-                                                        color: Colors.grey)),
-                                              ),
-                                              "th": Style(
-                                                padding:
-                                                    const EdgeInsets.all(6),
-                                                backgroundColor: Colors.grey,
-                                              ),
-                                              "td": Style(
-                                                padding:
-                                                    const EdgeInsets.all(6),
-                                                alignment: Alignment.topLeft,
-                                              ),
-                                              'h5': Style(
-                                                  maxLines: 2,
-                                                  color: Colors.red,
-                                                  textOverflow:
-                                                      TextOverflow.ellipsis),
-                                            },
-                                          )),
+                                        : Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 19.0),
+                                      child: RichText(text: textSpan),
+
+                                      // Html(
+                                      //         anchorKey: GlobalKey(),
+                                      //         data: ,
+                                      //         // data: "<h5>check 1<\/p>\r\n",
+                                      //         style: {
+                                      //           "body": Style(
+                                      //             // backgroundColor: const Color.fromARGB(
+                                      //             //     0x50, 0xee, 0xee, 0xee),
+                                      //             backgroundColor:
+                                      //                 Colors.transparent,
+                                      //           ),
+                                      //           "tr": Style(
+                                      //             border: const Border(
+                                      //                 bottom: BorderSide(
+                                      //                     color: Colors.grey)),
+                                      //           ),
+                                      //           "th": Style(
+                                      //             padding:
+                                      //                 const EdgeInsets.all(6),
+                                      //             backgroundColor: Colors.grey,
+                                      //           ),
+                                      //           "td": Style(
+                                      //             padding:
+                                      //                 const EdgeInsets.all(6),
+                                      //             alignment: Alignment.topLeft,
+                                      //           ),
+                                      //           'p': Style(
+                                      //               // maxLines: 2,
+                                      //               color: Colors.red,
+                                      //               textOverflow:
+                                      //                   TextOverflow.ellipsis),
+                                      //         },
+                                      //       )
+                                    ),
                                     // ListView.builder(
                                     //   itemCount: List_content.length,
                                     //   shrinkWrap: true,
@@ -9983,20 +10016,20 @@ class _KegelScreenState extends State<KegelScreen>
           (levels == 'Easy'
               ? updateTime_Easy
               : (levels == 'Normal'
-                  ? updateTime_Normal
-                  : (levels == 'Super Easy'
-                      ? (stages == '1'
-                          ? updateTime_Super_Easy_stage1
-                          : (stages == '2'
-                              ? updateTime_Super_Easy_stage2
-                              : (stages == '3'
-                                  ? updateTime_Super_Easy_stage3
-                                  : updateTime_Easy)))
-                      : (levels == 'Hard'
-                          ? updateTime_Hard
-                          : (levels == 'Infinite'
-                              ? updateTime_Hard
-                              : updateTime_Easy))))));
+              ? updateTime_Normal
+              : (levels == 'Super Easy'
+              ? (stages == '1'
+              ? updateTime_Super_Easy_stage1
+              : (stages == '2'
+              ? updateTime_Super_Easy_stage2
+              : (stages == '3'
+              ? updateTime_Super_Easy_stage3
+              : updateTime_Easy)))
+              : (levels == 'Hard'
+              ? updateTime_Hard
+              : (levels == 'Infinite'
+              ? updateTime_Hard
+              : updateTime_Easy))))));
     });
   }
 
@@ -10013,20 +10046,20 @@ class _KegelScreenState extends State<KegelScreen>
           (levels == 'Easy'
               ? updateTime_Easy
               : (levels == 'Normal'
-                  ? updateTime_Normal
-                  : (levels == 'Super Easy'
-                      ? (stages == '1'
-                          ? updateTime_Super_Easy_stage1
-                          : (stages == '2'
-                              ? updateTime_Super_Easy_stage2
-                              : (stages == '3'
-                                  ? updateTime_Super_Easy_stage3
-                                  : updateTime_Easy)))
-                      : (levels == 'Hard'
-                          ? updateTime_Hard
-                          : (levels == 'Infinite'
-                              ? updateTime_Hard
-                              : updateTime_Easy))))));
+              ? updateTime_Normal
+              : (levels == 'Super Easy'
+              ? (stages == '1'
+              ? updateTime_Super_Easy_stage1
+              : (stages == '2'
+              ? updateTime_Super_Easy_stage2
+              : (stages == '3'
+              ? updateTime_Super_Easy_stage3
+              : updateTime_Easy)))
+              : (levels == 'Hard'
+              ? updateTime_Hard
+              : (levels == 'Infinite'
+              ? updateTime_Hard
+              : updateTime_Easy))))));
     });
   }
 
@@ -10128,37 +10161,37 @@ class _KegelScreenState extends State<KegelScreen>
           // Android-specific code
 
           Vibration.vibrate(
-              // pattern: [100, 100,100, 100,100, 100,100, 100,],
+            // pattern: [100, 100,100, 100,100, 100,100, 100,],
               duration: (levels == 'Easy ? '
                   ? 3000
                   : (levels == 'Normal'
-                      ? 4000
-                      : (levels == 'Super Easy'
-                          ? (stages == '1'
-                              ? 2000
-                              : (stages == '2'
-                                  ? 4000
-                                  : (stages == '3' ? 6000 : 2000)))
-                          : 3000))),
+                  ? 4000
+                  : (levels == 'Super Easy'
+                  ? (stages == '1'
+                  ? 2000
+                  : (stages == '2'
+                  ? 4000
+                  : (stages == '3' ? 6000 : 2000)))
+                  : 3000))),
               amplitude: 50
-              // intensities: [1, 255]
-              );
+            // intensities: [1, 255]
+          );
         } else if (Platform.isIOS) {
           // iOS-specific code
           for (var i = 0;
-              i <=
-                  (levels == 'Easy ? '
-                      ? 3
-                      : (levels == 'Normal'
-                          ? 4
-                          : (levels == 'Super Easy'
-                              ? (stages == '1'
-                                  ? 2
-                                  : (stages == '2'
-                                      ? 4
-                                      : (stages == '3' ? 6 : 2)))
-                              : 3)));
-              i++) {
+          i <=
+              (levels == 'Easy ? '
+                  ? 3
+                  : (levels == 'Normal'
+                  ? 4
+                  : (levels == 'Super Easy'
+                  ? (stages == '1'
+                  ? 2
+                  : (stages == '2'
+                  ? 4
+                  : (stages == '3' ? 6 : 2)))
+                  : 3)));
+          i++) {
             await Future.delayed(const Duration(seconds: 1), () {
               Vibration.vibrate();
             });
@@ -10171,19 +10204,19 @@ class _KegelScreenState extends State<KegelScreen>
         var num_;
 
         for (var i = 0;
-            i <=
-                (levels == 'Easy ? '
-                    ? 7
-                    : (levels == 'Normal'
-                        ? 14
-                        : (levels == 'Super Easy'
-                            ? (stages == '1'
-                                ? 6
-                                : (stages == '2'
-                                    ? 8
-                                    : (stages == '3' ? 10 : 6)))
-                            : 7)));
-            i++) {
+        i <=
+            (levels == 'Easy ? '
+                ? 7
+                : (levels == 'Normal'
+                ? 14
+                : (levels == 'Super Easy'
+                ? (stages == '1'
+                ? 6
+                : (stages == '2'
+                ? 8
+                : (stages == '3' ? 10 : 6)))
+                : 7)));
+        i++) {
           await Future.delayed(const Duration(milliseconds: 600), () {
             Vibration.vibrate();
           });
@@ -10286,13 +10319,13 @@ class _KegelScreenState extends State<KegelScreen>
         scheduledNotificationDateTime,
         platformChannelSpecifics);
     AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('app_icon');
+    const AndroidInitializationSettings('app_icon');
     IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings(
-            requestAlertPermission: true,
-            requestBadgePermission: true,
-            requestSoundPermission: true,
-            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    IOSInitializationSettings(
+        requestAlertPermission: true,
+        requestBadgePermission: true,
+        requestSoundPermission: true,
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     InitializationSettings initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
@@ -10407,13 +10440,13 @@ class _KegelScreenState extends State<KegelScreen>
         scheduledNotificationDateTime,
         platformChannelSpecifics);
     AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('app_icon');
+    const AndroidInitializationSettings('app_icon');
     IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings(
-            requestAlertPermission: true,
-            requestBadgePermission: true,
-            requestSoundPermission: true,
-            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    IOSInitializationSettings(
+        requestAlertPermission: true,
+        requestBadgePermission: true,
+        requestSoundPermission: true,
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     InitializationSettings initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
@@ -10534,5 +10567,62 @@ class _KegelScreenState extends State<KegelScreen>
         print('Please try again');
       }
     } else {}
+  }
+
+  bool isinfoLoading = true;
+  GetTechniqueModel? KegelTechniqueModel;
+
+  Future<dynamic> Kegel_technique_API(
+      {required BuildContext context, required String method}) async {
+    setState(() {
+      isinfoLoading = true;
+    });
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    String url =
+    // "${URLConstants.base_url}${URLConstants.kegel_technique}";
+        "${URLConstants.base_url}$method";
+    // showLoader(context);
+
+    var response = await http.get(Uri.parse(url));
+
+    print('Response request: ${response.request}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // var data = convert.jsonDecode(response.body);
+      Map<String, dynamic> data =
+      json.decode(response.body.replaceAll('}[]', '}'));
+      KegelTechniqueModel = GetTechniqueModel.fromJson(data);
+      // getUSerModelList(userInfoModel_email);
+      if (KegelTechniqueModel!.error == false) {
+        // hideLoader(context);
+        debugPrint(
+            '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${KegelTechniqueModel!.data!}');
+        setState(() {
+          isinfoLoading = false;
+        });
+
+        return KegelTechniqueModel;
+      } else {
+        setState(() {
+          isinfoLoading = false;
+        });
+
+        // hideLoader(context);
+
+        // CommonWidget().showToaster(msg: kegelGetModel!.message!);
+        return null;
+      }
+    } else if (response.statusCode == 422) {
+      // hideLoader(context);
+
+      CommonWidget().showToaster(msg: KegelTechniqueModel!.message!);
+    } else if (response.statusCode == 401) {
+      // hideLoader(context);
+      CommonWidget().showToaster(msg: KegelTechniqueModel!.message!);
+    } else {
+      // CommonWidget().showToaster(msg: msg.toString());
+    }
   }
 }

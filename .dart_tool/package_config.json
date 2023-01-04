@@ -369,13 +369,19 @@
     },
     {
       "name": "hexcolor",
-      "rootUri": "file:///Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/hexcolor-2.0.7",
+      "rootUri": "file:///Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/hexcolor-3.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.15"
+      "languageVersion": "2.18"
     },
     {
       "name": "html",
       "rootUri": "file:///Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/html-0.15.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "html_unescape",
+      "rootUri": "file:///Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/html_unescape-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -764,6 +770,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "simple_html_css",
+      "rootUri": "file:///Users/technologies/Downloads/flutter_new/.pub-cache/hosted/pub.dartlang.org/simple_html_css-4.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///Users/technologies/Downloads/flutter_new/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -1064,7 +1076,7 @@
       "languageVersion": "2.16"
     }
   ],
-  "generated": "2022-12-24T06:58:24.860209Z",
+  "generated": "2023-01-04T12:52:40.347658Z",
   "generator": "pub",
-  "generatorVersion": "2.18.4"
+  "generatorVersion": "2.18.6"
 }

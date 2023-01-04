@@ -46,7 +46,7 @@ class Kegel_controller extends GetxController {
     if (response.statusCode == 200 || response.statusCode == 201) {
       // var data = convert.jsonDecode(response.body);
       Map<String, dynamic> data =
-          json.decode(response.body.replaceAll('}[]', '}'));
+      json.decode(response.body.replaceAll('}[]', '}'));
       kegelGetModel = KegelGetModel.fromJson(data);
       // getUSerModelList(userInfoModel_email);
       if (kegelGetModel!.error == false) {
@@ -80,13 +80,17 @@ class Kegel_controller extends GetxController {
   }
 
   RxBool isinfoLoading = true.obs;
-  GetTechniqueModel? getTechniqueModel;
+  GetTechniqueModel? KegelTechniqueModel;
+  GetTechniqueModel? PeeTechniqueModel;
+  GetTechniqueModel? MasturbationTechniqueModel;
+  GetTechniqueModel? WarmupTechniqueModel;
+  GetTechniqueModel? BreathingTechniqueModel;
 
   Future<dynamic> Kegel_technique_API({required BuildContext context,required String method}) async {
     isinfoLoading(true);
     String id_user = await PreferenceManager().getPref(URLConstants.id);
     String url =
-        // "${URLConstants.base_url}${URLConstants.kegel_technique}";
+    // "${URLConstants.base_url}${URLConstants.kegel_technique}";
         "${URLConstants.base_url}$method";
     // showLoader(context);
 
@@ -99,18 +103,202 @@ class Kegel_controller extends GetxController {
     if (response.statusCode == 200 || response.statusCode == 201) {
       // var data = convert.jsonDecode(response.body);
       Map<String, dynamic> data =
-          json.decode(response.body.replaceAll('}[]', '}'));
-      getTechniqueModel = GetTechniqueModel.fromJson(data);
+      json.decode(response.body.replaceAll('}[]', '}'));
+      KegelTechniqueModel = GetTechniqueModel.fromJson(data);
       // getUSerModelList(userInfoModel_email);
-      if (getTechniqueModel!.error == false) {
+      if (KegelTechniqueModel!.error == false) {
         // hideLoader(context);
         debugPrint(
-            '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${getTechniqueModel!.data!}');
+            '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${KegelTechniqueModel!.data!}');
         isinfoLoading(false);
 
-        return getTechniqueModel;
+        return KegelTechniqueModel;
       } else {
-        isinfoLoading(true);
+        isinfoLoading(false);
+
+        // hideLoader(context);
+
+        // CommonWidget().showToaster(msg: kegelGetModel!.message!);
+        return null;
+      }
+    } else if (response.statusCode == 422) {
+      // hideLoader(context);
+
+      CommonWidget().showToaster(msg: kegelGetModel!.message!);
+    } else if (response.statusCode == 401) {
+      // hideLoader(context);
+      CommonWidget().showToaster(msg: kegelGetModel!.message!);
+    } else {
+      // CommonWidget().showToaster(msg: msg.toString());
+    }
+  }
+  Future<dynamic> pee_technique_API({required BuildContext context,required String method}) async {
+    isinfoLoading(true);
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    String url =
+    // "${URLConstants.base_url}${URLConstants.kegel_technique}";
+        "${URLConstants.base_url}$method";
+    // showLoader(context);
+
+    var response = await http.get(Uri.parse(url));
+
+    print('Response request: ${response.request}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // var data = convert.jsonDecode(response.body);
+      Map<String, dynamic> data =
+      json.decode(response.body.replaceAll('}[]', '}'));
+      PeeTechniqueModel = GetTechniqueModel.fromJson(data);
+      // getUSerModelList(userInfoModel_email);
+      if (PeeTechniqueModel!.error == false) {
+        // hideLoader(context);
+        debugPrint(
+            '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${PeeTechniqueModel!.data!}');
+        isinfoLoading(false);
+
+        return PeeTechniqueModel;
+      } else {
+        isinfoLoading(false);
+
+        // hideLoader(context);
+
+        // CommonWidget().showToaster(msg: kegelGetModel!.message!);
+        return null;
+      }
+    } else if (response.statusCode == 422) {
+      // hideLoader(context);
+
+      CommonWidget().showToaster(msg: kegelGetModel!.message!);
+    } else if (response.statusCode == 401) {
+      // hideLoader(context);
+      CommonWidget().showToaster(msg: kegelGetModel!.message!);
+    } else {
+      // CommonWidget().showToaster(msg: msg.toString());
+    }
+  }
+  Future<dynamic> warmup_technique_API({required BuildContext context,required String method}) async {
+    isinfoLoading(true);
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    String url =
+    // "${URLConstants.base_url}${URLConstants.kegel_technique}";
+        "${URLConstants.base_url}$method";
+    // showLoader(context);
+
+    var response = await http.get(Uri.parse(url));
+
+    print('Response request: ${response.request}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // var data = convert.jsonDecode(response.body);
+      Map<String, dynamic> data =
+      json.decode(response.body.replaceAll('}[]', '}'));
+      WarmupTechniqueModel = GetTechniqueModel.fromJson(data);
+      // getUSerModelList(userInfoModel_email);
+      if (WarmupTechniqueModel!.error == false) {
+        // hideLoader(context);
+        debugPrint(
+            '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${WarmupTechniqueModel!.data!}');
+        isinfoLoading(false);
+
+        return WarmupTechniqueModel;
+      } else {
+        isinfoLoading(false);
+
+        // hideLoader(context);
+
+        // CommonWidget().showToaster(msg: kegelGetModel!.message!);
+        return null;
+      }
+    } else if (response.statusCode == 422) {
+      // hideLoader(context);
+
+      CommonWidget().showToaster(msg: kegelGetModel!.message!);
+    } else if (response.statusCode == 401) {
+      // hideLoader(context);
+      CommonWidget().showToaster(msg: kegelGetModel!.message!);
+    } else {
+      // CommonWidget().showToaster(msg: msg.toString());
+    }
+  }
+  Future<dynamic> masturbation_technique_API({required BuildContext context,required String method}) async {
+    isinfoLoading(true);
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    String url =
+    // "${URLConstants.base_url}${URLConstants.kegel_technique}";
+        "${URLConstants.base_url}$method";
+    // showLoader(context);
+
+    var response = await http.get(Uri.parse(url));
+
+    print('Response request: ${response.request}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // var data = convert.jsonDecode(response.body);
+      Map<String, dynamic> data =
+      json.decode(response.body.replaceAll('}[]', '}'));
+      MasturbationTechniqueModel = GetTechniqueModel.fromJson(data);
+      // getUSerModelList(userInfoModel_email);
+      if (MasturbationTechniqueModel!.error == false) {
+        // hideLoader(context);
+        debugPrint(
+            '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${MasturbationTechniqueModel!.data!}');
+        isinfoLoading(false);
+
+        return MasturbationTechniqueModel;
+      } else {
+        isinfoLoading(false);
+
+        // hideLoader(context);
+
+        // CommonWidget().showToaster(msg: kegelGetModel!.message!);
+        return null;
+      }
+    } else if (response.statusCode == 422) {
+      // hideLoader(context);
+
+      CommonWidget().showToaster(msg: kegelGetModel!.message!);
+    } else if (response.statusCode == 401) {
+      // hideLoader(context);
+      CommonWidget().showToaster(msg: kegelGetModel!.message!);
+    } else {
+      // CommonWidget().showToaster(msg: msg.toString());
+    }
+  }
+  Future<dynamic> breathing_technique_API({required BuildContext context,required String method}) async {
+    isinfoLoading(true);
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    String url =
+    // "${URLConstants.base_url}${URLConstants.kegel_technique}";
+        "${URLConstants.base_url}$method";
+    // showLoader(context);
+
+    var response = await http.get(Uri.parse(url));
+
+    print('Response request: ${response.request}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // var data = convert.jsonDecode(response.body);
+      Map<String, dynamic> data =
+      json.decode(response.body.replaceAll('}[]', '}'));
+      BreathingTechniqueModel = GetTechniqueModel.fromJson(data);
+      // getUSerModelList(userInfoModel_email);
+      if (BreathingTechniqueModel!.error == false) {
+        // hideLoader(context);
+        debugPrint(
+            '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${BreathingTechniqueModel!.data!}');
+        isinfoLoading(false);
+
+        return BreathingTechniqueModel;
+      } else {
+        isinfoLoading(false);
 
         // hideLoader(context);
 
@@ -149,7 +337,7 @@ class Kegel_controller extends GetxController {
     if (response.statusCode == 200 || response.statusCode == 201) {
       // var data = convert.jsonDecode(response.body);
       Map<String, dynamic> data =
-          json.decode(response.body.replaceAll('}[]', '}'));
+      json.decode(response.body.replaceAll('}[]', '}'));
       kegelGetAlarmModel = KegelGetAlarmModel.fromJson(data);
       // getUSerModelList(userInfoModel_email);
       if (kegelGetAlarmModel!.error == false) {
@@ -370,14 +558,14 @@ class Kegel_controller extends GetxController {
         platformChannelSpecifics);
 
     AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('app_icon');
+    const AndroidInitializationSettings('app_icon');
 
     IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings(
-            requestAlertPermission: true,
-            requestBadgePermission: true,
-            requestSoundPermission: true,
-            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    IOSInitializationSettings(
+        requestAlertPermission: true,
+        requestBadgePermission: true,
+        requestSoundPermission: true,
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     InitializationSettings initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
@@ -465,7 +653,7 @@ class Kegel_controller extends GetxController {
     if (response.statusCode == 200 || response.statusCode == 201) {
       // var data = convert.jsonDecode(response.body);
       Map<String, dynamic> data =
-          json.decode(response.body.replaceAll('}[]', '}'));
+      json.decode(response.body.replaceAll('}[]', '}'));
       introVideoModel = IntroVideoModel.fromJson(data);
       // getUSerModelList(userInfoModel_email);
       if (introVideoModel!.error == false) {

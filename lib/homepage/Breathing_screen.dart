@@ -1,31 +1,28 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-
 // import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:klench_/homepage/controller/breathing_controller.dart';
-import 'package:klench_/utils/TexrUtils.dart';
 import 'package:klench_/utils/common_widgets.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_html_css/simple_html_css.dart';
 import 'package:vibration/vibration.dart';
 
 import '../Dashboard/dashboard_screen.dart';
 import '../utils/Asset_utils.dart';
-import '../utils/Common_buttons.dart';
 import '../utils/TextStyle_utils.dart';
 import '../utils/UrlConstrant.dart';
 import '../utils/colorUtils.dart';
 import 'controller/kegel_excercise_controller.dart';
+import 'model/getTechniqueModel.dart';
+import 'package:http/http.dart' as http;
 
 class BreathingScreen extends StatefulWidget {
   const BreathingScreen({Key? key}) : super(key: key);
@@ -37,7 +34,7 @@ class BreathingScreen extends StatefulWidget {
 class _BreathingScreenState extends State<BreathingScreen>
     with TickerProviderStateMixin {
   final Breathing_controller _breathing_controller =
-      Get.put(Breathing_controller(), tag: Breathing_controller().toString());
+  Get.put(Breathing_controller(), tag: Breathing_controller().toString());
 
   Stopwatch watch = Stopwatch();
   Stopwatch watch2 = Stopwatch();
@@ -77,7 +74,6 @@ class _BreathingScreenState extends State<BreathingScreen>
                   elapsedTime = '00';
                   percent = 0.0;
                   // _animationController!.dispose();
-
                   // watch.stop();
                   counter = 0;
                 });
@@ -85,6 +81,19 @@ class _BreathingScreenState extends State<BreathingScreen>
                 await _breathing_controller.Breathing_post_API(context);
                 await _kegel_controller.update_notified_status(
                     context: context, status: 'false');
+                await _animationController_middle!.reverse();
+                stopWatch();
+                setState(() {
+                  back_wallpaper = true;
+                  animation_started_middle = false;
+                  timer_started = false;
+                  _animationController!.dispose();
+                  elapsedTime = '00';
+                  percent = 0.0;
+                  watch.reset();
+                  counter == 0;
+                  // paused_time.clear();
+                });
                 // if (_breathing_controller.breathingPostModel!.error == false) {
                 await getdata();
                 // }
@@ -238,7 +247,7 @@ class _BreathingScreenState extends State<BreathingScreen>
         if (Platform.isAndroid) {
           // Android-specific code
           Vibration.vibrate(
-              // pattern: [100, 100,100, 100,100, 100,100, 100,],
+            // pattern: [100, 100,100, 100,100, 100,100, 100,],
               duration: 5000,
               intensities: [1, 255]);
         } else if (Platform.isIOS) {
@@ -396,30 +405,30 @@ class _BreathingScreenState extends State<BreathingScreen>
         AnimationController(vsync: this, duration: Duration(milliseconds: 400));
     _animationController_shadow1!.forward();
     _animation_shadow1 =
-        Tween(begin: 0.0, end: 40.0).animate(_animationController_shadow1!)
-          ..addStatusListener((status) {
-            print(status);
-            if (status == AnimationStatus.completed) {
-              // print("elapsedTime");
-              setState(() {
-                shadow_animation1_completed = true;
-                // print(shadow_animation1_completed);
-              });
-            }
-            // shadow_animation1_completed = true;
+    Tween(begin: 0.0, end: 40.0).animate(_animationController_shadow1!)
+      ..addStatusListener((status) {
+        print(status);
+        if (status == AnimationStatus.completed) {
+          // print("elapsedTime");
+          setState(() {
+            shadow_animation1_completed = true;
+            // print(shadow_animation1_completed);
           });
+        }
+        // shadow_animation1_completed = true;
+      });
 
     _animationController_shadow2 =
         AnimationController(vsync: this, duration: Duration(milliseconds: 100));
     _animationController_shadow2!.repeat(reverse: true);
     _animation_shadow2 =
-        Tween(begin: 40.0, end: 42.0).animate(_animationController_shadow2!)
-          ..addStatusListener((status) {
-            if (shadow_animation_pause == true) {}
-            // print(status);
-            // if (status == AnimationStatus.completed) {}
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 40.0, end: 42.0).animate(_animationController_shadow2!)
+      ..addStatusListener((status) {
+        if (shadow_animation_pause == true) {}
+        // print(status);
+        // if (status == AnimationStatus.completed) {}
+        // shadow_animation1_completed = true;
+      });
 
     print(_animationController!.status);
   }
@@ -439,29 +448,29 @@ class _BreathingScreenState extends State<BreathingScreen>
         vsync: this, duration: const Duration(milliseconds: 500));
     _animationController_middle!.forward();
     _animation_middle =
-        Tween(begin: 15.0, end: 30.0).animate(_animationController_middle!)
-          ..addStatusListener((status) {
-            // print(status);
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 15.0, end: 30.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        // print(status);
+        // shadow_animation1_completed = true;
+      });
     _animation_middle2 =
-        Tween(begin: 15.0, end: 60.0).animate(_animationController_middle!)
-          ..addStatusListener((status) {
-            // print(status);
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 15.0, end: 60.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        // print(status);
+        // shadow_animation1_completed = true;
+      });
     _animation_middle3 =
-        Tween(begin: 15.0, end: 160.0).animate(_animationController_middle!)
-          ..addStatusListener((status) {
-            // print(status);
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 15.0, end: 160.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        // print(status);
+        // shadow_animation1_completed = true;
+      });
     _animation_middle4 =
-        Tween(begin: 15.0, end: 120.0).animate(_animationController_middle!)
-          ..addStatusListener((status) {
-            // print(status);
-            // shadow_animation1_completed = true;
-          });
+    Tween(begin: 15.0, end: 120.0).animate(_animationController_middle!)
+      ..addStatusListener((status) {
+        // print(status);
+        // shadow_animation1_completed = true;
+      });
   }
 
   @override
@@ -495,7 +504,7 @@ class _BreathingScreenState extends State<BreathingScreen>
       print("lastRoute ${lastRoute}");
 
       await _breathing_controller.Breathing_get_API(context);
-      await _kegel_controller.Kegel_technique_API(
+      await breathing_technique_API(
           context: context, method: URLConstants.breathing_technique);
       if (_breathing_controller.breathingGetModel!.error == false) {
         setState(() {
@@ -507,7 +516,7 @@ class _BreathingScreenState extends State<BreathingScreen>
   }
 
   final Kegel_controller _kegel_controller =
-      Get.put(Kegel_controller(), tag: Kegel_controller().toString());
+  Get.put(Kegel_controller(), tag: Kegel_controller().toString());
 
   @override
   Widget build(BuildContext context) {
@@ -515,6 +524,34 @@ class _BreathingScreenState extends State<BreathingScreen>
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     print(screenHeight);
+    final TextSpan textSpan = HTML.toTextSpan(
+      context,
+      (isinfoLoading == true
+          ? ''
+          : BreathingTechniqueModel!.data!.technique!),
+      linksCallback: (dynamic link) {
+        debugPrint('You clicked on ${link.toString()}');
+      },
+      // as name suggests, optionally set the default text style
+      defaultTextStyle: TextStyle(
+        color: Colors.grey[700],
+      ),
+
+      overrideStyle: <String, TextStyle>{
+        'p': TextStyle(
+            fontSize: 16,
+            color: ColorUtils.primary_grey,
+            fontFamily: 'PR',
+            fontWeight: FontWeight.w200,
+            decoration: TextDecoration.none),
+        // FontStyleUtility.h16(
+        //     fontColor: ColorUtils.primary_grey,
+        //     family: 'PR'),
+        'a': const TextStyle(wordSpacing: 2),
+        // specify any tag not just the supported ones,
+        // and apply TextStyles to them and/override them
+      },
+    );
 
     return Stack(
       children: [
@@ -532,27 +569,27 @@ class _BreathingScreenState extends State<BreathingScreen>
           // ),
           decoration: (back_wallpaper
               ? BoxDecoration(
-                  // gradient: LinearGradient(
-                  //   begin: Alignment.topCenter,
-                  //   end: Alignment.bottomCenter,
-                  //   // stops: [0.1, 0.5, 0.7, 0.9],
-                  //   colors: [
-                  //     HexColor("#000000").withOpacity(0.86),
-                  //     HexColor("#000000").withOpacity(0.81),
-                  //     HexColor("#000000").withOpacity(0.44),
-                  //     HexColor("#000000").withOpacity(1),
-                  //
-                  //   ],
-                  // ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    colorFilter: new ColorFilter.mode(
-                        Colors.black.withOpacity(0.5), BlendMode.dst),
-                    image: AssetImage(
-                      AssetUtils.b_screen_back,
-                    ),
-                  ),
-                )
+            // gradient: LinearGradient(
+            //   begin: Alignment.topCenter,
+            //   end: Alignment.bottomCenter,
+            //   // stops: [0.1, 0.5, 0.7, 0.9],
+            //   colors: [
+            //     HexColor("#000000").withOpacity(0.86),
+            //     HexColor("#000000").withOpacity(0.81),
+            //     HexColor("#000000").withOpacity(0.44),
+            //     HexColor("#000000").withOpacity(1),
+            //
+            //   ],
+            // ),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              colorFilter: new ColorFilter.mode(
+                  Colors.black.withOpacity(0.5), BlendMode.dst),
+              image: AssetImage(
+                AssetUtils.b_screen_back,
+              ),
+            ),
+          )
               : BoxDecoration()),
         ),
         Scaffold(
@@ -578,18 +615,18 @@ class _BreathingScreenState extends State<BreathingScreen>
                       onTap: () {
                         (started
                             ? Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        DashboardScreen(page: 1)))
-                            // Navigator.of(context).pushReplacement(
-                            //         MaterialPageRoute(
-                            //             builder: (context) => DashboardScreen(
-                            //                   page: 1,
-                            //                 )),
-                            //       )
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    DashboardScreen(page: 1)))
+                        // Navigator.of(context).pushReplacement(
+                        //         MaterialPageRoute(
+                        //             builder: (context) => DashboardScreen(
+                        //                   page: 1,
+                        //                 )),
+                        //       )
                             : CommonWidget().showErrorToaster(
-                                msg: "Please finish the method"));
+                            msg: "Please finish the method"));
                       },
                       child: Container(
                           width: 41,
@@ -619,98 +656,98 @@ class _BreathingScreenState extends State<BreathingScreen>
                           margin: EdgeInsets.symmetric(horizontal: 10),
                           alignment: Alignment.center,
                           child: Obx(() => (_breathing_controller
-                                      .isuserinfoLoading.value ==
-                                  true
+                              .isuserinfoLoading.value ==
+                              true
                               ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      AssetUtils.star_icon,
-                                      color: Colors.grey,
-                                      height: 22,
-                                      width: 22,
-                                    ),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
-                                    Image.asset(
-                                      AssetUtils.star_icon,
-                                      height: 22,
-                                      color: Colors.grey,
-                                      width: 22,
-                                    ),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
-                                    Image.asset(
-                                      AssetUtils.star_icon,
-                                      color: Colors.grey,
-                                      height: 22,
-                                      width: 22,
-                                    ),
-                                  ],
-                                )
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                AssetUtils.star_icon,
+                                color: Colors.grey,
+                                height: 22,
+                                width: 22,
+                              ),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              Image.asset(
+                                AssetUtils.star_icon,
+                                height: 22,
+                                color: Colors.grey,
+                                width: 22,
+                              ),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              Image.asset(
+                                AssetUtils.star_icon,
+                                color: Colors.grey,
+                                height: 22,
+                                width: 22,
+                              ),
+                            ],
+                          )
                               : Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      AssetUtils.star_icon,
-                                      color: (int.parse(_breathing_controller
-                                                  .breathingGetModel!
-                                                  .data![_breathing_controller
-                                                          .breathingGetModel!
-                                                          .data!
-                                                          .length -
-                                                      1]
-                                                  .sets!) >=
-                                              1
-                                          ? ColorUtils.primary_gold
-                                          : Colors.grey),
-                                      height: 22,
-                                      width: 22,
-                                    ),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
-                                    Image.asset(
-                                      AssetUtils.star_icon,
-                                      height: 22,
-                                      color: (int.parse(_breathing_controller
-                                                  .breathingGetModel!
-                                                  .data![_breathing_controller
-                                                          .breathingGetModel!
-                                                          .data!
-                                                          .length -
-                                                      1]
-                                                  .sets!) >=
-                                              2
-                                          ? ColorUtils.primary_gold
-                                          : Colors.grey),
-                                      width: 22,
-                                    ),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
-                                    Image.asset(
-                                      AssetUtils.star_icon,
-                                      color: (int.parse(_breathing_controller
-                                                  .breathingGetModel!
-                                                  .data![_breathing_controller
-                                                          .breathingGetModel!
-                                                          .data!
-                                                          .length -
-                                                      1]
-                                                  .sets!) >=
-                                              3
-                                          ? ColorUtils.primary_gold
-                                          : Colors.grey),
-                                      height: 22,
-                                      width: 22,
-                                    ),
-                                  ],
-                                )))),
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                AssetUtils.star_icon,
+                                color: (int.parse(_breathing_controller
+                                    .breathingGetModel!
+                                    .data![_breathing_controller
+                                    .breathingGetModel!
+                                    .data!
+                                    .length -
+                                    1]
+                                    .sets!) >=
+                                    1
+                                    ? ColorUtils.primary_gold
+                                    : Colors.grey),
+                                height: 22,
+                                width: 22,
+                              ),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              Image.asset(
+                                AssetUtils.star_icon,
+                                height: 22,
+                                color: (int.parse(_breathing_controller
+                                    .breathingGetModel!
+                                    .data![_breathing_controller
+                                    .breathingGetModel!
+                                    .data!
+                                    .length -
+                                    1]
+                                    .sets!) >=
+                                    2
+                                    ? ColorUtils.primary_gold
+                                    : Colors.grey),
+                                width: 22,
+                              ),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              Image.asset(
+                                AssetUtils.star_icon,
+                                color: (int.parse(_breathing_controller
+                                    .breathingGetModel!
+                                    .data![_breathing_controller
+                                    .breathingGetModel!
+                                    .data!
+                                    .length -
+                                    1]
+                                    .sets!) >=
+                                    3
+                                    ? ColorUtils.primary_gold
+                                    : Colors.grey),
+                                height: 22,
+                                width: 22,
+                              ),
+                            ],
+                          )))),
 
                       // IconButton(
                       //     onPressed: () {},
@@ -793,21 +830,21 @@ class _BreathingScreenState extends State<BreathingScreen>
                       Container(
                         height: (screenHeight >= 600 && screenHeight <= 700
                             ? (animation_started_middle
-                                ? _animation_middle2!.value
-                                : 15)
+                            ? _animation_middle2!.value
+                            : 15)
                             : (screenHeight >= 700 && screenHeight <= 800
-                                ? (animation_started_middle
-                                    ? _animation_middle!.value
-                                    : 15)
-                                : (screenHeight >= 800 && screenHeight <= 850
-                                    ? (animation_started_middle
-                                        ? _animation_middle4!.value
-                                        : 15)
-                                    : (screenHeight >= 850
-                                        ? (animation_started_middle
-                                            ? _animation_middle3!.value
-                                            : 15)
-                                        : 0)))),
+                            ? (animation_started_middle
+                            ? _animation_middle!.value
+                            : 15)
+                            : (screenHeight >= 800 && screenHeight <= 850
+                            ? (animation_started_middle
+                            ? _animation_middle4!.value
+                            : 15)
+                            : (screenHeight >= 850
+                            ? (animation_started_middle
+                            ? _animation_middle3!.value
+                            : 15)
+                            : 0)))),
                       ),
 
                       AvatarGlow(
@@ -846,157 +883,303 @@ class _BreathingScreenState extends State<BreathingScreen>
                                           : Colors.transparent),
                                       spreadRadius: (animation_started
                                           ? (shadow_animation1_completed
-                                              ? _animation_shadow2!.value
-                                              : _animation_shadow1!.value)
+                                          ? _animation_shadow2!.value
+                                          : _animation_shadow1!.value)
                                           : 0),
                                       blurRadius: 35,
                                     ),
                                   ],
                                 ),
                               ),
+                              ///
+                              // (animation_started
+                              //     ? DottedBorder(
+                              //         borderType: BorderType.Oval,
+                              //         strokeWidth: 7.5,
+                              //         dashPattern: [0, 19],
+                              //         strokeCap: StrokeCap.round,
+                              //         radius: Radius.circular(100),
+                              //         padding: EdgeInsets.all(0),
+                              //         color: Colors.black,
+                              //         child: Container(
+                              //           height: 350,
+                              //           width: 350,
+                              //           padding: EdgeInsets.all(5),
+                              //         ),
+                              //       )
+                              //     : SizedBox.shrink()),
+                              // (animation_started
+                              //     ? DottedBorder(
+                              //         borderType: BorderType.Oval,
+                              //         strokeWidth: 7.5,
+                              //         dashPattern: [0, 19],
+                              //         strokeCap: StrokeCap.round,
+                              //         radius: Radius.circular(100),
+                              //         padding: EdgeInsets.all(0),
+                              //         color: Colors.black,
+                              //         child: Container(
+                              //           height: 320,
+                              //           width: 320,
+                              //           padding: EdgeInsets.all(5),
+                              //         ),
+                              //       )
+                              //     : SizedBox.shrink()),
+                              // (animation_started
+                              //     ? DottedBorder(
+                              //         borderType: BorderType.Oval,
+                              //         strokeWidth: 7,
+                              //         dashPattern: [0, 19],
+                              //         strokeCap: StrokeCap.round,
+                              //         radius: Radius.circular(100),
+                              //         padding: EdgeInsets.all(0),
+                              //         color: Colors.black,
+                              //         child: Container(
+                              //           height: 290,
+                              //           width: 290,
+                              //           padding: EdgeInsets.all(5),
+                              //         ),
+                              //       )
+                              //     : SizedBox.shrink()),
+                              // (animation_started
+                              //     ? DottedBorder(
+                              //         borderType: BorderType.Oval,
+                              //         strokeWidth: 8,
+                              //         dashPattern: [0, 19],
+                              //         strokeCap: StrokeCap.round,
+                              //         radius: Radius.circular(100),
+                              //         padding: EdgeInsets.all(0),
+                              //         color: Colors.black,
+                              //         child: Container(
+                              //           height: 265,
+                              //           width: 265,
+                              //           padding: EdgeInsets.all(5),
+                              //         ),
+                              //       )
+                              //     : SizedBox.shrink()),
+                              // (animation_started
+                              //     ? DottedBorder(
+                              //         borderType: BorderType.Oval,
+                              //         strokeWidth: 7,
+                              //         dashPattern: [0, 18],
+                              //         strokeCap: StrokeCap.round,
+                              //         radius: Radius.circular(100),
+                              //         padding: EdgeInsets.all(0),
+                              //         color: Colors.black,
+                              //         child: Container(
+                              //           height: 240,
+                              //           width: 240,
+                              //           padding: EdgeInsets.all(5),
+                              //         ),
+                              //       )
+                              //     : SizedBox.shrink()),
+                              // (animation_started
+                              //     ? DottedBorder(
+                              //         borderType: BorderType.Oval,
+                              //         strokeWidth: 6,
+                              //         dashPattern: [0, 16],
+                              //         strokeCap: StrokeCap.round,
+                              //         radius: Radius.circular(100),
+                              //         padding: EdgeInsets.all(0),
+                              //         color: Colors.black,
+                              //         child: Container(
+                              //           height: 220,
+                              //           width: 220,
+                              //           padding: EdgeInsets.all(5),
+                              //         ),
+                              //       )
+                              //     : SizedBox.shrink()),
+                              // (animation_started
+                              //     ? DottedBorder(
+                              //         borderType: BorderType.Oval,
+                              //         strokeWidth: 5,
+                              //         dashPattern: [0, 14],
+                              //         strokeCap: StrokeCap.round,
+                              //         radius: Radius.circular(100),
+                              //         padding: EdgeInsets.all(0),
+                              //         color: Colors.black,
+                              //         child: Container(
+                              //           height: 200,
+                              //           width: 200,
+                              //           padding: EdgeInsets.all(5),
+                              //         ),
+                              //       )
+                              //     : SizedBox.shrink()),
+                              // (animation_started
+                              //     ? DottedBorder(
+                              //         borderType: BorderType.Oval,
+                              //         strokeWidth: 4,
+                              //         dashPattern: [0, 12],
+                              //         strokeCap: StrokeCap.round,
+                              //         radius: Radius.circular(100),
+                              //         padding: EdgeInsets.all(0),
+                              //         color: Colors.black,
+                              //         child: Container(
+                              //           height: 180,
+                              //           width: 180,
+                              //           padding: EdgeInsets.all(5),
+                              //         ),
+                              //       )
+                              //     : SizedBox.shrink()),
+                              // (animation_started
+                              //     ? DottedBorder(
+                              //         borderType: BorderType.Oval,
+                              //         strokeWidth: 3,
+                              //         dashPattern: [0, 10],
+                              //         strokeCap: StrokeCap.round,
+                              //         radius: Radius.circular(100),
+                              //         padding: EdgeInsets.all(0),
+                              //         color: Colors.black,
+                              //         child: Container(
+                              //           height: 160,
+                              //           width: 160,
+                              //           padding: EdgeInsets.all(5),
+                              //         ),
+                              //       )
+                              //     : SizedBox.shrink()),
+                              ///
                               (animation_started
                                   ? DottedBorder(
-                                      borderType: BorderType.Oval,
-                                      strokeWidth: 7.5,
-                                      dashPattern: [0, 19],
-                                      strokeCap: StrokeCap.round,
-                                      radius: Radius.circular(100),
-                                      padding: EdgeInsets.all(0),
-                                      color: Colors.black,
-                                      child: Container(
-                                        height: 350,
-                                        width: 350,
-                                        padding: EdgeInsets.all(5),
-                                      ),
-                                    )
+                                borderType: BorderType.Oval,
+                                strokeWidth: 5.5,
+                                dashPattern: [0, 15],
+                                strokeCap: StrokeCap.round,
+                                radius: Radius.circular(100),
+                                padding: EdgeInsets.all(0),
+                                color: Colors.black,
+                                child: Container(
+                                  height: 330,
+                                  width: 330,
+                                  padding: EdgeInsets.all(5),
+                                ),
+                              )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                      borderType: BorderType.Oval,
-                                      strokeWidth: 7.5,
-                                      dashPattern: [0, 19],
-                                      strokeCap: StrokeCap.round,
-                                      radius: Radius.circular(100),
-                                      padding: EdgeInsets.all(0),
-                                      color: Colors.black,
-                                      child: Container(
-                                        height: 320,
-                                        width: 320,
-                                        padding: EdgeInsets.all(5),
-                                      ),
-                                    )
+                                borderType: BorderType.Oval,
+                                strokeWidth: 5.5,
+                                dashPattern: [0, 15],
+                                strokeCap: StrokeCap.round,
+                                radius: Radius.circular(100),
+                                padding: EdgeInsets.all(0),
+                                color: Colors.black,
+                                child: Container(
+                                  height: 310,
+                                  width: 310,
+                                  padding: EdgeInsets.all(5),
+                                ),
+                              )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                      borderType: BorderType.Oval,
-                                      strokeWidth: 7,
-                                      dashPattern: [0, 19],
-                                      strokeCap: StrokeCap.round,
-                                      radius: Radius.circular(100),
-                                      padding: EdgeInsets.all(0),
-                                      color: Colors.black,
-                                      child: Container(
-                                        height: 290,
-                                        width: 290,
-                                        padding: EdgeInsets.all(5),
-                                      ),
-                                    )
+                                borderType: BorderType.Oval,
+                                strokeWidth: 5,
+                                dashPattern: [0, 14],
+                                strokeCap: StrokeCap.round,
+                                radius: Radius.circular(100),
+                                padding: EdgeInsets.all(0),
+                                color: Colors.black,
+                                child: Container(
+                                  height: 285,
+                                  width: 285,
+                                  padding: EdgeInsets.all(5),
+                                ),
+                              )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                      borderType: BorderType.Oval,
-                                      strokeWidth: 8,
-                                      dashPattern: [0, 19],
-                                      strokeCap: StrokeCap.round,
-                                      radius: Radius.circular(100),
-                                      padding: EdgeInsets.all(0),
-                                      color: Colors.black,
-                                      child: Container(
-                                        height: 265,
-                                        width: 265,
-                                        padding: EdgeInsets.all(5),
-                                      ),
-                                    )
+                                borderType: BorderType.Oval,
+                                strokeWidth: 5,
+                                dashPattern: [0, 16],
+                                strokeCap: StrokeCap.round,
+                                radius: Radius.circular(100),
+                                padding: EdgeInsets.all(0),
+                                color: Colors.black,
+                                child: Container(
+                                  height: 265,
+                                  width: 265,
+                                  padding: EdgeInsets.all(5),
+                                ),
+                              )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                      borderType: BorderType.Oval,
-                                      strokeWidth: 7,
-                                      dashPattern: [0, 18],
-                                      strokeCap: StrokeCap.round,
-                                      radius: Radius.circular(100),
-                                      padding: EdgeInsets.all(0),
-                                      color: Colors.black,
-                                      child: Container(
-                                        height: 240,
-                                        width: 240,
-                                        padding: EdgeInsets.all(5),
-                                      ),
-                                    )
+                                borderType: BorderType.Oval,
+                                strokeWidth: 5,
+                                dashPattern: [0, 14],
+                                strokeCap: StrokeCap.round,
+                                radius: Radius.circular(100),
+                                padding: EdgeInsets.all(0),
+                                color: Colors.black,
+                                child: Container(
+                                  height: 240,
+                                  width: 240,
+                                  padding: EdgeInsets.all(5),
+                                ),
+                              )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                      borderType: BorderType.Oval,
-                                      strokeWidth: 6,
-                                      dashPattern: [0, 16],
-                                      strokeCap: StrokeCap.round,
-                                      radius: Radius.circular(100),
-                                      padding: EdgeInsets.all(0),
-                                      color: Colors.black,
-                                      child: Container(
-                                        height: 220,
-                                        width: 220,
-                                        padding: EdgeInsets.all(5),
-                                      ),
-                                    )
+                                borderType: BorderType.Oval,
+                                strokeWidth: 5,
+                                dashPattern: [0, 15],
+                                strokeCap: StrokeCap.round,
+                                radius: Radius.circular(100),
+                                padding: EdgeInsets.all(0),
+                                color: Colors.black,
+                                child: Container(
+                                  height: 220,
+                                  width: 220,
+                                  padding: EdgeInsets.all(5),
+                                ),
+                              )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                      borderType: BorderType.Oval,
-                                      strokeWidth: 5,
-                                      dashPattern: [0, 14],
-                                      strokeCap: StrokeCap.round,
-                                      radius: Radius.circular(100),
-                                      padding: EdgeInsets.all(0),
-                                      color: Colors.black,
-                                      child: Container(
-                                        height: 200,
-                                        width: 200,
-                                        padding: EdgeInsets.all(5),
-                                      ),
-                                    )
+                                borderType: BorderType.Oval,
+                                strokeWidth: 5,
+                                dashPattern: [0, 14],
+                                strokeCap: StrokeCap.round,
+                                radius: Radius.circular(100),
+                                padding: EdgeInsets.all(0),
+                                color: Colors.black,
+                                child: Container(
+                                  height: 200,
+                                  width: 200,
+                                  padding: EdgeInsets.all(5),
+                                ),
+                              )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                      borderType: BorderType.Oval,
-                                      strokeWidth: 4,
-                                      dashPattern: [0, 12],
-                                      strokeCap: StrokeCap.round,
-                                      radius: Radius.circular(100),
-                                      padding: EdgeInsets.all(0),
-                                      color: Colors.black,
-                                      child: Container(
-                                        height: 180,
-                                        width: 180,
-                                        padding: EdgeInsets.all(5),
-                                      ),
-                                    )
+                                borderType: BorderType.Oval,
+                                strokeWidth: 4,
+                                dashPattern: [0, 12],
+                                strokeCap: StrokeCap.round,
+                                radius: Radius.circular(100),
+                                padding: EdgeInsets.all(0),
+                                color: Colors.black,
+                                child: Container(
+                                  height: 180,
+                                  width: 180,
+                                  padding: EdgeInsets.all(5),
+                                ),
+                              )
                                   : SizedBox.shrink()),
                               (animation_started
                                   ? DottedBorder(
-                                      borderType: BorderType.Oval,
-                                      strokeWidth: 3,
-                                      dashPattern: [0, 10],
-                                      strokeCap: StrokeCap.round,
-                                      radius: Radius.circular(100),
-                                      padding: EdgeInsets.all(0),
-                                      color: Colors.black,
-                                      child: Container(
-                                        height: 160,
-                                        width: 160,
-                                        padding: EdgeInsets.all(5),
-                                      ),
-                                    )
+                                borderType: BorderType.Oval,
+                                strokeWidth: 3,
+                                dashPattern: [0, 10],
+                                strokeCap: StrokeCap.round,
+                                radius: Radius.circular(100),
+                                padding: EdgeInsets.all(0),
+                                color: Colors.black,
+                                child: Container(
+                                  height: 160,
+                                  width: 160,
+                                  padding: EdgeInsets.all(5),
+                                ),
+                              )
                                   : SizedBox.shrink()),
                               Container(
                                 height: (animation_started
@@ -1007,54 +1190,54 @@ class _BreathingScreenState extends State<BreathingScreen>
                                     : 150),
                                 decoration: (animation_started
                                     ? BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color: Color(0xFFFCF483),
-                                            width: 2.5),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: ColorUtils
-                                                .primary_gold, // darker color
-                                          ),
-                                          BoxShadow(
-                                            color: HexColor('#000000'),
-                                            // background color
-                                            spreadRadius: -7.0,
-                                            blurRadius: 10.0,
-                                          ),
-                                        ],
-                                        // boxShadow: [
-                                        //   BoxShadow(
-                                        //       color:
-                                        //       ColorUtils.primary_gold.withOpacity(0.5),
-                                        //       spreadRadius: (animation_started
-                                        //           ? (shadow_animation1_completed
-                                        //           ? _animation_shadow2!.value
-                                        //           : _animation_shadow1!.value)
-                                        //           : 0),
-                                        //       blurRadius: 0)
-                                        // ],
-                                      )
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      color: Color(0xFFFCF483),
+                                      width: 2.5),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: ColorUtils
+                                          .primary_gold, // darker color
+                                    ),
+                                    BoxShadow(
+                                      color: HexColor('#000000'),
+                                      // background color
+                                      spreadRadius: -7.0,
+                                      blurRadius: 10.0,
+                                    ),
+                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //       color:
+                                  //       ColorUtils.primary_gold.withOpacity(0.5),
+                                  //       spreadRadius: (animation_started
+                                  //           ? (shadow_animation1_completed
+                                  //           ? _animation_shadow2!.value
+                                  //           : _animation_shadow1!.value)
+                                  //           : 0),
+                                  //       blurRadius: 0)
+                                  // ],
+                                )
                                     : const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                            alignment: Alignment.center,
-                                            image: AssetImage(
-                                                AssetUtils.home_button)),
-                                        // boxShadow: [
-                                        //   BoxShadow(
-                                        //     color: (animation_started
-                                        //         ? HexColor('#F5C921')
-                                        //         : Colors.transparent),
-                                        //     blurRadius: (animation_started
-                                        //         ? _animation!.value
-                                        //         : 0),
-                                        //     spreadRadius: (animation_started
-                                        //         ? _animation!.value
-                                        //         : 0),
-                                        //   )
-                                        // ]
-                                      )),
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      alignment: Alignment.center,
+                                      image: AssetImage(
+                                          AssetUtils.home_button)),
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: (animation_started
+                                  //         ? HexColor('#F5C921')
+                                  //         : Colors.transparent),
+                                  //     blurRadius: (animation_started
+                                  //         ? _animation!.value
+                                  //         : 0),
+                                  //     spreadRadius: (animation_started
+                                  //         ? _animation!.value
+                                  //         : 0),
+                                  //   )
+                                  // ]
+                                )),
                                 // BoxDecoration(
                                 //     // border: Border.all(
                                 //     //     color: ColorUtils.primary_gold, width: 10),
@@ -1079,7 +1262,7 @@ class _BreathingScreenState extends State<BreathingScreen>
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    CrossAxisAlignment.center,
                                     children: [
                                       // IconButton(
                                       //   alignment: Alignment.center,
@@ -1101,14 +1284,14 @@ class _BreathingScreenState extends State<BreathingScreen>
                                                     textStyle: TextStyle(
                                                         color: (timer_started
                                                             ? HexColor(
-                                                                    '#F5C921')
-                                                                .withOpacity(
-                                                                    0.4)
+                                                            '#F5C921')
+                                                            .withOpacity(
+                                                            0.4)
                                                             : HexColor(
-                                                                '#F5C921')),
+                                                            '#F5C921')),
                                                         fontSize: 30,
                                                         fontWeight:
-                                                            FontWeight.w600),
+                                                        FontWeight.w600),
                                                   )),
                                             ),
                                             Column(
@@ -1132,7 +1315,7 @@ class _BreathingScreenState extends State<BreathingScreen>
                                                         fontSize: 20,
                                                         fontFamily: 'PR',
                                                         fontWeight:
-                                                            FontWeight.w900),
+                                                        FontWeight.w900),
                                                   ),
                                                 ),
                                               ],
@@ -1147,21 +1330,21 @@ class _BreathingScreenState extends State<BreathingScreen>
                       Container(
                         height: (screenHeight >= 600 && screenHeight <= 700
                             ? (animation_started_middle
-                                ? _animation_middle2!.value
-                                : 15)
+                            ? _animation_middle2!.value
+                            : 15)
                             : (screenHeight >= 700 && screenHeight <= 800
-                                ? (animation_started_middle
-                                    ? _animation_middle!.value
-                                    : 15)
-                                : (screenHeight >= 800 && screenHeight <= 850
-                                    ? (animation_started_middle
-                                        ? _animation_middle4!.value
-                                        : 15)
-                                    : (screenHeight >= 850
-                                        ? (animation_started_middle
-                                            ? _animation_middle3!.value
-                                            : 15)
-                                        : 0)))),
+                            ? (animation_started_middle
+                            ? _animation_middle!.value
+                            : 15)
+                            : (screenHeight >= 800 && screenHeight <= 850
+                            ? (animation_started_middle
+                            ? _animation_middle4!.value
+                            : 15)
+                            : (screenHeight >= 850
+                            ? (animation_started_middle
+                            ? _animation_middle3!.value
+                            : 15)
+                            : 0)))),
                       ),
 
                       Text(('$counter/10'),
@@ -1175,9 +1358,9 @@ class _BreathingScreenState extends State<BreathingScreen>
                       GestureDetector(
                         onTap: () async {
                           if (_breathing_controller.breathingGetModel!.error ==
-                                  false &&
+                              false &&
                               int.parse(_breathing_controller
-                                      .breathingGetModel!.data![0].sets!) >=
+                                  .breathingGetModel!.data![0].sets!) >=
                                   3) {
                             print(int.parse(_breathing_controller
                                 .breathingGetModel!.data![0].sets!));
@@ -1186,15 +1369,16 @@ class _BreathingScreenState extends State<BreathingScreen>
                           } else {
                             if (startStop) {
                               if (_breathing_controller.sets <= 3) {
+                                middle_animation();
+                                back_wallpaper = false;
                                 startWatch();
                                 await _kegel_controller.update_notified_status(
                                     context: context, status: 'true');
-                                middle_animation();
-                                back_wallpaper = false;
+
                               } else {
                                 CommonWidget().showErrorToaster(
                                     msg:
-                                        "You have completed your today's sets, comback tommorow");
+                                    "You have completed your today's sets, comeback tomorrow");
                               }
                             } else {
                               await _animationController_middle!.reverse();
@@ -1257,24 +1441,22 @@ class _BreathingScreenState extends State<BreathingScreen>
                         height: 30,
                       ),
                       Container(
-                        // decoration: BoxDecoration(
-                        //     color: Colors.black.withOpacity(0.58),
-                        //     gradient: LinearGradient(
-                        //       begin: Alignment.centerLeft,
-                        //       end: Alignment.centerRight,
-                        //       // stops: [0.1, 0.5, 0.7, 0.9],
-                        //       colors: [
-                        //         HexColor("#020204").withOpacity(0.8),
-                        //         // HexColor("#151619").withOpacity(0.63),
-                        //         HexColor("#36393E").withOpacity(0.8),
-                        //       ],
-                        //     ),
-                        //     borderRadius: BorderRadius.circular(20)),
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.58),
+                            gradient: LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              // stops: [0.1, 0.5, 0.7, 0.9],
+                              colors: [
+                                HexColor("#020204").withOpacity(0.8),
+                                // HexColor("#151619").withOpacity(0.63),
+                                HexColor("#36393E").withOpacity(0.8),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(20)),
                         child: Padding(
-                          // padding: const EdgeInsets.symmetric(
-                          //     vertical: 15, horizontal: 8),
                           padding: const EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 0),
+                              vertical: 15, horizontal: 8),
                           child: Column(
                             children: [
                               Column(
@@ -1321,17 +1503,37 @@ class _BreathingScreenState extends State<BreathingScreen>
                                           end: Alignment.centerRight,
                                           // stops: [0.1, 0.5, 0.7, 0.9],
                                           colors: [
-                                            HexColor("#020204").withOpacity(0.65),
-                                            HexColor("#36393E").withOpacity(0.65),
+                                            HexColor("#020204").withOpacity(1),
+                                            HexColor("#36393E").withOpacity(1),
                                           ],
                                         ),
-                                        // boxShadow: [
-                                        //   BoxShadow(
-                                        //       color: HexColor('#04060F'),
-                                        //       offset: Offset(10, 10),
-                                        //       blurRadius: 10)
-                                        // ],
-                                        borderRadius: BorderRadius.circular(20)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: HexColor('#04060F'),
+                                            offset: Offset(10, 10),
+                                            blurRadius: 20,
+                                          ),
+                                        ],
+                                        borderRadius:
+                                        BorderRadius.circular(10)),
+                                    // decoration: BoxDecoration(
+                                    //   // color: Colors.black.withOpacity(0.65),
+                                    //     gradient: LinearGradient(
+                                    //       begin: Alignment.centerLeft,
+                                    //       end: Alignment.centerRight,
+                                    //       // stops: [0.1, 0.5, 0.7, 0.9],
+                                    //       colors: [
+                                    //         HexColor("#020204").withOpacity(0.65),
+                                    //         HexColor("#36393E").withOpacity(0.65),
+                                    //       ],
+                                    //     ),
+                                    //     // boxShadow: [
+                                    //     //   BoxShadow(
+                                    //     //       color: HexColor('#04060F'),
+                                    //     //       offset: Offset(10, 10),
+                                    //     //       blurRadius: 10)
+                                    //     // ],
+                                    //     borderRadius: BorderRadius.circular(20)),
                                     child: ExpansionTile(
                                       iconColor: ColorUtils.primary_gold,
                                       title: Container(
@@ -1339,7 +1541,7 @@ class _BreathingScreenState extends State<BreathingScreen>
                                         child: Padding(
                                           padding: const EdgeInsets.only(
                                               left: 0,
-                                              top: 15,
+                                              top: 20,
                                               right: 15,
                                               bottom: 15),
                                           child: Text(
@@ -1352,46 +1554,49 @@ class _BreathingScreenState extends State<BreathingScreen>
                                         ),
                                       ),
                                       children: <Widget>[
-                                        Obx(() => _kegel_controller
-                                            .isinfoLoading.value ==
-                                            true
+                                        isinfoLoading
                                             ? SizedBox()
-                                            : Html(
-                                          anchorKey: GlobalKey(),
-                                          data: _kegel_controller
-                                              .getTechniqueModel!
-                                              .data!
-                                              .technique,
-                                          // data: "<h5>check 1<\/p>\r\n",
-                                          style: {
-                                            "body": Style(
-                                              // backgroundColor: const Color.fromARGB(
-                                              //     0x50, 0xee, 0xee, 0xee),
-                                              backgroundColor:
-                                              Colors.transparent,
-                                            ),
-                                            "tr": Style(
-                                              border: const Border(
-                                                  bottom: BorderSide(
-                                                      color: Colors.grey)),
-                                            ),
-                                            "th": Style(
-                                              padding:
-                                              const EdgeInsets.all(6),
-                                              backgroundColor: Colors.grey,
-                                            ),
-                                            "td": Style(
-                                              padding:
-                                              const EdgeInsets.all(6),
-                                              alignment: Alignment.topLeft,
-                                            ),
-                                            'h5': Style(
-                                                maxLines: 2,
-                                                color: Colors.red,
-                                                textOverflow:
-                                                TextOverflow.ellipsis),
-                                          },
-                                        )),
+                                            : Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 19.0,vertical: 10),
+                                          child: RichText(text: textSpan),
+                                        ),
+
+                                        // Html(
+                                        //   anchorKey: GlobalKey(),
+                                        //   data: _kegel_controller
+                                        //       .getTechniqueModel!
+                                        //       .data!
+                                        //       .technique,
+                                        //   // data: "<h5>check 1<\/p>\r\n",
+                                        //   style: {
+                                        //     "body": Style(
+                                        //       // backgroundColor: const Color.fromARGB(
+                                        //       //     0x50, 0xee, 0xee, 0xee),
+                                        //       backgroundColor:
+                                        //       Colors.transparent,
+                                        //     ),
+                                        //     "tr": Style(
+                                        //       border: const Border(
+                                        //           bottom: BorderSide(
+                                        //               color: Colors.grey)),
+                                        //     ),
+                                        //     "th": Style(
+                                        //       padding:
+                                        //       const EdgeInsets.all(6),
+                                        //       backgroundColor: Colors.grey,
+                                        //     ),
+                                        //     "td": Style(
+                                        //       padding:
+                                        //       const EdgeInsets.all(6),
+                                        //       alignment: Alignment.topLeft,
+                                        //     ),
+                                        //     'h5': Style(
+                                        //         maxLines: 2,
+                                        //         color: Colors.red,
+                                        //         textOverflow:
+                                        //         TextOverflow.ellipsis),
+                                        //   },
+                                        // )
                                         // ListView(
                                         //   shrinkWrap: true,
                                         //   padding:
@@ -1424,7 +1629,7 @@ class _BreathingScreenState extends State<BreathingScreen>
                                         //    ),
                                         //    Container(
                                         //      child: Text(
-                                          //        '3. Exhale 4 sec',
+                                        //        '3. Exhale 4 sec',
                                         //        style: FontStyleUtility.h15(
                                         //            fontColor:
                                         //            HexColor('#DCDCDC'),
@@ -1701,6 +1906,60 @@ class _BreathingScreenState extends State<BreathingScreen>
 
     return secondsStr;
   }
+
+  bool isinfoLoading = true;
+  GetTechniqueModel? BreathingTechniqueModel;
+  Future<dynamic> breathing_technique_API({required BuildContext context,required String method}) async {
+    setState(() {
+      isinfoLoading = true;
+    });
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    String url =
+    // "${URLConstants.base_url}${URLConstants.kegel_technique}";
+        "${URLConstants.base_url}$method";
+    // showLoader(context);
+
+    var response = await http.get(Uri.parse(url));
+
+    print('Response request: ${response.request}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // var data = convert.jsonDecode(response.body);
+      Map<String, dynamic> data =
+      json.decode(response.body.replaceAll('}[]', '}'));
+      BreathingTechniqueModel = GetTechniqueModel.fromJson(data);
+      // getUSerModelList(userInfoModel_email);
+      if (BreathingTechniqueModel!.error == false) {
+        // hideLoader(context);
+        debugPrint(
+            '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${BreathingTechniqueModel!.data!}');
+        setState(() {
+          isinfoLoading = false;
+        });
+        return BreathingTechniqueModel;
+      } else {
+        setState(() {
+          isinfoLoading = false;
+        });
+        // hideLoader(context);
+
+        // CommonWidget().showToaster(msg: kegelGetModel!.message!);
+        return null;
+      }
+    } else if (response.statusCode == 422) {
+      // hideLoader(context);
+
+      CommonWidget().showToaster(msg: BreathingTechniqueModel!.message!);
+    } else if (response.statusCode == 401) {
+      // hideLoader(context);
+      CommonWidget().showToaster(msg: BreathingTechniqueModel!.message!);
+    } else {
+      // CommonWidget().showToaster(msg: msg.toString());
+    }
+  }
+
 
   @override
   // TODO: implement wantKeepAlive

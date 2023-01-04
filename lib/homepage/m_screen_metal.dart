@@ -7,7 +7,8 @@ import 'dart:ui';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+
+// import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +20,7 @@ import 'package:klench_/homepage/swipe_controller.dart';
 import 'package:klench_/utils/TexrUtils.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_html_css/simple_html_css.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../Dashboard/dashboard_screen.dart';
@@ -34,6 +36,7 @@ import 'controller/kegel_excercise_controller.dart';
 import 'm_screen.dart';
 import 'm_screen_metal.dart';
 import 'model/WeeklyData.dart';
+import 'model/getTechniqueModel.dart';
 import 'model/m_screen_dailyData_model.dart';
 import 'model/m_screen_get_method_model.dart';
 import 'model/m_screen_lifetimeData_model.dart';
@@ -52,8 +55,8 @@ class M_ScreenMetal extends StatefulWidget {
 class M_ScreenMetalState extends State<M_ScreenMetal>
     with TickerProviderStateMixin {
   final Masturbation_screen_controller _masturbation_screen_controller =
-      Get.put(Masturbation_screen_controller(),
-          tag: Masturbation_screen_controller().toString());
+  Get.put(Masturbation_screen_controller(),
+      tag: Masturbation_screen_controller().toString());
 
   Stopwatch watch = Stopwatch();
   Timer? timer;
@@ -307,7 +310,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   SelectionBehavior? _selectionBehavior;
   CrosshairBehavior? _crosshairBehavior;
   String? selected_date =
-      DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
+  DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
+
+  bool addnewTap = false;
 
   addmethod_popup(BuildContext context) {
     showDialog(
@@ -331,7 +336,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           decoration: BoxDecoration(
-                              // color: Colors.black.withOpacity(0.65),
+                            // color: Colors.black.withOpacity(0.65),
                               gradient: LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
@@ -391,7 +396,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
                                     Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      CrossAxisAlignment.center,
                                       children: [
                                         // Container(
                                         //   margin: EdgeInsets.only(left: 18),
@@ -429,7 +434,6 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           //     // ],
                                           //     borderRadius:
                                           //         BorderRadius.circular(20)),
-
                                           child: TextFormField(
                                             maxLength: 150,
                                             decoration: InputDecoration(
@@ -449,7 +453,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               focusedBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color:
-                                                        ColorUtils.primary_gold,
+                                                    ColorUtils.primary_gold,
                                                     width: 1),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
@@ -457,7 +461,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color:
-                                                        ColorUtils.primary_grey,
+                                                    ColorUtils.primary_grey,
                                                     width: 1),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
@@ -471,12 +475,12 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               // ),
                                               hintStyle: FontStyleUtility.h14(
                                                   fontColor:
-                                                      HexColor('#CBCBCB'),
+                                                  HexColor('#CBCBCB'),
                                                   family: 'PR'),
                                             ),
                                             style: FontStyleUtility.h14(
                                                 fontColor:
-                                                    ColorUtils.primary_grey,
+                                                ColorUtils.primary_grey,
                                                 family: 'PR'),
                                             controller: method_new,
                                             keyboardType: TextInputType.text,
@@ -500,29 +504,32 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           //               list.length)]));
                                           //   // method_new.clear();
                                           // });
-
+                                          setState(() {
+                                            addnewTap = true;
+                                          });
                                           await Masturbation_Post_Method(
                                               method_name: method_new.text,
                                               method_color: list[
-                                                  random.nextInt(list.length)]);
+                                              random.nextInt(list.length)]);
+
                                           setState(() {
                                             method_new.clear();
                                           });
 
                                           setState(() {
                                             method_selected =
-                                                _masturbation_screen_controller
-                                                    .method_list
-                                                    .last
-                                                    .method_name!;
+                                            _masturbation_screen_controller
+                                                .method_list
+                                                .last
+                                                .method_name!;
                                             method_selected_color =
-                                                _masturbation_screen_controller
-                                                    .method_list.last.color!;
+                                            _masturbation_screen_controller
+                                                .method_list.last.color!;
                                             method_selected_id =
-                                                _masturbation_screen_controller
-                                                    .method_list
-                                                    .last
-                                                    .method_id!;
+                                            _masturbation_screen_controller
+                                                .method_list
+                                                .last
+                                                .method_id!;
                                           });
 
                                           print(
@@ -544,17 +551,20 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           //         .method_list,
                                           //     _masturbation_screen_controller
                                           //         .method_list);
+                                          setState(() {
+                                            addnewTap = false;
+                                          });
                                           Navigator.pop(context);
                                         }
                                       },
                                       child: Container(
                                         width:
-                                            MediaQuery.of(context).size.width /
-                                                4,
+                                        MediaQuery.of(context).size.width /
+                                            4,
                                         margin: EdgeInsets.all(0),
                                         // width: 300,
                                         decoration: BoxDecoration(
-                                            // color: Colors.black.withOpacity(0.65),
+                                          // color: Colors.black.withOpacity(0.65),
                                             gradient: LinearGradient(
                                               begin: Alignment.centerLeft,
                                               end: Alignment.centerRight,
@@ -566,8 +576,13 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                     .withOpacity(1),
                                               ],
                                             ),
+                                            border: Border.all(
+                                                color: addnewTap
+                                                    ? ColorUtils.primary_gold
+                                                    : Colors.transparent,
+                                                width: 1),
                                             borderRadius:
-                                                BorderRadius.circular(10)),
+                                            BorderRadius.circular(10)),
 
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -577,7 +592,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                             textAlign: TextAlign.center,
                                             style: FontStyleUtility.h16(
                                                 fontColor:
-                                                    ColorUtils.primary_grey,
+                                                ColorUtils.primary_grey,
                                                 family: 'PM'),
                                           ),
                                         ),
@@ -677,7 +692,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                           alignment: Alignment.topRight,
                           child: Container(
                               decoration: BoxDecoration(
-                                  // color: Colors.black.withOpacity(0.65),
+                                // color: Colors.black.withOpacity(0.65),
                                   gradient: LinearGradient(
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
@@ -812,7 +827,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
           builder: (context, setModalState) {
             return Container(
               decoration: BoxDecoration(
-                  // color: Colors.black.withOpacity(0.65),
+                // color: Colors.black.withOpacity(0.65),
                   gradient: LinearGradient(
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
@@ -865,7 +880,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                               mode: CupertinoDatePickerMode.date,
                               maximumDate: DateTime.now(),
                               initialDateTime:
-                                  DateTime.now().subtract(Duration(hours: 1)),
+                              DateTime.now().subtract(Duration(hours: 1)),
                               onDateTimeChanged: (DateTime value) async {
                                 // print(value);
                                 print(DateFormat('yyyy-MM-dd')
@@ -934,8 +949,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
   methodPopUp(
       {required BuildContext context,
-      required String method_id,
-      required String method_old}) async {
+        required String method_id,
+        required String method_old}) async {
     DateTime? selected;
     showDialog(
       context: context,
@@ -958,7 +973,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           decoration: BoxDecoration(
-                              // color: Colors.black.withOpacity(0.65),
+                            // color: Colors.black.withOpacity(0.65),
                               gradient: LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
@@ -996,7 +1011,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                         margin: EdgeInsets.all(10),
                                         // width: 300,
                                         decoration: BoxDecoration(
-                                            // color: Colors.black.withOpacity(0.65),
+                                          // color: Colors.black.withOpacity(0.65),
                                             gradient: LinearGradient(
                                               begin: Alignment.centerLeft,
                                               end: Alignment.centerRight,
@@ -1015,7 +1030,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                   blurRadius: 10)
                                             ],
                                             borderRadius:
-                                                BorderRadius.circular(10)),
+                                            BorderRadius.circular(10)),
 
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -1025,7 +1040,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                             textAlign: TextAlign.center,
                                             style: FontStyleUtility.h16(
                                                 fontColor:
-                                                    ColorUtils.primary_grey,
+                                                ColorUtils.primary_grey,
                                                 family: 'PM'),
                                           ),
                                         ),
@@ -1041,13 +1056,16 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                         } else {
                                           await _masturbation_screen_controller
                                               .MasturbationData_delete_API(
-                                                  context: context,
-                                                  methodId: method_id,
-                                                  method_name: method_old);
+                                              context: context,
+                                              methodId: method_id,
+                                              method_name: method_old);
                                           if (_masturbation_screen_controller
-                                                  .m_screenDeleteModel!.error ==
+                                              .m_screenDeleteModel!.error ==
                                               false) {
                                             method_time.clear();
+                                            setState(() {
+                                              method_selected = '';
+                                            });
                                             await Masturbation_Get_Method();
                                             await Masturbation_LifeTime_Data_get_API();
                                             await Masturbation_Daily_Data_get_API();
@@ -1060,7 +1078,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                         margin: EdgeInsets.all(10),
                                         // width: 300,
                                         decoration: BoxDecoration(
-                                            // color: Colors.black.withOpacity(0.65),
+                                          // color: Colors.black.withOpacity(0.65),
                                             gradient: LinearGradient(
                                               begin: Alignment.centerLeft,
                                               end: Alignment.centerRight,
@@ -1079,7 +1097,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                   blurRadius: 10)
                                             ],
                                             borderRadius:
-                                                BorderRadius.circular(10)),
+                                            BorderRadius.circular(10)),
 
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -1089,7 +1107,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                             textAlign: TextAlign.center,
                                             style: FontStyleUtility.h16(
                                                 fontColor:
-                                                    ColorUtils.primary_grey,
+                                                ColorUtils.primary_grey,
                                                 family: 'PM'),
                                           ),
                                         ),
@@ -1109,7 +1127,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                           alignment: Alignment.topRight,
                           child: Container(
                               decoration: BoxDecoration(
-                                  // color: Colors.black.withOpacity(0.65),
+                                // color: Colors.black.withOpacity(0.65),
                                   gradient: LinearGradient(
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
@@ -1223,7 +1241,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                     alignment: Alignment.topRight,
                     child: Container(
                         decoration: BoxDecoration(
-                            // color: Colors.black.withOpacity(0.65),
+                          // color: Colors.black.withOpacity(0.65),
                             gradient: LinearGradient(
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
@@ -1273,7 +1291,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
               child: Container(
                 decoration: BoxDecoration(
                     border:
-                        Border.all(color: ColorUtils.primary_gold, width: 1),
+                    Border.all(color: ColorUtils.primary_gold, width: 1),
                     // color: Colors.black.withOpacity(0.65),
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -1329,11 +1347,11 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   },
                                   child: Container(
                                     width:
-                                        MediaQuery.of(context).size.width / 5,
+                                    MediaQuery.of(context).size.width / 5,
                                     margin: EdgeInsets.all(10),
                                     // width: 300,
                                     decoration: BoxDecoration(
-                                        // color: Colors.black.withOpacity(0.65),
+                                      // color: Colors.black.withOpacity(0.65),
                                         gradient: LinearGradient(
                                           begin: Alignment.centerLeft,
                                           end: Alignment.centerRight,
@@ -1344,7 +1362,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           ],
                                         ),
                                         borderRadius:
-                                            BorderRadius.circular(10)),
+                                        BorderRadius.circular(10)),
 
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -1415,8 +1433,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
 
   EditPopUp(
       {required BuildContext context,
-      required String method_id,
-      required String method_name}) async {
+        required String method_id,
+        required String method_name}) async {
     DateTime? selected;
     showDialog(
       context: context,
@@ -1439,7 +1457,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           decoration: BoxDecoration(
-                              // color: Colors.black.withOpacity(0.65),
+                            // color: Colors.black.withOpacity(0.65),
                               gradient: LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
@@ -1464,7 +1482,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   children: [
                                     Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           height: 11,
@@ -1473,27 +1491,27 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           margin: EdgeInsets.symmetric(
                                               horizontal: 10),
                                           // width: 300,
-                                          decoration: BoxDecoration(
-                                              // color: Colors.black.withOpacity(0.65),
-                                              gradient: LinearGradient(
-                                                begin: Alignment.centerLeft,
-                                                end: Alignment.centerRight,
-                                                // stops: [0.1, 0.5, 0.7, 0.9],
-                                                colors: [
-                                                  HexColor("#36393E")
-                                                      .withOpacity(1),
-                                                  HexColor("#020204")
-                                                      .withOpacity(1),
-                                                ],
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: HexColor('#04060F'),
-                                                    offset: Offset(10, 10),
-                                                    blurRadius: 10)
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
+                                          // decoration: BoxDecoration(
+                                          //     // color: Colors.black.withOpacity(0.65),
+                                          //     gradient: LinearGradient(
+                                          //       begin: Alignment.centerLeft,
+                                          //       end: Alignment.centerRight,
+                                          //       // stops: [0.1, 0.5, 0.7, 0.9],
+                                          //       colors: [
+                                          //         HexColor("#36393E")
+                                          //             .withOpacity(1),
+                                          //         HexColor("#020204")
+                                          //             .withOpacity(1),
+                                          //       ],
+                                          //     ),
+                                          //     boxShadow: [
+                                          //       BoxShadow(
+                                          //           color: HexColor('#04060F'),
+                                          //           offset: Offset(10, 10),
+                                          //           blurRadius: 10)
+                                          //     ],
+                                          //     borderRadius:
+                                          //         BorderRadius.circular(20)),
 
                                           child: TextFormField(
                                             maxLength: 150,
@@ -1511,26 +1529,34 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                               counterText: "",
                                               filled: true,
                                               border: InputBorder.none,
-                                              enabledBorder:
-                                                  const OutlineInputBorder(
+                                              focusedBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    color: Colors.transparent,
+                                                    color:
+                                                    ColorUtils.primary_gold,
+                                                    width: 1),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color:
+                                                    ColorUtils.primary_grey,
                                                     width: 1),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
                                               ),
                                               hintStyle: FontStyleUtility.h14(
                                                   fontColor:
-                                                      HexColor('#CBCBCB'),
+                                                  HexColor('#CBCBCB'),
                                                   family: 'PR'),
                                             ),
                                             style: FontStyleUtility.h14(
                                                 fontColor:
-                                                    ColorUtils.primary_grey,
+                                                ColorUtils.primary_grey,
                                                 family: 'PR'),
                                             controller:
-                                                _masturbation_screen_controller
-                                                    .method_new_name,
+                                            _masturbation_screen_controller
+                                                .method_new_name,
                                             keyboardType: TextInputType.text,
                                           ),
                                         ),
@@ -1551,7 +1577,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                             methodId: method_id,
                                           );
                                           if (_masturbation_screen_controller
-                                                  .m_screenEditModel!.error ==
+                                              .m_screenEditModel!.error ==
                                               false) {
                                             method_time.clear();
                                             // await Masturbation_Daily_Data_get_API();
@@ -1560,18 +1586,42 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                             await Masturbation_LifeTime_Data_get_API();
                                             await Masturbation_Daily_Data_get_API();
                                             await MasturbationWeekly_Data_get_API();
-
                                           }
                                         }
                                       },
                                       child: Container(
-                                        alignment: Alignment.topRight,
-                                        child: Text(
-                                          'Add',
-                                          style: FontStyleUtility.h14(
-                                              fontColor:
-                                                  ColorUtils.primary_grey,
-                                              family: 'PR'),
+                                        width:
+                                        MediaQuery.of(context).size.width /
+                                            4,
+                                        margin: EdgeInsets.all(0),
+                                        // width: 300,
+                                        decoration: BoxDecoration(
+                                          // color: Colors.black.withOpacity(0.65),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.centerRight,
+                                              // stops: [0.1, 0.5, 0.7, 0.9],
+                                              colors: [
+                                                HexColor("#36393E")
+                                                    .withOpacity(1),
+                                                HexColor("#020204")
+                                                    .withOpacity(1),
+                                              ],
+                                            ),
+                                            borderRadius:
+                                            BorderRadius.circular(10)),
+
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0, horizontal: 15),
+                                          child: Text(
+                                            'Add',
+                                            textAlign: TextAlign.center,
+                                            style: FontStyleUtility.h16(
+                                                fontColor:
+                                                ColorUtils.primary_grey,
+                                                family: 'PM'),
+                                          ),
                                         ),
                                       ),
                                     )
@@ -1597,7 +1647,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                           alignment: Alignment.topRight,
                           child: Container(
                               decoration: BoxDecoration(
-                                  // color: Colors.black.withOpacity(0.65),
+                                // color: Colors.black.withOpacity(0.65),
                                   gradient: LinearGradient(
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
@@ -1687,7 +1737,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
         //   );
         // },
         tooltipSettings: const InteractiveTooltip(
-            // Formatting trackball tooltip text
+          // Formatting trackball tooltip text
             format: 'point.x : point.y minute'),
         // Display mode of trackball tooltip
         tooltipDisplayMode: TrackballDisplayMode.floatAllPoints,
@@ -1727,7 +1777,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
     print("lastRoute ${lastRoute}");
 
     await Masturbation_Get_Method();
-    await _kegel_controller.Kegel_technique_API(
+    await masturbation_technique_API(
         context: context, method: URLConstants.masturbation_technique);
 
     await Masturbation_LifeTime_Data_get_API();
@@ -1792,10 +1842,39 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
   }
 
   final Kegel_controller _kegel_controller =
-      Get.put(Kegel_controller(), tag: Kegel_controller().toString());
+  Get.put(Kegel_controller(), tag: Kegel_controller().toString());
 
   @override
   Widget build(BuildContext context) {
+    final TextSpan textSpan = HTML.toTextSpan(
+      context,
+      (isinfoLoading == true
+          ? ''
+          : MasturbationTechniqueModel!.data!.technique!),
+      linksCallback: (dynamic link) {
+        debugPrint('You clicked on ${link.toString()}');
+      },
+      // as name suggests, optionally set the default text style
+      defaultTextStyle: TextStyle(
+        color: Colors.grey[700],
+      ),
+
+      overrideStyle: <String, TextStyle>{
+        'p': TextStyle(
+            fontSize: 14,
+            color: ColorUtils.primary_grey,
+            fontFamily: 'PR',
+            fontWeight: FontWeight.w200,
+            decoration: TextDecoration.none),
+        // FontStyleUtility.h16(
+        //     fontColor: ColorUtils.primary_grey,
+        //     family: 'PR'),
+        'a': const TextStyle(wordSpacing: 2),
+        // specify any tag not just the supported ones,
+        // and apply TextStyles to them and/override them
+      },
+    );
+
     return Stack(
       children: [
         Container(
@@ -1911,14 +1990,14 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                         onTap: () {
                           (started
                               ? Navigator.pop(context)
-                              // Navigator.of(context).pushReplacement(
-                              //         MaterialPageRoute(
-                              //             builder: (context) => DashboardScreen(
-                              //                   page: 1,
-                              //                 )),
-                              //       )
+                          // Navigator.of(context).pushReplacement(
+                          //         MaterialPageRoute(
+                          //             builder: (context) => DashboardScreen(
+                          //                   page: 1,
+                          //                 )),
+                          //       )
                               : CommonWidget().showErrorToaster(
-                                  msg: "Please finish the method"));
+                              msg: "Please finish the method"));
                           // Navigator.pop(context);
                         },
                         child: Container(
@@ -2212,23 +2291,23 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   borderRadius: BorderRadius.circular(50),
                                   gradient: (paused_time.length >= 4
                                       ? LinearGradient(
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                          // stops: [0.1, 0.5, 0.7, 0.9],
-                                          colors: [
-                                            HexColor("#DD3931").withOpacity(1),
-                                            HexColor("#DD3931").withOpacity(1),
-                                          ],
-                                        )
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                    colors: [
+                                      HexColor("#DD3931").withOpacity(1),
+                                      HexColor("#DD3931").withOpacity(1),
+                                    ],
+                                  )
                                       : LinearGradient(
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                          // stops: [0.1, 0.5, 0.7, 0.9],
-                                          colors: [
-                                            HexColor("#34343E").withOpacity(1),
-                                            HexColor("#8A8B8D").withOpacity(1),
-                                          ],
-                                        )),
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                    colors: [
+                                      HexColor("#34343E").withOpacity(1),
+                                      HexColor("#8A8B8D").withOpacity(1),
+                                    ],
+                                  )),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(2.0),
@@ -2247,23 +2326,23 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   borderRadius: BorderRadius.circular(50),
                                   gradient: (paused_time.length >= 3
                                       ? LinearGradient(
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                          // stops: [0.1, 0.5, 0.7, 0.9],
-                                          colors: [
-                                            HexColor("#DD3931").withOpacity(1),
-                                            HexColor("#DD3931").withOpacity(1),
-                                          ],
-                                        )
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                    colors: [
+                                      HexColor("#DD3931").withOpacity(1),
+                                      HexColor("#DD3931").withOpacity(1),
+                                    ],
+                                  )
                                       : LinearGradient(
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                          // stops: [0.1, 0.5, 0.7, 0.9],
-                                          colors: [
-                                            HexColor("#34343E").withOpacity(1),
-                                            HexColor("#8A8B8D").withOpacity(1),
-                                          ],
-                                        )),
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                    colors: [
+                                      HexColor("#34343E").withOpacity(1),
+                                      HexColor("#8A8B8D").withOpacity(1),
+                                    ],
+                                  )),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(2.0),
@@ -2282,23 +2361,23 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   borderRadius: BorderRadius.circular(50),
                                   gradient: (paused_time.length >= 2
                                       ? LinearGradient(
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                          // stops: [0.1, 0.5, 0.7, 0.9],
-                                          colors: [
-                                            HexColor("#DD3931").withOpacity(1),
-                                            HexColor("#DD3931").withOpacity(1),
-                                          ],
-                                        )
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                    colors: [
+                                      HexColor("#DD3931").withOpacity(1),
+                                      HexColor("#DD3931").withOpacity(1),
+                                    ],
+                                  )
                                       : LinearGradient(
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                          // stops: [0.1, 0.5, 0.7, 0.9],
-                                          colors: [
-                                            HexColor("#34343E").withOpacity(1),
-                                            HexColor("#8A8B8D").withOpacity(1),
-                                          ],
-                                        )),
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                    colors: [
+                                      HexColor("#34343E").withOpacity(1),
+                                      HexColor("#8A8B8D").withOpacity(1),
+                                    ],
+                                  )),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(2.0),
@@ -2317,23 +2396,23 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   borderRadius: BorderRadius.circular(50),
                                   gradient: (paused_time.isNotEmpty
                                       ? LinearGradient(
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                          // stops: [0.1, 0.5, 0.7, 0.9],
-                                          colors: [
-                                            HexColor("#DD3931").withOpacity(1),
-                                            HexColor("#DD3931").withOpacity(1),
-                                          ],
-                                        )
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                    colors: [
+                                      HexColor("#DD3931").withOpacity(1),
+                                      HexColor("#DD3931").withOpacity(1),
+                                    ],
+                                  )
                                       : LinearGradient(
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                          // stops: [0.1, 0.5, 0.7, 0.9],
-                                          colors: [
-                                            HexColor("#34343E").withOpacity(1),
-                                            HexColor("#8A8B8D").withOpacity(1),
-                                          ],
-                                        )),
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                    colors: [
+                                      HexColor("#34343E").withOpacity(1),
+                                      HexColor("#8A8B8D").withOpacity(1),
+                                    ],
+                                  )),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(2.0),
@@ -2380,7 +2459,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     image: DecorationImage(
                                         alignment: Alignment.center,
                                         image:
-                                            AssetImage(AssetUtils.home_button)),
+                                        AssetImage(AssetUtils.home_button)),
                                     boxShadow: [
                                       BoxShadow(
                                         color: (animation_started
@@ -2403,7 +2482,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                             textStyle: TextStyle(
                                                 color: (timer_started
                                                     ? HexColor('#DD3931')
-                                                        .withOpacity(0.4)
+                                                    .withOpacity(0.4)
                                                     : HexColor('#DD3931')),
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w600),
@@ -2448,7 +2527,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                       // title: Center(child: Text("Evaluation our APP")),
                                       content: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         children: [
                                           Stack(
                                             children: [
@@ -2456,17 +2535,17 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                 // height: 150,
                                                 // height: double.maxFinite,
                                                 height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
+                                                    .size
+                                                    .height /
                                                     4,
                                                 width: double.maxFinite,
                                                 decoration: BoxDecoration(
-                                                    // color: Colors.black.withOpacity(0.65),
+                                                  // color: Colors.black.withOpacity(0.65),
                                                     gradient: LinearGradient(
                                                       begin:
-                                                          Alignment.centerLeft,
+                                                      Alignment.centerLeft,
                                                       end:
-                                                          Alignment.centerRight,
+                                                      Alignment.centerRight,
                                                       // stops: [0.1, 0.5, 0.7, 0.9],
                                                       colors: [
                                                         HexColor("#020204")
@@ -2480,12 +2559,12 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                           color: HexColor(
                                                               '#04060F'),
                                                           offset:
-                                                              Offset(10, 10),
+                                                          Offset(10, 10),
                                                           blurRadius: 10)
                                                     ],
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
+                                                    BorderRadius.circular(
+                                                        20)),
                                                 margin: EdgeInsets.symmetric(
                                                     horizontal: 10,
                                                     vertical: 10),
@@ -2494,7 +2573,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                 // padding: const EdgeInsets.all(8.0),
                                                 child: Column(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.center,
+                                                  MainAxisAlignment.center,
                                                   children: [
                                                     Expanded(
                                                       child: Container(
@@ -2502,37 +2581,37 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                             top: 10),
                                                         // color: Colors.white,
                                                         alignment:
-                                                            Alignment.center,
+                                                        Alignment.center,
                                                         child: ListView.builder(
                                                           padding:
-                                                              EdgeInsets.only(
-                                                                  bottom: 0),
+                                                          EdgeInsets.only(
+                                                              bottom: 0),
 
                                                           // physics: NeverScrollableScrollPhysics(),
                                                           itemCount:
-                                                              _masturbation_screen_controller
-                                                                  .method_list
-                                                                  .length,
+                                                          _masturbation_screen_controller
+                                                              .method_list
+                                                              .length,
                                                           shrinkWrap: true,
                                                           itemBuilder:
                                                               (BuildContext
-                                                                      context,
-                                                                  int index) {
+                                                          context,
+                                                              int index) {
                                                             return GestureDetector(
                                                               onTap: () {
                                                                 setState(() {
                                                                   method_selected = _masturbation_screen_controller
                                                                       .method_list[
-                                                                          index]
+                                                                  index]
                                                                       .method_name!;
                                                                   method_selected_color =
-                                                                      _masturbation_screen_controller
-                                                                          .method_list[
-                                                                              index]
-                                                                          .color!;
+                                                                  _masturbation_screen_controller
+                                                                      .method_list[
+                                                                  index]
+                                                                      .color!;
                                                                   method_selected_id = _masturbation_screen_controller
                                                                       .method_list[
-                                                                          index]
+                                                                  index]
                                                                       .method_id!;
 
                                                                   print(
@@ -2540,7 +2619,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                   print(
                                                                       "method_selected ${_masturbation_screen_controller.method_list[index].color!.toString()}");
                                                                   started =
-                                                                      true;
+                                                                  true;
                                                                 });
                                                                 Navigator.pop(
                                                                     context);
@@ -2565,84 +2644,81 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                               child: Container(
                                                                 margin: EdgeInsets
                                                                     .symmetric(
-                                                                        vertical:
-                                                                            8.5),
+                                                                    vertical:
+                                                                    8.5),
                                                                 alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child:
-                                                                    (index > 3
-                                                                        ? Row(
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.center,
-                                                                            children: [
-                                                                              Expanded(
-                                                                                // flex: 3,
-                                                                                child: Container(
-                                                                                  // color: Colors.white,
-                                                                                  alignment: Alignment.centerRight,
-                                                                                  child: Text(
-                                                                                    _masturbation_screen_controller.method_list[index].method_name!,
-                                                                                    style: FontStyleUtility.h15(
-                                                                                        fontColor: HexColor(_masturbation_screen_controller.method_list[index].color!),
-                                                                                        // fontColor: (_masturbation_screen_controller.method_list[index] == 'Hand'
-                                                                                        //     ? Colors.red
-                                                                                        //     : (_masturbation_screen_controller.method_list[index] == 'Dildo'
-                                                                                        //         ? Colors.blue
-                                                                                        //         : (_masturbation_screen_controller.method_list[index] == 'Sex'
-                                                                                        //             ? Colors.green
-                                                                                        //             // : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
-                                                                                        //             : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : list[random.nextInt(list.length)])))),
-                                                                                        family: 'PM'),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              Expanded(
-                                                                                // flex: 2,
-                                                                                  child: GestureDetector(
-                                                                                    onTap: (){
-                                                                                      methodPopUp(
-                                                                                          context:
-                                                                                          context,
-                                                                                          method_old: _masturbation_screen_controller
-                                                                                              .method_list[
-                                                                                          index]
-                                                                                              .method_name!,
-                                                                                          method_id: _masturbation_screen_controller
-                                                                                              .method_list[
-                                                                                          index]
-                                                                                              .method_id!);
-                                                                                    },
-                                                                                    child: Container(
-                                                                                      margin: EdgeInsets.only(left: 20),
-                                                                                      alignment: Alignment.centerLeft,
-                                                                                      child: Icon(
-                                                                                        Icons.delete,
-                                                                                        size: 20,
-                                                                                        color: ColorUtils.primary_gold,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ))
-                                                                            ],
-                                                                          )
-                                                                        : Container(
-                                                                      // color: Colors.white,
-                                                                      alignment: Alignment.center,
-                                                                      child: Text(
-                                                                        _masturbation_screen_controller.method_list[index].method_name!,
-                                                                        style: FontStyleUtility.h15(
-                                                                            fontColor: HexColor(_masturbation_screen_controller.method_list[index].color!),
-                                                                            // fontColor: (_masturbation_screen_controller.method_list[index] == 'Hand'
-                                                                            //     ? Colors.red
-                                                                            //     : (_masturbation_screen_controller.method_list[index] == 'Dildo'
-                                                                            //         ? Colors.blue
-                                                                            //         : (_masturbation_screen_controller.method_list[index] == 'Sex'
-                                                                            //             ? Colors.green
-                                                                            //             // : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
-                                                                            //             : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : list[random.nextInt(list.length)])))),
-                                                                            family: 'PM'),
+                                                                Alignment
+                                                                    .center,
+                                                                child: (index >
+                                                                    3
+                                                                    ? Row(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Expanded(
+                                                                      // flex: 3,
+                                                                      child:
+                                                                      Container(
+                                                                        // color: Colors.white,
+                                                                        alignment: Alignment.centerRight,
+                                                                        child: Text(
+                                                                          _masturbation_screen_controller.method_list[index].method_name!,
+                                                                          style: FontStyleUtility.h15(
+                                                                              fontColor: HexColor(_masturbation_screen_controller.method_list[index].color!),
+                                                                              // fontColor: (_masturbation_screen_controller.method_list[index] == 'Hand'
+                                                                              //     ? Colors.red
+                                                                              //     : (_masturbation_screen_controller.method_list[index] == 'Dildo'
+                                                                              //         ? Colors.blue
+                                                                              //         : (_masturbation_screen_controller.method_list[index] == 'Sex'
+                                                                              //             ? Colors.green
+                                                                              //             // : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
+                                                                              //             : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : list[random.nextInt(list.length)])))),
+                                                                              family: 'PM'),
+                                                                        ),
                                                                       ),
-                                                                    )),
+                                                                    ),
+                                                                    Expanded(
+                                                                      // flex: 2,
+                                                                        child: GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            methodPopUp(context: context, method_old: _masturbation_screen_controller.method_list[index].method_name!, method_id: _masturbation_screen_controller.method_list[index].method_id!);
+                                                                          },
+                                                                          child:
+                                                                          Container(
+                                                                            margin: EdgeInsets.only(left: 20),
+                                                                            alignment: Alignment.centerLeft,
+                                                                            child: Icon(
+                                                                              Icons.delete,
+                                                                              size: 20,
+                                                                              color: ColorUtils.primary_gold,
+                                                                            ),
+                                                                          ),
+                                                                        ))
+                                                                  ],
+                                                                )
+                                                                    : Container(
+                                                                  // color: Colors.white,
+                                                                  alignment:
+                                                                  Alignment.center,
+                                                                  child:
+                                                                  Text(
+                                                                    _masturbation_screen_controller
+                                                                        .method_list[index]
+                                                                        .method_name!,
+                                                                    style: FontStyleUtility.h15(
+                                                                        fontColor: HexColor(_masturbation_screen_controller.method_list[index].color!),
+                                                                        // fontColor: (_masturbation_screen_controller.method_list[index] == 'Hand'
+                                                                        //     ? Colors.red
+                                                                        //     : (_masturbation_screen_controller.method_list[index] == 'Dildo'
+                                                                        //         ? Colors.blue
+                                                                        //         : (_masturbation_screen_controller.method_list[index] == 'Sex'
+                                                                        //             ? Colors.green
+                                                                        //             // : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100])))),
+                                                                        //             : (_masturbation_screen_controller.method_list[index] == 'Fleshlight' ? Colors.purple : list[random.nextInt(list.length)])))),
+                                                                        family: 'PM'),
+                                                                  ),
+                                                                )),
                                                               ),
                                                             );
                                                           },
@@ -2661,41 +2737,41 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                         },
                                                         child: Container(
                                                           alignment:
-                                                              Alignment.center,
+                                                          Alignment.center,
                                                           decoration:
-                                                              BoxDecoration(
-                                                                  border:
-                                                                      Border(
-                                                            right: BorderSide(
-                                                                color: Colors
-                                                                    .black,
-                                                                width: 1),
-                                                          )),
+                                                          BoxDecoration(
+                                                              border:
+                                                              Border(
+                                                                right: BorderSide(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    width: 1),
+                                                              )),
                                                           child: Padding(
                                                             padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    vertical:
-                                                                        4.5),
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                vertical:
+                                                                4.5),
                                                             child: Container(
                                                               decoration:
-                                                                  BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(500),
-                                                                      gradient: LinearGradient(
-                                                                        begin: Alignment
-                                                                            .centerLeft,
-                                                                        end: Alignment
-                                                                            .centerRight,
-                                                                        // stops: [0.1, 0.5, 0.7, 0.9],
-                                                                        colors: [
-                                                                          HexColor("#020204")
-                                                                              .withOpacity(1),
-                                                                          HexColor("#36393E")
-                                                                              .withOpacity(1),
-                                                                        ],
-                                                                      ),
-                                                                      boxShadow: [
+                                                              BoxDecoration(
+                                                                  borderRadius:
+                                                                  BorderRadius.circular(500),
+                                                                  gradient: LinearGradient(
+                                                                    begin: Alignment
+                                                                        .centerLeft,
+                                                                    end: Alignment
+                                                                        .centerRight,
+                                                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                                                    colors: [
+                                                                      HexColor("#020204")
+                                                                          .withOpacity(1),
+                                                                      HexColor("#36393E")
+                                                                          .withOpacity(1),
+                                                                    ],
+                                                                  ),
+                                                                  boxShadow: [
                                                                     BoxShadow(
                                                                         color: HexColor(
                                                                             '#04060F'),
@@ -2703,15 +2779,15 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                             3,
                                                                             3),
                                                                         blurRadius:
-                                                                            10)
+                                                                        10)
                                                                   ]),
                                                               child: Padding(
                                                                 padding: const EdgeInsets
-                                                                        .symmetric(
+                                                                    .symmetric(
                                                                     horizontal:
-                                                                        6),
+                                                                    6),
                                                                 child:
-                                                                    Image.asset(
+                                                                Image.asset(
                                                                   AssetUtils
                                                                       .plus_big,
                                                                   height: 30,
@@ -2734,13 +2810,13 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                 },
                                                 child: Container(
                                                   margin:
-                                                      EdgeInsets.only(right: 0),
+                                                  EdgeInsets.only(right: 0),
                                                   alignment: Alignment.topRight,
                                                   child: Container(
                                                       decoration: BoxDecoration(
-                                                          // color: Colors.black.withOpacity(0.65),
+                                                        // color: Colors.black.withOpacity(0.65),
                                                           gradient:
-                                                              LinearGradient(
+                                                          LinearGradient(
                                                             begin: Alignment
                                                                 .centerLeft,
                                                             end: Alignment
@@ -2748,13 +2824,13 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                             // stops: [0.1, 0.5, 0.7, 0.9],
                                                             colors: [
                                                               HexColor(
-                                                                      "#36393E")
+                                                                  "#36393E")
                                                                   .withOpacity(
-                                                                      1),
+                                                                  1),
                                                               HexColor(
-                                                                      "#020204")
+                                                                  "#020204")
                                                                   .withOpacity(
-                                                                      1),
+                                                                  1),
                                                             ],
                                                           ),
                                                           boxShadow: [
@@ -2766,13 +2842,13 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                 blurRadius: 5)
                                                           ],
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20)),
+                                                          BorderRadius
+                                                              .circular(
+                                                              20)),
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsets
-                                                                .all(4.0),
+                                                        const EdgeInsets
+                                                            .all(4.0),
                                                         child: Icon(
                                                           Icons.cancel_outlined,
                                                           size: 25,
@@ -3008,7 +3084,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   // if(paused_time.length == 4){
                                   await _kegel_controller
                                       .update_notified_status(
-                                          context: context, status: 'false');
+                                      context: context, status: 'false');
                                   await stopWatch_finish();
                                   await changeIndex();
                                   print(
@@ -3028,18 +3104,18 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           scale: curve,
                                           child: AlertDialog(
                                               backgroundColor:
-                                                  Colors.transparent,
+                                              Colors.transparent,
                                               contentPadding: EdgeInsets.zero,
                                               elevation: 0.0,
                                               // title: Center(child: Text("Evaluation our APP")),
                                               content: Column(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsets.all(
-                                                            10.0),
+                                                    const EdgeInsets.all(
+                                                        10.0),
                                                     child: Container(
                                                       decoration: BoxDecoration(
                                                           border: Border.all(
@@ -3048,7 +3124,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                               width: 1),
                                                           // color: Colors.black.withOpacity(0.65),
                                                           gradient:
-                                                              LinearGradient(
+                                                          LinearGradient(
                                                             begin: Alignment
                                                                 .topLeft,
                                                             end: Alignment
@@ -3058,22 +3134,22 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                               // HexColor("#000000").withOpacity(1),
                                                               // HexColor("#000000").withOpacity(1),
                                                               HexColor(
-                                                                      "#ce942f")
+                                                                  "#ce942f")
                                                                   .withOpacity(
-                                                                      1),
+                                                                  1),
 
                                                               HexColor(
-                                                                      "#ecdc8f")
+                                                                  "#ecdc8f")
                                                                   .withOpacity(
-                                                                      1),
+                                                                  1),
                                                               HexColor(
-                                                                      "#e5cc79")
+                                                                  "#e5cc79")
                                                                   .withOpacity(
-                                                                      1),
+                                                                  1),
                                                               HexColor(
-                                                                      "#ce942f")
+                                                                  "#ce942f")
                                                                   .withOpacity(
-                                                                      1),
+                                                                  1),
                                                               // HexColor("#37393D").withOpacity(1),
                                                               // ColorUtils.primary_gold.withOpacity(1),
 
@@ -3090,16 +3166,16 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                 blurRadius: 10)
                                                           ],
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15)),
+                                                          BorderRadius
+                                                              .circular(
+                                                              15)),
                                                       child: Align(
                                                           alignment:
-                                                              Alignment.center,
+                                                          Alignment.center,
                                                           child: Padding(
                                                             padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
+                                                            const EdgeInsets
+                                                                .all(8.0),
                                                             child: Container(
                                                               margin: EdgeInsets
                                                                   .all(10),
@@ -3108,27 +3184,27 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                 children: [
                                                                   Padding(
                                                                     padding: const EdgeInsets
-                                                                            .symmetric(
+                                                                        .symmetric(
                                                                         vertical:
-                                                                            8.0,
+                                                                        8.0,
                                                                         horizontal:
-                                                                            5),
+                                                                        5),
                                                                     child: Text(
                                                                       "Remember you need to pause during masturbation 4 times per session",
                                                                       textAlign:
-                                                                          TextAlign
-                                                                              .center,
+                                                                      TextAlign
+                                                                          .center,
                                                                       style: FontStyleUtility.h16(
                                                                           fontColor: Colors
                                                                               .black,
                                                                           family:
-                                                                              'PM'),
+                                                                          'PM'),
                                                                     ),
                                                                   ),
                                                                   Row(
                                                                     mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
+                                                                    MainAxisAlignment
+                                                                        .center,
                                                                     children: [
                                                                       GestureDetector(
                                                                         onTap:
@@ -3137,14 +3213,14 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                               context);
                                                                         },
                                                                         child:
-                                                                            Container(
+                                                                        Container(
                                                                           width:
-                                                                              MediaQuery.of(context).size.width / 5,
+                                                                          MediaQuery.of(context).size.width / 5,
                                                                           margin:
-                                                                              EdgeInsets.all(10),
+                                                                          EdgeInsets.all(10),
                                                                           // width: 300,
                                                                           decoration: BoxDecoration(
-                                                                              // color: Colors.black.withOpacity(0.65),
+                                                                            // color: Colors.black.withOpacity(0.65),
                                                                               gradient: LinearGradient(
                                                                                 begin: Alignment.centerLeft,
                                                                                 end: Alignment.centerRight,
@@ -3157,11 +3233,11 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                                               borderRadius: BorderRadius.circular(10)),
 
                                                                           child:
-                                                                              Padding(
+                                                                          Padding(
                                                                             padding:
-                                                                                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15),
+                                                                            const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15),
                                                                             child:
-                                                                                Text(
+                                                                            Text(
                                                                               'Ok',
                                                                               textAlign: TextAlign.center,
                                                                               style: FontStyleUtility.h16(fontColor: ColorUtils.primary_grey, family: 'PM'),
@@ -3182,7 +3258,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                         );
                                       },
                                       transitionDuration:
-                                          const Duration(milliseconds: 300),
+                                      const Duration(milliseconds: 300),
                                     );
                                     // _scaleDialog(
                                     //     context: context,
@@ -3241,12 +3317,12 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                   ///
                                   await _masturbation_screen_controller
                                       .m_method_post_API(
-                                          context: context,
-                                          pauses: mohit
-                                              .toString()
-                                              .replaceAll('[', '')
-                                              .replaceAll(']', ''),
-                                          method_data: method_data);
+                                      context: context,
+                                      pauses: mohit
+                                          .toString()
+                                          .replaceAll('[', '')
+                                          .replaceAll(']', ''),
+                                      method_data: method_data);
                                   setState(() {
                                     timer_started = false;
                                     elapsedTime = '00:00';
@@ -3265,12 +3341,12 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     _scaleDialog(
                                         context: context,
                                         message:
-                                            "Congratulations! You lasted over 3 minutes! Start saying to goodbye to Premature ejaculation!");
+                                        "Congratulations! You lasted over 3 minutes! Start saying to goodbye to Premature ejaculation!");
                                   } else if (ten_min) {
                                     _scaleDialog(
                                         context: context,
                                         message:
-                                            "Congratulations! You are halfway there to the 20-minute mark!");
+                                        "Congratulations! You are halfway there to the 20-minute mark!");
                                   }
 
                                   ///
@@ -3299,34 +3375,34 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                 // width:(width ?? 300),
                                 decoration: (started
                                     ? BoxDecoration(
-                                        border: Border.all(
-                                            color: ColorUtils.primary_gold,
-                                            width: 1),
-                                        borderRadius:
-                                            BorderRadius.circular(100))
-                                    // : (paused
-                                    //     ? BoxDecoration(
-                                    //         gradient: LinearGradient(
-                                    //           begin: Alignment.centerLeft,
-                                    //           end: Alignment.centerRight,
-                                    //           // stops: [0.1, 0.5, 0.7, 0.9],
-                                    //           colors: [
-                                    //             HexColor("#ECDD8F")
-                                    //                 .withOpacity(0.90),
-                                    //             HexColor("#E5CC79")
-                                    //                 .withOpacity(0.90),
-                                    //             HexColor("#CE952F")
-                                    //                 .withOpacity(0.90),
-                                    //           ],
-                                    //         ),
-                                    //         borderRadius:
-                                    //             BorderRadius.circular(100))
+                                    border: Border.all(
+                                        color: ColorUtils.primary_gold,
+                                        width: 1),
+                                    borderRadius:
+                                    BorderRadius.circular(100))
+                                // : (paused
+                                //     ? BoxDecoration(
+                                //         gradient: LinearGradient(
+                                //           begin: Alignment.centerLeft,
+                                //           end: Alignment.centerRight,
+                                //           // stops: [0.1, 0.5, 0.7, 0.9],
+                                //           colors: [
+                                //             HexColor("#ECDD8F")
+                                //                 .withOpacity(0.90),
+                                //             HexColor("#E5CC79")
+                                //                 .withOpacity(0.90),
+                                //             HexColor("#CE952F")
+                                //                 .withOpacity(0.90),
+                                //           ],
+                                //         ),
+                                //         borderRadius:
+                                //             BorderRadius.circular(100))
                                     : BoxDecoration(
-                                        border: Border.all(
-                                            color: ColorUtils.primary_gold,
-                                            width: 1),
-                                        borderRadius:
-                                            BorderRadius.circular(100))),
+                                    border: Border.all(
+                                        color: ColorUtils.primary_gold,
+                                        width: 1),
+                                    borderRadius:
+                                    BorderRadius.circular(100))),
                                 child: Container(
                                     alignment: Alignment.center,
                                     margin: EdgeInsets.symmetric(
@@ -3337,8 +3413,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                       style: FontStyleUtility.h16(
                                           fontColor: (started
                                               ? Colors.white
-                                              // : (paused
-                                              //     ? Colors.black
+                                          // : (paused
+                                          //     ? Colors.black
                                               : Colors.white),
                                           family: 'PM'),
                                     )),
@@ -3355,7 +3431,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                 if (paused_time.length >= 4) {
                                   await _kegel_controller
                                       .update_notified_status(
-                                          context: context, status: 'true');
+                                      context: context, status: 'true');
                                   startWatch();
                                   CommonWidget().showToaster(
                                       msg: "Only 4 pauses are available");
@@ -3381,8 +3457,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                       } else {
                                         await _kegel_controller
                                             .update_notified_status(
-                                                context: context,
-                                                status: 'true');
+                                            context: context,
+                                            status: 'true');
                                         startWatch();
                                         watch2.stop();
                                         watch2.reset();
@@ -3391,8 +3467,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     } else {
                                       await _kegel_controller
                                           .update_notified_status(
-                                              context: context,
-                                              status: 'false');
+                                          context: context,
+                                          status: 'false');
                                       stopWatch();
                                       watch2.reset();
                                       startWatch2();
@@ -3419,28 +3495,28 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                 // width:(width ?? 300) ,
                                 decoration: (paused_time.length == 4
                                     ? BoxDecoration(
-                                        border: Border.all(
-                                            color: ColorUtils.primary_gold,
-                                            width: 1),
-                                        borderRadius:
-                                            BorderRadius.circular(100))
+                                    border: Border.all(
+                                        color: ColorUtils.primary_gold,
+                                        width: 1),
+                                    borderRadius:
+                                    BorderRadius.circular(100))
                                     : BoxDecoration(
-                                        // color: ColorUtils.primary_gold,
-                                        gradient: LinearGradient(
-                                          begin: Alignment.centerLeft,
-                                          end: Alignment.centerRight,
-                                          // stops: [0.1, 0.5, 0.7, 0.9],
-                                          colors: [
-                                            HexColor("#ECDD8F")
-                                                .withOpacity(0.6),
-                                            HexColor("#E5CC79")
-                                                .withOpacity(0.60),
-                                            HexColor("#CE952F")
-                                                .withOpacity(0.60),
-                                          ],
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(100))),
+                                  // color: ColorUtils.primary_gold,
+                                    gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      // stops: [0.1, 0.5, 0.7, 0.9],
+                                      colors: [
+                                        HexColor("#ECDD8F")
+                                            .withOpacity(0.6),
+                                        HexColor("#E5CC79")
+                                            .withOpacity(0.60),
+                                        HexColor("#CE952F")
+                                            .withOpacity(0.60),
+                                      ],
+                                    ),
+                                    borderRadius:
+                                    BorderRadius.circular(100))),
                                 child: Container(
                                     alignment: Alignment.center,
                                     margin: const EdgeInsets.symmetric(
@@ -3574,521 +3650,521 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                         Container(
                             child: (paused_time.isNotEmpty
                                 ? Column(
-                                    children: [
-                                      Container(
-                                        margin: const EdgeInsets.only(
-                                            bottom: 0,
-                                            top: 0,
-                                            left: 15,
-                                            right: 15),
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Colors.black.withOpacity(0.65),
-                                            gradient: LinearGradient(
-                                              begin: Alignment.centerLeft,
-                                              end: Alignment.centerRight,
-                                              // stops: [0.1, 0.5, 0.7, 0.9],
-                                              colors: [
-                                                HexColor("#020204")
-                                                    .withOpacity(0.63),
-                                                // HexColor("#151619").withOpacity(0.63),
-                                                HexColor("#36393E")
-                                                    .withOpacity(0.63),
-                                              ],
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 25, right: 25, top: 20),
-                                          child: ListView.builder(
-                                            itemCount: paused_time.length,
-                                            shrinkWrap: true,
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              return Container(
-                                                margin: EdgeInsets.only(
-                                                  bottom: 20,
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      "Pause ${index + 1}",
-                                                      style: FontStyleUtility.h15(
-                                                          fontColor: ColorUtils
-                                                              .primary_grey,
-                                                          family: 'PR'),
-                                                    ),
-                                                    Text(
-                                                      paused_time[index],
-                                                      style:
-                                                          FontStyleUtility.h15(
-                                                              fontColor:
-                                                                  HexColor(
-                                                                      '#6E6E6E'),
-                                                              family: 'PR'),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                      bottom: 0,
+                                      top: 0,
+                                      left: 15,
+                                      right: 15),
+                                  decoration: BoxDecoration(
+                                      color:
+                                      Colors.black.withOpacity(0.65),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        // stops: [0.1, 0.5, 0.7, 0.9],
+                                        colors: [
+                                          HexColor("#020204")
+                                              .withOpacity(0.63),
+                                          // HexColor("#151619").withOpacity(0.63),
+                                          HexColor("#36393E")
+                                              .withOpacity(0.63),
+                                        ],
                                       ),
-                                    ],
-                                  )
+                                      borderRadius:
+                                      BorderRadius.circular(20)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 25, right: 25, top: 20),
+                                    child: ListView.builder(
+                                      itemCount: paused_time.length,
+                                      shrinkWrap: true,
+                                      physics:
+                                      NeverScrollableScrollPhysics(),
+                                      itemBuilder: (BuildContext context,
+                                          int index) {
+                                        return Container(
+                                          margin: EdgeInsets.only(
+                                            bottom: 20,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Pause ${index + 1}",
+                                                style: FontStyleUtility.h15(
+                                                    fontColor: ColorUtils
+                                                        .primary_grey,
+                                                    family: 'PR'),
+                                              ),
+                                              Text(
+                                                paused_time[index],
+                                                style:
+                                                FontStyleUtility.h15(
+                                                    fontColor:
+                                                    HexColor(
+                                                        '#6E6E6E'),
+                                                    family: 'PR'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
                                 : SizedBox.shrink())),
                         SizedBox(
                           height: 21,
                         ),
                         (method_time.isNotEmpty
                             ? Container(
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
-                                      // stops: [0.1, 0.5, 0.7, 0.9],
-                                      colors: [
-                                        HexColor("#36393E").withOpacity(0.45),
-                                        HexColor("#020204").withOpacity(0.45),
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      margin:
-                                          EdgeInsets.only(left: 30, top: 8.5),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        'Progress Tracker',
-                                        style: FontStyleUtility.h14(
-                                            fontColor: ColorUtils.primary_gold,
-                                            family: 'PMB'),
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                // stops: [0.1, 0.5, 0.7, 0.9],
+                                colors: [
+                                  HexColor("#36393E").withOpacity(0.45),
+                                  HexColor("#020204").withOpacity(0.45),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Column(
+                            children: [
+                              Container(
+                                margin:
+                                EdgeInsets.only(left: 30, top: 8.5),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Progress Tracker',
+                                  style: FontStyleUtility.h14(
+                                      fontColor: ColorUtils.primary_gold,
+                                      family: 'PMB'),
+                                ),
+                              ),
+                              // SizedBox(
+                              //   height: 29,
+                              // ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                      right: 15,
+                                      left: 15,
+                                      top: 15,
+                                      bottom: 20),
+                                  decoration: BoxDecoration(
+                                    // color: Colors.black.withOpacity(0.65),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        // stops: [0.1, 0.5, 0.7, 0.9],
+                                        colors: [
+                                          HexColor("#020204")
+                                              .withOpacity(0.65),
+                                          HexColor("#36393E")
+                                              .withOpacity(0.65),
+                                        ],
                                       ),
-                                    ),
-                                    // SizedBox(
-                                    //   height: 29,
-                                    // ),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Container(
-                                        margin: EdgeInsets.only(
-                                            right: 15,
-                                            left: 15,
-                                            top: 15,
-                                            bottom: 20),
-                                        decoration: BoxDecoration(
-                                            // color: Colors.black.withOpacity(0.65),
-                                            gradient: LinearGradient(
-                                              begin: Alignment.centerLeft,
-                                              end: Alignment.centerRight,
-                                              // stops: [0.1, 0.5, 0.7, 0.9],
-                                              colors: [
-                                                HexColor("#020204")
-                                                    .withOpacity(0.65),
-                                                HexColor("#36393E")
-                                                    .withOpacity(0.65),
-                                              ],
-                                            ),
-                                            // boxShadow: [
-                                            //   BoxShadow(
-                                            //       color: HexColor('#04060F'),
-                                            //       offset: Offset(10, 10),
-                                            //       blurRadius: 10)
-                                            // ],
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: Column(
+                                      // boxShadow: [
+                                      //   BoxShadow(
+                                      //       color: HexColor('#04060F'),
+                                      //       offset: Offset(10, 10),
+                                      //       blurRadius: 10)
+                                      // ],
+                                      borderRadius:
+                                      BorderRadius.circular(20)),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        child: Row(
                                           children: [
-                                            Container(
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                        border: Border(
-                                                          right: BorderSide(
-                                                              color:
-                                                                  Colors.black,
-                                                              width: 1),
-                                                          bottom: BorderSide(
-                                                              color:
-                                                                  Colors.black,
-                                                              width: 1),
-                                                        ),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 12.0),
-                                                        child: Text(
-                                                          'Method Used',
-                                                          style: FontStyleUtility.h14(
-                                                              fontColor: ColorUtils
-                                                                  .primary_grey,
-                                                              family: 'PR'),
-                                                        ),
-                                                      ),
-                                                    ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Container(
+                                                alignment:
+                                                Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    right: BorderSide(
+                                                        color:
+                                                        Colors.black,
+                                                        width: 1),
+                                                    bottom: BorderSide(
+                                                        color:
+                                                        Colors.black,
+                                                        width: 1),
                                                   ),
-                                                  Expanded(
-                                                    child: Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                        border: Border(
-                                                          right: BorderSide(
-                                                              color:
-                                                                  Colors.black,
-                                                              width: 1),
-                                                          bottom: BorderSide(
-                                                              color:
-                                                                  Colors.black,
-                                                              width: 1),
-                                                        ),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 12.0),
-                                                        child: Text(
-                                                          'Pause',
-                                                          style: FontStyleUtility.h14(
-                                                              fontColor: ColorUtils
-                                                                  .primary_grey,
-                                                              family: 'PR'),
-                                                        ),
-                                                      ),
-                                                    ),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                  const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 12.0),
+                                                  child: Text(
+                                                    'Method Used',
+                                                    style: FontStyleUtility.h14(
+                                                        fontColor: ColorUtils
+                                                            .primary_grey,
+                                                        family: 'PR'),
                                                   ),
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                          border: Border(
-                                                        bottom: BorderSide(
-                                                            color: Colors.black,
-                                                            width: 1),
-                                                      )),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 12.0),
-                                                        child: Text(
-                                                          'Current time',
-                                                          style: FontStyleUtility.h14(
-                                                              fontColor: ColorUtils
-                                                                  .primary_grey,
-                                                              family: 'PR'),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                                ),
                                               ),
                                             ),
-                                            ListView.builder(
-                                              shrinkWrap: true,
-                                              itemCount: method_time.length,
-                                              physics:
-                                                  NeverScrollableScrollPhysics(),
-                                              padding: EdgeInsets.zero,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                return GestureDetector(
-                                                  onLongPress: () {
-                                                    print(
-                                                        "Method ID : ${method_time[index].id}");
-                                                    methodPopUp(
-                                                        context: context,
-                                                        method_old:
-                                                            method_time[index]
-                                                                .method_name!,
-                                                        method_id:
-                                                            method_time[index]
-                                                                .id!);
-                                                  },
-                                                  child: Row(
-                                                    children: [
-                                                      Expanded(
-                                                        flex: 2,
-                                                        child: Container(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                                  border:
-                                                                      Border(
-                                                            right: BorderSide(
-                                                                color: Colors
-                                                                    .black,
-                                                                width: 1),
-                                                            bottom: BorderSide(
-                                                                color: Colors
-                                                                    .black,
-                                                                width: 1),
-                                                          )),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(4.5),
-                                                            child: Text(
-                                                              '${method_time[index].method_name}',
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: FontStyleUtility.h14(
-                                                                  fontColor: HexColor(method_time[index].color!),
-                                                                  // (method_time[index]
-                                                                  //     .method_name ==!
-                                                                  //     'Hand'
-                                                                  //     ? Colors
-                                                                  //     .red
-                                                                  //     : (method_time[index]
-                                                                  //     .method_name ==
-                                                                  //     'Dildo'
-                                                                  //     ? Colors
-                                                                  //     .blue
-                                                                  //     : (method_time[index]
-                                                                  //     .method_name ==
-                                                                  //     'Sex'
-                                                                  //     ? Colors.green
-                                                                  //     : (method_time[index]
-                                                                  //     .method_name ==
-                                                                  //     'Fleshlight'
-                                                                  //     ? Colors.purple
-                                                                  //     : Colors
-                                                                  //     .primaries[_random
-                                                                  //     .nextInt(
-                                                                  //     Colors
-                                                                  //         .primaries
-                                                                  //         .length)][_random
-                                                                  //     .nextInt(
-                                                                  //     9) *
-                                                                  //     100])))),
-                                                                  // (index <=
-                                                                  //         3
-                                                                  //     ? colors[
-                                                                  //         index]
-                                                                  //     : Colors
-                                                                  //         .white),
-                                                                  family: 'PR'),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Container(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                                  border:
-                                                                      Border(
-                                                            right: BorderSide(
-                                                                color: Colors
-                                                                    .black,
-                                                                width: 1),
-                                                            bottom: BorderSide(
-                                                                color: Colors
-                                                                    .black,
-                                                                width: 1),
-                                                          )),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(4.5),
-                                                            child: Text(
-                                                              '${method_time[index].pauses}',
-                                                              style: FontStyleUtility.h14(
-                                                                  fontColor:
-                                                                      ColorUtils
-                                                                          .primary_grey,
-                                                                  family: 'PR'),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        flex: 2,
-                                                        child: Container(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                                  border:
-                                                                      Border(
-                                                            bottom: BorderSide(
-                                                                color: Colors
-                                                                    .black,
-                                                                width: 1),
-                                                          )),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(4.5),
-                                                            child: Text(
-                                                              '${method_time[index].total_time}',
-                                                              style: FontStyleUtility.h14(
-                                                                  fontColor:
-                                                                      HexColor(
-                                                                          '#7A7A7A'),
-                                                                  family: 'PR'),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
+                                            Expanded(
+                                              child: Container(
+                                                alignment:
+                                                Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    right: BorderSide(
+                                                        color:
+                                                        Colors.black,
+                                                        width: 1),
+                                                    bottom: BorderSide(
+                                                        color:
+                                                        Colors.black,
+                                                        width: 1),
                                                   ),
-                                                );
-                                              },
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                  const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 12.0),
+                                                  child: Text(
+                                                    'Pause',
+                                                    style: FontStyleUtility.h14(
+                                                        fontColor: ColorUtils
+                                                            .primary_grey,
+                                                        family: 'PR'),
+                                                  ),
+                                                ),
+                                              ),
                                             ),
-                                            // Container(
-                                            //   child: Row(
-                                            //     children: [
-                                            //       Expanded(
-                                            //         flex: 2,
-                                            //         child: GestureDetector(
-                                            //           onTap: () {
-                                            //             addmethod_popup(
-                                            //                 context);
-                                            //           },
-                                            //           child: Container(
-                                            //             alignment:
-                                            //                 Alignment.center,
-                                            //             decoration:
-                                            //                 BoxDecoration(
-                                            //                     border: Border(
-                                            //               right: BorderSide(
-                                            //                   color:
-                                            //                       Colors.black,
-                                            //                   width: 1),
-                                            //             )),
-                                            //             child: Padding(
-                                            //               padding:
-                                            //                   const EdgeInsets
-                                            //                           .symmetric(
-                                            //                       vertical:
-                                            //                           4.5),
-                                            //               child: Container(
-                                            //                 decoration:
-                                            //                     BoxDecoration(
-                                            //                         borderRadius:
-                                            //                             BorderRadius.circular(500),
-                                            //                         gradient: LinearGradient(
-                                            //                           begin: Alignment
-                                            //                               .centerLeft,
-                                            //                           end: Alignment
-                                            //                               .centerRight,
-                                            //                           // stops: [0.1, 0.5, 0.7, 0.9],
-                                            //                           colors: [
-                                            //                             HexColor("#020204")
-                                            //                                 .withOpacity(1),
-                                            //                             HexColor("#36393E")
-                                            //                                 .withOpacity(1),
-                                            //                           ],
-                                            //                         ),
-                                            //                         boxShadow: [
-                                            //                       BoxShadow(
-                                            //                           color: HexColor(
-                                            //                               '#04060F'),
-                                            //                           offset:
-                                            //                               Offset(
-                                            //                                   3,
-                                            //                                   3),
-                                            //                           blurRadius:
-                                            //                               10)
-                                            //                     ]),
-                                            //                 child: Padding(
-                                            //                   padding: const EdgeInsets
-                                            //                           .symmetric(
-                                            //                       horizontal:
-                                            //                           6),
-                                            //                   child:
-                                            //                       Image.asset(
-                                            //                     AssetUtils
-                                            //                         .plus_big,
-                                            //                     height: 23,
-                                            //                     width: 10,
-                                            //                     color: HexColor(
-                                            //                         '#606060'),
-                                            //                   ),
-                                            //                 ),
-                                            //               ),
-                                            //             ),
-                                            //           ),
-                                            //         ),
-                                            //       ),
-                                            //       Expanded(
-                                            //         child: Container(
-                                            //           alignment:
-                                            //               Alignment.center,
-                                            //           decoration: BoxDecoration(
-                                            //               border: Border(
-                                            //             right: BorderSide(
-                                            //                 color: Colors.black,
-                                            //                 width: 1),
-                                            //           )),
-                                            //           child: Padding(
-                                            //             padding:
-                                            //                 const EdgeInsets
-                                            //                     .all(4.5),
-                                            //             child: Text(
-                                            //               '-',
-                                            //               style: FontStyleUtility.h14(
-                                            //                   fontColor: ColorUtils
-                                            //                       .primary_gold,
-                                            //                   family: 'PR'),
-                                            //             ),
-                                            //           ),
-                                            //         ),
-                                            //       ),
-                                            //       Expanded(
-                                            //         flex: 2,
-                                            //         child: Container(
-                                            //           alignment:
-                                            //               Alignment.center,
-                                            //           decoration: BoxDecoration(
-                                            //               border: Border()),
-                                            //           child: Padding(
-                                            //             padding:
-                                            //                 const EdgeInsets
-                                            //                     .all(5),
-                                            //             child: Text(
-                                            //               '-',
-                                            //               style: FontStyleUtility.h14(
-                                            //                   fontColor: ColorUtils
-                                            //                       .primary_gold,
-                                            //                   family: 'PR'),
-                                            //             ),
-                                            //           ),
-                                            //         ),
-                                            //       ),
-                                            //     ],
-                                            //   ),
-                                            // ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Container(
+                                                alignment:
+                                                Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    border: Border(
+                                                      bottom: BorderSide(
+                                                          color: Colors.black,
+                                                          width: 1),
+                                                    )),
+                                                child: Padding(
+                                                  padding:
+                                                  const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 12.0),
+                                                  child: Text(
+                                                    'Current time',
+                                                    style: FontStyleUtility.h14(
+                                                        fontColor: ColorUtils
+                                                            .primary_grey,
+                                                        family: 'PR'),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: method_time.length,
+                                        physics:
+                                        NeverScrollableScrollPhysics(),
+                                        padding: EdgeInsets.zero,
+                                        itemBuilder:
+                                            (BuildContext context,
+                                            int index) {
+                                          return GestureDetector(
+                                            onLongPress: () {
+                                              print(
+                                                  "Method ID : ${method_time[index].id}");
+                                              methodPopUp(
+                                                  context: context,
+                                                  method_old:
+                                                  method_time[index]
+                                                      .method_name!,
+                                                  method_id:
+                                                  method_time[index]
+                                                      .id!);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Container(
+                                                    alignment:
+                                                    Alignment.center,
+                                                    decoration:
+                                                    BoxDecoration(
+                                                        border:
+                                                        Border(
+                                                          right: BorderSide(
+                                                              color: Colors
+                                                                  .black,
+                                                              width: 1),
+                                                          bottom: BorderSide(
+                                                              color: Colors
+                                                                  .black,
+                                                              width: 1),
+                                                        )),
+                                                    child: Padding(
+                                                      padding:
+                                                      const EdgeInsets
+                                                          .all(4.5),
+                                                      child: Text(
+                                                        '${method_time[index].method_name}',
+                                                        overflow:
+                                                        TextOverflow
+                                                            .ellipsis,
+                                                        style: FontStyleUtility.h14(
+                                                            fontColor: HexColor(method_time[index].color!),
+                                                            // (method_time[index]
+                                                            //     .method_name ==!
+                                                            //     'Hand'
+                                                            //     ? Colors
+                                                            //     .red
+                                                            //     : (method_time[index]
+                                                            //     .method_name ==
+                                                            //     'Dildo'
+                                                            //     ? Colors
+                                                            //     .blue
+                                                            //     : (method_time[index]
+                                                            //     .method_name ==
+                                                            //     'Sex'
+                                                            //     ? Colors.green
+                                                            //     : (method_time[index]
+                                                            //     .method_name ==
+                                                            //     'Fleshlight'
+                                                            //     ? Colors.purple
+                                                            //     : Colors
+                                                            //     .primaries[_random
+                                                            //     .nextInt(
+                                                            //     Colors
+                                                            //         .primaries
+                                                            //         .length)][_random
+                                                            //     .nextInt(
+                                                            //     9) *
+                                                            //     100])))),
+                                                            // (index <=
+                                                            //         3
+                                                            //     ? colors[
+                                                            //         index]
+                                                            //     : Colors
+                                                            //         .white),
+                                                            family: 'PR'),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Container(
+                                                    alignment:
+                                                    Alignment.center,
+                                                    decoration:
+                                                    const BoxDecoration(
+                                                        border:
+                                                        Border(
+                                                          right: BorderSide(
+                                                              color: Colors
+                                                                  .black,
+                                                              width: 1),
+                                                          bottom: BorderSide(
+                                                              color: Colors
+                                                                  .black,
+                                                              width: 1),
+                                                        )),
+                                                    child: Padding(
+                                                      padding:
+                                                      const EdgeInsets
+                                                          .all(4.5),
+                                                      child: Text(
+                                                        '${method_time[index].pauses}',
+                                                        style: FontStyleUtility.h14(
+                                                            fontColor:
+                                                            ColorUtils
+                                                                .primary_grey,
+                                                            family: 'PR'),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Container(
+                                                    alignment:
+                                                    Alignment.center,
+                                                    decoration:
+                                                    const BoxDecoration(
+                                                        border:
+                                                        Border(
+                                                          bottom: BorderSide(
+                                                              color: Colors
+                                                                  .black,
+                                                              width: 1),
+                                                        )),
+                                                    child: Padding(
+                                                      padding:
+                                                      const EdgeInsets
+                                                          .all(4.5),
+                                                      child: Text(
+                                                        '${method_time[index].total_time}',
+                                                        style: FontStyleUtility.h14(
+                                                            fontColor:
+                                                            HexColor(
+                                                                '#7A7A7A'),
+                                                            family: 'PR'),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      // Container(
+                                      //   child: Row(
+                                      //     children: [
+                                      //       Expanded(
+                                      //         flex: 2,
+                                      //         child: GestureDetector(
+                                      //           onTap: () {
+                                      //             addmethod_popup(
+                                      //                 context);
+                                      //           },
+                                      //           child: Container(
+                                      //             alignment:
+                                      //                 Alignment.center,
+                                      //             decoration:
+                                      //                 BoxDecoration(
+                                      //                     border: Border(
+                                      //               right: BorderSide(
+                                      //                   color:
+                                      //                       Colors.black,
+                                      //                   width: 1),
+                                      //             )),
+                                      //             child: Padding(
+                                      //               padding:
+                                      //                   const EdgeInsets
+                                      //                           .symmetric(
+                                      //                       vertical:
+                                      //                           4.5),
+                                      //               child: Container(
+                                      //                 decoration:
+                                      //                     BoxDecoration(
+                                      //                         borderRadius:
+                                      //                             BorderRadius.circular(500),
+                                      //                         gradient: LinearGradient(
+                                      //                           begin: Alignment
+                                      //                               .centerLeft,
+                                      //                           end: Alignment
+                                      //                               .centerRight,
+                                      //                           // stops: [0.1, 0.5, 0.7, 0.9],
+                                      //                           colors: [
+                                      //                             HexColor("#020204")
+                                      //                                 .withOpacity(1),
+                                      //                             HexColor("#36393E")
+                                      //                                 .withOpacity(1),
+                                      //                           ],
+                                      //                         ),
+                                      //                         boxShadow: [
+                                      //                       BoxShadow(
+                                      //                           color: HexColor(
+                                      //                               '#04060F'),
+                                      //                           offset:
+                                      //                               Offset(
+                                      //                                   3,
+                                      //                                   3),
+                                      //                           blurRadius:
+                                      //                               10)
+                                      //                     ]),
+                                      //                 child: Padding(
+                                      //                   padding: const EdgeInsets
+                                      //                           .symmetric(
+                                      //                       horizontal:
+                                      //                           6),
+                                      //                   child:
+                                      //                       Image.asset(
+                                      //                     AssetUtils
+                                      //                         .plus_big,
+                                      //                     height: 23,
+                                      //                     width: 10,
+                                      //                     color: HexColor(
+                                      //                         '#606060'),
+                                      //                   ),
+                                      //                 ),
+                                      //               ),
+                                      //             ),
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //       Expanded(
+                                      //         child: Container(
+                                      //           alignment:
+                                      //               Alignment.center,
+                                      //           decoration: BoxDecoration(
+                                      //               border: Border(
+                                      //             right: BorderSide(
+                                      //                 color: Colors.black,
+                                      //                 width: 1),
+                                      //           )),
+                                      //           child: Padding(
+                                      //             padding:
+                                      //                 const EdgeInsets
+                                      //                     .all(4.5),
+                                      //             child: Text(
+                                      //               '-',
+                                      //               style: FontStyleUtility.h14(
+                                      //                   fontColor: ColorUtils
+                                      //                       .primary_gold,
+                                      //                   family: 'PR'),
+                                      //             ),
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //       Expanded(
+                                      //         flex: 2,
+                                      //         child: Container(
+                                      //           alignment:
+                                      //               Alignment.center,
+                                      //           decoration: BoxDecoration(
+                                      //               border: Border()),
+                                      //           child: Padding(
+                                      //             padding:
+                                      //                 const EdgeInsets
+                                      //                     .all(5),
+                                      //             child: Text(
+                                      //               '-',
+                                      //               style: FontStyleUtility.h14(
+                                      //                   fontColor: ColorUtils
+                                      //                       .primary_gold,
+                                      //                   family: 'PR'),
+                                      //             ),
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
                                 ),
-                              )
+                              ),
+                            ],
+                          ),
+                        )
                             : SizedBox.shrink()),
 
                         const SizedBox(
@@ -4132,7 +4208,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                 //     borderRadius: BorderRadius.circular(20)),
                                 decoration: BoxDecoration(
                                     color:
-                                        HexColor('#181A1F').withOpacity(0.65),
+                                    HexColor('#181A1F').withOpacity(0.65),
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(20),
                                         topRight: Radius.circular(20),
@@ -4211,7 +4287,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(13),
+                                          BorderRadius.circular(13),
                                           // border: Border.all(
                                           //     color: HexColor('#383E46'),
                                           //     width: 1)
@@ -4219,20 +4295,20 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                         // margin: EdgeInsets.all(16),
                                         child: Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: [
                                             Container(
                                               margin: EdgeInsets.symmetric(
                                                   vertical: 15, horizontal: 20),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 children: [
                                                   Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    CrossAxisAlignment
+                                                        .start,
                                                     children: [
                                                       Text(
                                                         'Daily Graph',
@@ -4246,34 +4322,34 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                       ),
                                                       (loading
                                                           ? CircularProgressIndicator(
-                                                              color:
-                                                                  Colors.green,
-                                                            )
+                                                        color:
+                                                        Colors.green,
+                                                      )
                                                           : (m_screenDailyDataModel!
-                                                                      .data!
-                                                                      .isEmpty ||
-                                                                  m_screenDailyDataModel!
-                                                                      .data![0]
-                                                                      .days!
-                                                                      .isEmpty
-                                                              ? SizedBox
-                                                                  .shrink()
-                                                              : Text(
-                                                                  DateFormat("MM-dd-yyyy").format(DateFormat(
-                                                                          "yyyy-MM-dd hh:mm:ss")
-                                                                      .parse(m_screenDailyDataModel!
-                                                                          .data![
-                                                                              0]
-                                                                          .days![
-                                                                              0]
-                                                                          .createdDate!)),
-                                                                  style: FontStyleUtility.h14(
-                                                                      fontColor:
-                                                                          HexColor(
-                                                                              '#D5D5D5'),
-                                                                      family:
-                                                                          'PR'),
-                                                                ))),
+                                                          .data!
+                                                          .isEmpty ||
+                                                          m_screenDailyDataModel!
+                                                              .data![0]
+                                                              .days!
+                                                              .isEmpty
+                                                          ? SizedBox
+                                                          .shrink()
+                                                          : Text(
+                                                        DateFormat("MM-dd-yyyy").format(DateFormat(
+                                                            "yyyy-MM-dd hh:mm:ss")
+                                                            .parse(m_screenDailyDataModel!
+                                                            .data![
+                                                        0]
+                                                            .days![
+                                                        0]
+                                                            .createdDate!)),
+                                                        style: FontStyleUtility.h14(
+                                                            fontColor:
+                                                            HexColor(
+                                                                '#D5D5D5'),
+                                                            family:
+                                                            'PR'),
+                                                      ))),
                                                       // Text(
                                                       //   'Top result: 40 sec',
                                                       //   style:
@@ -4288,10 +4364,10 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                   Container(
                                                     decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(50),
+                                                        BorderRadius
+                                                            .circular(50),
                                                         gradient:
-                                                            LinearGradient(
+                                                        LinearGradient(
                                                           begin: Alignment
                                                               .centerLeft,
                                                           end: Alignment
@@ -4309,14 +4385,14 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                               color: HexColor(
                                                                   '#04060F'),
                                                               offset:
-                                                                  Offset(3, 3),
+                                                              Offset(3, 3),
                                                               blurRadius: 10)
                                                         ]),
                                                     child: IconButton(
                                                       visualDensity:
-                                                          VisualDensity(
-                                                              vertical: -2,
-                                                              horizontal: -2),
+                                                      VisualDensity(
+                                                          vertical: -2,
+                                                          horizontal: -2),
                                                       onPressed: () {
                                                         selectdate(context);
                                                       },
@@ -4336,9 +4412,9 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                 child: SfCartesianChart(
                                                     plotAreaBorderWidth: 0,
                                                     plotAreaBorderColor:
-                                                        ColorUtils.primary_grey,
+                                                    ColorUtils.primary_grey,
                                                     tooltipBehavior:
-                                                        _tooltipBehavior,
+                                                    _tooltipBehavior,
                                                     // zoomPanBehavior:
                                                     //     _zoomPanBehavior,
 
@@ -4353,17 +4429,17 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                     //             family: "PM")),
                                                     primaryXAxis: CategoryAxis(
                                                         majorGridLines:
-                                                            MajorGridLines(
-                                                                width: 0),
+                                                        MajorGridLines(
+                                                            width: 0),
                                                         // isInversed: true,
 
                                                         //Hide the axis line of y-axis
                                                         axisLine:
-                                                            AxisLine(width: 0)),
+                                                        AxisLine(width: 0)),
                                                     primaryYAxis: NumericAxis(
-                                                        //Hide the gridlines of y-axis
-                                                        // opposedPosition: true,
-                                                        // rangePadding: ChartRangePadding.none,
+                                                      //Hide the gridlines of y-axis
+                                                      // opposedPosition: true,
+                                                      // rangePadding: ChartRangePadding.none,
                                                         title: AxisTitle(
                                                             text: 'minutes'),
                                                         minimum: 0,
@@ -4371,17 +4447,17 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                         interval: 5,
                                                         //Axis label customization.
                                                         labelStyle:
-                                                            const TextStyle(
-                                                                color: Colors
-                                                                    .blueGrey,
-                                                                fontSize: 10),
+                                                        const TextStyle(
+                                                            color: Colors
+                                                                .blueGrey,
+                                                            fontSize: 10),
                                                         // numberFormat: NumberFormat
                                                         //     .compact(),
                                                         majorGridLines:
-                                                            MajorGridLines(
-                                                                width: 1,
-                                                                color: HexColor(
-                                                                    '#383E46')),
+                                                        MajorGridLines(
+                                                            width: 1,
+                                                            color: HexColor(
+                                                                '#383E46')),
                                                         //Hide the axis line of y-axis
                                                         axisLine: AxisLine(
                                                             width: 1,
@@ -4390,63 +4466,63 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                     // tooltipBehavior:
                                                     //     _tooltipBehavior,
                                                     enableSideBySideSeriesPlacement:
-                                                        false,
+                                                    false,
                                                     series: <
                                                         ChartSeries<ChartData2,
                                                             String>>[
                                                       // Renders column chart
                                                       ColumnSeries<ChartData2,
-                                                              String>(
+                                                          String>(
                                                           dataSource:
-                                                              daily_data_list,
+                                                          daily_data_list,
                                                           enableTooltip: false,
                                                           width: 0.5,
                                                           // spacing: 0.6,
                                                           color: HexColor(
                                                               '#F92824'),
                                                           borderRadius:
-                                                              BorderRadius.only(
+                                                          BorderRadius.only(
                                                             topRight:
-                                                                Radius.circular(
-                                                                    5),
+                                                            Radius.circular(
+                                                                5),
                                                             topLeft:
-                                                                Radius.circular(
-                                                                    5),
+                                                            Radius.circular(
+                                                                5),
                                                           ),
                                                           // spacing: 0.5,
                                                           pointColorMapper:
                                                               (ChartData2 data,
-                                                                      _) =>
-                                                                  HexColor(data
-                                                                      .color),
+                                                              _) =>
+                                                              HexColor(data
+                                                                  .color),
                                                           xValueMapper:
                                                               (ChartData2 data,
-                                                                      _) =>
-                                                                  data.x,
+                                                              _) =>
+                                                          data.x,
                                                           yValueMapper:
                                                               (ChartData2 data,
-                                                                      _) =>
-                                                                  data.y),
+                                                              _) =>
+                                                          data.y),
 
                                                       RangeColumnSeries<
                                                           ChartData2, String>(
                                                         dataSource:
-                                                            daily_data_list,
+                                                        daily_data_list,
                                                         width: 0.5,
                                                         color: Colors.black45,
                                                         xValueMapper:
                                                             (ChartData2 data,
-                                                                    _) =>
-                                                                data.x,
+                                                            _) =>
+                                                        data.x,
                                                         lowValueMapper:
                                                             (ChartData2 data,
-                                                                    _) =>
-                                                                data.pause_time -
-                                                                0.3,
+                                                            _) =>
+                                                        data.pause_time -
+                                                            0.3,
                                                         highValueMapper:
                                                             (ChartData2 data,
-                                                                    _) =>
-                                                                data.pause_time,
+                                                            _) =>
+                                                        data.pause_time,
                                                       )
                                                       // ScatterSeries<ChartData2,
                                                       //     String>(
@@ -4479,57 +4555,57 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                             (loading
                                                 ? SizedBox.shrink()
                                                 : (m_screenDailyDataModel!
-                                                        .data!.isEmpty
-                                                    ? SizedBox.shrink()
-                                                    : Container(
-                                                        margin: EdgeInsets
-                                                            .symmetric(
-                                                                vertical: 0,
-                                                                horizontal: 20),
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        // width: 100,
-                                                        height: 50,
-                                                        child: ListView.builder(
-                                                          shrinkWrap: true,
-                                                          scrollDirection:
-                                                              Axis.horizontal,
-                                                          itemCount:
-                                                              methoddd.length,
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  int index) {
-                                                            return Row(
-                                                              children: [
-                                                                Container(
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .bar_chart,
-                                                                    color: HexColor(
-                                                                        coloring[
-                                                                            index]),
-                                                                  ),
-                                                                ),
-                                                                Container(
-                                                                  child: Text(
-                                                                    methoddd[
-                                                                        index],
-                                                                    style: FontStyleUtility.h12(
-                                                                        fontColor:
-                                                                            Colors
-                                                                                .white,
-                                                                        family:
-                                                                            "PM"),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
+                                                .data!.isEmpty
+                                                ? SizedBox.shrink()
+                                                : Container(
+                                              margin: EdgeInsets
+                                                  .symmetric(
+                                                  vertical: 0,
+                                                  horizontal: 20),
+                                              width: MediaQuery.of(
+                                                  context)
+                                                  .size
+                                                  .width,
+                                              // width: 100,
+                                              height: 50,
+                                              child: ListView.builder(
+                                                shrinkWrap: true,
+                                                scrollDirection:
+                                                Axis.horizontal,
+                                                itemCount:
+                                                methoddd.length,
+                                                itemBuilder:
+                                                    (BuildContext
+                                                context,
+                                                    int index) {
+                                                  return Row(
+                                                    children: [
+                                                      Container(
+                                                        child: Icon(
+                                                          Icons
+                                                              .bar_chart,
+                                                          color: HexColor(
+                                                              coloring[
+                                                              index]),
                                                         ),
-                                                      )))
+                                                      ),
+                                                      Container(
+                                                        child: Text(
+                                                          methoddd[
+                                                          index],
+                                                          style: FontStyleUtility.h12(
+                                                              fontColor:
+                                                              Colors
+                                                                  .white,
+                                                              family:
+                                                              "PM"),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ),
+                                            )))
                                           ],
                                         ),
                                       ),
@@ -4557,13 +4633,13 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                           vertical: 15, horizontal: 20),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             'Weekly Graph',
                                             style: FontStyleUtility.h14(
                                                 fontColor:
-                                                    ColorUtils.primary_gold,
+                                                ColorUtils.primary_gold,
                                                 family: 'PR'),
                                           ),
                                           // Container(
@@ -4608,7 +4684,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                         child: SfCartesianChart(
                                             plotAreaBorderWidth: 0,
                                             plotAreaBorderColor:
-                                                ColorUtils.primary_grey,
+                                            ColorUtils.primary_grey,
                                             tooltipBehavior: _tooltipBehavior2,
                                             // zoomPanBehavior: _zoomPanBehavior,
                                             legend: Legend(
@@ -4619,18 +4695,18 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                     family: "PM")),
                                             primaryXAxis: CategoryAxis(
                                                 majorGridLines:
-                                                    MajorGridLines(width: 0),
+                                                MajorGridLines(width: 0),
                                                 autoScrollingMode:
-                                                    AutoScrollingMode.start,
+                                                AutoScrollingMode.start,
                                                 // zoomFactor: 0.6,
 
                                                 // zoomFactor:2 ,
                                                 //Hide the axis line of y-axis
                                                 axisLine: AxisLine(width: 0)),
                                             primaryYAxis: NumericAxis(
-                                                //Hide the gridlines of y-axis
+                                              //Hide the gridlines of y-axis
                                                 title:
-                                                    AxisTitle(text: 'minutes'),
+                                                AxisTitle(text: 'minutes'),
                                                 // minimum: 1,
                                                 // maximum: 30,
                                                 interval: 5,
@@ -4646,258 +4722,258 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                 axisLine: AxisLine(
                                                     width: 1,
                                                     color:
-                                                        HexColor('#383E46'))),
+                                                    HexColor('#383E46'))),
                                             series: mohit
-                                            // <ChartSeries<ChartData0, String>>[
-                                            //   // Renders column chart
-                                            //   ColumnSeries<ChartData0, String>(
-                                            //       // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                            //       dataSource: weekly_data,
-                                            //       enableTooltip: true,
-                                            //       legendItemText: 'Hand',
-                                            //       width: 0.5,
-                                            //       spacing: 0.3,
-                                            //       color: HexColor('#DD3931'),
-                                            //       pointColorMapper: (ChartData0
-                                            //                   data,
-                                            //               _) =>
-                                            //           (data
-                                            //                       .x1 ==
-                                            //                   'Hand'
-                                            //               ? Colors.red
-                                            //               : (data
-                                            //                           .x1 ==
-                                            //                       'Dildo'
-                                            //                   ? Colors.blue
-                                            //                   : (data
-                                            //                               .x1 ==
-                                            //                           'Sex'
-                                            //                       ? Colors.green
-                                            //                       : (data.x1 ==
-                                            //                               'Fleshlight'
-                                            //                           ? Colors
-                                            //                               .purple
-                                            //                           : HexColor(data
-                                            //                               .color))))),
-                                            //       xValueMapper:
-                                            //           (ChartData0 data, _) =>
-                                            //               data.x,
-                                            //       yValueMapper:
-                                            //           (ChartData0 data, _) =>
-                                            //               data.y),
-                                            //   ColumnSeries<ChartData0, String>(
-                                            //       // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                            //       dataSource: weekly_data2,
-                                            //       enableTooltip: true,
-                                            //       legendItemText: 'Dildo',
-                                            //       width: 0.5,
-                                            //       spacing: 0.3,
-                                            //       color: Colors.blue,
-                                            //       pointColorMapper: (ChartData0
-                                            //                   data,
-                                            //               _) =>
-                                            //           (data
-                                            //                       .x1 ==
-                                            //                   'Hand'
-                                            //               ? Colors.red
-                                            //               : (data
-                                            //                           .x1 ==
-                                            //                       'Dildo'
-                                            //                   ? Colors.blue
-                                            //                   : (data
-                                            //                               .x1 ==
-                                            //                           'Sex'
-                                            //                       ? Colors.green
-                                            //                       : (data.x1 ==
-                                            //                               'Fleshlight'
-                                            //                           ? Colors
-                                            //                               .purple
-                                            //                           : HexColor(data
-                                            //                               .color))))),
-                                            //       xValueMapper:
-                                            //           (ChartData0 data, _) =>
-                                            //               data.x,
-                                            //       yValueMapper:
-                                            //           (ChartData0 data, _) =>
-                                            //               data.y),
-                                            //   ColumnSeries<ChartData0, String>(
-                                            //       // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                            //       dataSource: weekly_data3,
-                                            //       enableTooltip: true,
-                                            //       legendItemText: 'Sex',
-                                            //       width: 0.5,
-                                            //       spacing: 0.3,
-                                            //       color: Colors.green,
-                                            //       pointColorMapper: (ChartData0
-                                            //                   data,
-                                            //               _) =>
-                                            //           (data
-                                            //                       .x1 ==
-                                            //                   'Hand'
-                                            //               ? Colors.red
-                                            //               : (data
-                                            //                           .x1 ==
-                                            //                       'Dildo'
-                                            //                   ? Colors.blue
-                                            //                   : (data
-                                            //                               .x1 ==
-                                            //                           'Sex'
-                                            //                       ? Colors.green
-                                            //                       : (data.x1 ==
-                                            //                               'Fleshlight'
-                                            //                           ? Colors
-                                            //                               .purple
-                                            //                           : HexColor(data
-                                            //                               .color))))),
-                                            //       xValueMapper:
-                                            //           (ChartData0 data, _) =>
-                                            //               data.x,
-                                            //       yValueMapper:
-                                            //           (ChartData0 data, _) =>
-                                            //               data.y),
-                                            //   ColumnSeries<ChartData0, String>(
-                                            //       // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                            //       dataSource: weekly_data4,
-                                            //       enableTooltip: true,
-                                            //       legendItemText: 'Fleshlight',
-                                            //       width: 0.5,
-                                            //       spacing: 0.3,
-                                            //       color: Colors.purple,
-                                            //       pointColorMapper:
-                                            //           (ChartData0 data, _) => (data
-                                            //                       .x1 ==
-                                            //                   'Hand'
-                                            //               ? Colors.red
-                                            //               : (data.x1 == 'Dildo'
-                                            //                   ? Colors.blue
-                                            //                   : (data.x1 == 'Sex'
-                                            //                       ? Colors.green
-                                            //                       : (data.x1 ==
-                                            //                               'Fleshlight'
-                                            //                           ? Colors
-                                            //                               .purple
-                                            //                           : HexColor(
-                                            //                               "${data.color.substring(2)}"))))),
-                                            //       xValueMapper:
-                                            //           (ChartData0 data, _) =>
-                                            //               data.x,
-                                            //       yValueMapper:
-                                            //           (ChartData0 data, _) =>
-                                            //               data.y),
-                                            //   // ColumnSeries<ChartData2, String>(
-                                            //   //     width: 0.5,
-                                            //   //     spacing: 0.6,
-                                            //   //     color: HexColor('#75C043'),
-                                            //   //     legendItemText: 'Sex',
-                                            //   //
-                                            //   //     // dataSource: _masturbation_screen_controller.gst_payable_list,
-                                            //   //     dataSource: weekly_data_listM,
-                                            //   //     xValueMapper:
-                                            //   //         (ChartData2 data, _) =>
-                                            //   //     data.x,
-                                            //   //     yValueMapper:
-                                            //   //         (ChartData2 data, _) =>
-                                            //   //     data.y),
-                                            //   // ColumnSeries<ChartData2, String>(
-                                            //   //     width: 0.5,
-                                            //   //     spacing: 0.6,
-                                            //   //     color: HexColor('#1880C3'),
-                                            //   //     legendItemText: 'Dildo',
-                                            //   //     dataSource: weekly_data_listT,
-                                            //   //     xValueMapper:
-                                            //   //         (ChartData2 data, _) =>
-                                            //   //     data.x,
-                                            //   //     yValueMapper:
-                                            //   //         (ChartData2 data, _) =>
-                                            //   //     data.y),
-                                            //   // ColumnSeries<ChartData2, String>(
-                                            //   //     width: 0.5,
-                                            //   //     spacing: 0.6,
-                                            //   //     color: HexColor('#1880C3'),
-                                            //   //     legendItemText: 'Dildo',
-                                            //   //     dataSource: weekly_data_listW,
-                                            //   //     xValueMapper:
-                                            //   //         (ChartData2 data, _) =>
-                                            //   //     data.x,
-                                            //   //     yValueMapper:
-                                            //   //         (ChartData2 data, _) =>
-                                            //   //     data.y),
-                                            //   // ColumnSeries<ChartData2, String>(
-                                            //   //     width: 0.5,
-                                            //   //     spacing: 0.6,
-                                            //   //     color: HexColor('#1880C3'),
-                                            //   //     legendItemText: 'Dildo',
-                                            //   //     dataSource: weekly_data_listTU,
-                                            //   //     xValueMapper:
-                                            //   //         (ChartData2 data, _) =>
-                                            //   //     data.x,
-                                            //   //     yValueMapper:
-                                            //   //         (ChartData2 data, _) =>
-                                            //   //     data.y),
-                                            //   // ColumnSeries<ChartData2, String>(
-                                            //   //     width: 0.5,
-                                            //   //     spacing: 0.6,
-                                            //   //     color: HexColor('#1880C3'),
-                                            //   //     legendItemText: 'Dildo',
-                                            //   //     dataSource: weekly_data_listF,
-                                            //   //     xValueMapper:
-                                            //   //         (ChartData2 data, _) =>
-                                            //   //     data.x,
-                                            //   //     yValueMapper:
-                                            //   //         (ChartData2 data, _) =>
-                                            //   //     data.y),
-                                            // ]
-                                            )),
+                                          // <ChartSeries<ChartData0, String>>[
+                                          //   // Renders column chart
+                                          //   ColumnSeries<ChartData0, String>(
+                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                          //       dataSource: weekly_data,
+                                          //       enableTooltip: true,
+                                          //       legendItemText: 'Hand',
+                                          //       width: 0.5,
+                                          //       spacing: 0.3,
+                                          //       color: HexColor('#DD3931'),
+                                          //       pointColorMapper: (ChartData0
+                                          //                   data,
+                                          //               _) =>
+                                          //           (data
+                                          //                       .x1 ==
+                                          //                   'Hand'
+                                          //               ? Colors.red
+                                          //               : (data
+                                          //                           .x1 ==
+                                          //                       'Dildo'
+                                          //                   ? Colors.blue
+                                          //                   : (data
+                                          //                               .x1 ==
+                                          //                           'Sex'
+                                          //                       ? Colors.green
+                                          //                       : (data.x1 ==
+                                          //                               'Fleshlight'
+                                          //                           ? Colors
+                                          //                               .purple
+                                          //                           : HexColor(data
+                                          //                               .color))))),
+                                          //       xValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.x,
+                                          //       yValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.y),
+                                          //   ColumnSeries<ChartData0, String>(
+                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                          //       dataSource: weekly_data2,
+                                          //       enableTooltip: true,
+                                          //       legendItemText: 'Dildo',
+                                          //       width: 0.5,
+                                          //       spacing: 0.3,
+                                          //       color: Colors.blue,
+                                          //       pointColorMapper: (ChartData0
+                                          //                   data,
+                                          //               _) =>
+                                          //           (data
+                                          //                       .x1 ==
+                                          //                   'Hand'
+                                          //               ? Colors.red
+                                          //               : (data
+                                          //                           .x1 ==
+                                          //                       'Dildo'
+                                          //                   ? Colors.blue
+                                          //                   : (data
+                                          //                               .x1 ==
+                                          //                           'Sex'
+                                          //                       ? Colors.green
+                                          //                       : (data.x1 ==
+                                          //                               'Fleshlight'
+                                          //                           ? Colors
+                                          //                               .purple
+                                          //                           : HexColor(data
+                                          //                               .color))))),
+                                          //       xValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.x,
+                                          //       yValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.y),
+                                          //   ColumnSeries<ChartData0, String>(
+                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                          //       dataSource: weekly_data3,
+                                          //       enableTooltip: true,
+                                          //       legendItemText: 'Sex',
+                                          //       width: 0.5,
+                                          //       spacing: 0.3,
+                                          //       color: Colors.green,
+                                          //       pointColorMapper: (ChartData0
+                                          //                   data,
+                                          //               _) =>
+                                          //           (data
+                                          //                       .x1 ==
+                                          //                   'Hand'
+                                          //               ? Colors.red
+                                          //               : (data
+                                          //                           .x1 ==
+                                          //                       'Dildo'
+                                          //                   ? Colors.blue
+                                          //                   : (data
+                                          //                               .x1 ==
+                                          //                           'Sex'
+                                          //                       ? Colors.green
+                                          //                       : (data.x1 ==
+                                          //                               'Fleshlight'
+                                          //                           ? Colors
+                                          //                               .purple
+                                          //                           : HexColor(data
+                                          //                               .color))))),
+                                          //       xValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.x,
+                                          //       yValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.y),
+                                          //   ColumnSeries<ChartData0, String>(
+                                          //       // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                          //       dataSource: weekly_data4,
+                                          //       enableTooltip: true,
+                                          //       legendItemText: 'Fleshlight',
+                                          //       width: 0.5,
+                                          //       spacing: 0.3,
+                                          //       color: Colors.purple,
+                                          //       pointColorMapper:
+                                          //           (ChartData0 data, _) => (data
+                                          //                       .x1 ==
+                                          //                   'Hand'
+                                          //               ? Colors.red
+                                          //               : (data.x1 == 'Dildo'
+                                          //                   ? Colors.blue
+                                          //                   : (data.x1 == 'Sex'
+                                          //                       ? Colors.green
+                                          //                       : (data.x1 ==
+                                          //                               'Fleshlight'
+                                          //                           ? Colors
+                                          //                               .purple
+                                          //                           : HexColor(
+                                          //                               "${data.color.substring(2)}"))))),
+                                          //       xValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.x,
+                                          //       yValueMapper:
+                                          //           (ChartData0 data, _) =>
+                                          //               data.y),
+                                          //   // ColumnSeries<ChartData2, String>(
+                                          //   //     width: 0.5,
+                                          //   //     spacing: 0.6,
+                                          //   //     color: HexColor('#75C043'),
+                                          //   //     legendItemText: 'Sex',
+                                          //   //
+                                          //   //     // dataSource: _masturbation_screen_controller.gst_payable_list,
+                                          //   //     dataSource: weekly_data_listM,
+                                          //   //     xValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.x,
+                                          //   //     yValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.y),
+                                          //   // ColumnSeries<ChartData2, String>(
+                                          //   //     width: 0.5,
+                                          //   //     spacing: 0.6,
+                                          //   //     color: HexColor('#1880C3'),
+                                          //   //     legendItemText: 'Dildo',
+                                          //   //     dataSource: weekly_data_listT,
+                                          //   //     xValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.x,
+                                          //   //     yValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.y),
+                                          //   // ColumnSeries<ChartData2, String>(
+                                          //   //     width: 0.5,
+                                          //   //     spacing: 0.6,
+                                          //   //     color: HexColor('#1880C3'),
+                                          //   //     legendItemText: 'Dildo',
+                                          //   //     dataSource: weekly_data_listW,
+                                          //   //     xValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.x,
+                                          //   //     yValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.y),
+                                          //   // ColumnSeries<ChartData2, String>(
+                                          //   //     width: 0.5,
+                                          //   //     spacing: 0.6,
+                                          //   //     color: HexColor('#1880C3'),
+                                          //   //     legendItemText: 'Dildo',
+                                          //   //     dataSource: weekly_data_listTU,
+                                          //   //     xValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.x,
+                                          //   //     yValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.y),
+                                          //   // ColumnSeries<ChartData2, String>(
+                                          //   //     width: 0.5,
+                                          //   //     spacing: 0.6,
+                                          //   //     color: HexColor('#1880C3'),
+                                          //   //     legendItemText: 'Dildo',
+                                          //   //     dataSource: weekly_data_listF,
+                                          //   //     xValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.x,
+                                          //   //     yValueMapper:
+                                          //   //         (ChartData2 data, _) =>
+                                          //   //     data.y),
+                                          // ]
+                                        )),
                                     (loader
                                         ? SizedBox.shrink()
                                         : (m_screenWeeklyDataModel!
-                                                .data!.isEmpty
-                                            ? SizedBox.shrink()
-                                            : Container(
-                                                // color: Colors.pink,
-                                                margin: EdgeInsets.symmetric(
-                                                    vertical: 0,
-                                                    horizontal: 20),
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                // width: 100,
-                                                height: 50,
-                                                child: ListView.builder(
-                                                  shrinkWrap: true,
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  itemCount: methoddd2.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    return Row(
-                                                      children: [
-                                                        Container(
-                                                          child: Icon(
-                                                            Icons.bar_chart,
-                                                            color: HexColor(
-                                                                coloring2[
-                                                                    index]),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          child: Text(
-                                                            methoddd2[index],
-                                                            style: FontStyleUtility
-                                                                .h12(
-                                                                    fontColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    family:
-                                                                        "PM"),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
+                                        .data!.isEmpty
+                                        ? SizedBox.shrink()
+                                        : Container(
+                                      // color: Colors.pink,
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 0,
+                                          horizontal: 20),
+                                      width: MediaQuery.of(context)
+                                          .size
+                                          .width,
+                                      // width: 100,
+                                      height: 50,
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        scrollDirection:
+                                        Axis.horizontal,
+                                        itemCount: methoddd2.length,
+                                        itemBuilder:
+                                            (BuildContext context,
+                                            int index) {
+                                          return Row(
+                                            children: [
+                                              Container(
+                                                child: Icon(
+                                                  Icons.bar_chart,
+                                                  color: HexColor(
+                                                      coloring2[
+                                                      index]),
                                                 ),
-                                              )))
+                                              ),
+                                              Container(
+                                                child: Text(
+                                                  methoddd2[index],
+                                                  style: FontStyleUtility
+                                                      .h12(
+                                                      fontColor:
+                                                      Colors
+                                                          .white,
+                                                      family:
+                                                      "PM"),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    )))
                                   ],
                                 ),
                               ),
@@ -5009,7 +5085,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                               Container(
                                 margin: EdgeInsets.all(15),
                                 decoration: BoxDecoration(
-                                    // color: Colors.black.withOpacity(0.65),
+                                  // color: Colors.black.withOpacity(0.65),
                                     gradient: LinearGradient(
                                       begin: Alignment.centerLeft,
                                       end: Alignment.centerRight,
@@ -5035,7 +5111,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                       child: Text('Life time',
                                           style: FontStyleUtility.h14(
                                               fontColor:
-                                                  ColorUtils.primary_gold,
+                                              ColorUtils.primary_gold,
                                               family: 'PR')),
                                     ),
                                     Container(
@@ -5043,28 +5119,28 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                         child: SfCartesianChart(
                                             plotAreaBorderWidth: 0,
                                             plotAreaBorderColor:
-                                                ColorUtils.primary_grey,
+                                            ColorUtils.primary_grey,
 
                                             // tooltipBehavior: _tooltipBehavior,
                                             // crosshairBehavior: _crosshairBehavior,
                                             trackballBehavior:
-                                                _trackballBehavior,
+                                            _trackballBehavior,
                                             // zoomPanBehavior: _zoomPanBehavior,
                                             primaryXAxis: CategoryAxis(
                                                 rangePadding:
-                                                    ChartRangePadding.auto,
+                                                ChartRangePadding.auto,
                                                 majorGridLines:
-                                                    MajorGridLines(width: 0),
+                                                MajorGridLines(width: 0),
                                                 // arrangeByIndex: true,
                                                 // zoomFactor: 0.2,
                                                 //Hide the axis line of y-axis
                                                 axisLine: AxisLine(width: 0)),
                                             primaryYAxis: NumericAxis(
-                                                //Hide the gridlines of y-axis
-                                                // opposedPosition: true,
-                                                // rangePadding: ChartRangePadding.none,
+                                              //Hide the gridlines of y-axis
+                                              // opposedPosition: true,
+                                              // rangePadding: ChartRangePadding.none,
                                                 title:
-                                                    AxisTitle(text: 'minutes'),
+                                                AxisTitle(text: 'minutes'),
                                                 // minimum: 1,
                                                 // maximum: 30,
                                                 interval: 5,
@@ -5081,7 +5157,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                 axisLine: AxisLine(
                                                     width: 1,
                                                     color:
-                                                        HexColor('#383E46'))),
+                                                    HexColor('#383E46'))),
                                             // primaryYAxis: NumericAxis(
                                             //     //Hide the gridlines of y-axis
                                             //     majorGridLines:
@@ -5091,11 +5167,11 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                             series: <ChartSeries>[
                                               SplineSeries<ChartData2, String>(
                                                   markerSettings:
-                                                      const MarkerSettings(
-                                                          isVisible: true,
-                                                          borderWidth: 1,
-                                                          height: 6,
-                                                          width: 6),
+                                                  const MarkerSettings(
+                                                      isVisible: true,
+                                                      borderWidth: 1,
+                                                      height: 6,
+                                                      width: 6),
                                                   dataSource: graph_life,
                                                   // gst_payable_list,
                                                   // Bind the color for all the data points from the data source
@@ -5103,13 +5179,13 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                                   // selectionBehavior:_selectionBehavior ,
                                                   pointColorMapper:
                                                       (ChartData2 data, _) =>
-                                                          Colors.green,
+                                                  Colors.green,
                                                   xValueMapper:
                                                       (ChartData2 data, _) =>
-                                                          data.x,
+                                                  data.x,
                                                   yValueMapper:
                                                       (ChartData2 data, _) =>
-                                                          data.y)
+                                                  data.y)
                                             ])),
                                   ],
                                 ),
@@ -5118,7 +5194,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                               Container(
                                 margin: EdgeInsets.all(15),
                                 decoration: BoxDecoration(
-                                    // color: Colors.black.withOpacity(0.65),
+                                  // color: Colors.black.withOpacity(0.65),
                                     gradient: LinearGradient(
                                       begin: Alignment.centerLeft,
                                       end: Alignment.centerRight,
@@ -5154,46 +5230,52 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
                                     ),
                                   ),
                                   children: <Widget>[
-                                    Obx(() => _kegel_controller
-                                        .isinfoLoading.value ==
-                                        true
+
+                                    isinfoLoading
                                         ? SizedBox()
-                                        : Html(
-                                      anchorKey: GlobalKey(),
-                                      data: _kegel_controller
-                                          .getTechniqueModel!
-                                          .data!
-                                          .technique,
-                                      // data: "<h5>check 1<\/p>\r\n",
-                                      style: {
-                                        "body": Style(
-                                          // backgroundColor: const Color.fromARGB(
-                                          //     0x50, 0xee, 0xee, 0xee),
-                                          backgroundColor:
-                                          Colors.transparent,
-                                        ),
-                                        "tr": Style(
-                                          border: const Border(
-                                              bottom: BorderSide(
-                                                  color: Colors.grey)),
-                                        ),
-                                        "th": Style(
-                                          padding:
-                                          const EdgeInsets.all(6),
-                                          backgroundColor: Colors.grey,
-                                        ),
-                                        "td": Style(
-                                          padding:
-                                          const EdgeInsets.all(6),
-                                          alignment: Alignment.topLeft,
-                                        ),
-                                        'h5': Style(
-                                            maxLines: 2,
-                                            color: Colors.red,
-                                            textOverflow:
-                                            TextOverflow.ellipsis),
-                                      },
-                                    )),
+                                        : Padding(
+                                      padding:
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 19.0),
+                                      child: RichText(text: textSpan),
+                                    ),
+                                    // Html(
+                                    //   anchorKey: GlobalKey(),
+                                    //   data: _kegel_controller
+                                    //       .getTechniqueModel!
+                                    //       .data!
+                                    //       .technique,
+                                    //   // data: "<h5>check 1<\/p>\r\n",
+                                    //   style: {
+                                    //     "body": Style(
+                                    //       // backgroundColor: const Color.fromARGB(
+                                    //       //     0x50, 0xee, 0xee, 0xee),
+                                    //       backgroundColor:
+                                    //       Colors.transparent,
+                                    //     ),
+                                    //     "tr": Style(
+                                    //       border: const Border(
+                                    //           bottom: BorderSide(
+                                    //               color: Colors.grey)),
+                                    //     ),
+                                    //     "th": Style(
+                                    //       padding:
+                                    //       const EdgeInsets.all(6),
+                                    //       backgroundColor: Colors.grey,
+                                    //     ),
+                                    //     "td": Style(
+                                    //       padding:
+                                    //       const EdgeInsets.all(6),
+                                    //       alignment: Alignment.topLeft,
+                                    //     ),
+                                    //     'h5': Style(
+                                    //         maxLines: 2,
+                                    //         color: Colors.red,
+                                    //         textOverflow:
+                                    //         TextOverflow.ellipsis),
+                                    //   },
+                                    // )
+
                                     // ListView.builder(
                                     //   itemCount: List_content.length,
                                     //   shrinkWrap: true,
@@ -5553,13 +5635,14 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
       if (response.statusCode == 200 || response.statusCode == 201) {
         // var data = convert.jsonDecode(response.body);
         Map<String, dynamic> data =
-            json.decode(response.body.replaceAll('}[]', '}'));
+        json.decode(response.body.replaceAll('}[]', '}'));
         print("Data :${data}");
         getMasturbationMethod = GetMasturbationMethod.fromJson(data);
         // getUSerModelList(userInfoModel_email);
         if (getMasturbationMethod!.error == false) {
           // hideLoader(context);
-          debugPrint('2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${getMasturbationMethod!.data!.length}');
+          debugPrint(
+              '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${getMasturbationMethod!.data!.length}');
           if (_masturbation_screen_controller.method_list.isNotEmpty) {
             _masturbation_screen_controller.method_list.clear();
           }
@@ -5653,15 +5736,19 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
       if (response.statusCode == 200 || response.statusCode == 201) {
         // var data = convert.jsonDecode(response.body);
         Map<String, dynamic> data =
-            json.decode(response.body.replaceAll('}[]', '}'));
+        json.decode(response.body.replaceAll('}[]', '}'));
         print("Data :${data}");
-        m_screenWeeklyDataModel = M_ScreenWeeklyDataModel.fromJson(data);
+        setState(() {
+          m_screenWeeklyDataModel = M_ScreenWeeklyDataModel.fromJson(data);
+        });
         weeklyData = WeeklyData.fromJson(data);
 
         // getUSerModelList(userInfoModel_email);
         setState(() {
           loader = false;
         });
+        print('m_screenWeeklyDataModel!.error');
+        print(m_screenWeeklyDataModel!.error);
 
         if (m_screenWeeklyDataModel!.error == false) {
           // hideLoader(context);
@@ -5671,59 +5758,61 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
           if (mohit.isNotEmpty) {
             mohit.clear();
           }
-          for (var i = 0; i < m_screenWeeklyDataModel!.data!.length; i++) {
-            var y1 = m_screenWeeklyDataModel!.data![i].createdDate!;
-            print(y1);
-            String tempDate =
-                DateFormat('EEEE').format(DateFormat("yyyy-MM-dd").parse(y1));
-            print(tempDate);
+          if (m_screenWeeklyDataModel!.data!.isNotEmpty) {
+            for (var i = 0; i < m_screenWeeklyDataModel!.data!.length; i++) {
+              var y1 = m_screenWeeklyDataModel!.data![i].createdDate!;
+              print(y1);
+              String tempDate =
+              DateFormat('EEEE').format(DateFormat("yyyy-MM-dd").parse(y1));
+              print(tempDate);
 
-            for (var k = 0;
-                k < m_screenWeeklyDataModel!.data![i].days!.length;
-                k++) {
-              DateTime tempDate_ = new DateFormat("mm:ss")
-                  .parse(weeklyData!.data![i].days![k].totalTime!);
-              print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
-              var totalTime = (tempDate_.minute * 60) + tempDate_.second;
-              var y = double.parse((totalTime / 60).toString());
+              for (var k = 0;
+              k < m_screenWeeklyDataModel!.data![i].days!.length;
+              k++) {
+                DateTime tempDate_ = new DateFormat("mm:ss")
+                    .parse(weeklyData!.data![i].days![k].totalTime!);
+                print("TIME : ${tempDate_.minute} : TIME ${tempDate_.second}");
+                var totalTime = (tempDate_.minute * 60) + tempDate_.second;
+                var y = double.parse((totalTime / 60).toString());
 
-              var datar = ColumnSeries(
-                  dataSource: m_screenWeeklyDataModel!.data![i].days!,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(5),
-                    topLeft: Radius.circular(5),
-                  ),
-                  pointColorMapper: (Days_weekly data, _) =>
-                      HexColor(weeklyData!.data![i].days![k].colorCode!),
-                  xValueMapper: (Days_weekly data, _) => DateFormat('EEEE')
-                      .format(
-                          DateFormat("yyyy-MM-dd").parse(data.createdDate!)),
-                  width: 0.5,
-                  spacing: 0.3,
-                  yValueMapper: (Days_weekly data, _) => y);
+                var datar = ColumnSeries(
+                    dataSource: m_screenWeeklyDataModel!.data![i].days!,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(5),
+                      topLeft: Radius.circular(5),
+                    ),
+                    pointColorMapper: (Days_weekly data, _) =>
+                        HexColor(weeklyData!.data![i].days![k].colorCode!),
+                    xValueMapper: (Days_weekly data, _) => DateFormat('EEEE')
+                        .format(
+                        DateFormat("yyyy-MM-dd").parse(data.createdDate!)),
+                    width: 0.5,
+                    spacing: 0.3,
+                    yValueMapper: (Days_weekly data, _) => y);
+
+                setState(() {
+                  mohit.add(datar);
+                });
+                print("mohit ${mohit}");
+                List new1 = [];
+                List new2 = [];
+                setState(() {
+                  new1.add(weeklyData!.data![i].days![k].methodName!);
+                  new2.add(weeklyData!.data![i].days![k].colorCode!);
+                });
+
+                setState(() {
+                  methoddd2.add(weeklyData!.data![i].days![k].methodName!);
+                  // methoddd2.add(weeklyData!.data![i].days![k].methodName!);
+                  coloring2.add(weeklyData!.data![i].days![k].colorCode!);
+                });
+              }
 
               setState(() {
-                mohit.add(datar);
-              });
-              print("mohit ${mohit}");
-              List new1 = [];
-              List new2 = [];
-              setState(() {
-                new1.add(weeklyData!.data![i].days![k].methodName!);
-                new2.add(weeklyData!.data![i].days![k].colorCode!);
-              });
-
-              setState(() {
-                methoddd2.add(weeklyData!.data![i].days![k].methodName!);
-                // methoddd2.add(weeklyData!.data![i].days![k].methodName!);
-                coloring2.add(weeklyData!.data![i].days![k].colorCode!);
+                methoddd2 = methoddd2.toSet().toList();
+                // coloring2 = coloring2.toSet().toList();
               });
             }
-
-            setState(() {
-              methoddd2 = methoddd2.toSet().toList();
-              // coloring2 = coloring2.toSet().toList();
-            });
           }
 
           // for (var i = 0; i <= weeklyData!.data!.length; i++) {
@@ -6020,7 +6109,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
       if (response.statusCode == 200 || response.statusCode == 201) {
         // var data = convert.jsonDecode(response.body);
         Map<String, dynamic> data =
-            json.decode(response.body.replaceAll('}[]', '}'));
+        json.decode(response.body.replaceAll('}[]', '}'));
         print("Data :${data}");
         m_screenLifeTimeDataModel = M_ScreenLifeTimeDataModel.fromJson(data);
         // getUSerModelList(userInfoModel_email);
@@ -6039,11 +6128,11 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
           }
 
           for (var i = 0;
-              i < m_screenLifeTimeDataModel!.data![0].methods!.length;
-              i++) {
+          i < m_screenLifeTimeDataModel!.data![0].methods!.length;
+          i++) {
             // x_axis = data_sales[i]["month"];
             var x =
-                m_screenLifeTimeDataModel!.data![0].methods![i].createdDate!;
+            m_screenLifeTimeDataModel!.data![0].methods![i].createdDate!;
             var x1 = m_screenLifeTimeDataModel!.data![0].methods![i].methodName;
 
             // var y = double.parse(
@@ -6118,7 +6207,7 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
       if (response.statusCode == 200 || response.statusCode == 201) {
         // var data = convert.jsonDecode(response.body);
         Map<String, dynamic> data =
-            json.decode(response.body.replaceAll('}[]', '}'));
+        json.decode(response.body.replaceAll('}[]', '}'));
         print("Data :${data}");
         m_screenDailyDataModel = M_ScreenDailyDataModel.fromJson(data);
         // getUSerModelList(userInfoModel_email);
@@ -6139,8 +6228,8 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             daily_data_list.clear();
           }
           for (var i = 0;
-              i < m_screenDailyDataModel!.data![0].days!.length;
-              i++) {
+          i < m_screenDailyDataModel!.data![0].days!.length;
+          i++) {
             // x_axis = data_sales[i]["month"];
             // print(
             //     "date : ${m_screenDailyDataModel!.data![0].days![i].totalTime}");
@@ -6194,26 +6283,26 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
             var color = (x1 == 'Hand'
                 ? Colors.red
                 : (x1 == 'Dildo'
-                    ? Colors.blue
-                    : (x1 == 'Sex'
-                        ? Colors.green
-                        : (x1 == 'Fleshlight'
-                            ? Colors.purple
-                            : list[random.nextInt(list.length)]))));
+                ? Colors.blue
+                : (x1 == 'Sex'
+                ? Colors.green
+                : (x1 == 'Fleshlight'
+                ? Colors.purple
+                : list[random.nextInt(list.length)]))));
             print("Color $color");
             // var y2 = data_gst_receivable[i]['value'];
             // var y3 =
             // method_time.clear()
             for (var j = 0;
-                j <
-                    m_screenDailyDataModel!
-                        .data![0].days![i].pausesTime!.length;
-                j++) {
+            j <
+                m_screenDailyDataModel!
+                    .data![0].days![i].pausesTime!.length;
+            j++) {
               setState(() {
                 double day = (m_screenDailyDataModel!
-                        .data![0].days![i].pausesTime![j].isNotEmpty
+                    .data![0].days![i].pausesTime![j].isNotEmpty
                     ? double.parse(m_screenDailyDataModel!
-                        .data![0].days![i].pausesTime![j])
+                    .data![0].days![i].pausesTime![j])
                     : 0);
                 daily_data_list.add(ChartData2(
                   formattedTime,
@@ -6228,12 +6317,12 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
               print(daily_data_list);
               method_time.add(ListMethodClass(
                 method_name:
-                    m_screenDailyDataModel!.data![0].days![i].methodName!,
+                m_screenDailyDataModel!.data![0].days![i].methodName!,
                 pauses: m_screenDailyDataModel!.data![0].days![i].totalPauses!,
                 pause_time:
-                    m_screenDailyDataModel!.data![0].days![i].pausesTime,
+                m_screenDailyDataModel!.data![0].days![i].pausesTime,
                 total_time:
-                    m_screenDailyDataModel!.data![0].days![i].totalTime!,
+                m_screenDailyDataModel!.data![0].days![i].totalTime!,
                 color: m_screenDailyDataModel!.data![0].days![i].colorCode!,
                 id: m_screenDailyDataModel!.data![0].days![i].id!,
               ));
@@ -6280,4 +6369,61 @@ class M_ScreenMetalState extends State<M_ScreenMetal>
       // TODO
     }
   }
+
+  bool isinfoLoading = true;
+  GetTechniqueModel? MasturbationTechniqueModel;
+
+  Future<dynamic> masturbation_technique_API({required BuildContext context,required String method}) async {
+    setState(() {
+      isinfoLoading= true;
+    });
+    String id_user = await PreferenceManager().getPref(URLConstants.id);
+    String url =
+    // "${URLConstants.base_url}${URLConstants.kegel_technique}";
+        "${URLConstants.base_url}$method";
+    // showLoader(context);
+
+    var response = await http.get(Uri.parse(url));
+
+    print('Response request: ${response.request}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // var data = convert.jsonDecode(response.body);
+      Map<String, dynamic> data =
+      json.decode(response.body.replaceAll('}[]', '}'));
+      MasturbationTechniqueModel = GetTechniqueModel.fromJson(data);
+      // getUSerModelList(userInfoModel_email);
+      if (MasturbationTechniqueModel!.error == false) {
+        // hideLoader(context);
+        debugPrint(
+            '2-2-2-2-2-2 Inside the Get UserInfo Controller Details ${MasturbationTechniqueModel!.data!}');
+        setState(() {
+          isinfoLoading = false;
+        });
+
+        return MasturbationTechniqueModel;
+      } else {
+        setState(() {
+          isinfoLoading = false;
+        });
+
+        // hideLoader(context);
+
+        // CommonWidget().showToaster(msg: kegelGetModel!.message!);
+        return null;
+      }
+    } else if (response.statusCode == 422) {
+      // hideLoader(context);
+
+      CommonWidget().showToaster(msg: MasturbationTechniqueModel!.message!);
+    } else if (response.statusCode == 401) {
+      // hideLoader(context);
+      CommonWidget().showToaster(msg: MasturbationTechniqueModel!.message!);
+    } else {
+      // CommonWidget().showToaster(msg: msg.toString());
+    }
+  }
+
 }

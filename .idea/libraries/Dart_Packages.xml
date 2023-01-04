@@ -432,7 +432,7 @@
         <entry key="hexcolor">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/hexcolor-2.0.7/lib" />
+              <option value="$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/hexcolor-3.0.1/lib" />
             </list>
           </value>
         </entry>
@@ -440,6 +440,13 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/html-0.15.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="html_unescape">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/html_unescape-2.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -891,6 +898,13 @@
             </list>
           </value>
         </entry>
+        <entry key="simple_html_css">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/simple_html_css-4.0.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="sky_engine">
           <value>
             <list>
@@ -1295,8 +1309,9 @@
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/fluttertoast-8.0.9/lib" />
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/get-4.6.1/lib" />
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/google_fonts-2.3.3/lib" />
-      <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/hexcolor-2.0.7/lib" />
+      <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/hexcolor-3.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/html-0.15.0/lib" />
+      <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/html_unescape-2.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/http-0.13.5/lib" />
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/image-3.2.0/lib" />
@@ -1361,6 +1376,7 @@
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-2.0.4/lib" />
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/shared_preferences_windows-2.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/simple_gesture_detector-0.2.0/lib" />
+      <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/simple_html_css-4.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/sms_autofill-2.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/source_span-1.9.0/lib" />
       <root url="file://$PROJECT_DIR$/../flutter_new/.pub-cache/hosted/pub.dartlang.org/sqflite-2.0.3+1/lib" />

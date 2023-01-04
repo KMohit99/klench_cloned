@@ -1,6 +1,7 @@
 import 'dart:convert' as convert;
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -32,6 +33,10 @@ class _NotificationSettingsState extends State<NotificationSettings> {
   void initState() {
     getUserSettings();
     getStartEndTime();
+    FirebaseMessaging.instance.getToken().then((value) {
+      String? token = value;
+      print("token $token");
+    });
     super.initState();
   }
 
@@ -131,7 +136,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                           ]),
                       child: Container(
                         margin:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 21),
+                        EdgeInsets.symmetric(vertical: 15, horizontal: 21),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -292,248 +297,250 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                           (getdataLoading
                               ? SizedBox()
                               : Container(
-                                  margin: EdgeInsets.all(10),
+                            margin: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [
+                                    HexColor("#36393E").withOpacity(1),
+                                    HexColor("#020204").withOpacity(1),
+                                  ],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: HexColor('#04060F'),
+                                      offset: Offset(3, 3),
+                                      blurRadius: 10)
+                                ]),
+                            child: ExpansionTile(
+                              iconColor: ColorUtils.primary_grey,
+                              collapsedIconColor: ColorUtils.primary_grey,
+                              initiallyExpanded: true,
+                              title: Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 0,
+                                      top: 15,
+                                      right: 15,
+                                      bottom: 15),
+                                  child: Text(
+                                    (start_time != null
+                                        ? (DateFormat('HH:mm a')
+                                        .format(start_time!))
+                                        : (getStartEndModel!.error ==
+                                        false
+                                        ? "${getStartEndModel!.data!.startTime}"
+                                        : "Start time")),
+                                    textAlign: TextAlign.left,
+                                    style: FontStyleUtility.h15(
+                                        fontColor:
+                                        ColorUtils.primary_grey,
+                                        family: 'PM'),
+                                  ),
+                                ),
+                              ),
+                              children: <Widget>[
+                                Container(
+                                  height: 100,
+                                  // decoration: BoxDecoration(
+                                  //     borderRadius: BorderRadius.circular(15),
+                                  //     gradient: LinearGradient(
+                                  //       begin: Alignment.topCenter,
+                                  //       end: Alignment.bottomCenter,
+                                  //       colors: [
+                                  //         HexColor("#000000").withOpacity(1),
+                                  //         HexColor("#04060F").withOpacity(1),
+                                  //         HexColor("#000000").withOpacity(1),
+                                  //
+                                  //       ],
+                                  //     ),
+                                  //     boxShadow: [
+                                  //       BoxShadow(
+                                  //           color: HexColor('#04060F'),
+                                  //           offset: Offset(3, 3),
+                                  //           blurRadius: 10)
+                                  //     ]),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      gradient: LinearGradient(
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                        colors: [
-                                          HexColor("#36393E").withOpacity(1),
-                                          HexColor("#020204").withOpacity(1),
-                                        ],
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: HexColor('#04060F'),
-                                            offset: Offset(3, 3),
-                                            blurRadius: 10)
-                                      ]),
-                                  child: ExpansionTile(
-                                    iconColor: ColorUtils.primary_grey,
-                                    collapsedIconColor: ColorUtils.primary_grey,
-                                    initiallyExpanded: true,
-                                    title: Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 0,
-                                            top: 15,
-                                            right: 15,
-                                            bottom: 15),
-                                        child: Text(
-                                          (start_time != null
-                                              ? (DateFormat('hh:mm a')
-                                                  .format(start_time!))
-                                              : (getStartEndModel!.error ==
-                                                      false
-                                                  ? "${getStartEndModel!.data!.startTime}"
-                                                  : "Start time")),
-                                          textAlign: TextAlign.left,
-                                          style: FontStyleUtility.h15(
-                                              fontColor:
-                                                  ColorUtils.primary_grey,
-                                              family: 'PM'),
-                                        ),
-                                      ),
+                                    borderRadius:
+                                    BorderRadius.circular(15),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        HexColor("#36393E")
+                                            .withOpacity(1),
+                                        HexColor("#020204")
+                                            .withOpacity(1),
+                                      ],
                                     ),
-                                    children: <Widget>[
-                                      Container(
-                                        height: 100,
-                                        // decoration: BoxDecoration(
-                                        //     borderRadius: BorderRadius.circular(15),
-                                        //     gradient: LinearGradient(
-                                        //       begin: Alignment.topCenter,
-                                        //       end: Alignment.bottomCenter,
-                                        //       colors: [
-                                        //         HexColor("#000000").withOpacity(1),
-                                        //         HexColor("#04060F").withOpacity(1),
-                                        //         HexColor("#000000").withOpacity(1),
-                                        //
-                                        //       ],
-                                        //     ),
-                                        //     boxShadow: [
-                                        //       BoxShadow(
-                                        //           color: HexColor('#04060F'),
-                                        //           offset: Offset(3, 3),
-                                        //           blurRadius: 10)
-                                        //     ]),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.centerLeft,
-                                            end: Alignment.centerRight,
-                                            colors: [
-                                              HexColor("#36393E")
-                                                  .withOpacity(1),
-                                              HexColor("#020204")
-                                                  .withOpacity(1),
-                                            ],
-                                          ),
-                                          // boxShadow: [
-                                          //   BoxShadow(
-                                          //       color: HexColor('#04060F'),
-                                          //       offset: Offset(3, 3),
-                                          //       blurRadius: 10)
-                                          // ]
-                                        ),
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //       color: HexColor('#04060F'),
+                                    //       offset: Offset(3, 3),
+                                    //       blurRadius: 10)
+                                    // ]
+                                  ),
 
-                                        child: Stack(
-                                          children: [
-                                            CupertinoTheme(
-                                              data: CupertinoThemeData(
-                                                brightness: Brightness.dark,
-                                                textTheme:
-                                                    CupertinoTextThemeData(
-                                                  dateTimePickerTextStyle:
-                                                      TextStyle(
-                                                          fontSize: 18,
-                                                          fontFamily: 'PMB'),
-                                                ),
-                                              ),
-                                              child: CupertinoDatePicker(
-                                                mode: CupertinoDatePickerMode
-                                                    .time,
-                                                onDateTimeChanged:
-                                                    (DateTime value) {
-                                                  setState(() {
-                                                    start_time = value;
-                                                  });
-                                                  print(
-                                                      "${value.hour}:${value.minute}");
-                                                },
-                                              ),
-                                            ),
-                                          ],
+                                  child: Stack(
+                                    children: [
+                                      CupertinoTheme(
+                                        data: CupertinoThemeData(
+                                          brightness: Brightness.dark,
+                                          textTheme:
+                                          CupertinoTextThemeData(
+                                            dateTimePickerTextStyle:
+                                            TextStyle(
+                                                fontSize: 18,
+                                                fontFamily: 'PMB'),
+                                          ),
+                                        ),
+                                        child: CupertinoDatePicker(
+                                          // use24hFormat: true,
+                                          mode: CupertinoDatePickerMode
+                                              .time,
+                                          onDateTimeChanged:
+                                              (DateTime value) {
+                                            setState(() {
+                                              start_time = value;
+                                            });
+                                            print(
+                                                "${value.hour}:${value.minute}");
+                                          },
                                         ),
                                       ),
                                     ],
                                   ),
-                                )),
+                                ),
+                              ],
+                            ),
+                          )),
 
                           (getdataLoading
                               ? SizedBox()
                               : Container(
-                                  margin: EdgeInsets.all(10),
+                            margin: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [
+                                    HexColor("#36393E").withOpacity(1),
+                                    HexColor("#020204").withOpacity(1),
+                                  ],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: HexColor('#04060F'),
+                                      offset: Offset(3, 3),
+                                      blurRadius: 10)
+                                ]),
+                            child: ExpansionTile(
+                              iconColor: ColorUtils.primary_grey,
+                              collapsedIconColor: ColorUtils.primary_grey,
+                              title: Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 0,
+                                      top: 15,
+                                      right: 15,
+                                      bottom: 15),
+                                  child: Text(
+                                    (end_time != null
+                                        ? (DateFormat('HH:mm a')
+                                        .format(end_time!))
+                                        : (getStartEndModel!.error ==
+                                        false
+                                        ? "${getStartEndModel!.data!.endTime}"
+                                        : "End time")),
+                                    textAlign: TextAlign.left,
+                                    style: FontStyleUtility.h15(
+                                        fontColor:
+                                        ColorUtils.primary_grey,
+                                        family: 'PM'),
+                                  ),
+                                ),
+                              ),
+                              children: <Widget>[
+                                Container(
+                                  height: 100,
+                                  // decoration: BoxDecoration(
+                                  //     borderRadius: BorderRadius.circular(15),
+                                  //     gradient: LinearGradient(
+                                  //       begin: Alignment.topCenter,
+                                  //       end: Alignment.bottomCenter,
+                                  //       colors: [
+                                  //         HexColor("#000000").withOpacity(1),
+                                  //         HexColor("#04060F").withOpacity(1),
+                                  //         HexColor("#000000").withOpacity(1),
+                                  //
+                                  //       ],
+                                  //     ),
+                                  //     boxShadow: [
+                                  //       BoxShadow(
+                                  //           color: HexColor('#04060F'),
+                                  //           offset: Offset(3, 3),
+                                  //           blurRadius: 10)
+                                  //     ]),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      gradient: LinearGradient(
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                        colors: [
-                                          HexColor("#36393E").withOpacity(1),
-                                          HexColor("#020204").withOpacity(1),
-                                        ],
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: HexColor('#04060F'),
-                                            offset: Offset(3, 3),
-                                            blurRadius: 10)
-                                      ]),
-                                  child: ExpansionTile(
-                                    iconColor: ColorUtils.primary_grey,
-                                    collapsedIconColor: ColorUtils.primary_grey,
-                                    title: Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 0,
-                                            top: 15,
-                                            right: 15,
-                                            bottom: 15),
-                                        child: Text(
-                                          (end_time != null
-                                              ? (DateFormat('hh:mm a')
-                                                  .format(end_time!))
-                                              : (getStartEndModel!.error ==
-                                                      false
-                                                  ? "${getStartEndModel!.data!.endTime}"
-                                                  : "End time")),
-                                          textAlign: TextAlign.left,
-                                          style: FontStyleUtility.h15(
-                                              fontColor:
-                                                  ColorUtils.primary_grey,
-                                              family: 'PM'),
-                                        ),
-                                      ),
+                                    borderRadius:
+                                    BorderRadius.circular(15),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        HexColor("#36393E")
+                                            .withOpacity(1),
+                                        HexColor("#020204")
+                                            .withOpacity(1),
+                                      ],
                                     ),
-                                    children: <Widget>[
-                                      Container(
-                                        height: 100,
-                                        // decoration: BoxDecoration(
-                                        //     borderRadius: BorderRadius.circular(15),
-                                        //     gradient: LinearGradient(
-                                        //       begin: Alignment.topCenter,
-                                        //       end: Alignment.bottomCenter,
-                                        //       colors: [
-                                        //         HexColor("#000000").withOpacity(1),
-                                        //         HexColor("#04060F").withOpacity(1),
-                                        //         HexColor("#000000").withOpacity(1),
-                                        //
-                                        //       ],
-                                        //     ),
-                                        //     boxShadow: [
-                                        //       BoxShadow(
-                                        //           color: HexColor('#04060F'),
-                                        //           offset: Offset(3, 3),
-                                        //           blurRadius: 10)
-                                        //     ]),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.centerLeft,
-                                            end: Alignment.centerRight,
-                                            colors: [
-                                              HexColor("#36393E")
-                                                  .withOpacity(1),
-                                              HexColor("#020204")
-                                                  .withOpacity(1),
-                                            ],
-                                          ),
-                                          // boxShadow: [
-                                          //   BoxShadow(
-                                          //       color: HexColor('#04060F'),
-                                          //       offset: Offset(3, 3),
-                                          //       blurRadius: 10)
-                                          // ]
-                                        ),
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //       color: HexColor('#04060F'),
+                                    //       offset: Offset(3, 3),
+                                    //       blurRadius: 10)
+                                    // ]
+                                  ),
 
-                                        child: Stack(
-                                          children: [
-                                            CupertinoTheme(
-                                              data: CupertinoThemeData(
-                                                brightness: Brightness.dark,
-                                                textTheme:
-                                                    CupertinoTextThemeData(
-                                                  dateTimePickerTextStyle:
-                                                      TextStyle(
-                                                          fontSize: 18,
-                                                          fontFamily: 'PMB'),
-                                                ),
-                                              ),
-                                              child: CupertinoDatePicker(
-                                                mode: CupertinoDatePickerMode
-                                                    .time,
-                                                onDateTimeChanged:
-                                                    (DateTime value) {
-                                                  setState(() {
-                                                    end_time = value;
-                                                  });
-                                                  // "DateFormat('d/MMM/yy h:mm a').format(dateTimeNow);"
-                                                  print((DateFormat('HH:mm')
-                                                      .format(end_time!)));
-                                                  // print(
-                                                  //     "${end_time!.hour}:${end_time!.minute}");
-                                                },
-                                              ),
-                                            ),
-                                          ],
+                                  child: Stack(
+                                    children: [
+                                      CupertinoTheme(
+                                        data: CupertinoThemeData(
+                                          brightness: Brightness.dark,
+                                          textTheme:
+                                          CupertinoTextThemeData(
+                                            dateTimePickerTextStyle:
+                                            TextStyle(
+                                                fontSize: 18,
+                                                fontFamily: 'PMB'),
+                                          ),
+                                        ),
+                                        child: CupertinoDatePicker(
+                                          mode: CupertinoDatePickerMode
+                                              .time,
+                                          // use24hFormat: true,
+                                          onDateTimeChanged:
+                                              (DateTime value) {
+                                            setState(() {
+                                              end_time = value;
+                                            });
+                                            // "DateFormat('d/MMM/yy h:mm a').format(dateTimeNow);"
+                                            print((DateFormat('HH:mm')
+                                                .format(end_time!)));
+                                            // print(
+                                            //     "${end_time!.hour}:${end_time!.minute}");
+                                          },
                                         ),
                                       ),
                                     ],
                                   ),
-                                )),
+                                ),
+                              ],
+                            ),
+                          )),
                           SizedBox(
                             height: 10,
                           ),
@@ -644,23 +651,23 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                                 vertical: 10, horizontal: 30),
                             child: (start_time != null && end_time != null
                                 ? common_button_gold(
-                                    onTap: () async {
-                                      if (start_time != null &&
-                                          end_time != null) {
-                                        // await Start_End_notification_API(context);
-                                        // if (_startEndModel!.error == false) {
-                                        _scaleDialog(
-                                            context: context, message: '');
-                                        // }
-                                      } else {
-                                        CommonWidget().showErrorToaster(
-                                            msg:
-                                                "Please select start and end time");
-                                      }
-                                      // Get.to(SignInScreen());
-                                    },
-                                    title_text: 'Save',
-                                  )
+                              onTap: () async {
+                                if (start_time != null &&
+                                    end_time != null) {
+                                  // await Start_End_notification_API(context);
+                                  // if (_startEndModel!.error == false) {
+                                  _scaleDialog(
+                                      context: context, message: '');
+                                  // }
+                                } else {
+                                  CommonWidget().showErrorToaster(
+                                      msg:
+                                      "Please select start and end time");
+                                }
+                                // Get.to(SignInScreen());
+                              },
+                              title_text: 'Save',
+                            )
                                 : common_button_black(title_text: 'Save')),
                           )
                         ],
@@ -1277,7 +1284,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               GestureDetector(
                                                 onTap: () async {
@@ -1294,12 +1301,12 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                                                 },
                                                 child: Container(
                                                   width: MediaQuery.of(context)
-                                                          .size
-                                                          .width / 4,
+                                                      .size
+                                                      .width / 4,
                                                   margin: EdgeInsets.all(0),
                                                   // width: 300,
                                                   decoration: BoxDecoration(
-                                                      // color: Colors.black.withOpacity(0.65),
+                                                    // color: Colors.black.withOpacity(0.65),
                                                       gradient: LinearGradient(
                                                         begin: Alignment
                                                             .centerLeft,
@@ -1314,18 +1321,18 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                                                         ],
                                                       ),
                                                       borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
+                                                      BorderRadius.circular(
+                                                          10)),
 
                                                   child: Padding(
                                                     padding: const EdgeInsets
-                                                            .symmetric(
+                                                        .symmetric(
                                                         vertical: 8.0,
                                                         horizontal: 15),
                                                     child: Text(
                                                       'Ok',
                                                       textAlign:
-                                                          TextAlign.center,
+                                                      TextAlign.center,
                                                       style: FontStyleUtility.h16(
                                                           fontColor: ColorUtils
                                                               .primary_grey,
@@ -1352,7 +1359,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                             alignment: Alignment.topRight,
                             child: Container(
                                 decoration: BoxDecoration(
-                                    // color: Colors.black.withOpacity(0.65),
+                                  // color: Colors.black.withOpacity(0.65),
                                     gradient: LinearGradient(
                                       begin: Alignment.centerLeft,
                                       end: Alignment.centerRight,
@@ -1445,7 +1452,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
     String id_user = await PreferenceManager().getPref(URLConstants.id);
 
     String url =
-        ("${URLConstants.base_url}${URLConstants.getNotificationSetting}?user_id=$id_user");
+    ("${URLConstants.base_url}${URLConstants.getNotificationSetting}?user_id=$id_user");
 
     http.Response response = await http.get(Uri.parse(url));
 
@@ -1501,8 +1508,8 @@ class _NotificationSettingsState extends State<NotificationSettings> {
 
     Map data = {
       'user_id': id_user,
-      'start_time': DateFormat('HH:mm').format(start_time!),
-      'end_time': DateFormat('HH:mm').format(end_time!),
+      'start_time': DateFormat('HH:mm:ss').format(start_time!),
+      'end_time': DateFormat('HH:mm:ss').format(end_time!),
 
       // 'type': login_type,
     };
@@ -1545,7 +1552,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
     String id_user = await PreferenceManager().getPref(URLConstants.id);
 
     String url =
-        ("${URLConstants.base_url}${URLConstants.get_start_end_notification}?user_id=$id_user");
+    ("${URLConstants.base_url}${URLConstants.get_start_end_notification}?user_id=$id_user");
 
     http.Response response = await http.get(Uri.parse(url));
 
@@ -1566,14 +1573,26 @@ class _NotificationSettingsState extends State<NotificationSettings> {
         // CommonWidget().showToaster(msg: data["success"].toString());
         return getStartEndModel;
       } else {
+        setState(() {
+          getdataLoading = false;
+        });
         // CommonWidget().showToaster(msg: msg.toString());
         return null;
       }
     } else if (response.statusCode == 422) {
+      setState(() {
+        getdataLoading = false;
+      });
       // CommonWidget().showToaster(msg: msg.toString());
     } else if (response.statusCode == 401) {
+      setState(() {
+        getdataLoading = false;
+      });
       // CommonService().unAuthorizedUser();
     } else {
+      setState(() {
+        getdataLoading = false;
+      });
       // CommonWidget().showToaster(msg: msg.toString());
     }
   }

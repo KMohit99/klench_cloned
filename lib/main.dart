@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,9 +17,11 @@ import 'package:wakelock/wakelock.dart';
 
 import 'firebase_options.dart';
 import 'messaging_service.dart';
+import 'dart:io' show Platform;
+
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin();
 
 MessagingService _msgService = MessagingService();
 
@@ -38,12 +41,14 @@ Future<void> main() async {
 
   runApp(MyApp());
 }
+FlutterLocalNotificationsPlugin? fltNotification;
 
 /// Top level function to handle incoming messages when the app is in the background
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print(" --- background message received ---");
   print(message.notification!.title);
   print(message.notification!.body);
+
 }
 
 Future<void> saveTokenToDatabase(String token) async {
@@ -155,7 +160,7 @@ class _MyAppState extends State<MyApp> {
 
   void initDynamicLinks() async {
     final PendingDynamicLinkData? data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
+    await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri? deepLink = data?.link;
 
     if (deepLink != null) {

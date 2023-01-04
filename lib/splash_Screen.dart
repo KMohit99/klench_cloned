@@ -5,13 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:klench_/Dashboard/dashboard_screen.dart';
 import 'package:klench_/front_page/FrontpageScreen.dart';
 import 'package:klench_/utils/Asset_utils.dart';
-import 'package:klench_/utils/TextStyle_utils.dart';
 import 'package:klench_/utils/UrlConstrant.dart';
-import 'package:klench_/utils/colorUtils.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Future.delayed(const Duration(seconds: 5), () {
 
 // Here you can write your code
-        init();
+      init();
 
       // });
     });
@@ -126,7 +123,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   method() async {
     bool auth =
-        await PreferenceManager().getbool(URLConstants.authentication_enable);
+    await PreferenceManager().getbool(URLConstants.authentication_enable);
     print(auth);
 
     if (auth == true) {
@@ -147,8 +144,8 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
                 builder: (context) => DashboardScreen(
-                      page: 1,
-                    )),
+                  page: 1,
+                )),
           );
         }
       } else {
@@ -174,109 +171,116 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void initMessaging() {
     var androiInit = AndroidInitializationSettings("@mipmap/ic_launcher");
-    var iosInit = IOSInitializationSettings();
+    var iosInit = IOSInitializationSettings(requestSoundPermission: true,defaultPresentSound: true);
     var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
     fltNotification = FlutterLocalNotificationsPlugin();
     fltNotification!.initialize(initSetting);
-    var androidDetails = const AndroidNotificationDetails('1', 'channelName',
-        enableVibration: true, playSound: true);
-    var iosDetails =
-        const IOSNotificationDetails(presentSound: true, presentBadge: true,presentAlert: true);
-    var generalNotificationDetails =
-        NotificationDetails(android: androidDetails, iOS: iosDetails);
+    var androidDetails = const AndroidNotificationDetails('1', 'channelName', enableVibration: true, playSound: true);
+
+    var iosDetails = const IOSNotificationDetails(presentSound: true, );
+    var generalNotificationDetails = NotificationDetails(android: androidDetails, iOS: iosDetails);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AppleNotification? android = message.notification?.apple;
-
       if (notification != null && android != null) {
         fltNotification!.show(notification.hashCode, notification.title,
             notification.body, generalNotificationDetails);
       }
     });
+
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   }
+  Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+    print(" --- background message received ---");
+    print(message.notification!.title);
+    print(message.notification!.body);
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Container(
-          alignment: Alignment.center,
-          // margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: 80,
-                width: 200,
-                // color: ColorUtils.primary_grey,
-                decoration: BoxDecoration(
-                    // color: Colors.black.withOpacity(0.65),
-                    gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      // stops: [0.1, 0.5, 0.7, 0.9],
-                      colors: [
-                        HexColor("#020204").withOpacity(1),
-                        HexColor("#36393E").withOpacity(1),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CircularProgressIndicator(
-                        color: ColorUtils.primary_gold,
-                      ),
-                      Container(
-                        child: Text(
-                          "Loading..",
-                          style: FontStyleUtility.h16(
-                              fontColor: ColorUtils.primary_gold, family: 'PB'),
-                        ),
-                      ),
-
-                      // Container(
-                      //   color: Colors.transparent,
-                      //   height: 60,
-                      //   width: 80,
-                      //   child:
-                      //   Material(
-                      //     color: Colors.transparent,
-                      //     child: LoadingIndicator(
-                      //       backgroundColor: Colors.transparent,
-                      //       indicatorType: Indicator.ballScale,
-                      //       colors: _kDefaultRainbowColors,
-                      //       strokeWidth: 3.0,
-                      //       pathBackgroundColor: Colors.yellow,
-                      //       // showPathBackground ? Colors.black45 : null,
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          )),
-    );
-    ///
     // return Scaffold(
     //   backgroundColor: Colors.black,
-    //   body: Center(
-    //     child: Container(
-    //         margin: EdgeInsets.symmetric(horizontal: 86),
-    //         child: Image.asset(AssetUtils.Logo_white_icon)),
-    //   ),
+    //   body: Container(
+    //       alignment: Alignment.center,
+    //       // margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/20),
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.center,
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         children: <Widget>[
+    //           Container(
+    //             height: 80,
+    //             width: 200,
+    //             // color: ColorUtils.primary_grey,
+    //             decoration: BoxDecoration(
+    //                 // color: Colors.black.withOpacity(0.65),
+    //                 gradient: LinearGradient(
+    //                   begin: Alignment.centerLeft,
+    //                   end: Alignment.centerRight,
+    //                   // stops: [0.1, 0.5, 0.7, 0.9],
+    //                   colors: [
+    //                     HexColor("#020204").withOpacity(1),
+    //                     HexColor("#36393E").withOpacity(1),
+    //                   ],
+    //                 ),
+    //                 borderRadius: BorderRadius.circular(10)),
+    //             child: Padding(
+    //               padding: const EdgeInsets.all(8.0),
+    //               child: Row(
+    //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //                 mainAxisSize: MainAxisSize.min,
+    //                 children: [
+    //                   CircularProgressIndicator(
+    //                     color: ColorUtils.primary_gold,
+    //                   ),
+    //                   Container(
+    //                     child: Text(
+    //                       "Loading..",
+    //                       style: FontStyleUtility.h16(
+    //                           fontColor: ColorUtils.primary_gold, family: 'PB'),
+    //                     ),
+    //                   ),
+    //
+    //                   // Container(
+    //                   //   color: Colors.transparent,
+    //                   //   height: 60,
+    //                   //   width: 80,
+    //                   //   child:
+    //                   //   Material(
+    //                   //     color: Colors.transparent,
+    //                   //     child: LoadingIndicator(
+    //                   //       backgroundColor: Colors.transparent,
+    //                   //       indicatorType: Indicator.ballScale,
+    //                   //       colors: _kDefaultRainbowColors,
+    //                   //       strokeWidth: 3.0,
+    //                   //       pathBackgroundColor: Colors.yellow,
+    //                   //       // showPathBackground ? Colors.black45 : null,
+    //                   //     ),
+    //                   //   ),
+    //                   // ),
+    //                 ],
+    //               ),
+    //             ),
+    //           ),
+    //         ],
+    //       )),
     // );
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 86),
+            child: Image.asset(AssetUtils.Logo_white_icon)),
+      ),
+    );
   }
 
   final Kegel_controller _kegel_controller =
-      Get.put(Kegel_controller(), tag: Kegel_controller().toString());
+  Get.put(Kegel_controller(), tag: Kegel_controller().toString());
 
   final LocalAuthentication auth = LocalAuthentication();
   String _authorized = 'Not Authorized';
@@ -312,6 +316,6 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     setState(
-        () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
+            () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
   }
 }

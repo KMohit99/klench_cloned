@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 import '../utils/Asset_utils.dart';
+import '../utils/UrlConstrant.dart';
 import '../utils/colorUtils.dart';
 import 'controller/kegel_excercise_controller.dart';
 
@@ -51,7 +52,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
   }
 
   final Kegel_controller _kegel_controller =
-      Get.put(Kegel_controller(), tag: Kegel_controller().toString());
+  Get.put(Kegel_controller(), tag: Kegel_controller().toString());
 
   init() async {
     print("insssiiiiiii");
@@ -61,6 +62,19 @@ class _HomepageScreenState extends State<HomepageScreen> {
     print("lastRoute ${lastRoute}");
 
     await _kegel_controller.Kegel_get_API(context);
+
+    // await _kegel_controller.Kegel_technique_API(
+    //     context: context, method: URLConstants.kegel_technique);
+    // await _kegel_controller.pee_technique_API(
+    //     context: context, method: URLConstants.pee_technique);
+    // await _kegel_controller.warmup_technique_API(
+    //     context: context, method: URLConstants.warmup_technique);
+    // await _kegel_controller.masturbation_technique_API(
+    //     context: context, method: URLConstants.masturbation_technique);
+    // await _kegel_controller.breathing_technique_API(
+    //     context: context, method: URLConstants.breathing_technique);
+
+
     await _kegel_controller.IntroVideo_get_API(context);
   }
 
@@ -152,217 +166,253 @@ class _HomepageScreenState extends State<HomepageScreen> {
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) =>
                   Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        alignment: Alignment.center,
-                        child: Obx(() => (_kegel_controller
-                                    .isuserinfoLoading.value ==
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            alignment: Alignment.center,
+                            child: Obx(() => (_kegel_controller
+                                .isuserinfoLoading.value ==
                                 true
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    AssetUtils.star_icon,
-                                    color: Colors.grey,
-                                    height: 22,
-                                    width: 22,
-                                  ),
-                                  const SizedBox(
-                                    width: 7,
-                                  ),
-                                  Image.asset(
-                                    AssetUtils.star_icon,
-                                    height: 22,
-                                    color: Colors.grey,
-                                    width: 22,
-                                  ),
-                                  const SizedBox(
-                                    width: 7,
-                                  ),
-                                  Image.asset(
-                                    AssetUtils.star_icon,
-                                    color: Colors.grey,
-                                    height: 22,
-                                    width: 22,
-                                  ),
-                                ],
-                              )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    AssetUtils.star_icon,
-                                    color: (int.parse(_kegel_controller
-                                                .kegelGetModel!
-                                                .data![_kegel_controller
-                                                        .kegelGetModel!
-                                                        .data!
-                                                        .length -
-                                                    1]
-                                                .sets!) >=
-                                            1
-                                        ? ColorUtils.primary_gold
-                                        : Colors.grey),
-                                    height: 22,
-                                    width: 22,
-                                  ),
-                                  const SizedBox(
-                                    width: 7,
-                                  ),
-                                  Image.asset(
-                                    AssetUtils.star_icon,
-                                    height: 22,
-                                    color: (int.parse(_kegel_controller
-                                                .kegelGetModel!
-                                                .data![_kegel_controller
-                                                        .kegelGetModel!
-                                                        .data!
-                                                        .length -
-                                                    1]
-                                                .sets!) >=
-                                            2
-                                        ? ColorUtils.primary_gold
-                                        : Colors.grey),
-                                    width: 22,
-                                  ),
-                                  const SizedBox(
-                                    width: 7,
-                                  ),
-                                  Image.asset(
-                                    AssetUtils.star_icon,
-                                    color: (int.parse(_kegel_controller
-                                                .kegelGetModel!
-                                                .data![_kegel_controller
-                                                        .kegelGetModel!
-                                                        .data!
-                                                        .length -
-                                                    1]
-                                                .sets!) >=
-                                            3
-                                        ? ColorUtils.primary_gold
-                                        : Colors.grey),
-                                    height: 22,
-                                    width: 22,
-                                  ),
-                                ],
-                              )))),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: (screenHeight >= 600 && screenHeight <= 700
-                              ? 10
-                              : (screenHeight >= 700 && screenHeight <= 800
+                                ? Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  color: Colors.grey,
+                                  height: 22,
+                                  width: 22,
+                                ),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  height: 22,
+                                  color: Colors.grey,
+                                  width: 22,
+                                ),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  color: Colors.grey,
+                                  height: 22,
+                                  width: 22,
+                                ),
+                              ],
+                            )
+                                : Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  color: (int.parse(_kegel_controller
+                                      .kegelGetModel!
+                                      .data![_kegel_controller
+                                      .kegelGetModel!
+                                      .data!
+                                      .length -
+                                      1]
+                                      .sets!) >=
+                                      1
+                                      ? ColorUtils.primary_gold
+                                      : Colors.grey),
+                                  height: 22,
+                                  width: 22,
+                                ),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  height: 22,
+                                  color: (int.parse(_kegel_controller
+                                      .kegelGetModel!
+                                      .data![_kegel_controller
+                                      .kegelGetModel!
+                                      .data!
+                                      .length -
+                                      1]
+                                      .sets!) >=
+                                      2
+                                      ? ColorUtils.primary_gold
+                                      : Colors.grey),
+                                  width: 22,
+                                ),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Image.asset(
+                                  AssetUtils.star_icon,
+                                  color: (int.parse(_kegel_controller
+                                      .kegelGetModel!
+                                      .data![_kegel_controller
+                                      .kegelGetModel!
+                                      .data!
+                                      .length -
+                                      1]
+                                      .sets!) >=
+                                      3
+                                      ? ColorUtils.primary_gold
+                                      : Colors.grey),
+                                  height: 22,
+                                  width: 22,
+                                ),
+                              ],
+                            )))),
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: (screenHeight >= 600 && screenHeight <= 700
+                                  ? 10
+                                  : (screenHeight >= 700 && screenHeight <= 800
                                   ? 75
                                   : (screenHeight >= 800 ? 90 : 0)))),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              // Get.to(KegelScreen());
-                              final int page_no = 0;
-                              // Navigator.of(context).pushNamed('/kegel');
-                              Get.to(SwipeScreen(
-                                PageNo: page_no,
-                              ));
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(top: 0),
-                              height: 140,
-                              width: 140,
-                              // decoration: BoxDecoration(
-                              //   gradient: RadialGradient(
-                              //     center: const Alignment(0.0, 0.0),
-                              //     radius: 0.5,
-                              //     colors: [
-                              //       ColorUtils.color1,
-                              //       HexColor('#BF2777'),
-                              //     ],
-                              //   ),
-                              //   boxShadow: [
-                              //     BoxShadow(
-                              //         color: ColorUtils.primary_grey
-                              //             .withOpacity(0.5),
-                              //         blurRadius: 5,
-                              //         offset: Offset(0, 5))
-                              //   ],
-                              //   borderRadius: BorderRadius.circular(100),
-                              // ),
-                              child: Container(
-                                height: 140,
-                                width: 135,
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      alignment: Alignment.center,
-                                      image: AssetImage(AssetUtils.home_button)),
-                                ),
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: Text('K',
-                                      style: GoogleFonts.sourceSerifPro(
-                                        textStyle: TextStyle(
-                                            color: HexColor('#EE499E'),
-                                            shadows: [
-                                              Shadow(
-                                                  color: HexColor('#EE499E'),
-                                                  offset: Offset(0, 0),
-                                                  blurRadius: 50)
-                                            ],
-                                            fontSize: 64,
-                                            fontWeight: FontWeight.w600),
-                                      )),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          child: Column(
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  final int page_no = 3;
+                                  // Get.to(KegelScreen());
+                                  final int page_no = 0;
+                                  // Navigator.of(context).pushNamed('/kegel');
                                   Get.to(SwipeScreen(
                                     PageNo: page_no,
                                   ));
                                 },
                                 child: Container(
+                                  margin: EdgeInsets.only(top: 0),
                                   height: 140,
-                                  width: 135,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        alignment: Alignment.center,
-                                        image:
-                                            AssetImage(AssetUtils.home_button)),
-                                  ),
+                                  width: 140,
+                                  // decoration: BoxDecoration(
+                                  //   gradient: RadialGradient(
+                                  //     center: const Alignment(0.0, 0.0),
+                                  //     radius: 0.5,
+                                  //     colors: [
+                                  //       ColorUtils.color1,
+                                  //       HexColor('#BF2777'),
+                                  //     ],
+                                  //   ),
+                                  //   boxShadow: [
+                                  //     BoxShadow(
+                                  //         color: ColorUtils.primary_grey
+                                  //             .withOpacity(0.5),
+                                  //         blurRadius: 5,
+                                  //         offset: Offset(0, 5))
+                                  //   ],
+                                  //   borderRadius: BorderRadius.circular(100),
+                                  // ),
                                   child: Container(
-                                    alignment: Alignment.center,
-                                    child: Text('W',
-                                        style: GoogleFonts.sourceSerifPro(
-                                          textStyle: TextStyle(
-                                              color: HexColor('#3EA244'),
-                                              shadows: [
-                                                Shadow(
-                                                    color: HexColor('#3EA244'),
-                                                    offset: Offset(0, 0),
-                                                    blurRadius: 50)
-                                              ],
-                                              fontSize: 64,
-                                              fontWeight: FontWeight.w600),
-                                        )),
+                                    height: 140,
+                                    width: 135,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                          alignment: Alignment.center,
+                                          image: AssetImage(AssetUtils.home_button)),
+                                    ),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: Text('K',
+                                          style: GoogleFonts.sourceSerifPro(
+                                            textStyle: TextStyle(
+                                                color: HexColor('#EE499E'),
+                                                shadows: [
+                                                  Shadow(
+                                                      color: HexColor('#EE499E'),
+                                                      offset: Offset(0, 0),
+                                                      blurRadius: 50)
+                                                ],
+                                                fontSize: 64,
+                                                fontWeight: FontWeight.w600),
+                                          )),
+                                    ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 70,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      final int page_no = 3;
+                                      Get.to(SwipeScreen(
+                                        PageNo: page_no,
+                                      ));
+                                    },
+                                    child: Container(
+                                      height: 140,
+                                      width: 135,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            alignment: Alignment.center,
+                                            image:
+                                            AssetImage(AssetUtils.home_button)),
+                                      ),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child: Text('W',
+                                            style: GoogleFonts.sourceSerifPro(
+                                              textStyle: TextStyle(
+                                                  color: HexColor('#3EA244'),
+                                                  shadows: [
+                                                    Shadow(
+                                                        color: HexColor('#3EA244'),
+                                                        offset: Offset(0, 0),
+                                                        blurRadius: 50)
+                                                  ],
+                                                  fontSize: 64,
+                                                  fontWeight: FontWeight.w600),
+                                            )),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 70,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      final int page_no = 1;
+                                      Get.to(SwipeScreen(
+                                        PageNo: page_no,
+                                      ));
+                                    },
+                                    child: Container(
+                                      height: 140,
+                                      width: 135,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            alignment: Alignment.center,
+                                            image:
+                                            AssetImage(AssetUtils.home_button)),
+                                      ),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child: Text('M',
+                                            style: GoogleFonts.sourceSerifPro(
+                                              textStyle: TextStyle(
+                                                  color: HexColor('#ED4A42'),
+                                                  shadows: [
+                                                    Shadow(
+                                                        color: HexColor('#ED4A42'),
+                                                        offset: Offset(0, 0),
+                                                        blurRadius: 50)
+                                                  ],
+                                                  fontSize: 64,
+                                                  fontWeight: FontWeight.w600),
+                                            )),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  final int page_no = 1;
+                                  final int page_no = 2;
                                   Get.to(SwipeScreen(
                                     PageNo: page_no,
                                   ));
@@ -373,18 +423,17 @@ class _HomepageScreenState extends State<HomepageScreen> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         alignment: Alignment.center,
-                                        image:
-                                            AssetImage(AssetUtils.home_button)),
+                                        image: AssetImage(AssetUtils.home_button)),
                                   ),
                                   child: Container(
                                     alignment: Alignment.center,
-                                    child: Text('M',
+                                    child: Text('P',
                                         style: GoogleFonts.sourceSerifPro(
                                           textStyle: TextStyle(
-                                              color: HexColor('#ED4A42'),
+                                              color: HexColor('#F8D44D'),
                                               shadows: [
                                                 Shadow(
-                                                    color: HexColor('#ED4A42'),
+                                                    color: HexColor('#F8D44D'),
                                                     offset: Offset(0, 0),
                                                     blurRadius: 50)
                                               ],
@@ -396,45 +445,10 @@ class _HomepageScreenState extends State<HomepageScreen> {
                               ),
                             ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              final int page_no = 2;
-                              Get.to(SwipeScreen(
-                                PageNo: page_no,
-                              ));
-                            },
-                            child: Container(
-                              height: 140,
-                              width: 135,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    alignment: Alignment.center,
-                                    image: AssetImage(AssetUtils.home_button)),
-                              ),
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: Text('P',
-                                    style: GoogleFonts.sourceSerifPro(
-                                      textStyle: TextStyle(
-                                          color: HexColor('#F8D44D'),
-                                          shadows: [
-                                            Shadow(
-                                                color: HexColor('#F8D44D'),
-                                                offset: Offset(0, 0),
-                                                blurRadius: 50)
-                                          ],
-                                          fontSize: 64,
-                                          fontWeight: FontWeight.w600),
-                                    )),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
+                  ),
             ),
 
             // Container(
@@ -713,7 +727,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                               ),
                               Container(
                                 margin:
-                                    const EdgeInsets.symmetric(horizontal: 0),
+                                const EdgeInsets.symmetric(horizontal: 0),
                                 // height: 45,
                                 // width:(width ?? 300) ,
                                 decoration: BoxDecoration(
@@ -781,7 +795,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                               ),
                               Container(
                                 margin:
-                                    const EdgeInsets.symmetric(horizontal: 0),
+                                const EdgeInsets.symmetric(horizontal: 0),
                                 // height: 45,
                                 // width:(width ?? 300) ,
                                 decoration: BoxDecoration(

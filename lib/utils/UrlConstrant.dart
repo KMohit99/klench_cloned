@@ -4,7 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../homepage/m_screen.dart';
 
 class URLConstants {
-  static const String base_url = "http://foxyserver.com/klench/api/";
+  // static const String base_url = "http://foxyserver.com/klench/api/";
+  static const String base_url = "https://klench12.com/api/";
   // static const String base_url = "https://foxytechnologies.com/klench/api/";
 
   static const signUpApi = "signup.php";
@@ -25,7 +26,7 @@ class URLConstants {
   static const breathing_get = "get-kegel-breathing.php";
   static const breathing_post = "kegel-breathing.php";
 
- ///Kegel
+  ///Kegel
   static const kegel_get = "get-kegel.php";
   static const kegel_alarm_get = "get-kegel-alarm.php";
   static const kegel_post = "kegel.php";
@@ -67,10 +68,10 @@ class URLConstants {
   ///notified_status
   static const update_notified_status = "update-notified-status.php";
 
- ///intro_video
+  ///intro_video
   static const intro_video_get = "introvideoList.php";
 
- ///intro_video
+  ///intro_video
   static const postNotificationSetting = "postNotificationSetting.php";
   static const getNotificationSetting = "getNotificationSetting.php";
 

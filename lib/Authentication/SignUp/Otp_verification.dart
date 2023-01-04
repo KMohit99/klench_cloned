@@ -47,13 +47,13 @@ class _VerifyOtpState extends State<VerifyOtp> {
         //     }
         //
         //   });
-          verificationCompleted: (PhoneAuthCredential credential) async {
-            _signUpScreenController
-                .OtpController.text = credential.smsCode.toString();
-            await FirebaseAuth.instance.currentUser!.reload();
-            if (FirebaseAuth.instance.currentUser == null) {
-              await FirebaseAuth.instance.signInWithCredential(credential);
-            }
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          _signUpScreenController.OtpController.text =
+              credential.smsCode.toString();
+          await FirebaseAuth.instance.currentUser!.reload();
+          if (FirebaseAuth.instance.currentUser == null) {
+            await FirebaseAuth.instance.signInWithCredential(credential);
+          }
         },
         verificationFailed: (FirebaseAuthException e) {
           print(e.message);
@@ -273,7 +273,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
                         // ),
                         Container(
                           decoration: BoxDecoration(
-                              // color: Colors.black.withOpacity(0.65),
+                            // color: Colors.black.withOpacity(0.65),
                               gradient: LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
@@ -313,7 +313,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                     eachFieldMargin: EdgeInsets.all(0),
                                     focusNode: _pinOTPFocus,
                                     controller:
-                                        _signUpScreenController.OtpController,
+                                    _signUpScreenController.OtpController,
                                     submittedFieldDecoration: pinOTPDecoration,
                                     selectedFieldDecoration: pinOTPDecoration,
                                     followingFieldDecoration: pinOTPDecoration,
@@ -396,54 +396,54 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                 // ),
                                 Container(
                                     child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment.bottomLeft,
-                                            end: Alignment.topRight,
-                                            colors: [
-                                              HexColor("#020204")
-                                                  .withOpacity(1),
-                                              HexColor("#36393E")
-                                                  .withOpacity(1),
-                                            ],
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: HexColor('#2E2E2D'),
-                                              offset: Offset(0, 3),
-                                              blurRadius: 6,
-                                            ),
-                                            BoxShadow(
-                                              color: HexColor('#04060F'),
-                                              offset: Offset(10, 10),
-                                              blurRadius: 20,
-                                            ),
-                                          ],
-                                          borderRadius:
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                begin: Alignment.bottomLeft,
+                                                end: Alignment.topRight,
+                                                colors: [
+                                                  HexColor("#020204")
+                                                      .withOpacity(1),
+                                                  HexColor("#36393E")
+                                                      .withOpacity(1),
+                                                ],
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: HexColor('#2E2E2D'),
+                                                  offset: Offset(0, 3),
+                                                  blurRadius: 6,
+                                                ),
+                                                BoxShadow(
+                                                  color: HexColor('#04060F'),
+                                                  offset: Offset(10, 10),
+                                                  blurRadius: 20,
+                                                ),
+                                              ],
+                                              borderRadius:
                                               BorderRadius.circular(50)),
-                                      child: IconButton(
-                                        visualDensity: VisualDensity(
-                                            horizontal: -4, vertical: -4),
-                                        onPressed: () {},
-                                        icon: Icon(Icons.access_time_rounded),
-                                        color: ColorUtils.primary_grey,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 7,
-                                    ),
-                                    Text(
-                                      '${seconds} S',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: 'PR',
-                                          color: ColorUtils.primary_grey),
-                                    ),
-                                  ],
-                                )),
+                                          child: IconButton(
+                                            visualDensity: VisualDensity(
+                                                horizontal: -4, vertical: -4),
+                                            onPressed: () {},
+                                            icon: Icon(Icons.access_time_rounded),
+                                            color: ColorUtils.primary_grey,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 7,
+                                        ),
+                                        Text(
+                                          '${seconds} S',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'PR',
+                                              color: ColorUtils.primary_grey),
+                                        ),
+                                      ],
+                                    )),
                                 GestureDetector(
                                   onTap: () async {
                                     if (resend_otp == false) {
@@ -463,11 +463,11 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                         borderRadius: BorderRadius.circular(10),
                                         border: (resend_otp
                                             ? Border.all(
-                                                color: Colors.transparent,
-                                                width: 1)
+                                            color: Colors.transparent,
+                                            width: 1)
                                             : Border.all(
-                                                color: ColorUtils.primary_gold,
-                                                width: 1))),
+                                            color: ColorUtils.primary_gold,
+                                            width: 1))),
                                     margin: const EdgeInsets.only(
                                         top: 28, bottom: 28),
                                     child: Padding(
@@ -503,47 +503,47 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                   //   }
                                   // },
                                   onTap: () async {
-                                    print("_signUpScreenController.OtpController.text ${_signUpScreenController
-                                        .OtpController.text}");
+                                    print(
+                                        "_signUpScreenController.OtpController.text ${_signUpScreenController.OtpController.text}");
                                     // try {
-                                      // showLoader(context);
-                                      await FirebaseAuth.instance
-                                          .signInWithCredential(
-                                              PhoneAuthProvider.credential(
-                                                  verificationId: varification!,
-                                                  smsCode:
-                                                      _signUpScreenController
-                                                          .OtpController.text))
-                                          .then((value) async {
-                                        if (value.user != null) {
-                                          print("USER DATA FILLED");
-                                          await _signUpScreenController
-                                              .SignUpAPi(context: context);
-                                          //     context: context);
-                                          await selectTowerBottomSheet(
-                                              context);
-                                          Future.delayed(Duration(seconds: 2),
-                                              () {
-                                                if (_signUpScreenController
-                                                    .signUpModel!.error ==
-                                                    false) {
-                                                  // countdownTimer!.cancel();
-                                                 Navigator.pop(context);
-                                                  // Future.delayed(Duration(seconds: 2),
-                                                  //         () {
-                                                  // await Navigator.of(context).push(
-                                                  //     MaterialPageRoute(
-                                                  //         builder: (context) =>
-                                                  //             FaceScanScreen()));
-                                                }
-                                          });
+                                    // showLoader(context);
+                                    setState(() {
+                                      ontapped = true;
+                                    });
+                                    await FirebaseAuth.instance
+                                        .signInWithCredential(
+                                        PhoneAuthProvider.credential(
+                                            verificationId: varification!,
+                                            smsCode: _signUpScreenController
+                                                .OtpController.text))
+                                        .then((value) async {
+                                      if (value.user != null) {
+                                        print("USER DATA FILLED");
+                                        await _signUpScreenController.SignUpAPi(
+                                            context: context);
+                                        //     context: context);
+                                        await selectTowerBottomSheet(context);
+                                        Future.delayed(Duration(seconds: 2),
+                                                () {
+                                              if (_signUpScreenController
+                                                  .signUpModel!.error ==
+                                                  false) {
+                                                // countdownTimer!.cancel();
+                                                Navigator.pop(context);
+                                                // Future.delayed(Duration(seconds: 2),
+                                                //         () {
+                                                // await Navigator.of(context).push(
+                                                //     MaterialPageRoute(
+                                                //         builder: (context) =>
+                                                //             FaceScanScreen()));
+                                              }
+                                            });
 
-                                          print("Otp verifiredddddddd");
-                                        }else{
-                                          print("USER DATA NULL");
-
-                                        }
-                                      });
+                                        print("Otp verifiredddddddd");
+                                      } else {
+                                        print("USER DATA NULL");
+                                      }
+                                    });
                                     // } catch (e) {
                                     //   FocusScope.of(context).unfocus();
                                     //   CommonWidget()
@@ -600,10 +600,11 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                   },
                                   child: Container(
                                     // margin: Edge,
-                                    margin: EdgeInsets.symmetric(horizontal: 20),
+                                    margin:
+                                    EdgeInsets.symmetric(horizontal: 20),
 
                                     decoration: BoxDecoration(
-                                        // color: Colors.black.withOpacity(0.65),
+                                      // color: Colors.black.withOpacity(0.65),
                                         gradient: LinearGradient(
                                           begin: Alignment.centerLeft,
                                           end: Alignment.centerRight,
@@ -613,6 +614,11 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                             HexColor("#36393E").withOpacity(1),
                                           ],
                                         ),
+                                        border: Border.all(
+                                            color: ontapped
+                                                ? ColorUtils.primary_gold
+                                                : Colors.transparent,
+                                            width: 1),
                                         boxShadow: [
                                           BoxShadow(
                                             color: HexColor('#04060F'),
@@ -621,17 +627,17 @@ class _VerifyOtpState extends State<VerifyOtp> {
                                           ),
                                         ],
                                         borderRadius:
-                                            BorderRadius.circular(10)),
+                                        BorderRadius.circular(10)),
                                     child: Container(
                                         alignment: Alignment.center,
-                                        margin: EdgeInsets.symmetric(
+                                        margin: const EdgeInsets.symmetric(
                                           vertical: 12,
                                         ),
                                         child: Text(
                                           'Verify',
                                           style: FontStyleUtility.h15(
                                               fontColor:
-                                                  ColorUtils.primary_grey,
+                                              ColorUtils.primary_grey,
                                               family: 'PM'),
                                         )),
                                   ),

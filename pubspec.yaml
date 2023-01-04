@@ -16,7 +16,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   get: 4.6.1
-  hexcolor: ^2.0.5
+  hexcolor: ^3.0.1
   dropdown_button2: ^1.0.7
   intl: ^0.17.0
   pinput: ^1.2.0
@@ -76,6 +76,7 @@ dependencies:
   video_thumbnail_imageview: ^0.0.5
   flutter_native_timezone: ^2.0.0
   flutter_html: ^3.0.0-alpha.6
+  simple_html_css: ^4.0.0
 #  watch_ble_connection: ^1.0.0
 
 #  firebase_dynamic_links: ^5.0.4
